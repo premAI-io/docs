@@ -1,95 +1,83 @@
 ---
-title: Knowledge recall
+title: Recall, mid-meeting
 sidebarTitle: Knowledge recall
-description: Ask any question and Fluso searches across months of email, meetings, and Slack — so you never look unprepared in a meeting again.
+description: That company you researched in January, the decision from the April planning meeting, the Slack thread from last summer — retrieved in time to sound informed.
 ---
 
-You're in a meeting with a potential partner. They mention a company you researched three months ago. Your colleague looks at you — do you remember the details?
+You're in a meeting with a potential partner. They mention a company you researched three months ago. Your colleague glances at you. Do you remember the details?
 
 ## Without Fluso
 
-<Steps>
-  <Step title="Search email">
-    Find 2 threads from January.
-  </Step>
-  <Step title="Search Slack">
-    Find a discussion from January.
-  </Step>
-  <Step title="Try to remember">
-    Vague recall.
-  </Step>
-  <Step title="Give a vague answer">
-    *"I think we looked at them… they were interesting but I don't remember the specifics."*
-  </Step>
-</Steps>
+You search your email for the company's name. Find two threads. You search Slack. Find a discussion from January. You try to remember what you concluded. Your colleagues are still waiting. You give a vague answer: *"I think we looked at them… they were interesting but I don't remember the specifics."*
+
+Everyone nods politely. The conversation moves on. You make a note to look it up properly later, and don't.
 
 ## With Fluso
 
-You discreetly type:
+You discreetly type, while someone else is talking:
 
 > *"What do I know about Company X?"*
 
-Fluso responds:
+Fluso replies:
 
-> *"You researched Company X on January 15. They're a Series B fintech startup, $30M raised from a16z. Their product competes with Stripe in the APAC market. In your January Slack discussion with the team, the conclusion was: interesting tech but not a fit for partnership due to competitive overlap. You haven't interacted with them since."*
+*"You researched Company X on January 15. They're a Series B fintech startup, $30M raised from a16z. Their product competes with Stripe in the APAC market. In your January Slack discussion with the team, the conclusion was: interesting tech but not a fit for partnership due to competitive overlap. You haven't interacted with them since."*
 
-You answer:
+You answer when it's your turn:
 
-> *"Ah yes, Company X — we evaluated them in January. Solid tech but some competitive overlap made a partnership complex. They're worth watching in APAC though."*
+*"Ah yes, Company X — we evaluated them in January. Solid tech, but some competitive overlap made a partnership complex. They're worth watching in APAC though."*
 
-You look informed and prepared — because Fluso remembered what you would have forgotten.
+You sound informed and prepared, because you are. The thing you would have forgotten is in front of you.
 
-## Useful recall queries
+## The recall queries that pay off
 
-| Type | Example |
+| Type | What you ask |
 |---|---|
-| **Person history** | *"What's the history of our relationship with Acme Corp?"* |
-| **Decision recall** | *"What did we decide about the Q3 budget in the April planning meeting?"* |
-| **Topic across time** | *"What have we discussed about AI regulation?"* |
-| **Project status** | *"Where does the Acme deal stand right now?"* |
-| **Who knows what** | *"Who on the team has worked on the authentication system?"* |
-| **Connection finder** | *"Is there any link between the Acme deal and the Stripe conversation?"* |
-| **Last contact** | *"When did I last talk to the Stripe team?"* |
-| **Relationship health** | *"How's the Acme relationship going? Any red flags?"* |
+| Person history | *"What's the history of our relationship with Acme Corp?"* |
+| Decision recovery | *"What did we decide about the Q3 budget in the April planning meeting?"* |
+| Topic across time | *"What have we discussed about AI regulation?"* |
+| Project status | *"Where does the Acme deal stand right now?"* |
+| Who knows what | *"Who on the team has worked on the authentication system?"* |
+| Connection finder | *"Is there any link between the Acme deal and the Stripe conversation?"* |
+| Last contact | *"When did I last talk to the Stripe team?"* |
+| Relationship health | *"How's the Acme relationship going? Any red flags?"* |
 
 ## How recall scales over time
 
-The knowledge graph compounds. The more you use Fluso, the better recall gets:
+The graph compounds. The longer you've been using Fluso, the deeper the recall.
 
-| Time | Recall quality |
-|---|---|
-| Week 1 | Frequent contacts, current projects, recent conversations. |
-| Month 1 | History of key relationships, project status, communication patterns. |
-| Month 3 | Patterns you wouldn't see yourself — neglected relationships, stalled projects, recurring topics. |
-| Month 6+ | Institutional memory. *"What was the outcome of that vendor negotiation in January?"* — answered instantly. |
+In week one, it can recall your frequent contacts and current projects.
+
+By the end of month one, key relationships have history, project status is real-time, and your communication patterns are visible.
+
+At three months, Fluso starts surfacing patterns you wouldn't think to ask about — relationships you've gone quiet on, projects that are stalled, topics that keep coming up without resolution.
+
+After six months, it's institutional memory. *"What was the outcome of that vendor negotiation in January?"* gets a real answer, with citations.
 
 ## When recall is most valuable
 
-- **Mid-meeting**: discreetly query while someone is talking.
-- **Pre-call**: ask before joining ("Brief me on Sarah from Acme").
-- **Weekly review**: ask "What slipped this week?" or "What's stalled?"
-- **Quarterly planning**: ask "What were our Q1 commitments and which did we hit?"
+Mid-meeting, while someone else is talking. The discreet query that saves your reputation.
 
-## Setup checklist
+Pre-call. *"Brief me on Sarah from Acme."* Two minutes of context before you join the Zoom.
 
-- [ ] Gmail connected — see [Gmail](/integrations/gmail).
-- [ ] Calendar connected — meeting prep enriches the graph.
-- [ ] Slack connected — adds team context.
-- [ ] Process meeting transcripts regularly — decisions enter the graph.
+Weekly review. *"What slipped this week?"* or *"What's stalled?"* — patterns surface that you wouldn't notice scrolling through email.
+
+Quarterly planning. *"What were our Q1 commitments and which did we hit?"* Real institutional memory, not someone's reconstructed PowerPoint.
+
+## Setup
+
+Gmail connected (see [Gmail](/integrations/gmail)). Calendar connected so meeting prep enriches the graph. Slack if your team uses it. Process meeting transcripts as a habit — that's where decisions enter the graph.
 
 ## Privacy
 
-Your knowledge graph is yours alone. Stored in your isolated workspace, never shared with other users, never used to train models. You can delete individual entries or the entire graph at any time.
-
-For more, see [Security & privacy](/resources/security).
+The graph is yours alone. Lives in your isolated workspace. Never shared with other users. Never used to train models. Delete individual entries or wipe the whole thing whenever you want. Full picture in [Security & privacy](/resources/security).
 
 ## Related
 
 <CardGroup cols={2}>
   <Card title="Memory feature" icon="brain" href="/features/memory">
-    Full deep dive on the knowledge graph.
+    The full deep dive on the knowledge graph.
   </Card>
-  <Card title="Calendar workflow" icon="calendar-clock" href="/use-cases/meetings">
+  <Card title="Meeting workflow" icon="calendar-clock" href="/use-cases/meetings">
     Meeting prep is recall in action — see it in context.
   </Card>
 </CardGroup>

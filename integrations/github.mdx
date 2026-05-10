@@ -1,92 +1,73 @@
 ---
 title: GitHub
 sidebarTitle: GitHub
-description: Connect GitHub so Fluso can browse codebases, review PRs, scaffold projects, fix bugs, and manage issues — always with your approval before writing.
+description: Connecting Fluso to GitHub. Setup, repository scope, common prompts, and the project-context pattern that makes generated code fit your codebase.
 ---
 
-Connect GitHub and Fluso becomes a development partner. It reads your code, reviews PRs, scaffolds projects, finds and fixes bugs, and manages issues — all with your approval before any write.
+Connecting GitHub turns Fluso into a development partner. It reads your repos, reviews PRs, scaffolds projects, finds and fixes bugs, and manages issues. Every write — PR, commit, issue close — waits for your explicit approval.
 
-## What it unlocks
-
-| Capability | Example |
-|---|---|
-| **Understand code** | *"Show me how authentication works in this repo."* |
-| **Review PRs** | *"Review the open PR from Sarah."* |
-| **Scaffold projects** | *"Build me a REST API using FastAPI with SQLite."* |
-| **Fix bugs** | *"Users can't reset passwords — find the issue."* |
-| **Write code** | *"Add pagination to the /users endpoint."* |
-| **Manage issues** | *"Create an issue for the login bug."* |
-
-For the full feature deep dive, see [Code & development](/features/code).
+If you don't write code, the rest of this page is safely ignorable. If you do, this is the connection that pays back fastest after Gmail.
 
 ## Setup
 
-<Steps>
-  <Step title="Open Settings → Connectors">
-    Click **Connect** on the GitHub card.
-  </Step>
-  <Step title="Authorize with GitHub">
-    GitHub's OAuth flow opens.
-  </Step>
-  <Step title="Pick repositories">
-    Grant access to specific repositories or all repositories you have access to. You can change this later in your GitHub settings.
-  </Step>
-  <Step title="Review permissions">
-    | Permission | Why |
-    |---|---|
-    | Read repositories | Browse code, answer architecture questions, review PRs. |
-    | Read/write issues and PRs | File issues, open PRs, leave comments — always with your approval. |
-  </Step>
-  <Step title="Confirm">
-    GitHub shows as **Connected**. Setup time: about 30 seconds.
-  </Step>
-</Steps>
+Open **Settings → Connectors** and click **Connect** on the GitHub card. GitHub's OAuth flow opens.
 
-## Quick prompts to try
+Choose repository scope: specific repositories or all repositories you have access to. Either is fine, and you can change the set later from your GitHub settings without reconnecting.
 
-<AccordionGroup>
-  <Accordion title="Understand the codebase" icon="map">
-    > *"Show me how authentication works in this repo."*
+Permissions:
 
-    > *"What's the architecture of the backend?"*
+- **Read repositories** — to browse code, answer architecture questions, review PRs.
+- **Read/write issues and PRs** — to file issues, open PRs, and leave comments. Always with your approval.
 
-    > *"Where are the database models defined?"*
-  </Accordion>
-  <Accordion title="Review PRs" icon="git-pull-request">
-    > *"Review the open PR from Sarah — security, edge cases, tests."*
+Setup takes about thirty seconds.
 
-    > *"Summarise what changed in PR #42."*
+## Prompts that work well
 
-    > *"Which open PRs are safe to merge?"*
-  </Accordion>
-  <Accordion title="Fix bugs" icon="bug">
-    > *"Users report password reset emails aren't arriving. Find the bug."*
+Reading the code:
 
-    > *"Tests are failing on `main` — what broke?"*
-  </Accordion>
-  <Accordion title="Write code" icon="code">
-    > *"Add pagination to the /users endpoint — same pattern as /products."*
+> *"Show me how authentication works in this repo."*
 
-    > *"Write a database migration to add a 'role' column to users."*
+> *"What's the architecture of the backend?"*
 
-    > *"Write unit tests for the payment processing service."*
-  </Accordion>
-  <Accordion title="Issues" icon="circle-dot">
-    > *"List the open issues on `fluso-frontend`."*
+> *"Where are the database models defined?"*
 
-    > *"Create an issue for the login bug."*
+PR review:
 
-    > *"What issues are assigned to me this sprint?"*
-  </Accordion>
-</AccordionGroup>
+> *"Review the open PR from Sarah. Security, edge cases, tests."*
+
+> *"Summarise what changed in PR #42."*
+
+> *"Which open PRs are safe to merge?"*
+
+Bug hunting:
+
+> *"Users report password reset emails aren't arriving. Find the bug."*
+
+> *"Tests are failing on main. What broke?"*
+
+Writing code:
+
+> *"Add pagination to /users. Same pattern as /products."*
+
+> *"Write a database migration to add a 'role' column to users."*
+
+> *"Write unit tests for the payment processing service."*
+
+Issues:
+
+> *"List the open issues on fluso-frontend."*
+
+> *"Create an issue for the login bug."*
+
+> *"What issues are assigned to me this sprint?"*
 
 <Warning>
-  Fluso always asks before modifying your repositories. It will never create a PR, commit code, or close an issue without your confirmation.
+  Fluso always asks before opening a PR, committing code, or closing an issue. The diff or comment is shown for review every time.
 </Warning>
 
-## Project-specific context
+## A small thing that makes generated code much better
 
-Drop a `context.md` in your workspace describing your tech stack, conventions, and preferences. Fluso reads and follows it when generating code.
+Drop a `context.md` into your project's workspace describing your stack, conventions, and preferences. Fluso reads it and follows.
 
 ```markdown
 # Project context
@@ -98,33 +79,35 @@ Drop a `context.md` in your workspace describing your tech stack, conventions, a
 - Conventions: route handlers in app/api, services in lib/services
 ```
 
+The first PR you read after adding this will make the value obvious.
+
 ## Disconnecting
 
-From **Settings → Connectors**, click **Disconnect** on the GitHub card. All tokens are deleted immediately.
+In **Settings → Connectors**, click **Disconnect** on the GitHub card. Tokens are deleted immediately.
 
 You can also revoke from [GitHub → Settings → Applications](https://github.com/settings/applications).
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Fluso can't see a private repo">
-    Re-run authorization and add the repo to the allowlist, or grant access to all repositories.
+  <Accordion title="A private repo isn't visible">
+    Rerun authorisation and add the repo to the allowlist, or grant access to all repositories.
   </Accordion>
-  <Accordion title="Organization repos not visible">
-    Your organization may require an admin to approve the OAuth app. Check **Org → Settings → Third-party access**.
+  <Accordion title="Organisation repos aren't showing">
+    Your organisation may require an admin to approve the OAuth app. Check **Org → Settings → Third-party access**.
   </Accordion>
   <Accordion title="PR review is slow on a large repo">
-    For very large repos, scope reviews to the PR diff instead of the whole codebase. Try *"Review just the changes in PR #N"*.
+    For very large repos, scope reviews to the diff: *"Review just the changes in PR #N"* instead of *"review the PR"*.
   </Accordion>
 </AccordionGroup>
 
-## Related
+## See also
 
 <CardGroup cols={2}>
   <Card title="Code feature" icon="code" href="/features/code">
-    Full deep dive on Fluso's development capabilities.
+    The full deep dive on what Fluso does inside a codebase.
   </Card>
-  <Card title="Bug fix workflow" icon="bug" href="/use-cases/dev-bug-fix">
-    A worked example: bug report to PR in 15 minutes.
+  <Card title="Bug-to-PR workflow" icon="bug" href="/use-cases/dev-bug-fix">
+    Bug report to merged PR in fifteen minutes.
   </Card>
 </CardGroup>

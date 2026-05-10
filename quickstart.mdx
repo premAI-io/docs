@@ -1,138 +1,102 @@
 ---
 title: Quickstart
 sidebarTitle: Quickstart
-description: Set up Fluso, connect Gmail and Calendar, and run your first command — in under five minutes.
+description: Sign up, connect Gmail and Calendar, and try a few prompts. Five minutes start to finish.
 ---
 
-You can be productive with Fluso in about five minutes. This page covers the fastest path. For more detail on permissions and connectors, see [Connect your apps](/connect-apps).
+This is the fastest path to having Fluso doing useful work for you. If you want a closer look at the connector permissions, [Connect your apps](/connect-apps) goes deeper.
 
-## Step 1 — Create your account
+## Create the account
 
-Go to **[app.fluso.ai](https://app.fluso.ai)** and sign up. You can use:
+Sign up at [app.fluso.ai](https://app.fluso.ai). Google or GitHub is fastest; email and password works too. Free, no card, full feature access while you decide.
 
-- A Google account (fastest)
-- A GitHub account
-- Email and password
+You land in the chat. Sidebar on the right has projects, tasks, and settings.
 
-<Note>
-  Fluso is free to start. You get full access to try everything before choosing a plan. No credit card required.
-</Note>
+## Connect Gmail
 
-Once signed in, you land in the main Fluso interface — a chat window with your projects, tasks, and settings in the sidebar.
+In **Settings → Connectors**, click **Connect** on Gmail. Google's OAuth screen opens. Sign in with the account you want Fluso to assist with.
 
-## Step 2 — Connect Gmail
+Three permissions, all of them necessary for the basic features:
 
-Go to **Settings → Connectors** and click **Connect** on the Gmail card.
+- Read your messages, so Fluso can summarise the inbox, search, and pull tasks out of actionable mail.
+- Send mail, so it can draft replies. Drafts always get reviewed by you before they go.
+- Read headers, for categorisation.
 
-<Steps>
-  <Step title="Authorize with Google">
-    Google's standard OAuth flow opens. Sign in with the account you want Fluso to assist with.
-  </Step>
-  <Step title="Review the permissions">
-    Fluso requests:
+Fluso doesn't ask for permission to delete email or change account settings. There's no path to either even if it wanted one.
 
-    - **Read your emails** — to summarize, search, and extract tasks.
-    - **Send emails** — to draft and send replies, always with your approval.
-    - **View metadata** — headers used for categorization.
+## Connect Calendar
 
-    Fluso never asks for permission to delete email or change account settings.
-  </Step>
-  <Step title="You are connected">
-    Gmail now shows as **Connected** in your settings.
-  </Step>
-</Steps>
-
-## Step 3 — Connect Google Calendar
-
-Click **Connect** on the Google Calendar card and grant access:
-
-- **Read calendar events** — to see your schedule and check availability.
-- **Create and modify events** — to schedule meetings on request.
+Same flow on the Google Calendar card. It needs read access to see your schedule and write access to put events on it. Once both are connected, the morning brief and meeting prep become useful.
 
 <Tip>
-  Gmail and Calendar together unlock most of Fluso's day-to-day value. Slack and GitHub are great to add as you discover workflows that need them — see [Connect your apps](/connect-apps).
+  Slack and GitHub are good additions, but only when a workflow specifically needs them. Most of Fluso's value on day one comes from Gmail and Calendar alone.
 </Tip>
 
-## Step 4 — Send your first messages
+## Send your first prompts
 
-Try these in order, simple to compound:
+Three minutes, in roughly this order. Try them in real life, not on the docs page.
 
-<AccordionGroup>
-  <Accordion title="Start simple" icon="play">
-    > *"Summarise my unread emails from today"*
+The simple ones — they should respond instantly and prove the connections work:
 
-    > *"What's on my calendar tomorrow?"*
-  </Accordion>
-  <Accordion title="Get more useful" icon="zap">
-    > *"Create a task to review the Q2 report — it's due Friday"*
+> *"Summarise my unread emails from today."*
 
-    > *"Draft a reply to the last email from Sarah — say I'll have estimates by EOD tomorrow"*
-  </Accordion>
-  <Accordion title="See the real power" icon="sparkles">
-    > *"Find emails from the last week about the product launch and summarise the decisions"*
+> *"What's on my calendar tomorrow?"*
 
-    > *"Prep me for my 3pm meeting — who's attending and what have we discussed before?"*
-  </Accordion>
-  <Accordion title="Combine multiple apps" icon="layers">
-    > *"When's the earliest I can schedule a one-hour meeting with the engineering team this week?"*
+A bit more useful:
 
-    > *"A client emailed about API rate limits — find related Slack discussions and draft a response"*
-  </Accordion>
-</AccordionGroup>
+> *"Create a task: review the Q2 report, due Friday."*
 
-<Info>
-  Fluso gets better as you use it. Your first messages establish context. By day two or three, Fluso knows your projects, your frequent contacts, and your preferences.
-</Info>
+> *"Draft a reply to the last email from Sarah. Tell her I'll have estimates by EOD tomorrow."*
 
-## Step 5 — Create a project (optional)
+The kind of thing you couldn't easily do before:
 
-Projects keep work organised. Each project has its own files, memory, and context.
+> *"Find emails from the last week about the product launch and summarise the decisions."*
 
-Ask Fluso:
+> *"Prep me for my 3pm. Who's there, and what have we discussed before?"*
 
-> *"Create a project called 'Q2 Planning' and add my recent emails about Q2 to it"*
+And the ones that combine integrations once you've connected more:
 
-Or use **Projects** in the sidebar to create one manually.
+> *"When can I schedule a one-hour meeting with the engineering team this week?"*
 
-| Scenario | Project name |
-|---|---|
-| A specific client or partner | "Acme Corp" |
-| An internal initiative | "Q3 Launch" |
-| A recurring area of work | "Board Reporting" |
-| Personal | "Personal" |
+> *"A client emailed about API rate limits. Pull related Slack discussions and draft a response."*
 
-## Step 6 — Browse skills
+The first day's prompts will feel a little stiff. Fluso doesn't yet know your projects, your contacts, or your house style. By day three the answers get noticeably tighter; by week two they sound right the first time.
 
-Skills are specialised capabilities — creating PDFs, generating images, processing meetings, running deep research. They activate automatically when you ask for something they can do.
+## Make a project (optional)
 
-| Skill | Try saying |
-|---|---|
-| **PDF / Word** | *"Create a PDF report of my Q1 metrics."* |
-| **Presentations** | *"Make a 5-slide deck about our product roadmap."* |
-| **Meeting intelligence** | *"Process this meeting transcript and create tasks from the action items."* |
-| **Video summaries** | *"Summarise this YouTube video: [link]."* |
-| **Deep research** | *"Research the enterprise AI market and give me a cited report."* |
-| **Image generation** | *"Create a logo for my startup — modern, minimalist, blue."* |
+Projects are folders for context. Each one has its own files, memory, and tasks, so the noise from unrelated work doesn't bleed in. You can create one from the sidebar or just ask:
 
-## What's next
+> *"Create a project called Q2 Planning and add my recent emails about Q2 to it."*
+
+Useful naming patterns: a specific client (`Acme Corp`), an internal initiative (`Q3 Launch`), a recurring obligation (`Board Reporting`), or a personal bucket (`Personal`).
+
+## Skills you'll probably want soon
+
+Skills are capabilities Fluso reaches for when the request needs them. You don't install them. They activate when you ask for the right thing. A few common ones:
+
+- *"Make a 5-slide deck about our product roadmap."*
+- *"Process this meeting transcript and create tasks from the action items."*
+- *"Summarise this YouTube video: [link]."*
+- *"Research the enterprise AI market and give me a cited report."*
+- *"Create a logo for my startup. Modern, minimalist, blue."*
+
+## Where to go next
 
 <CardGroup cols={2}>
   <Card title="Connect more apps" icon="plug" href="/connect-apps">
-    Slack, GitHub, and the full catalog of 100+ connectors.
+    Slack, GitHub, and the catalog of a hundred or so others.
   </Card>
   <Card title="Your first week" icon="calendar-days" href="/first-week">
-    A simple plan for getting the most out of Fluso, day by day.
+    A day-by-day plan that turns Fluso into actual habit.
   </Card>
   <Card title="Features" icon="sparkles" href="/features/chat">
-    Deep dives on chat, email, calendar, tasks, memory, and more.
+    Chat, email, calendar, tasks, memory, content, research, code.
   </Card>
   <Card title="Use cases" icon="lightbulb" href="/use-cases/overview">
-    Real workflows from real users.
+    Workflows people run every day.
   </Card>
 </CardGroup>
 
-## Need help?
+## Help
 
-- Browse the [FAQ](/resources/faq) for common questions.
-- See [Use cases](/use-cases/overview) for detailed workflow examples.
-- Email [support@premai.io](mailto:support@premai.io) for help.
+The [FAQ](/resources/faq) covers the questions that come up most often. For anything else, [support@premai.io](mailto:support@premai.io) is fastest.

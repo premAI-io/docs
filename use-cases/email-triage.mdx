@@ -1,61 +1,49 @@
 ---
-title: Email triage
-sidebarTitle: Email triage
-description: Cut a 60-minute morning email scan down to 5 minutes. Replies and tasks drafted, action items surfaced, noise filtered.
+title: Inbox triage
+sidebarTitle: Inbox triage
+description: A worked example. Monday morning, 94 unread emails, become five minutes of review with nothing important slipping through.
 ---
 
-Email is the highest-leverage workflow Fluso handles. This page walks through what triage looks like end to end.
+Email is the workflow Fluso pays back fastest. The example below is the standard "Monday after a weekend off" version, but the same prompt works on any pile of unread mail.
 
-## The old way
+## What's actually in your inbox
 
-Your inbox is a mix of:
+The mix is the same for everyone. Direct requests from your boss and team. Client emails about projects in flight. Vendor mail about contracts and pricing. Newsletters you subscribed to in 2022 and never unsubscribed from. Notification digests from every SaaS tool you use. Calendar invites and updates. Automated reports.
 
-- Direct requests from your boss and team.
-- Client emails about projects.
-- Vendor emails about contracts and pricing.
-- Newsletters you subscribed to months ago.
-- Notification digests from every SaaS tool you use.
-- Calendar invites and updates.
-- Automated reports and alerts.
+You spend half an hour to an hour every morning sorting through it. Some days an important message gets buried and you only realise when someone follows up.
 
-You spend 30–60 minutes every morning sorting through this. Some days an important email gets buried and you miss it until someone follows up.
+## What changes
 
-## With Fluso
-
-It's Monday morning. You haven't checked email since Friday afternoon.
+Monday morning. You haven't checked email since Friday afternoon. Ninety-four unread.
 
 > *"Summarise my unread emails since Friday."*
 
-Fluso reads 94 unread emails and returns:
+Fluso reads all 94 and replies with three buckets.
 
-<Card title="Needs action (6)">
-1. 🚨 Legal — "Contract signed, need final review by Tuesday." → Task created, due Tuesday.
-2. Sarah (Acme) — "Can we move the launch date? Let's discuss tomorrow." → Draft reply: "Available tomorrow 2-4pm, which works best?"
-3. CFO — "Need Q2 revenue breakdown by Wednesday board meeting."
-4. Engineering — "Production hotfix ready for your approval."
-5. HR — "New hire starts Monday — please review onboarding plan."
-6. Client — "Having issues with the API — can someone look at this?"
-</Card>
+**Needs action — 6**
 
-<Card title="FYI (12)">
-- Weekly metrics (revenue +3%, users +5%)
-- Product team roadmap update
-- 3 vendor announcements
-- 2 project status updates
-- 4 newsletter digests
-</Card>
+1. Legal: contract signed, needs final review by Tuesday. Task created, due Tuesday.
+2. Sarah at Acme: can we move the launch date? Wants to discuss tomorrow. Draft reply ready: *"Available tomorrow 2-4pm, which works best?"*
+3. CFO: needs Q2 revenue breakdown by Wednesday's board meeting.
+4. Engineering: production hotfix ready for your approval.
+5. HR: new hire starts Monday, please review onboarding plan.
+6. Client: API issues, can someone look at it?
 
-<Card title="Noise (76)">
-Notification digests, automated alerts, marketing emails.
-</Card>
+**FYI — 12**
 
-**You spend 5 minutes.** Review the 6 action items, approve the draft reply to Sarah, adjust one task priority, done.
+Weekly metrics (revenue +3%, users +5%). Product team roadmap update. Three vendor announcements. Two project status updates. Four newsletter digests that might actually be worth reading.
 
-**Time saved: 45 minutes.** And nothing important slipped.
+**Noise — 76**
+
+Notification digests, automated alerts, marketing.
+
+You spend five minutes. You read the six action items. You approve the draft reply to Sarah. You bump one task priority. You glance at the FYI bucket and skip everything else. The 94 emails are handled, and the four things that mattered are tracked.
+
+Forty-five minutes saved. Nothing important missed.
 
 ## Useful follow-ups
 
-After the initial triage, sharpen the focus:
+After the initial sweep, you can sharpen:
 
 > *"Show me only emails from Acme this week."*
 
@@ -65,35 +53,33 @@ After the initial triage, sharpen the focus:
 
 > *"Did the client respond about the contract yet?"*
 
-## When to draft new replies
+## Drafting replies in batch
 
-Once you see the action list, batch the replies:
+Once you've seen the action list, batch the writing instead of one-at-a-time:
 
-> *"Draft replies to the three client emails — keep each under 4 sentences."*
+> *"Draft replies to the three client emails. Keep each under four sentences."*
 
-> *"Reply to Legal — confirm I'll have feedback by EOD Tuesday."*
+> *"Reply to Legal. Confirm I'll have feedback by EOD Tuesday."*
 
-> *"Reply to the CFO — say I'll have Q2 numbers ready by tomorrow afternoon."*
+> *"Reply to the CFO. Q2 numbers ready by tomorrow afternoon."*
 
-You review and approve. Fluso sends.
+You read each draft, approve, send. Five minutes total for what would have been forty-five of typing.
 
 <Warning>
-  Always review drafts before approving — especially for sensitive or external-facing email. Fluso is good but you have context it doesn't.
+  Read external-facing drafts carefully before approving. Fluso has good instincts; you have context Fluso doesn't.
 </Warning>
 
-## Setup checklist
+## Setup notes
 
-- [ ] Gmail connected — see [Gmail](/integrations/gmail).
-- [ ] Auto-task extraction enabled (default).
-- [ ] Run for at least 3 days — extraction quality improves quickly.
+Gmail connected (see [Gmail](/integrations/gmail)). Auto-task extraction enabled by default. Run for at least three days before judging extraction quality — it tightens fast.
 
 ## Related
 
 <CardGroup cols={2}>
   <Card title="Email feature" icon="mail" href="/features/email">
-    Full deep dive on Fluso's email capabilities.
+    Everything Fluso does with your inbox.
   </Card>
   <Card title="Morning brief" icon="sun" href="/use-cases/morning-brief">
-    Pair email triage with calendar, tasks, and follow-ups.
+    Pair the email sweep with calendar, tasks, and follow-ups.
   </Card>
 </CardGroup>

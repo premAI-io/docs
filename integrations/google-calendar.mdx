@@ -1,102 +1,87 @@
 ---
 title: Google Calendar
 sidebarTitle: Google Calendar
-description: Connect Google Calendar so Fluso can see your schedule, find available time, schedule meetings, and prep you with full context.
+description: Connecting Fluso to Google Calendar. The setup, the permissions, the prompts, and how to manage it.
 ---
 
-Calendar is the natural pair to Gmail. Together, they unlock the morning brief, meeting prep, and the full meeting workflow.
+Calendar pairs naturally with Gmail. Together they unlock the morning brief, meeting prep, and the full meeting workflow. On its own it still does enough to be worth connecting on day one.
 
-## What it unlocks
+## What changes once it's on
 
-| Capability | Example |
-|---|---|
-| **View schedule** | *"What's on my calendar tomorrow?"* |
-| **Find free time** | *"When am I free for 30 minutes on Thursday?"* |
-| **Schedule meetings** | *"Create a meeting with Sarah Monday at 2pm."* |
-| **Meeting prep** | *"Brief me on my 3pm meeting."* |
-| **Task sync** | Tasks with dates appear alongside calendar events. |
-| **Block focus time** | *"Block off 2-5pm for deep work."* |
-
-For the full feature deep dive, see [Calendar & meetings](/features/calendar).
+The full feature page is at [Calendar & meetings](/features/calendar). The short version: you can see your schedule with context, find time without playing Tetris, schedule meetings from chat, and have Fluso prep you before a call. Tasks with deadlines folded into the calendar view.
 
 ## Setup
 
-<Steps>
-  <Step title="Open Settings → Connectors">
-    Click **Connect** on the Google Calendar card.
-  </Step>
-  <Step title="Authorize with Google">
-    Same OAuth flow as Gmail. If you already authorized Gmail with the same account, this is even faster.
-  </Step>
-  <Step title="Review permissions">
-    | Permission | Why |
-    |---|---|
-    | Read events | View your schedule and check availability. |
-    | Create and modify events | Schedule meetings on your behalf. |
-  </Step>
-  <Step title="Confirm">
-    Calendar shows as **Connected**. Setup time: about 30 seconds.
-  </Step>
-</Steps>
+Open **Settings → Connectors** and click **Connect** on the Google Calendar card. The Google OAuth flow opens. If you already authorised Gmail with the same account, this is even shorter.
 
-## Quick prompts to try
+Permissions:
 
-<AccordionGroup>
-  <Accordion title="Schedule overview" icon="calendar">
-    > *"What's on my calendar today?"*
+- **Read events** — to see your schedule and check availability.
+- **Create and modify events** — to schedule meetings on your behalf.
 
-    > *"What does my week look like?"*
+Without write access the morning brief still works, but scheduling from chat doesn't.
 
-    > *"Show me my meetings with Acme this month."*
-  </Accordion>
-  <Accordion title="Find time" icon="clock">
-    > *"When am I free for 30 minutes tomorrow?"*
+Setup takes about thirty seconds.
 
-    > *"Find a 1-hour slot this week when the engineering team is available."*
+## Prompts that work well
 
-    > *"I need 2 hours of focus time today."*
-  </Accordion>
-  <Accordion title="Schedule" icon="calendar-plus">
-    > *"Schedule a 30-minute standup tomorrow at 9am."*
+Schedule:
 
-    > *"Create a meeting with Sarah next Monday at 2pm."*
+> *"What's on my calendar today?"*
 
-    > *"Set up a recurring 1:1 with my direct reports every other Tuesday."*
-  </Accordion>
-  <Accordion title="Prep" icon="briefcase">
-    > *"Prep me for my 3pm meeting."*
+> *"What does my week look like?"*
 
-    > *"Brief me on my next meeting with Acme."*
-  </Accordion>
-</AccordionGroup>
+> *"Show me my meetings with Acme this month."*
+
+Find time:
+
+> *"When am I free for thirty minutes tomorrow?"*
+
+> *"Find a one-hour slot this week when the engineering team is available."*
+
+> *"I need two hours of focus time today."*
+
+Schedule from chat:
+
+> *"Schedule a thirty-minute standup tomorrow at 9am."*
+
+> *"Create a meeting with Sarah next Monday at 2pm."*
+
+> *"Set up a recurring 1:1 with my direct reports every other Tuesday."*
+
+Prep:
+
+> *"Prep me for my 3pm."*
+
+> *"Brief me on my next meeting with Acme."*
 
 ## Disconnecting
 
-From **Settings → Connectors**, click **Disconnect** on the Google Calendar card. All tokens are deleted immediately.
+In **Settings → Connectors**, click **Disconnect** on the Google Calendar card. Tokens are deleted immediately.
 
 You can also revoke from [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Fluso doesn't see a calendar I expect">
-    Make sure the calendar is shared to the account you authorized. Fluso only sees calendars visible to that Google account.
+  <Accordion title="A calendar I expected isn't showing up">
+    Make sure the calendar is shared to the account you authorised. Fluso only sees calendars visible to that Google account.
   </Accordion>
-  <Accordion title="Times are off by hours">
-    Confirm your timezone in Fluso settings matches your Google Calendar timezone. Mismatches can shift event times.
+  <Accordion title="Times look off by hours">
+    Confirm your timezone in Fluso settings matches your Google Calendar timezone. Mismatches shift event times.
   </Accordion>
   <Accordion title="Can't create events">
-    Verify the **Create and modify events** permission is granted. Reconnect if the prompt asked for read-only access.
+    Verify the **Create and modify events** permission is granted. Reconnect if the original prompt only asked for read access.
   </Accordion>
 </AccordionGroup>
 
-## Related
+## See also
 
 <CardGroup cols={2}>
   <Card title="Calendar feature" icon="calendar-clock" href="/features/calendar">
-    Full deep dive on the meeting lifecycle: prep, transcripts, summaries, follow-ups.
+    The full meeting lifecycle — prep, transcript processing, follow-ups.
   </Card>
-  <Card title="Meetings workflow" icon="users" href="/use-cases/meetings">
-    A worked example of running an end-to-end meeting in 47 minutes.
+  <Card title="Meeting workflow" icon="users" href="/use-cases/meetings">
+    What it looks like to run a meeting end-to-end with Fluso.
   </Card>
 </CardGroup>

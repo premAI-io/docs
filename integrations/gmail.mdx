@@ -1,119 +1,101 @@
 ---
 title: Gmail
 sidebarTitle: Gmail
-description: Connect Gmail to Fluso for inbox triage, summaries, smart search, draft replies, and automatic task extraction.
+description: Connecting Fluso to Gmail. Permissions, what it does once connected, common prompts, and troubleshooting.
 ---
 
-Gmail is the highest-value integration. It's where most work originates, so connecting it gives Fluso the richest context about your day. **Connect this first.**
+Gmail is the highest-leverage connection in Fluso. Email is where most work originates, which means it's where Fluso gets the richest context fastest. Connect this first.
 
-## What it unlocks
+## What changes once it's on
 
-| Capability | Example |
-|---|---|
-| **Inbox triage** | *"Summarise my unread emails from today."* |
-| **Smart search** | *"Find the email where the client sent the pricing spreadsheet."* |
-| **Draft replies** | *"Reply to Sarah — I'll have estimates by Thursday."* |
-| **Auto-task extraction** | Tasks created automatically from actionable emails. |
-| **Thread summaries** | *"Summarise the email thread about the vendor negotiation."* |
-| **Follow-up tracking** | *"Has the client responded about the contract?"* |
+You ask Fluso to summarise your inbox, search for something specific, draft a reply, or pull tasks out of actionable mail, and it does. The full feature page is at [Email](/features/email); the short version of what's available:
 
-For the full feature deep dive, see [Email](/features/email).
+- Inbox triage in plain English (*"summarise my unread emails from today"*)
+- Search across the full mailbox (*"find the email where Thomas sent the pricing spreadsheet"*)
+- Draft replies in your voice (*"reply to Sarah, I'll have estimates by Thursday"*)
+- Auto-task extraction running in the background
+- Thread summaries (*"summarise the email thread about the vendor negotiation"*)
+- Follow-up tracking (*"has the client responded about the contract?"*)
 
 ## Setup
 
-<Steps>
-  <Step title="Open Settings → Connectors">
-    Click **Connect** on the Gmail card.
-  </Step>
-  <Step title="Authorize with Google">
-    Sign in with the Google account you want Fluso to assist with.
-  </Step>
-  <Step title="Review permissions">
-    | Permission | Why |
-    |---|---|
-    | Read emails | Summarise the inbox, search, extract tasks. |
-    | Send emails | Draft and send replies — always with your approval. |
-    | View metadata | Headers used to categorise messages. |
+Open **Settings → Connectors** and click **Connect** on the Gmail card. Sign in to Google with the account you want Fluso to assist with. The OAuth screen lists three permissions:
 
-    Fluso does **not** request permission to delete email or change account settings.
-  </Step>
-  <Step title="Confirm">
-    Gmail shows as **Connected**. Setup time: about 30 seconds.
-  </Step>
-</Steps>
+- **Read your messages** — for summaries, search, and task extraction.
+- **Send messages** — for reply drafts. Fluso never sends without your approval.
+- **Read headers** — for categorising messages by sender, label, and date.
 
-## Quick prompts to try
+Notably absent: anything that lets Fluso delete mail or change account settings. There's no path to either even if it wanted one.
 
-<AccordionGroup>
-  <Accordion title="Triage" icon="inbox">
-    > *"Summarise my unread emails from today."*
+The whole thing takes about thirty seconds.
 
-    > *"Which emails need a reply today?"*
+## Prompts that work well
 
-    > *"Show me only urgent emails."*
-  </Accordion>
-  <Accordion title="Search" icon="search">
-    > *"Find unread emails older than 3 days."*
+Triage:
 
-    > *"Emails from @acme.com in the last 2 weeks that mention 'contract' and have attachments."*
+> *"Summarise my unread emails from today."*
 
-    > *"Starred emails from April about the budget."*
-  </Accordion>
-  <Accordion title="Drafts" icon="pencil">
-    > *"Reply to the client — confirm we'll implement the changes by next sprint."*
+> *"Which emails need a reply today?"*
 
-    > *"Compose an introduction email to the new client we met at the conference."*
+> *"Anything from my boss I haven't responded to?"*
 
-    > *"Make my draft more formal."*
-  </Accordion>
-  <Accordion title="Follow-ups" icon="bell">
-    > *"Has Legal replied to my questions from Monday?"*
+Search:
 
-    > *"Anyone I emailed last week who hasn't responded?"*
-  </Accordion>
-</AccordionGroup>
+> *"Find unread emails older than three days."*
 
-## Permissions in detail
+> *"Emails from @acme.com in the last two weeks that mention 'contract' and have attachments."*
 
-<AccordionGroup>
-  <Accordion title="Read emails">
-    Fluso reads emails when you ask it to (e.g., "summarise my inbox") and when running auto-task extraction. Emails are processed for the response and not stored beyond what's needed for your knowledge graph and task references.
-  </Accordion>
-  <Accordion title="Send emails">
-    Fluso never sends an email without your explicit approval. Drafts are always shown for review first.
-  </Accordion>
-  <Accordion title="Metadata">
-    Headers are used for categorisation (sender, subject, labels, date) and are not shared with third parties.
-  </Accordion>
-</AccordionGroup>
+> *"Starred emails from April about the budget."*
+
+Drafts:
+
+> *"Reply to the client. Confirm we'll implement the changes by next sprint."*
+
+> *"Compose an introduction email to the new client we met at the conference."*
+
+> *"Make my last draft more formal."*
+
+Follow-ups:
+
+> *"Did Legal reply to my questions from Monday?"*
+
+> *"Anyone I emailed last week who hasn't responded?"*
+
+## How permissions actually behave
+
+Reading happens when you ask for it (*"summarise my inbox"*) and continuously in the background for auto-task extraction. Messages are processed for the response and not stored beyond what's referenced in your knowledge graph and tasks.
+
+Sending requires your explicit approval. Drafts are always shown first. There's no batch-send mode that bypasses the review.
+
+Header metadata is used for categorisation only and never shared with third parties.
 
 ## Disconnecting
 
-From **Settings → Connectors**, click **Disconnect** on the Gmail card. All Gmail tokens are deleted immediately and Fluso stops accessing your inbox.
+In **Settings → Connectors**, click **Disconnect** on the Gmail card. The token is deleted immediately and Fluso loses access.
 
-You can also revoke access directly from your [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
+You can also revoke directly from [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Fluso isn't finding my emails">
-    Verify Gmail is **Connected** in Settings → Connectors. Try disconnecting and reconnecting. If the issue persists, you may have hit a Gmail API rate limit — wait a few minutes and try again.
+  <Accordion title="Fluso isn't finding emails I know exist">
+    Verify Gmail still shows as **Connected** in Settings → Connectors. If it does, disconnect and reconnect. If the issue persists, you may have hit a Gmail API rate limit — wait a few minutes and try again.
   </Accordion>
-  <Accordion title="Token expired or app not connected">
-    OAuth tokens can expire. Go to Settings → Connectors and click **Reconnect**. Refresh the page once reconnected.
+  <Accordion title="The connection says it's broken">
+    OAuth tokens occasionally expire. In Settings → Connectors, click **Reconnect**. Refresh the page once it's done.
   </Accordion>
-  <Accordion title="Auto-tasks aren't appearing">
-    Auto-task extraction runs periodically. Give it 24–48 hours to learn the patterns of your inbox. You can also trigger it manually with *"Scan my inbox for tasks."*
+  <Accordion title="Auto-tasks haven't appeared yet">
+    Auto-task extraction runs periodically and learns the shape of your inbox over a couple of days. You can also force a sweep with *"Scan my inbox for tasks."*
   </Accordion>
 </AccordionGroup>
 
-## Related
+## See also
 
 <CardGroup cols={2}>
   <Card title="Email feature" icon="mail" href="/features/email">
-    Full deep dive on Fluso's email capabilities.
+    Full deep dive on what Fluso does with your inbox.
   </Card>
   <Card title="Email triage workflow" icon="inbox" href="/use-cases/email-triage">
-    A worked example of cutting 60 minutes of email down to 5.
+    A worked example of cutting morning email from an hour to five minutes.
   </Card>
 </CardGroup>

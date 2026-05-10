@@ -1,97 +1,70 @@
 ---
-title: Bug → fix
-sidebarTitle: Bug → fix
-description: From bug report to merged PR in 15 minutes — Fluso traces the code, identifies the root cause, writes the fix, and opens the PR for review.
+title: A bug to a PR
+sidebarTitle: Bug → PR
+description: Bug report to merged PR in fifteen minutes. Fluso traces the code, finds the cause, writes the fix, and opens the pull request for your review.
 ---
 
-Users report password reset emails aren't arriving. It's affecting multiple customers. You need to find and fix the bug.
+Users report password reset emails aren't arriving. It's affecting customers. You need to find the bug and fix it.
 
-## Without Fluso
+## The old version
 
-<Steps>
-  <Step title="Read the password reset code">
-    Auth module, email service, queue system.
-  </Step>
-  <Step title="Trace the flow">
-    Reset requested → token generated → email queued → email sent.
-  </Step>
-  <Step title="Find the issue">
-    Email template has a broken link because the base URL changed.
-  </Step>
-  <Step title="Fix">
-    Update the template.
-  </Step>
-  <Step title="Test and PR">
-    Write a test. Create a PR. Wait for review.
-  </Step>
-</Steps>
+Read the password reset code. Auth module, email service, queue system. Trace the flow: reset requested, token generated, email queued, email sent. Find the issue: the email template has a broken link because the base URL changed during the migration last week. Fix the template. Write a test. Open a PR. Wait for review.
 
-**Time: 2–4 hours.**
+Two to four hours.
 
 ## With Fluso
 
+You ask:
+
 > *"Users report password reset emails aren't arriving. Find the bug in our auth module."*
 
-**Fluso reads auth code, email service, and templates, then responds:**
+Fluso reads the auth code, the email service, and the templates, then replies:
 
-> *"Found it. The password reset email template in `templates/reset-password.html` line 12 uses `https://old-domain.com/reset?token=...`. The base URL changed when we migrated to the new domain last week. The links in the emails are broken."*
+*"Found it. The password reset email template in `templates/reset-password.html` line 12 uses `https://old-domain.com/reset?token=...`. The base URL changed when we migrated to the new domain last week. The links in the emails are broken."*
+
+You ask:
 
 > *"Fix it and create a PR."*
 
-**Fluso updates the template, writes a test, creates the PR:**
+Fluso updates the template, writes a test that validates the link format, and opens the PR.
 
-> *"Done. PR #156 — fixed the reset link domain, added a test that validates the link format. Ready for review."*
+*"Done. PR #156 — fixed the reset link domain, added a test that validates the link format. Ready for review."*
 
-**Time: 15 minutes.**
+You read the diff. Run the test locally. Approve the PR. Fifteen minutes from "we have a bug" to "the bug is fixed."
 
 ## Variations
 
-### Reproduce first
+When you want to reproduce first:
 
 > *"Users report login errors with the new SSO flow. Reproduce it locally and find the bug."*
 
-Fluso writes a test that reproduces the issue, then traces the code.
+Fluso writes a test that reproduces the issue, then traces the code from the failing test backwards.
 
-### Multiple suspects
+When there are multiple suspects:
 
 > *"Production hotfix — 5xx errors spiking on /api/orders. Could be the new payment provider integration or the rate limiter we deployed yesterday. Find the cause."*
 
 Fluso reads recent commits, checks both code paths, and isolates the issue.
 
-### Just analysis, no PR
+When you only want diagnosis, not a fix:
 
 > *"Analyse why our test suite is flaky in CI but passes locally. Don't fix anything yet — just diagnose."*
 
-When you want a root-cause report before deciding what to do.
+Useful when you want a root-cause report before deciding what to do about it.
 
-## When to use Fluso for this
+## What this is good at, and what it isn't
 
-| Good fit | Fluso shines |
-|---|---|
-| Single-repo issue | Tracing through your code |
-| Reproducible bug | Finding it via logs and tests |
-| Pattern-following fix | Following existing code conventions |
-| Routine PR | Tests, docs, and review-ready output |
+Bugs that live inside a single repository, where Fluso can read the code and follow the logic, are where it shines. Reproducible bugs are easier than intermittent ones. Fixes that follow existing conventions in the codebase are easier than redesigns. Routine PRs — with tests, with proper docs, ready for review — are exactly the kind of work this is good for.
 
-| Less good fit | You probably want to drive |
-|---|---|
-| Multi-service distributed bug | Spanning runtime systems |
-| Architectural redesign | Big design decisions |
-| Performance pathology | Profiling-driven optimisation |
+Less good fits: distributed bugs that span multiple services and require runtime introspection. Architectural redesigns where the question is "what's the right approach" not "where's the bug". Performance pathology that needs profiler output you have to gather.
 
 ## Tips
 
-<Tip>
-  **Name the symptom, not the cause.** "Password reset emails aren't arriving" is better than "the email template is broken." Let Fluso diagnose.
-</Tip>
+Name the symptom, not your guess at the cause. *"Password reset emails aren't arriving"* is more useful than *"the email template is broken"*. Let Fluso diagnose; if you tell it the answer up front, you bias the search.
 
-<Tip>
-  **Always review the PR.** Fluso writes good code, but you should read the diff and run the tests locally before merging. You're still the engineer of record.
-</Tip>
+Always read the diff. Fluso writes good code, but you're still the engineer of record. Reading the diff and running the tests locally is non-negotiable before merge.
 
-<Tip>
-  **Drop a `context.md` in the repo.** Stack, conventions, do-not-touch zones. Fluso reads and follows it.
-</Tip>
+Drop a `context.md` in the repo describing your stack, conventions, and do-not-touch zones. Fluso reads and follows. The first PR after you add it will make the value obvious.
 
 <Warning>
   Fluso always asks for approval before opening a PR or pushing changes. You see the diff and decide.
@@ -101,9 +74,9 @@ When you want a root-cause report before deciding what to do.
 
 <CardGroup cols={2}>
   <Card title="Code feature" icon="code" href="/features/code">
-    Codebase Q&A, PR review, scaffolding, bug fixes, and code generation.
+    Codebase Q&A, PR review, scaffolding, bug fixes, code generation.
   </Card>
   <Card title="GitHub integration" icon="github" href="/integrations/github">
-    Setup, permissions, and managing repository access.
+    Setup, permissions, repository scope.
   </Card>
 </CardGroup>

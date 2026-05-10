@@ -1,77 +1,30 @@
 ---
-title: Memory & knowledge graph
+title: Memory
 sidebarTitle: Memory
-description: Fluso remembers everything — people, projects, decisions, and conversations. Your personal knowledge graph that grows smarter the more you use it.
+description: How Fluso quietly builds a graph of your people, projects, and decisions — and why that matters more the longer you use it.
 ---
 
-Fluso doesn't forget. Every email, meeting, Slack thread, and document feeds a connected map of your work life. The more you use it, the more context Fluso has — and the more useful it becomes.
+Fluso doesn't forget. Every email, every meeting transcript, every Slack thread, every doc you create — they all feed into a connected map of your work. People. Projects. Decisions. The companies you talk to and the topics you keep coming back to. It's running in the background and you mostly don't think about it.
 
-## What Fluso remembers
+The reason it matters is the question you can ask three months later: *"What do I know about Company X?"* The answer is the actual answer, not your hazy recollection of one.
 
-### People
+## What's in there
 
-Fluso builds profiles for everyone you interact with — automatically. You don't fill anything in.
+People you interact with end up with a profile. Sarah Chen, VP Product at Acme, sarah@acme.com. First contact in March at the conference. Twelve emails, three meetings, two Slack mentions since. Topics: partnership, API integration, Q3 budget, pilot. Open with you: contract awaiting Legal review, your action item. Style: direct, data-driven, prefers async follow-ups.
 
-<Card title="Sample profile">
-**Sarah Chen**
-- Role: VP Product, Acme Corp
-- Email: sarah@acme.com
-- First contact: March 15, 2026 (conference introduction)
-- Last contact: May 8, 2026 (email about pilot expansion)
-- Communication: 12 emails, 3 meetings, 2 Slack mentions
-- Topics: partnership, API integration, Q3 budget, pilot
-- Open items: contract awaiting Legal review (your action item)
-- Style: direct, data-driven, prefers async follow-ups
-</Card>
+You didn't write any of that. Fluso built it from the traffic.
 
-### Projects
+Projects get the same treatment. The Acme project's memory has the documents shared, the meeting notes and decisions, the people involved with their roles, the timeline of milestones, the open questions, what's blocked and on whom. Asking *"What's the status of the Acme project?"* gets you a real status: last activity Sarah's email on May 8 about pilot expansion, next milestone the contract signing on May 20, blocked on Legal review (3 days overdue), team is you plus James and Lisa, the key decision agreed April 15 was the Q3 scope.
 
-Each project has a rich memory:
+Organisations and topics get tracked the same way — who's at which company, which projects connect to which clients, which competitors you've discussed and when, which technologies keep coming up.
 
-- Documents and files shared.
-- Meeting notes and decisions.
-- People involved and their roles.
-- Timeline of milestones and deadlines.
-- Open questions and blocked items.
-- Stage in the lifecycle.
+## How it builds
 
-> *"What's the status of the Acme project?"*
+Without you doing anything. There's no tagging, no foldering, no "save to memory" button. An email from sarah@acme.com gets linked to Sarah's profile and the Acme project. A meeting transcript gets parsed for decisions and action items. A Slack discussion about a competitor gets connected to the last time that competitor came up.
 
-| Field | Value |
-|---|---|
-| Last activity | Email from Sarah on May 8 about pilot expansion |
-| Next milestone | Contract signing — target May 20 |
-| Blocked on | Legal review (3 days overdue) |
-| Team | You, James (Eng), Lisa (Product) |
-| Key decisions | Q3 scope agreed on April 15 |
+The graph is connected, not siloed. A person isn't just a contact — they're also a meeting attendee, a Slack handle, a doc collaborator. A project isn't just a folder — it spans email threads, meetings, conversations, and files. So when you ask "what do I know about the pricing discussion?", Fluso doesn't search one source. It pulls from all of them.
 
-### Organisations
-
-Fluso maps companies and teams: who works where, what projects you have with them, how communication flows, the history of the relationship.
-
-### Topics
-
-What you discuss across time — technologies, competitors, industry trends, internal initiatives.
-
-## How the knowledge graph works
-
-### Automatic, not manual
-
-You never tag, categorise, or file anything. Fluso watches your activity and connects:
-
-- An email from `sarah@acme.com` → linked to Sarah's profile → linked to the Acme project → tagged with topics mentioned.
-- A meeting about Q2 metrics → linked to the Q2 Planning project → action items extracted → decisions recorded.
-- A Slack discussion about a competitor → linked to your competitive intelligence → connected to past discussions about the same competitor.
-
-### Connected, not siloed
-
-A person isn't just an email contact — they're also a meeting attendee, a Slack mention, a document collaborator. A project isn't just a folder — it spans emails, meetings, documents, and conversations.
-
-When you ask *"What do I know about the pricing discussion?"*, Fluso finds relevant information across **all** sources, not just one.
-
-### Searchable, not browsable
-
-You don't navigate folders or tags. You ask:
+You don't browse it. You ask it questions:
 
 > *"What did we decide about the Q3 budget?"*
 
@@ -81,85 +34,56 @@ You don't navigate folders or tags. You ask:
 
 > *"What have we discussed about AI regulation?"*
 
-> *"Find everything related to the server migration last month."*
+## What you do with it
 
-## What you can do with the knowledge graph
-
-### Recall anything instantly
+Recall is the obvious one:
 
 > *"What's the history of our relationship with Acme Corp?"*
 
-Fluso gives you a timeline: first contact, key meetings, decisions, current status, open items — across emails, meetings, and Slack.
+A timeline comes back. First contact, key meetings, decisions made, current status, open items. From email, meetings, and Slack together.
 
-### Prepare for meetings with full context
+Meeting prep is recall in tighter form:
 
 > *"Brief me on my 3pm with Sarah."*
 
-Role and background, communication history, last meeting topics, open action items, recent emails, related Slack discussions, documents shared.
+You get her role and background, your communication history, last meeting topics, open action items, recent emails, related Slack discussions, and anything she's shared with you. The thing you'd otherwise spend half an hour assembling.
 
-### Never lose a decision
+Decision recovery is the one that surprises people:
 
 > *"What did we decide about the product roadmap in the April planning meeting?"*
 
-Even if it was six weeks ago and you didn't take notes, Fluso knows — because you uploaded the transcript.
+Even if it was six weeks ago and you didn't take notes, the answer is there because you uploaded the transcript at the time.
 
-### Find who knows what
+There's also the find-who-knows-what version: *"Who on the team has worked on the authentication system?"*, *"Who's been in client meetings with Acme?"*
 
-> *"Who on the team has worked on the authentication system?"*
+The relationship-health version: *"How's the Acme relationship going? Any red flags?"* Fluso surfaces patterns that are easy to miss yourself — slower response times, fewer meetings, terser emails.
 
-> *"Who's been in the client meetings with Acme?"*
-
-> *"Who discussed the pricing changes in Slack last month?"*
-
-### Track relationship health
-
-> *"How's the Acme relationship going? Any red flags?"*
-
-Fluso surfaces patterns: longer response times, fewer meetings, terser emails — early warning signs you'd miss.
-
-### Discover connections
-
-> *"Is there any connection between the Acme deal and the Stripe conversation?"*
-
-Fluso finds the thread: same person on both emails, same project referenced, both discussions in the same week — connections you'd never find manually.
+The connection-finding version: *"Is there any connection between the Acme deal and the Stripe conversation?"* Same person on both threads, same project mentioned in two contexts, both surfaced in the same week. Connections you wouldn't bother to look for.
 
 ## Privacy and control
 
-### Your data is yours
+The graph is yours. It lives in your isolated workspace. No other user sees it. Nothing leaves it for third parties. Fluso doesn't train models on it.
 
-- Your knowledge graph is stored in your isolated workspace.
-- No other user can access it.
-- Nothing is shared with third parties.
-- You can delete any entry at any time.
-- You can delete the entire graph.
+You can delete any entry, or wipe the whole thing, at any time. The graph only ever builds from apps you've connected — disconnect Slack and Slack data stops contributing.
 
-### You control what's tracked
-
-Fluso only builds knowledge from apps you've explicitly connected. If Slack isn't connected, no Slack data enters the graph. Disconnect an app and that source stops contributing.
-
-### Sensitive information
-
-If something shouldn't be tracked, just say:
+For things you don't want tracked, you say so:
 
 > *"Don't track anything related to Project X."*
 
 > *"Forget everything about this vendor."*
 
-## The compound effect
+## The shape of the value over time
 
-The knowledge graph grows more valuable over time:
+In the first week, the graph knows your frequent contacts and current projects. Recent things are summarisable; older context is thin.
 
-| Time | What you get |
-|---|---|
-| **Week 1** | Frequent contacts, current projects, recent email and meeting summaries. |
-| **Month 1** | History of key relationships, project status, your communication patterns. Meeting prep is genuinely useful. |
-| **Month 3** | Patterns you wouldn't see yourself — neglected relationships, stalling projects, recurring topics without resolution. |
-| **Month 6+** | Institutional memory. *"What was the outcome of that vendor negotiation in January?"* — answered instantly. |
+By the end of the first month, the history of key relationships is in there, project status is real-time, your communication patterns are visible. Meeting prep starts feeling genuinely sharp.
+
+Three months in, Fluso starts surfacing things you wouldn't have thought to ask: relationships you've gone quiet on, projects that have stalled, topics that keep resurfacing without resolution.
+
+After six months, it's institutional memory. *"What was the outcome of that vendor negotiation in January?"* gets a direct answer, with citations.
+
+The graph doesn't feel transformative on day three. By week six it's quietly indispensable.
 
 <Tip>
-  **Trust the process.** The graph feels magical after a few weeks but subtle in the first few days. Give it time to accumulate. The value compounds.
+  The most common mistake is judging memory after a few days. It's subtle until it isn't. Use Fluso normally for a couple of weeks before deciding what it can or can't recall — the difference between week one and week three is large.
 </Tip>
-
-<Info>
-  Your knowledge graph is built on top of your connected apps. The more apps you connect — Gmail, Calendar, Slack, GitHub — the richer and more useful it becomes.
-</Info>

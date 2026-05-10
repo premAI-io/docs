@@ -1,162 +1,75 @@
 ---
 title: Research & analysis
 sidebarTitle: Research
-description: Fluso researches any topic with citations, summarises YouTube videos, analyses data, and audits datasets — so you get answers, not search results.
+description: Cited research reports, video summaries, statistical analysis, data quality auditing. Fluso reads the sources so you don't have to.
 ---
 
-Fluso does the digging, reading, and synthesising — so you get a structured answer, not a list of links.
+The research feature exists for a specific frustration: you ask a question and end up with fifteen browser tabs and an hour gone. Fluso turns the question into a structured answer with citations, so the hour is two minutes.
+
+It does the obvious version (deep research with sources), and a few less obvious ones (video summaries, statistical analysis, data quality audits). Each is below.
 
 ## Deep research
 
-Ask for research and Fluso reads multiple sources, verifies facts across them, and delivers a cited report — not just a summary.
+You ask for research. Fluso searches the web, reads the most relevant sources, cross-references claims across them, structures the findings, and cites every claim with a link.
 
-### How it works
+There are roughly three depths, depending on what you actually need.
 
-<Steps>
-  <Step title="Search">
-    Fluso queries the web across multiple sources.
-  </Step>
-  <Step title="Read">
-    Reads the most relevant articles and pages.
-  </Step>
-  <Step title="Cross-reference">
-    Verifies claims across sources.
-  </Step>
-  <Step title="Synthesise">
-    Structures findings into a coherent report.
-  </Step>
-  <Step title="Cite">
-    Every claim links back to its source.
-  </Step>
-</Steps>
+A quick lookup — *"What's NVIDIA's current market cap?"* — comes back as a sentence in seconds. No report, no scaffolding, just the answer.
 
-### Levels of research
+A standard report — *"Compare the top three CRM platforms for small business"* — takes a couple of minutes and produces a short cited document with the key findings.
 
-| Level | When to use | What you get | Time |
-|---|---|---|---|
-| **Quick** | *"What's NVIDIA's current market cap?"* | Direct answer in chat | Seconds |
-| **Standard** | *"Compare the top 3 CRM platforms for small business"* | Short cited report with key findings | 2–3 min |
-| **Deep** | *"Analyse the enterprise AI agent market — players, pricing, trends, M&A"* | Full report with analysis and recommendations | 5–10 min |
+A deep report — *"Analyse the enterprise AI agent market. Players, pricing, trends, M&A activity"* — takes 5 to 10 minutes and produces a structured document with executive summary, key findings, detailed analysis section by section, comparison tables where they help, recommendations, and 15 to 30 sources.
 
-### Common topics
+The categories Fluso is good at:
 
-| Category | Examples |
-|---|---|
-| Market analysis | *"TAM for AI coding assistants. Key players?"* |
-| Competitive intel | *"Research Rippling's product, pricing, recent funding, competitive position"* |
-| Technology | *"Best vector databases for production in 2026 — features and pricing"* |
-| Regulation | *"How does the EU AI Act affect SaaS? Compliance deadlines?"* |
-| Company research | *"Everything about Company X — funding, team, product, recent news"* |
-| Trend analysis | *"Emerging trends in enterprise AI adoption"* |
+- Market analysis (TAM, players, segmentation).
+- Competitive intel (a specific company's product, pricing, recent funding, position).
+- Technology comparisons (vector databases, web frameworks, hosting providers, that kind of thing).
+- Regulation (the EU AI Act and SaaS, deadlines, compliance).
+- Company research (everything-they-have on a specific firm).
+- Trend analysis (where adoption is moving in a sector).
 
-### What a deep research report looks like
-
-<Card title="Structure">
-**Executive summary** — 2–3 paragraphs of the most important findings.
-
-**Key findings**
-- Finding 1 with supporting evidence [source]
-- Finding 2 with data points [source]
-- Finding 3 with context [source]
-
-**Detailed analysis** — section-by-section breakdown with sources cited inline.
-
-**Competitive landscape** *(if applicable)* — comparison table with key differentiators.
-
-**Recommendations** — what to do with this information.
-
-**Sources** — 15–30 cited sources with links.
-</Card>
+A request like *"top five enterprise AI platforms compared on pricing, features, target market, and funding, with citations"* produces a much sharper report than *"research AI platforms"*. Specificity drives quality, the same way it does in any other request you'd make of a research analyst.
 
 ## Video summaries
 
-Paste a YouTube link. Get everything you need without watching the video.
+Paste a YouTube link, get back what the video actually said. Useful when someone insists you watch a 90-minute keynote and you have ten minutes.
 
 > *"Summarise this YouTube video: [link]"*
 
-| Output | Description |
-|---|---|
-| **Executive summary** | Main takeaways in 3–5 paragraphs. |
-| **Key topics** | What was covered, organised by theme. |
-| **Timestamped highlights** | Every important moment with a timestamp link. |
-| **Key quotes** | Notable statements from the speaker. |
-| **Actionable insights** | What to do with the information. |
+You get an executive summary in three to five paragraphs, the topics organised by theme, every important moment with a timestamp link you can click into the video, the notable quotes from the speaker, and what to do with the information.
 
-### Video library
+Every summary is saved. Weeks later: *"What did that keynote say about prompt engineering?"* — Fluso looks in your library and answers.
 
-Every video summary is saved. Weeks later:
-
-> *"What did that keynote say about prompt engineering?"*
-
-> *"Find my saved video about transformer architectures."*
-
-> *"Show all videos I've saved about product management."*
-
-### Supported
-
-- YouTube videos of any length.
-- Conference talks and keynotes.
-- Tutorials and courses.
-- Product demos.
-- Podcast episodes (video format).
-- Non-English videos (with language selection).
+Works on YouTube of any length, conference talks, tutorials, product demos, video podcasts. Non-English videos work with a language hint.
 
 ## Data analysis
 
-### Statistical analysis
+The statistical version is for when you're staring at A/B test numbers and want to know if you should ship.
 
-Fluso runs proper statistical tests and explains results in plain English:
+> *"Our A/B test ran for two weeks. Control: 1,000 visitors, 50 conversions. Variant: 1,000 visitors, 65 conversions. Is this significant? What's the effect size? Should we ship it?"*
 
-> *"Our A/B test ran for 2 weeks. Control: 1,000 visitors, 50 conversions. Variant: 1,000 visitors, 65 conversions. Is this significant? What's the effect size? Should we ship it?"*
+You get back a real answer with the test (two-proportion z-test), result (statistically significant, p = 0.042), effect size (Cohen's h = 0.15, small to medium), confidence interval (95% CI [0.3%, 2.7%]), and a plain-English read: the variant likely improves conversion by 1.5 percentage points, from 5.0% to 6.5%, real but modest. Recommendation: ship, monitor for two more weeks to confirm.
 
-<Card title="Output">
-- **Test:** two-proportion z-test
-- **Result:** statistically significant (p = 0.042)
-- **Effect size:** Cohen's h = 0.15 (small to medium)
-- **95% CI:** [0.3%, 2.7%]
-- **Interpretation:** the variant likely improves conversion by 1.5 percentage points (5.0% → 6.5%). Real effect, modest but meaningful.
-- **Recommendation:** ship the variant. Improvement is real, risk minimal. Monitor for two more weeks to confirm.
-</Card>
+The kinds of analysis Fluso runs: A/B tests, survey responses, before/after comparisons, correlation, sample-size calculations.
 
-### What Fluso can analyse
+The data-quality version is for when you have a dataset and don't fully trust it:
 
-- A/B test results (conversion, revenue, engagement).
-- Survey responses and ratings.
-- Before/after comparisons.
-- Correlation analysis.
-- Sample size calculations for experiment planning.
+> *"Audit this dataset before we use it. Any quality issues?"*
 
-### Data quality auditing
-
-> *"Audit this dataset before we use it — any quality issues?"*
-
-Fluso checks for:
-
-- **Missing values** — gaps and patterns.
-- **Inconsistencies** — conflicting formats, contradictory entries.
-- **Outliers** — values that don't make sense.
-- **Validity** — wrong types, impossible values.
-- **Duplicates** — repeated and near-duplicate entries.
-
-You get a prioritised list ranked by severity and impact.
+You get back a prioritised list — missing values and where they're concentrated, inconsistencies in format, outliers that don't make sense, validity issues (wrong types, impossible values), duplicates and near-duplicates — ranked by severity.
 
 ## Competitive intelligence
 
-Fluso combines public research with your internal knowledge graph:
+Worth calling out separately because it combines public research with your private knowledge graph:
 
-> *"Research our top 3 competitors — pricing, features, recent moves, where they're vulnerable."*
+> *"Research our top three competitors. Pricing, features, recent moves, and where they're vulnerable."*
 
-You get:
+What comes back layers two things. The public picture: web research, news, funding data. The private picture: what you've discussed about them in emails and Slack, what's come up in meetings. The combination is sharper than either alone — you get the context that's only in your head, plus the context that's only on the internet, in one report.
 
-- Public information (web research, news, funding).
-- Internal context (what you've discussed in emails and Slack).
-- Meeting intelligence (competitor mentions in your meetings).
+## Pairing research with content
 
-Layered insights you can't get from Google alone.
-
-## Research → content
-
-Research pairs perfectly with Fluso's content skills:
+The most useful pattern is asking for the artifact, not the research:
 
 > *"Research the state of AI in healthcare and create a 15-slide presentation with citations."*
 
@@ -164,20 +77,8 @@ Research pairs perfectly with Fluso's content skills:
 
 > *"Research competitor pricing and build a comparison spreadsheet."*
 
-## Tips
-
-<Tip>
-  **Be specific.** "Top 5 enterprise AI platforms, compared on pricing, features, target market, and funding — with citations" gets a much better report than "research AI platforms."
-</Tip>
-
-<Tip>
-  **Ask for the format.** Add "create a presentation" or "make it a PDF" to your research request and Fluso delivers the final product, not just the research.
-</Tip>
-
-<Tip>
-  **Citations matter.** Verify critical claims before making consequential decisions.
-</Tip>
+You skip the step where you'd normally take the research output and reformat it. Fluso just builds the deliverable.
 
 <Warning>
-  Research is based on publicly available information at query time. Facts can change. For high-stakes decisions, verify key claims independently.
+  Research is based on what's publicly available at the time of the query. Things change. Citations are linked, so for high-stakes decisions, click through and verify the load-bearing claims yourself.
 </Warning>
