@@ -1,0 +1,109 @@
+---
+title: Connectors
+sidebarTitle: Connectors
+description: How Fluso plugs into the apps you already use. OAuth, permissions, the catalog, and the principles that hold across all of them.
+---
+
+A connector is a connection between Fluso and an external app. Gmail. Calendar. Slack. GitHub. Each one extends what Fluso can read, search, and act on. The catalog runs to over a hundred services. Four of them carry most people's day.
+
+This page covers the model. For setup specifics on each app, see the per-connector pages: [Gmail](/integrations/gmail), [Google Calendar](/integrations/google-calendar), [Slack](/integrations/slack), [GitHub](/integrations/github).
+
+## How a connection works
+
+Click **Connect** on a card in **Settings → Connectors**. The app's own OAuth screen opens. You see the exact permissions Fluso wants and approve only what you're comfortable with. After that, Fluso can use the app inside chat. There's no key to copy, no callback URL to set, no shared password.
+
+Tokens live encrypted in a dedicated secrets manager. You can revoke at any time, from Fluso or from the source app's settings. Disconnecting deletes the token immediately.
+
+## The four that matter most
+
+<CardGroup cols={2}>
+  <Card title="Gmail" icon="mail" href="/integrations/gmail">
+    Triage, summaries, search, drafts, auto-task extraction. Connect this first.
+  </Card>
+  <Card title="Google Calendar" icon="calendar" href="/integrations/google-calendar">
+    Schedule, find time, schedule meetings, prep with full context.
+  </Card>
+  <Card title="Slack" icon="message-square" href="/integrations/slack">
+    Catch up on channels, search team history, post updates with approval.
+  </Card>
+  <Card title="GitHub" icon="github" href="/integrations/github">
+    Codebase Q&A, PR review, scaffolding, bug fixes, issue management.
+  </Card>
+</CardGroup>
+
+## The full catalog
+
+Fluso connects to over a hundred services. The most common, by category. If something you need isn't here, [tell us](mailto:support@premai.io); new connectors get added regularly, prioritised by what people ask for.
+
+**Communication.** Gmail, Slack (core, see above). Microsoft Teams, Discord, Telegram, WhatsApp Business.
+
+**Calendar & scheduling.** Google Calendar (core). Outlook Calendar, Cal.com, Calendly.
+
+**Code & development.** GitHub (core). GitLab, Bitbucket, Linear, Jira, Notion.
+
+**Documents & storage.** Google Drive, Dropbox, OneDrive, Box.
+
+**Design.** Figma, Canva, Adobe Creative Cloud.
+
+**Business & finance.** Stripe, HubSpot, Salesforce, QuickBooks, Xero.
+
+**Data & infrastructure.** PostgreSQL, MySQL, MongoDB, Redis, S3, Snowflake, Chroma, Pinecone.
+
+**AI & ML.** OpenAI, Anthropic, Google AI, Hugging Face, Replicate.
+
+For internal tools and custom systems, Enterprise customers can request bespoke connectors as part of their plan.
+
+## What connecting unlocks
+
+The pattern is consistent: **reads happen freely, writes wait for approval**.
+
+Once connected, Fluso can summarise, search, and pull context from the app whenever you ask. It can also draft writes — emails, Slack messages, PRs, calendar events — but every write is shown for review before it goes.
+
+There's no "auto-send" mode. You're always the one who clicks send.
+
+## Principles that hold across every connector
+
+**You see every permission.** OAuth screens list exactly what Fluso is asking for. You approve item by item.
+
+**Scope is yours to set.** Per-channel for Slack, per-repo for GitHub, single-account for Google. You can change scope without reconnecting.
+
+**Disconnection is instant.** Token deleted immediately. Fluso loses access from the moment you click disconnect. Any data already in your knowledge graph stays unless you delete it separately.
+
+**Tokens are encrypted in a dedicated secrets manager.** Never in environment variables, never in logs.
+
+**Per-user isolation.** Your tokens cannot access another user's data, and theirs cannot access yours. Same for Team plans — admins manage seats but cannot read messages or files.
+
+For the longer security and privacy picture, see [Security](/resources/security) and [Privacy](/resources/privacy).
+
+## Managing connections
+
+Open **Settings → Connectors** to see what's connected, when each token was last refreshed, what each app has access to, and to disconnect anything you've stopped using. Audit once a month. A few well-used connections beat many half-forgotten ones.
+
+## Recommended connection order
+
+Gmail first — most work originates in email, so this gives Fluso the richest context fastest.
+
+Calendar second — pairs with Gmail to enable the morning brief and meeting prep.
+
+Slack only if your team mostly coordinates there. If most coordination happens in email, skipping Slack costs nothing.
+
+GitHub only if you write code. The features it enables are powerful, but they're irrelevant if you don't.
+
+## Common questions
+
+<AccordionGroup>
+  <Accordion title="Can Fluso act without me approving?">
+    No. Reads happen freely. Anything that writes to another system — sending mail, posting to Slack, opening a PR, creating an event — waits for your explicit approval.
+  </Accordion>
+  <Accordion title="What does Fluso actually store?">
+    OAuth tokens, encrypted, in a dedicated secrets manager. Conversations, files, and the knowledge graph live in your isolated workspace. Passwords are never seen.
+  </Accordion>
+  <Accordion title="What happens when I disconnect?">
+    The token is deleted. Fluso loses access immediately. Anything already in your knowledge graph stays unless you delete it.
+  </Accordion>
+  <Accordion title="Can teammates see my apps on a Team plan?">
+    Admins can see which apps a member has connected so they can manage access. They cannot read the data.
+  </Accordion>
+</AccordionGroup>
+
+The longer take is at [Privacy](/resources/privacy).
