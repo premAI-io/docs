@@ -1,49 +1,24 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "almond",
+  "theme": "mint",
   "name": "Fluso",
   "description": "Fluso is an AI executive assistant that works inside your tools — email, calendar, Slack, GitHub, and 100+ more. Read the docs to get set up, connect your apps, and put Fluso to work.",
   "colors": {
-    "primary": "#7C3AED",
-    "light": "#A78BFA",
-    "dark": "#5B21B6"
+    "primary": "#5B21B6",
+    "light": "#7C3AED",
+    "dark": "#3B0764"
   },
-  "favicon": "/favicon.ico",
+  "favicon": "/favicon.svg",
   "icons": {
     "library": "lucide"
   },
-  "styling": {
-    "eyebrows": "breadcrumbs"
-  },
-  "contextual": {
-    "options": ["copy", "view", "assistant", "mcp", "add-mcp"]
+  "appearance": {
+    "default": "light"
   },
   "navigation": {
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Home",
-          "icon": "house",
-          "href": "/"
-        },
-        {
-          "anchor": "App",
-          "icon": "external-link",
-          "href": "https://app.fluso.ai"
-        },
-        {
-          "anchor": "Support",
-          "icon": "life-buoy",
-          "href": "mailto:support@premai.io"
-        }
-      ]
-    },
-    "directory": "card",
     "groups": [
       {
         "group": "Get started",
-        "icon": "rocket",
-        "expanded": true,
         "pages": [
           "introduction",
           "quickstart",
@@ -53,8 +28,6 @@
       },
       {
         "group": "Features",
-        "icon": "sparkles",
-        "expanded": true,
         "pages": [
           "features/chat",
           "features/email",
@@ -68,8 +41,6 @@
       },
       {
         "group": "Integrations",
-        "icon": "plug",
-        "expanded": true,
         "pages": [
           "integrations/overview",
           "integrations/gmail",
@@ -81,8 +52,6 @@
       },
       {
         "group": "Use cases",
-        "icon": "lightbulb",
-        "expanded": true,
         "pages": [
           "use-cases/overview",
           "use-cases/morning-brief",
@@ -96,8 +65,6 @@
       },
       {
         "group": "Resources",
-        "icon": "book-open",
-        "expanded": true,
         "pages": [
           "resources/pricing",
           "resources/security",
@@ -119,7 +86,7 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Try Fluso free",
+      "label": "Try Fluso",
       "href": "https://app.fluso.ai"
     }
   },
