@@ -6,23 +6,23 @@ description: Documents, decks, spreadsheets, images, diagrams, web pages. Descri
 
 Most of what people make with Fluso starts as a sentence and ends as a file. A PDF, a deck, a spreadsheet with formulas in it, an image, a diagram, a working web page. The first draft isn't always perfect; it's almost always close enough that you spend ten minutes editing instead of an hour starting.
 
-What follows is each format in turn. The pattern is consistent, so the first one is the longest and the rest get faster.
+Each format is below, in turn. The pattern is consistent, so the first one is the longest and the rest get faster.
 
 ## Documents
 
-The classic case is a proposal. You ask:
+The classic case is a proposal:
 
 > *"Write a project proposal for the Acme partnership. Executive summary, scope, timeline, budget, team. Professional formatting, table of contents."*
 
-What comes back is a formatted PDF with the structure you asked for, written in the kind of measured prose that proposals use. Headings and subheadings are sized appropriately. There's a TOC, page numbers, and sections that flow. Tables are formatted, charts are placed, the visual style is consistent.
+What comes back is a formatted PDF with the structure you asked for, written in the kind of measured prose that proposals use. Headings and subheadings sized appropriately. A TOC, page numbers, sections that flow. Tables formatted, charts placed, the visual style consistent.
 
 The same thing works for the other doc shapes:
 
-> *"Create a Q2 performance report. Sections for revenue, product metrics, team updates, Q3 priorities. Include data tables and charts."*
+> *"Create a Q2 performance report with sections for revenue, product metrics, team updates, Q3 priorities. Include data tables and charts."*
 
-> *"Write a client memo about the new pricing changes taking effect next month. Formal but friendly."*
+> *"Write a client memo about the new pricing changes taking effect next month. Formal but friendly tone."*
 
-A few less obvious ones that work:
+A few less obvious ones:
 
 > *"Turn these meeting notes into a formatted report."*
 
@@ -38,9 +38,9 @@ The combinations of inputs and formats are wide enough that the answer to "can i
 
 Pitch decks are the most common request:
 
-> *"Create a 10-slide pitch deck for our Series A. Problem, solution, market size, traction, team, competition, business model, ask. Clean, modern."*
+> *"Create a 10-slide pitch deck for our Series A. Problem, solution, market size, traction, team, competition, business model, ask. Clean, modern design."*
 
-You get a deck with logical flow, slide titles that mean something, bullets sized so they're not blocks of text, charts where charts belong, and speaker notes that have the supporting context.
+You get a deck with logical flow, slide titles that mean something, bullets sized so they're not blocks of text, charts where charts belong, and speaker notes with the supporting context.
 
 Or from existing material:
 
@@ -50,9 +50,7 @@ Or from existing material:
 
 > *"Make a slide deck from this blog post about AI trends."*
 
-Common shapes Fluso knows: pitch decks (problem, solution, market, team, traction, ask), board decks (metrics, wins, challenges, strategy, recommendations), training (learning objectives, content, examples, exercises), webinars (agenda, content, Q&A prompts), conference talks (hook, key points, examples, closing insight), status updates (progress, blockers, next steps, timeline).
-
-You don't need to know which one you're asking for. Just describe the deck.
+You don't need to know which format you're asking for. Just describe the deck.
 
 ## Spreadsheets
 
@@ -60,7 +58,7 @@ A budget sheet from a description:
 
 > *"Create a budget spreadsheet with Q2 projections by department. Actuals, forecast, variance columns. Add formulas and charts."*
 
-You get a workbook with the columns set up, formulas in place (SUM, AVERAGE, VLOOKUP, conditional logic where it helps), conditional formatting on variance, and a couple of charts illustrating the obvious cuts of the data.
+You get a workbook with the columns set up, formulas in place, conditional formatting on variance, and a couple of charts illustrating the obvious cuts of the data.
 
 Analysis instead of structure works just as well:
 
@@ -82,8 +80,6 @@ Image generation works on description. The more specific the description, the be
 
 The difference between "make a logo" and the version above is the difference between two attempts and one. If a request feels too vague when you read it back, add a sentence about palette, mood, or aspect ratio.
 
-Common kinds of work that fit: logos and brand marks, marketing visuals (social, ads, banners, headers), product mockups, infographics, profile and team images.
-
 ## Diagrams
 
 Process flows, system architecture, org charts, timelines, mind maps:
@@ -94,11 +90,11 @@ Process flows, system architecture, org charts, timelines, mind maps:
 
 > *"Create a flowchart for our incident response process."*
 
-The output is in the hand-drawn-style that reads cleanly in docs and slides — clear enough for a wiki, casual enough that it doesn't pretend to be a final architecture diagram for a vendor pitch.
+Output is in the hand-drawn style that reads cleanly in docs and slides. Clear enough for a wiki, casual enough that it doesn't pretend to be a final architecture diagram.
 
 ## Web pages
 
-The thing Fluso writes here is real, deployable HTML and CSS — not a wireframe, not a screenshot. Tailwind for styling, React where it makes sense, responsive by default.
+The thing Fluso writes here is real, deployable HTML and CSS, not a wireframe or a screenshot. Tailwind for styling, React where it makes sense, responsive by default.
 
 > *"Build a landing page for our AI SaaS product. Hero with headline and CTA, features grid, social proof, pricing table, footer. Modern, clean."*
 
@@ -110,12 +106,14 @@ If you have brand colours, mention them and Fluso uses them consistently across 
 
 ## What makes outputs better
 
-A few things that pay off, regardless of format.
+Three things move quality more than anything else.
 
-Specifying audience and tone changes the entire output. *"For technical buyers, Heads of Data Engineering at companies of 100-1000 employees"* shapes the language. *"Friendly but not casual"* shapes it differently from *"formal"*. The model's default is to write for a generic audience; if you tell it who's reading, it writes for them.
+**Audience and tone change the entire output.** "For technical buyers, Heads of Data Engineering at companies of 100-1000 employees" shapes the language. "Friendly but not casual" shapes it differently from "formal". The model's default is to write for a generic audience; if you tell it who's reading, it writes for them.
 
-Iterating works. The first deck isn't always the right one. *"Make slide 3 about competition instead of pricing"*, *"add a customer quote on slide 7"*, *"change the design to something less corporate"* — all valid follow-ups.
+**Iteration works.** The first deck isn't always the right one. *"Make slide 3 about competition instead of pricing"*, *"add a customer quote on slide 7"*, *"change the design to something less corporate"*. All valid follow-ups.
 
-If you have a brand, set it once and reuse it. *"Use our brand colours: #7C3AED primary, #1E1B4B dark"* in a project context applies across documents, decks, and images.
+**Brand assets reuse.** If you set them once at the project level — *"Use our brand colours: #7C3AED primary, #1E1B4B dark"* — Fluso applies them across documents, decks, and images.
 
-External-facing artifacts deserve a real read-through before they go out. Fluso writes well, but you have specific knowledge it doesn't — about the audience, the relationship, the political dynamics. The two together are better than either alone.
+External-facing artifacts deserve a real read-through before they go out. Fluso writes well, but you have specific knowledge it doesn't, about the audience, the relationship, the political dynamics. The two together are better than either alone.
+
+For a worked end-to-end example — landing page, blog post, social graphics for a launch in one afternoon — see [A launch in an afternoon](/workflows/content-launch).

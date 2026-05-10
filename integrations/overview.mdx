@@ -1,16 +1,16 @@
 ---
 title: Integrations
 sidebarTitle: Overview
-description: How Fluso connects to your tools — Gmail, Calendar, Slack, GitHub, and the rest. Two clicks, no API keys.
+description: How Fluso connects to your tools. Two clicks, no API keys, full control over what's accessed.
 ---
 
-Each app you connect gives Fluso more to work with. More context to understand what you mean. More capability to act on what you ask. The catalog runs to over a hundred services; four of them carry most people's day.
+Each app you connect gives Fluso more to work with. More context to understand what you mean. More capability to act on what you ask. The catalog runs to over a hundred services. Four of them carry most people's day.
 
 ## Working model
 
-You click **Connect** on a card in **Settings → Connectors**. The app's own OAuth screen opens. You see exactly what permissions Fluso wants and approve the ones you're comfortable with. After that, Fluso can use the app inside your conversations. There's no key to copy, no callback URL to set, no shared password anywhere.
+Click **Connect** on a card in **Settings → Connectors**. The app's own OAuth screen opens. You see the exact permissions Fluso wants and approve the ones you're comfortable with. After that, Fluso can use the app inside your conversations. There's no key to copy, no callback URL to set, no shared password anywhere.
 
-Tokens live encrypted in a dedicated secrets store. You can revoke from Fluso or from the source app's settings. Disconnecting deletes the token immediately.
+Tokens live encrypted in a dedicated secrets store. Revoke from Fluso or from the source app's settings. Disconnecting deletes the token immediately.
 
 ## The four that matter most
 
@@ -29,17 +29,31 @@ Tokens live encrypted in a dedicated secrets store. You can revoke from Fluso or
   </Card>
 </CardGroup>
 
-## Everything else
+## The full catalog
 
-Fluso connects to a hundred-plus apps across communication, calendar, code, documents, design, business, data, and AI tools.
+Fluso connects to a hundred-plus services. The most common ones, by category. If something you need isn't here, [tell us](mailto:support@premai.io); new connectors get added regularly, prioritised by what people ask for.
 
-<Card title="Browse the full catalog" icon="grid" href="/integrations/all-apps">
-  Every supported integration, grouped by category.
-</Card>
+**Communication.** Gmail, Slack (core, see above). Microsoft Teams, Discord, Telegram, WhatsApp Business.
+
+**Calendar & scheduling.** Google Calendar (core). Outlook Calendar, Cal.com, Calendly.
+
+**Code & development.** GitHub (core). GitLab, Bitbucket, Linear, Jira, Notion.
+
+**Documents & storage.** Google Drive, Dropbox, OneDrive, Box.
+
+**Design.** Figma, Canva, Adobe Creative Cloud.
+
+**Business & finance.** Stripe, HubSpot, Salesforce, QuickBooks, Xero.
+
+**Data & infrastructure.** PostgreSQL, MySQL, MongoDB, Redis, S3, Snowflake, Chroma, Pinecone.
+
+**AI & ML.** OpenAI, Anthropic, Google AI, Hugging Face, Replicate.
+
+For internal tools and custom systems, Enterprise customers can request bespoke connectors as part of their plan.
 
 ## Managing connections
 
-Open **Settings → Connectors** to see what's connected and active, when each token was last refreshed, what each app has access to, and to disconnect anything you've stopped using. An audit once a month is a good habit. A few well-used connections beats many half-forgotten ones.
+Open **Settings → Connectors** to see what's connected and active, when each token was last refreshed, what each app has access to, and to disconnect anything you've stopped using. An audit once a month is a good habit. A few well-used connections beat many half-forgotten ones.
 
 ## Common questions
 
@@ -58,4 +72,4 @@ Open **Settings → Connectors** to see what's connected and active, when each t
   </Accordion>
 </AccordionGroup>
 
-The longer version is in [Security & privacy](/resources/security).
+The longer version is at [Security & privacy](/resources/security).

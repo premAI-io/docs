@@ -1,0 +1,156 @@
+---
+title: Going deeper
+sidebarTitle: Going deeper
+description: Patterns, projects, custom skills, and the prompt habits that separate daily users from pros.
+---
+
+Most people get to "uses Fluso every day" within a couple of weeks. Going from there to "actually pretty fluent at it" takes another month or two. This page is what that looks like.
+
+It assumes you've done the basics: connected Gmail and Calendar, run morning briefs, processed at least one meeting transcript, made something from a description. If any of those still feel new, do [Quickstart](/quickstart) first.
+
+## Better prompts, not different ones
+
+The biggest gap between an OK Fluso user and a fluent one isn't features. It's how they ask.
+
+A few patterns worth practising.
+
+**Specifics multiply quality.** "Make a deck about our roadmap" gets a generic deck. "Make a 10-slide internal roadmap deck for engineering managers — Q3 priorities, dependencies, hiring needs, no fluff" gets a deck you can actually use. The model can do almost anything; it can't read your mind.
+
+**Outcomes, not steps.** Don't tell Fluso *how* to do something. "Search Gmail for messages from Sarah, read them, then tell me what she wants" is what a robot would type. "What did Sarah email me about?" is what you'd actually say. Both work. The second is faster.
+
+**Steer mid-stream.** Replies stream token by token. If you can see one going wrong, type into the box: *"actually, just today"*, *"shorter"*, *"include the attachments too"*. Don't wait for it to finish a wrong answer.
+
+**Reference earlier work.** Threads remember everything. *"Reply to the one from Legal"* makes sense after Fluso has summarised your inbox. *"Use the same tone as my last email to the team"* works because Fluso has the previous draft in context.
+
+**Set the audience and the tone.** "For technical buyers" produces different writing from "for board members" produces different writing from "for a customer success follow-up". The default audience is generic. If you tell it the audience, it writes for them.
+
+## Use projects, properly
+
+Projects are folders for context. Most people create one and forget. The better habit:
+
+A project per major area of work. Acme Corp, Q3 Launch, Board Reporting, Personal. When you're inside a project, Fluso scopes its memory and search to that project's content. Asking "what's the status?" inside the Acme project gets the Acme answer; same prompt outside any project gets a generic everything-bag.
+
+Drop a `context.md` into the project's workspace if your context is non-obvious. The simplest version:
+
+```markdown
+# Acme Corp
+
+- Sarah Chen (VP Product) — primary contact
+- Mark Davis (CTO) — technical lead on their side
+- Phase 1: pilot with 50 users, May 25 deadline
+- Phase 2: full rollout, Q3
+- Sensitive: don't reference our internal pricing model in emails to them
+```
+
+Fluso reads it before answering anything inside the project. The cost is two minutes; the payoff shows up in every reply for months.
+
+For developer projects, `context.md` is where your stack and conventions go:
+
+```markdown
+- Stack: Next.js 14, TypeScript, Postgres, Drizzle ORM
+- Style: 2-space indent, no semicolons, single quotes
+- Testing: Vitest, Playwright for e2e
+- Conventions: route handlers in app/api, services in lib/services
+```
+
+The first PR Fluso writes after you add this will make the value obvious.
+
+## Custom skills
+
+Skills are the prebuilt capabilities Fluso reaches for when a request needs them: PDF generation, deep research, meeting intelligence, image generation, and so on. You can write your own.
+
+A custom skill is a `SKILL.md` file in your workspace. It describes a workflow Fluso should follow when invoked. Useful for things you do repeatedly with a specific shape:
+
+```markdown
+# weekly-investor-update
+
+When asked to "draft the weekly investor update":
+
+1. Pull this week's metrics from the dashboard (revenue, signups, churn)
+2. Pull major decisions from this week's meeting transcripts
+3. Write 250 words in the tone of past updates I've sent
+4. Format: subject line, three short paragraphs, one chart
+5. Output as a Gmail draft to investors@list, not sent
+```
+
+Available on Pro and Team plans. The skill activates when you say something close to its trigger.
+
+## Knowledge graph hygiene
+
+The graph builds itself. You don't have to maintain it. But a few maintenance habits keep it useful:
+
+**Process meeting transcripts even when you took notes.** The transcript is what enters the graph. Without it, the meeting effectively didn't happen for memory purposes. Two minutes per meeting; the recall payoff is months later.
+
+**Tell Fluso to forget when you need to.** *"Don't track anything related to Project X"* or *"Forget everything about this vendor"*. The graph won't remember what you don't want it to.
+
+**Scope by project when working on something specific.** Switching into a project before asking a question pulls the answer from that project's slice of the graph instead of from everything.
+
+**Audit once a quarter.** *"What relationships have I gone quiet on?"* surfaces things worth re-engaging. *"What projects have stalled?"* surfaces work that's drifted. The graph sees patterns you don't.
+
+## Cross-app workflows
+
+The single-integration prompts are useful. The compounding ones are where things get interesting.
+
+> *"A client emailed about API rate limits. Find related discussions in #engineering and draft a response that includes the relevant context."*
+
+This pulls from Gmail (the client email), Slack (the engineering discussion), and your knowledge graph (what you've discussed with this client before), then produces a draft. None of those steps would be possible without all three integrations connected.
+
+A few more that pay back the integration investment:
+
+> *"Process this meeting transcript and post the summary in #product."*
+
+> *"Prep me for the 3pm meeting. Pull in any Slack discussions about the topic from this week."*
+
+> *"This bug report mentions 'auth flow'. Find the relevant code in our repo and the related Slack thread, then write a status update for the customer."*
+
+> *"Summarise the email threads about the Acme deal, list every decision in chronological order, and create a single doc I can share with the team."*
+
+The pattern: name the inputs, name the output, let Fluso connect them.
+
+## Approval discipline
+
+Reads happen freely. Writes wait for approval. The instinct on day one is to read every draft carefully; by day twenty, you'll be tempted to batch-approve. Don't.
+
+A few things that pay off:
+
+**Read every external-facing draft.** Especially anything to a client, anything sensitive, anything where the relationship matters more than the message. Fluso has good instincts. You have specific knowledge it doesn't.
+
+**Batch internal drafts.** Replies to teammates, internal Slack updates, tasks for yourself — those are safe to read in groups of five rather than one at a time.
+
+**Always read PR diffs.** Fluso writes good code. You're still the engineer of record. Run the tests locally before merging.
+
+**When you say no, say why.** *"Too formal, make it warmer"* or *"don't mention pricing"* — Fluso uses the feedback for the next draft. Generic *"no, try again"* leaves it guessing.
+
+## For teams
+
+Team plans add shared context. The patterns that matter:
+
+**Shared projects** for cross-team work. Both you and your colleague see the same memory, the same files, the same task list, scoped to that project. The Acme project becomes a real shared brain instead of two separate ones.
+
+**Shared knowledge graph** for the team. Decisions made in any team member's meetings are visible to everyone (within the shared project). Useful for executive teams; less useful for projects with strict need-to-know.
+
+**Admin visibility, not access.** Admins can see which apps team members have connected and how much they're using Fluso. They cannot read messages, files, or knowledge graphs. The audit trail is for managing the seat, not surveilling the work.
+
+## Things people miss
+
+A short list of features that are easy to overlook.
+
+The slash commands inside chat: `/status` shows what Fluso is doing right now (useful when something's slow), `/schedules` lists pending scheduled actions, `/abort` stops the current run.
+
+Saying *"new thread"* starts a fresh context. Useful when the conversation has drifted but you don't want to reach for the mouse.
+
+You can attach files to messages. PDFs, images, CSVs, audio. *"Summarise this"*, *"what does this chart show?"*, *"make a deck from this data"*. The file becomes part of the prompt.
+
+Fluso reads files in your workspace. *"Read the Q1 report and pull the key numbers"* works on any file you've put there.
+
+It can run code and commands. *"Run the test suite and tell me what failed"*, *"how much disk space are my files using?"*.
+
+These aren't power features. They're just easy to forget exist.
+
+## When you want to keep going
+
+By the time you're using all of the above, the docs run out of things to teach you. The remaining gains come from your own patterns: your own SKILL.md files, your own project structure, your own prompt phrasings that produce work you don't have to edit.
+
+If a workflow you do every week isn't fast yet, write a skill for it. If you keep telling Fluso the same context, put it in a `context.md`. If Fluso keeps getting something wrong in the same way, tell it once at the project level and stop fighting the same battle.
+
+The pros aren't using a different product. They're just asking it for things in a way that gets useful answers the first time.

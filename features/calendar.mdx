@@ -4,7 +4,7 @@ sidebarTitle: Calendar
 description: How Fluso runs the meeting lifecycle — scheduling, prep, transcript processing, and the long-term meeting analysis if you want it.
 ---
 
-The point of connecting your calendar is what happens around the meetings, not the calendar itself. Before a meeting Fluso preps you. During the meeting you focus. After, the transcript becomes a summary, decisions, tasks, and a follow-up email — automatically.
+The point of connecting your calendar isn't the calendar. It's the half hour before each meeting you'd otherwise spend prepping, and the forty-five minutes after you'd otherwise spend on cleanup.
 
 ## The basics
 
@@ -26,9 +26,9 @@ Finding time is conversational:
 
 > *"I need two hours of focus time today. Where can I block it?"*
 
-Fluso looks at your calendars (including shared ones), accounts for tasks already pinned to time, and proposes options that actually work — not slots that overlap with the deep-work block you put on Thursday.
+Fluso looks at your calendars (including shared ones), accounts for tasks already pinned to time, and proposes options that work — not slots that overlap with the deep-work block you put on Thursday.
 
-Scheduling works the same way:
+Scheduling is the same:
 
 > *"Schedule a thirty-minute standup tomorrow at 9am."*
 
@@ -40,13 +40,13 @@ Scheduling works the same way:
 
 ## Meeting prep
 
-The single highest-leverage thing the calendar integration does. Before a meeting, ask:
+The most useful thing the calendar integration does. Before a meeting:
 
 > *"Prep me for my 3pm."*
 
-You get a brief that pulls from everywhere: who's attending and what you know about them, the last time you met and what you discussed, recent emails that touch the topic, Slack threads that mention it, the open action items between the two of you, and a guess at what's likely to come up based on recent traffic.
+You get a brief that pulls from everywhere: who's attending and what you know about them, the last time you met and what you discussed, recent emails that touch the topic, Slack threads that mention it, the open action items between you, and a guess at what's likely to come up based on recent traffic.
 
-A real one looks roughly like this. The 3pm with Sarah and Mark from Acme: VP Product and CTO respectively, you last met April 18 and agreed on Phase 1 scope, contract pending Legal. Since then there have been three emails from Sarah about pilot expansion and a Slack discussion in #partnerships about Acme's Q3 budget. Open items: Legal review (overdue, your action) and technical specs (Friday, James's). Likely topics: pilot expansion, API rate limiting (their team has been asking in Slack), Q3 pricing.
+A real one looks roughly like this. The 3pm with Sarah and Mark from Acme: VP Product and CTO respectively, you last met April 18 and agreed on Phase 1 scope, contract pending Legal. Since then, three emails from Sarah about pilot expansion and a Slack discussion in #partnerships about Acme's Q3 budget. Open items: Legal review (overdue, your action) and technical specs (Friday, James's). Likely topics: pilot expansion, API rate limiting (their team's been asking in Slack), Q3 pricing.
 
 You walk in informed without spending half an hour scrambling.
 
@@ -54,7 +54,7 @@ You walk in informed without spending half an hour scrambling.
 
 Upload a transcript or a recording. Fluso handles the rest.
 
-It accepts the usual formats — `.txt`, `.vtt`, `.srt`, `.docx`, `.md` for text, audio files for recordings. Transcripts from Zoom, Meet, Teams, Otter, Fireflies, Granola all just work.
+It accepts the usual formats: `.txt`, `.vtt`, `.srt`, `.docx`, `.md` for text, audio files for recordings. Transcripts from Zoom, Meet, Teams, Otter, Fireflies, Granola all just work.
 
 Then:
 
@@ -80,15 +80,15 @@ Once Fluso has processed enough meetings, it can look at patterns across them:
 
 > *"Analyse my meetings from the last two weeks."*
 
-It looks at things you'd never count yourself — speaking ratio, filler-word frequency, who interrupts whom, whether your meetings end with concrete next steps or fade out, and how those numbers are moving over time.
+It looks at things you'd never count yourself: speaking ratio, filler-word frequency, who interrupts whom, whether your meetings end with concrete next steps or fade out, and how those numbers are moving over time.
 
 A real one sounds like: *Speaking ratio 42 percent, balanced. Filler words 8 per minute, above average; the "pause instead of um" technique helps. You interrupted others four times across six meetings; you were interrupted twice. Filler words are down from 12 to 8 per minute over the last month and your speaking ratio has come down from 55 to 42 percent. Recommendation: keep working on filler words; otherwise effective.*
 
-This is private to you. It's diagnostic, not graded.
+Private to you. Diagnostic, not graded.
 
 ## A few useful patterns
 
-The full meeting workflow becomes one minute before, one minute after, plus the meeting itself: prep with one prompt, process the transcript with one prompt, approve drafts. See [End-to-end meetings](/use-cases/meetings) for the worked version.
+The full meeting workflow becomes one minute before, one minute after, plus the meeting itself. See [End-to-end meetings](/workflows/meetings) for the worked version.
 
 A meeting-free day takes one prompt: *"Block off Thursday for deep work. Decline or reschedule any non-urgent meetings."*
 
@@ -100,4 +100,4 @@ A recurring-meeting audit catches the ones that should be emails: *"Review my re
 
 ## Notes
 
-The connection lives at [Google Calendar](/integrations/google-calendar). Fluso uses OAuth2 — no password, full revocable access. The full security picture is in [Security & privacy](/resources/security).
+The connection lives at [Google Calendar](/integrations/google-calendar). Fluso uses OAuth2 — no password, full revocable access. The full security picture is at [Security & privacy](/resources/security).

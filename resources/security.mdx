@@ -1,7 +1,7 @@
 ---
 title: Security & privacy
 sidebarTitle: Security
-description: How Fluso handles your data — encryption, isolation, access controls, and the commitment to never act without your approval.
+description: How Fluso handles your data. Encryption, isolation, access controls, and the commitment to never act without your approval.
 ---
 
 Your data is yours. Fluso is built so it stays that way.
@@ -20,7 +20,7 @@ Anything is deletable. Individual entries, the whole knowledge graph, an entire 
 
 Connections use TLS. Workspace files are encrypted at rest. The database is encrypted at rest. OAuth tokens live in a dedicated secrets manager, encrypted, never in environment variables. Conversations are encrypted at rest.
 
-Authentication runs through Clerk — passwords, MFA, social login. Third-party app connections use OAuth2, which means your passwords are never seen. Per-user isolation guarantees one user's credentials cannot access another's data.
+Authentication runs through Clerk: passwords, MFA, social login. Third-party app connections use OAuth2, which means your passwords are never seen. Per-user isolation guarantees one user's credentials cannot access another's data.
 
 Each user gets a sandbox container of their own. Network policies prevent cross-user communication. Token refresh happens before expiry, automatically.
 

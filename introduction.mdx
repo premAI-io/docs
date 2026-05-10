@@ -1,71 +1,66 @@
 ---
 title: What Fluso is
 sidebarTitle: Introduction
-description: An AI assistant that lives inside Gmail, Calendar, Slack, GitHub, and the rest of your tools. It reads, drafts, schedules, processes, codes, and remembers.
+description: Fluso is an AI assistant that lives inside Gmail, Calendar, Slack, and GitHub. It reads, drafts, schedules, processes, codes, and remembers — for you, in plain English.
 ---
 
-Fluso is an assistant that lives inside the apps you already use. You connect Gmail. You connect your calendar. Maybe Slack, maybe GitHub. After that, you can ask Fluso to do almost anything you'd otherwise do yourself in those tools, in plain English, and it does it.
+Fluso is an AI assistant. The difference from the others: it lives inside the apps you already use.
 
-It is not a chat window with a model behind it. It reads your inbox the way you read your inbox. It puts events on your calendar. It writes a 12-slide deck and hands you the file. It opens a pull request when you ask it to. The difference matters because the time savings only show up when the assistant can act.
+You connect Gmail. You connect your calendar. Maybe Slack, maybe GitHub. After that, you can ask Fluso to do almost anything you'd otherwise do yourself in those tools, in plain English, and it does it. Drafts the email. Schedules the meeting. Processes the transcript. Writes the deck. Opens the PR. You review and approve.
 
-## The work it takes off your plate
+This page is the five-minute version. If you want to skip ahead and try it, go to the [Quickstart](/quickstart).
 
-The shape of a normal week, before:
+## Not a chatbot
 
-- An hour a day on email triage.
-- Twenty minutes finding a meeting time and sending the invite.
-- Forty minutes of notes and follow-ups after a meeting that ran an hour.
-- A morning gone to writing a deck from a blank slide.
-- An afternoon researching across fifteen tabs and trying to pull it together.
-- Constant tab-switching to remember what you and someone else last said about something.
+A chatbot answers questions in a window separate from your work. To use it, you copy and paste context in.
 
-Fluso handles each of these. None of them perfectly the first time, but well enough that you stop doing them yourself.
+Fluso connects to where the context already is. When you ask it to summarise your inbox, it reads your inbox. When you ask it to find a Slack thread, it searches Slack. When you ask it to review a PR, it reads your repo. The savings on each task aren't from the answer being better; they're from not having to assemble the context yourself.
 
-## What it does, by example
+That's also why Fluso is more useful the more apps you connect. The compounding effect is real even though I'm not going to use the word twice.
 
-Instead of scanning fifty unread emails: you ask for a summary, and you get a list of what needs action, what's FYI, and what's noise. The action items become tracked tasks, with deadlines and links back to the source.
+## What it does, with examples
 
-Instead of staring at a blank Google Doc: you describe what you want — a project proposal with executive summary, timeline, and budget — and a formatted doc is in chat thirty seconds later.
+Instead of scanning fifty unread emails: ask for a summary, get back what needs action, what's FYI, and what's noise. Tasks for the action items appear automatically. Drafts for the replies that need writing.
 
-Instead of digging through three months of Slack: you ask what the team decided about pricing and Fluso quotes the message and links you to it.
+Instead of staring at a blank Google Doc: describe a project proposal with executive summary, timeline, and budget. A formatted PDF is in chat thirty seconds later.
 
-Instead of reading a two-hour transcript: you upload it, and you get a summary, the decisions, the action items as tasks with assignees, a follow-up email draft, and a Slack update draft. Reviewing all of that takes about two minutes.
+Instead of digging through three months of Slack: ask what the team decided about pricing. Fluso quotes the message and links to it.
 
-Instead of opening fifteen tabs: you ask for a competitive analysis of five enterprise platforms with citations, and you get a research report and a twelve-slide deck.
+Instead of reading a two-hour transcript: upload it. Get a summary, decisions, action items as tasks with assignees, a follow-up email draft, and a Slack update draft. Two minutes of review beats an hour of cleanup.
 
-The pattern is the same: describe the outcome, review what comes back, approve or edit.
+Instead of opening fifteen tabs: ask for a competitive analysis of five enterprise platforms with citations. Get a report and a deck.
 
-## Things you can make from a description
+The pattern is the same across all of them. Describe the outcome. Review what comes back. Approve or edit.
 
-Documents, decks, spreadsheets with formulas and charts, images, flowcharts, web pages — landing pages and dashboards as deployable code if you want them. Fluso writes the first draft. You take it from there.
+## How writes work
 
-## Code
+Reads happen freely. If you ask for a summary, Fluso reads what it needs and answers.
 
-Connect GitHub and Fluso reads your repos. Ask how authentication works and you get an answer with file-and-line references, not a generic explanation. Ask it to review an open PR and you get a real review: bugs, missing tests, security concerns. Describe a bug and Fluso traces the code, finds the cause, writes the fix, and opens the PR. You approve the diff before anything is merged.
+Anything that touches another person waits for your approval. Drafts of email and Slack messages get shown before they go. Pull requests get shown before they're filed. You read the diff or the message, you click send. There's no batch-send mode that bypasses this.
 
-## Memory
+This is the speed of an AI plus the judgment of a person, and the discipline matters more than the speed.
 
-Every email, every meeting transcript, every Slack thread, every doc — Fluso quietly builds a graph from them. People you talk to, projects you work on, decisions you've made. Six weeks later, when someone mentions a company you researched in January, you can ask "what do I know about Company X?" and get the actual answer, not your vague recollection of it.
+## Memory, in the background
 
-The graph compounds. Week one it knows your frequent contacts and current projects. By month three it surfaces patterns you'd miss yourself: relationships you've gone quiet on, projects that have stalled, topics that keep coming up without resolution.
+Every email, every transcript, every Slack thread, every doc — they all feed a connected map of your work. People you talk to. Projects you work on. Decisions you've made.
 
-## What's different about it
+You don't have to do anything to maintain it. Six weeks later, when someone mentions a company you researched in January, ask Fluso what you know about them. The answer is the actual answer, not your hazy recollection of one.
 
-Most AI assistants live in a chat window and you copy-paste context into them. Fluso connects to the tools where the context already is, so it starts every conversation knowing more about your work than a general-purpose chatbot can.
-
-It also acts. A chatbot tells you what to do. Fluso drafts the email, schedules the meeting, opens the PR, posts the Slack update. Anything that touches another person — sending, posting, pushing — waits for your explicit approval. You see the action and decide. Reading and analysis happen automatically; writes don't.
+The graph isn't impressive on day three. By week six it's quietly indispensable.
 
 ## Who it's for
 
-Founders and executives who lose two hours a day to inbox and meeting overhead. Developers who'd rather not stop coding to triage PRs. PMs who synthesise things for a living. Researchers who Google for hours and then format what they found. Teams that need shared context without yet another sync. Anyone who creates content from a description more than once a week.
+Founders and executives who lose a couple of hours a day to email and meeting overhead. Developers who'd rather not stop coding to triage PRs. PMs who synthesise things for a living. Researchers who Google for hours and then format what they found. Teams that need shared context without yet another sync.
 
-## Where to go from here
+Anyone whose work is mostly digital and mostly conversation.
+
+## Where to next
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="rocket" href="/quickstart">
     Account, two integrations, first prompts. Five minutes.
   </Card>
-  <Card title="Workflows" icon="lightbulb" href="/use-cases/overview">
-    Seven concrete examples of what an actual day with Fluso looks like.
+  <Card title="Workflows" icon="lightbulb" href="/workflows/morning-brief">
+    Six concrete examples, each a real day's work.
   </Card>
 </CardGroup>

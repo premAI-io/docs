@@ -1,54 +1,56 @@
 ---
 title: Chat
 sidebarTitle: Chat
-description: How conversation with Fluso actually works — what it does with a message, how to get good results, and the small set of features in the chat itself.
+description: How conversation with Fluso actually works. What happens when you send a message, how to ask for things well, and the small set of features inside the chat itself.
 ---
 
-Chat is the front door. Everything Fluso does — every email it summarises, every deck it builds, every PR it reviews — happens because you said something to it. The chat looks like a messenger. It isn't one.
+The chat is the front door. Everything Fluso does happens because you said something to it. The window looks like a messenger. It isn't one.
 
 ## What happens when you send a message
 
-There's a stretchy moment between hitting enter and seeing the first words come back. In that moment Fluso gathers everything it has on the situation: this conversation's history, your project's memory, the apps you've connected, the skills available to it, the files in scope, and your preferences. Then it picks tools. Then it uses them. Sometimes one. Sometimes ten in sequence.
+There's a small pause between hitting enter and seeing the first words come back. In that pause, Fluso gathers everything it has on the situation: this thread's history, your project's memory, your connected apps, the skills available, the files in scope, and your preferences. Then it picks tools and uses them. Sometimes one. Sometimes ten in sequence.
 
-If you ask it to summarise your unread emails and create tasks from the actionable ones, here's what's going on under the hood: it queries Gmail, finds twelve unread, reads the five that look like requests, drafts three tasks with deadlines, drops them into your task list, and then writes you a short summary that mentions all of it. You see the summary. The work is already done.
+Ask it to summarise your unread emails and create tasks from the actionable ones. Behind the scenes: it queries Gmail, finds twelve unread, reads the five that look like requests, drafts three tasks with deadlines, drops them into your task list, and writes you a short summary that mentions all of it. You see the summary. The work is already done.
 
-That's the loop. Describe an outcome, get the outcome, review it.
+Describe the outcome. Get the outcome. Review.
 
-## Talking to Fluso so you get useful answers
+## Asking for things well
 
 Three things matter more than anything else.
 
-**Specifics beat generalities.** "Help with email" isn't a request; it's a topic. "Summarise my unread emails and tell me which need a reply today" is a request. Fluso will do both — but the first will come back with a clarifying question, and the second will come back with a list.
+**Specifics beat generalities.** "Help with email" isn't a request. "Summarise my unread emails and tell me which need a reply today" is. Fluso will do both — but the first comes back with a clarifying question, the second with a list.
 
 **Outcomes, not steps.** You don't need to instruct Fluso the way you'd instruct a junior. "Search Gmail for messages from Sarah, read them, then tell me what she wants" is what a robot would type. "What did Sarah email me about?" is what you'd actually say. The second works fine.
 
-**Steer mid-stream.** Replies stream in token by token. If you can see the reply going somewhere wrong, type into the box — *"actually, just today"*, *"shorter"*, *"include the attachments too"* — and Fluso adjusts. You don't have to wait for it to finish a wrong answer.
+**Steer mid-stream.** Replies stream token by token. If you can see a reply going somewhere wrong, type into the box: *"actually, just today"*, *"shorter"*, *"include the attachments"*. Fluso adjusts. You don't have to wait for it to finish a wrong answer.
 
 ## Threads
 
-A thread is a conversation. It remembers everything you've said and everything Fluso has said back. That's why follow-ups work — *"Reply to the one from Legal"* makes sense because Fluso remembers the inbox summary it just gave you.
+A thread is a conversation. It remembers what you've said and what Fluso has said back. That's why follow-ups work. After Fluso summarises your inbox, *"reply to the one from Legal"* makes sense because the inbox summary is in the context.
 
-Start a new thread when you switch topic. The plus button at the top works, or you can ask for one in the chat. Old threads stay in the sidebar; you can pick any of them back up and Fluso has the full history.
+Start a new thread when you switch topic. The plus button at the top works, or you can ask for one in chat. Old threads stay in the sidebar. Pick any of them back up and Fluso has the full history.
 
-There are three slash commands you'll occasionally want: `/status` to see what Fluso is currently doing, `/schedules` to see what's queued for later, and `/abort` to stop the current run. You can mostly forget they exist until you need them.
+Three slash commands that occasionally help: `/status` to see what Fluso is currently doing, `/schedules` to see what's queued, `/abort` to stop the current run. Most days you can forget they exist.
 
 ## Things you can do inside chat
 
-You can attach a file. Drag a PDF in and ask for a summary. Drop in an image and ask what's in the chart. Hand it a CSV and tell it to make a deck from the data. Files Fluso creates for you appear as attachments in the reply — you click to download.
+Attach a file. Drag a PDF in and ask for a summary. Drop in an image and ask what's in the chart. Hand it a CSV and tell it to make a deck from the data. Files Fluso creates for you appear as attachments in the reply.
 
-You can have it work with files in the workspace: read a report, write a markdown file, append to an existing one. You can have it run commands: install a project's dependencies, run the test suite, check disk usage. None of this requires leaving the chat.
+Work with files in your workspace: read a report, write a markdown file, append to an existing one.
 
-You can have it use any of your connected apps as part of an answer: pull the latest message from Sarah, search for a specific Slack thread, list open PRs that need review.
+Run commands: install a project's dependencies, run the test suite, check disk usage. None of this requires leaving the chat.
+
+Use any connected app as part of an answer: pull the latest message from Sarah, search for a Slack thread, list open PRs that need review.
 
 ## A small etiquette
 
 Anything that touches another person waits for your approval. Drafts of email and Slack messages get shown before they go. Pull requests get shown before they're filed. You read the diff, you click send. This is non-negotiable, and it's a feature: the speed of Fluso plus the judgment of you.
 
 <Warning>
-  Always read external-facing drafts before approving. Fluso has good instincts, but you have context Fluso doesn't.
+  Read external-facing drafts before approving. Fluso has good instincts. You have context Fluso doesn't.
 </Warning>
 
-A few small habits that pay off:
+A few habits that pay off:
 
 One topic per thread. Switching subjects mid-thread blurs the context Fluso is using. The cost of starting a new thread is zero.
 
