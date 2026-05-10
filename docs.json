@@ -40,19 +40,15 @@
         "group": "Features",
         "pages": [
           "features/chat",
-          "features/email",
-          "features/calendar",
+          "features/connectors",
+          "features/skills",
           "features/tasks",
-          "features/memory",
-          "features/content",
-          "features/research",
-          "features/code"
+          "features/memory"
         ]
       },
       {
-        "group": "Integrations",
+        "group": "Connector setup",
         "pages": [
-          "integrations/overview",
           "integrations/gmail",
           "integrations/google-calendar",
           "integrations/slack",
@@ -64,6 +60,7 @@
         "pages": [
           "resources/pricing",
           "resources/security",
+          "resources/privacy",
           "resources/faq"
         ]
       }
