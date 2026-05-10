@@ -1,0 +1,102 @@
+---
+title: Google Calendar
+sidebarTitle: Google Calendar
+description: Connect Google Calendar so Fluso can see your schedule, find available time, schedule meetings, and prep you with full context.
+---
+
+Calendar is the natural pair to Gmail. Together, they unlock the morning brief, meeting prep, and the full meeting workflow.
+
+## What it unlocks
+
+| Capability | Example |
+|---|---|
+| **View schedule** | *"What's on my calendar tomorrow?"* |
+| **Find free time** | *"When am I free for 30 minutes on Thursday?"* |
+| **Schedule meetings** | *"Create a meeting with Sarah Monday at 2pm."* |
+| **Meeting prep** | *"Brief me on my 3pm meeting."* |
+| **Task sync** | Tasks with dates appear alongside calendar events. |
+| **Block focus time** | *"Block off 2-5pm for deep work."* |
+
+For the full feature deep dive, see [Calendar & meetings](/features/calendar).
+
+## Setup
+
+<Steps>
+  <Step title="Open Settings → Connectors">
+    Click **Connect** on the Google Calendar card.
+  </Step>
+  <Step title="Authorize with Google">
+    Same OAuth flow as Gmail. If you already authorized Gmail with the same account, this is even faster.
+  </Step>
+  <Step title="Review permissions">
+    | Permission | Why |
+    |---|---|
+    | Read events | View your schedule and check availability. |
+    | Create and modify events | Schedule meetings on your behalf. |
+  </Step>
+  <Step title="Confirm">
+    Calendar shows as **Connected**. Setup time: about 30 seconds.
+  </Step>
+</Steps>
+
+## Quick prompts to try
+
+<AccordionGroup>
+  <Accordion title="Schedule overview" icon="calendar">
+    > *"What's on my calendar today?"*
+
+    > *"What does my week look like?"*
+
+    > *"Show me my meetings with Acme this month."*
+  </Accordion>
+  <Accordion title="Find time" icon="clock">
+    > *"When am I free for 30 minutes tomorrow?"*
+
+    > *"Find a 1-hour slot this week when the engineering team is available."*
+
+    > *"I need 2 hours of focus time today."*
+  </Accordion>
+  <Accordion title="Schedule" icon="calendar-plus">
+    > *"Schedule a 30-minute standup tomorrow at 9am."*
+
+    > *"Create a meeting with Sarah next Monday at 2pm."*
+
+    > *"Set up a recurring 1:1 with my direct reports every other Tuesday."*
+  </Accordion>
+  <Accordion title="Prep" icon="briefcase">
+    > *"Prep me for my 3pm meeting."*
+
+    > *"Brief me on my next meeting with Acme."*
+  </Accordion>
+</AccordionGroup>
+
+## Disconnecting
+
+From **Settings → Connectors**, click **Disconnect** on the Google Calendar card. All tokens are deleted immediately.
+
+You can also revoke from [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Fluso doesn't see a calendar I expect">
+    Make sure the calendar is shared to the account you authorized. Fluso only sees calendars visible to that Google account.
+  </Accordion>
+  <Accordion title="Times are off by hours">
+    Confirm your timezone in Fluso settings matches your Google Calendar timezone. Mismatches can shift event times.
+  </Accordion>
+  <Accordion title="Can't create events">
+    Verify the **Create and modify events** permission is granted. Reconnect if the prompt asked for read-only access.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Calendar feature" icon="calendar-clock" href="/features/calendar">
+    Full deep dive on the meeting lifecycle: prep, transcripts, summaries, follow-ups.
+  </Card>
+  <Card title="Meetings workflow" icon="users" href="/use-cases/meetings">
+    A worked example of running an end-to-end meeting in 47 minutes.
+  </Card>
+</CardGroup>

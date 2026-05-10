@@ -1,0 +1,173 @@
+---
+title: Connect your apps
+sidebarTitle: Connect your apps
+description: Detailed walkthrough for connecting Gmail, Calendar, Slack, GitHub, and the rest of Fluso's 100+ integrations — including the permissions Fluso requests and why.
+---
+
+Fluso becomes more useful with every app you connect. Each integration adds context (so Fluso understands more about your work) and adds capability (so it can do more on your behalf).
+
+This page walks through the most common connectors. For the full catalog, see [All apps](/integrations/all-apps).
+
+## How connections work
+
+<Steps>
+  <Step title="Click Connect">
+    From **Settings → Connectors**, click **Connect** on the app you want to add. You're redirected to that app's authorization page.
+  </Step>
+  <Step title="Authorize">
+    You grant Fluso the specific permissions it needs. Fluso shows you exactly what it can and can't do — and you can revoke access at any time.
+  </Step>
+  <Step title="Use">
+    Fluso can now use that app as part of your conversations. Just ask for what you want in plain English.
+  </Step>
+</Steps>
+
+<Info>
+  Fluso uses OAuth2 for every integration. Your passwords are never seen or stored. Tokens are encrypted at rest in a dedicated secrets manager. You can revoke access from Fluso or from the connected app itself.
+</Info>
+
+## Recommended order
+
+Connect apps in the order that maps to your work. Start with the two that always pay off, then add the ones that match your role.
+
+<AccordionGroup>
+  <Accordion title="1. Gmail" icon="mail">
+    The single highest-value connection. Email is where most work originates, so this is what gives Fluso the richest context. **Connect this first.**
+  </Accordion>
+  <Accordion title="2. Google Calendar" icon="calendar">
+    Pairs with Gmail to enable meeting prep, scheduling, and the daily morning brief.
+  </Accordion>
+  <Accordion title="3. Slack (if your team uses it)" icon="message-square">
+    Adds team context — Fluso can search history, catch you up on channels, and post updates.
+  </Accordion>
+  <Accordion title="4. GitHub (if you write code)" icon="github">
+    Turns Fluso into a development partner — codebase Q&A, PR review, scaffolding, bug fixes.
+  </Accordion>
+</AccordionGroup>
+
+## Gmail
+
+<Steps>
+  <Step title="Click Connect on the Gmail card">
+    You're redirected to Google's authorization page.
+  </Step>
+  <Step title="Review permissions">
+    Fluso requests:
+
+    | Permission | Why |
+    |---|---|
+    | Read emails | Summarise the inbox, search, extract tasks. |
+    | Send emails | Draft and send replies — always with your approval. |
+    | View metadata | Headers used to categorize messages. |
+
+    Fluso does **not** request permission to delete email or change account settings.
+  </Step>
+  <Step title="Confirm">
+    Gmail shows as **Connected** in Settings → Connectors. You're done.
+  </Step>
+</Steps>
+
+**Setup time:** about 30 seconds.
+
+## Google Calendar
+
+<Steps>
+  <Step title="Click Connect on the Google Calendar card">
+    Same Google OAuth flow.
+  </Step>
+  <Step title="Grant access">
+    Fluso requests:
+
+    | Permission | Why |
+    |---|---|
+    | Read events | View your schedule and check availability. |
+    | Create and modify events | Schedule meetings when you ask. |
+  </Step>
+  <Step title="Done">
+    Fluso can now see your schedule and help manage it.
+  </Step>
+</Steps>
+
+**Setup time:** about 30 seconds.
+
+## Slack
+
+<Steps>
+  <Step title="Click Connect on the Slack card">
+    You're redirected to Slack's authorization flow. Pick the workspace to connect.
+  </Step>
+  <Step title="Choose channels">
+    Authorize Fluso for the channels you want it to see — public, selected private, or all you have access to.
+  </Step>
+  <Step title="Grant permissions">
+    | Permission | Why |
+    |---|---|
+    | Read messages | Catch you up, search history, surface action items. |
+    | Send messages | Post updates — always with your approval. |
+  </Step>
+</Steps>
+
+**Setup time:** about 30 seconds.
+
+## GitHub
+
+<Steps>
+  <Step title="Click Connect on the GitHub card">
+    You're redirected to GitHub's OAuth flow.
+  </Step>
+  <Step title="Pick repositories">
+    Grant access to specific repositories or all repos you have access to. You can change this later from your GitHub settings.
+  </Step>
+  <Step title="Grant permissions">
+    | Permission | Why |
+    |---|---|
+    | Read repositories | Browse code, answer architecture questions, review PRs. |
+    | Read/write issues and PRs | File issues, open PRs, leave comments — always with your approval. |
+  </Step>
+</Steps>
+
+**Setup time:** about 30 seconds.
+
+## Managing connections
+
+Open **Settings → Connectors** at any time to:
+
+- See what's connected and active.
+- Connect new apps.
+- Disconnect apps you no longer use.
+- Review what each app has access to.
+- See when tokens were last refreshed.
+
+<Tip>
+  Review your connected apps once a month. Disconnect anything you no longer use. A few well-used integrations beat many unused ones.
+</Tip>
+
+## Security and privacy
+
+<AccordionGroup>
+  <Accordion title="How are credentials stored?">
+    OAuth2 tokens are encrypted at rest in a dedicated secrets manager. Your passwords are never seen or stored.
+  </Accordion>
+  <Accordion title="Can Fluso act without my permission?">
+    Never. Any action that modifies external data — sending email, posting to Slack, creating PRs — requires your explicit approval first.
+  </Accordion>
+  <Accordion title="What happens when I disconnect?">
+    All tokens are immediately deleted. Fluso stops accessing that app. You can also revoke access from the connected app itself, for example through Google Account settings.
+  </Accordion>
+  <Accordion title="Can teammates see my connected apps?">
+    No. Your integrations are private to your account. Team plan admins can see which apps a member has connected (for management purposes) but cannot access the data.
+  </Accordion>
+</AccordionGroup>
+
+For more, see [Security & privacy](/resources/security).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Your first week" icon="calendar-days" href="/first-week">
+    A day-by-day plan to get the most out of Fluso.
+  </Card>
+  <Card title="All integrations" icon="plug" href="/integrations/overview">
+    Explore deep dives for each connector.
+  </Card>
+</CardGroup>

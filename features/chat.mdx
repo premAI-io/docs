@@ -1,0 +1,160 @@
+---
+title: Chat & conversation
+sidebarTitle: Chat
+description: How to talk to Fluso — the conversational interface, how Fluso understands context, uses tools, and streams responses in real time.
+---
+
+The chat is how you talk to Fluso. It looks like a messaging app, but it's much more — Fluso understands context across your entire workspace, can use tools to take action, and streams responses in real time.
+
+## How chat works
+
+When you send a message, here's what happens:
+
+<Steps>
+  <Step title="Fluso assembles context">
+    Conversation history, project memory, connected apps, available skills, relevant files, and your preferences.
+  </Step>
+  <Step title="Fluso picks the right tools">
+    Email? Slack? File system? Code execution? Web research? It chooses what the request needs.
+  </Step>
+  <Step title="Fluso executes">
+    It calls the tools, processes the results, and may chain actions together — for example, search emails → read matches → summarise.
+  </Step>
+  <Step title="Fluso responds">
+    Text streams to you in real time. Files Fluso created appear as attachments.
+  </Step>
+</Steps>
+
+### A worked example
+
+You say: *"Summarise my unread emails and create tasks from any that need action."*
+
+| Behind the scenes | What you see |
+|---|---|
+| Searches Gmail for unread → 12 found | |
+| Reads the 5 that look actionable | |
+| Creates 3 tasks with deadlines | "You have 12 unread emails. 5 need attention, 7 are noise. I created 3 tasks from the actionable ones. The others are FYI — a project update from Engineering and a vendor announcement." |
+
+One message in, one message out. Fluso did the reading, the judgment, the task creation, and the summary.
+
+## How to talk to Fluso effectively
+
+### Be specific about what you want
+
+| Vague | Better |
+|---|---|
+| "Help with email" | "Summarise my unread emails and tell me which ones need a reply today." |
+| "Make a presentation" | "Create a 10-slide pitch deck for investors covering market, team, product, financials, ask. Professional tone." |
+| "What's happening?" | "Catch me up — unread emails, today's meetings, and tasks due this week." |
+
+### Give Fluso the outcome, not the steps
+
+You don't need to spell out *how* to do something. Tell Fluso what you want:
+
+| Instead of | Just say |
+|---|---|
+| "Search Gmail for messages from Sarah, read them, then tell me what she wants" | "What did Sarah email me about?" |
+| "Check my calendar tomorrow, find open slots, tell me when I'm free for 30 minutes" | "When am I free for 30 minutes tomorrow?" |
+| "Search Slack for messages about the launch, read the thread, summarise the discussion" | "What's the team saying about the launch in Slack?" |
+
+### Steer mid-response
+
+Fluso streams responses. If it's heading the wrong way, just interject:
+
+> *"Actually, just focus on emails from today."*
+
+> *"Include the attachments too."*
+
+> *"Make it more concise."*
+
+Fluso absorbs the redirection and adjusts.
+
+### Follow-ups keep the context
+
+The conversation thread remembers everything:
+
+> You: *"Summarise my unread emails."* — Fluso responds.
+>
+> You: *"Reply to the one from Legal."* — Fluso knows which email.
+>
+> You: *"Make it more formal."* — Fluso revises the draft.
+
+## What you can do in chat
+
+### Read and write files
+
+> *"Read the Q1 report and pull out the key numbers."*
+
+> *"Write this summary to a file called `meeting-notes.md`."*
+
+> *"Create a new file with the project timeline we discussed."*
+
+### Run code and commands
+
+> *"Run the test suite and tell me what failed."*
+
+> *"Install the dependencies for this project."*
+
+> *"How much disk space are my files using?"*
+
+### Use connected apps
+
+> *"Find the email thread about the budget and show me the latest messages."*
+
+> *"Search Slack for the server migration discussion."*
+
+> *"Are there PRs that need my review?"*
+
+### Receive files as attachments
+
+When Fluso creates something — a doc, image, or report — it appears as an attachment. Click to download.
+
+## Chat features
+
+### Streaming responses
+
+Fluso types in real time, so you can read along instead of waiting for the full message.
+
+### Threads
+
+| Action | How |
+|---|---|
+| Start fresh | Click **+** or say *"new thread."* |
+| Switch threads | All threads are saved in the sidebar. |
+| Continue | Pick up where you left off — Fluso has the full history. |
+
+### Slash commands
+
+| Command | What it does |
+|---|---|
+| `/status` | Show what Fluso is currently working on. |
+| `/schedules` | List active reminders and scheduled actions. |
+| `/abort` | Stop the current processing. |
+
+### File attachments
+
+Drop a file into your message:
+
+> *(Attach a PDF)* — *"Summarise this document."*
+>
+> *(Attach an image)* — *"What does this chart show?"*
+>
+> *(Attach a CSV)* — *"Create a presentation from this data."*
+
+## Best practices
+
+<Tip>
+  **One thread per topic.** Keep related conversations together so Fluso maintains context. Start a new thread when switching to a completely different topic.
+</Tip>
+
+<Tip>
+  **Let Fluso ask clarifying questions.** If Fluso asks "Which project?" or "What format?" — answer. The back-and-forth produces better results than guessing everything upfront.
+</Tip>
+
+<Tip>
+  **Switch into a project for focused work.** When you're working on a specific initiative, switch to that project so Fluso prioritises project-specific context.
+</Tip>
+
+<Warning>
+  **Always review before approving.** When Fluso offers to send an email, post to Slack, or open a PR, review the content first. Fluso is your assistant, not your replacement.
+</Warning>

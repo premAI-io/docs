@@ -1,0 +1,207 @@
+---
+title: Tasks
+sidebarTitle: Tasks
+description: Fluso captures tasks from your emails, meetings, and conversations automatically. Organise, prioritise, and track everything in one place.
+---
+
+Fluso doesn't just manage tasks — it **finds them for you**. Tasks appear automatically from emails, meetings, and Slack. You focus on doing the work; Fluso handles the tracking.
+
+## How tasks get created
+
+### Automatically from emails
+
+Fluso scans your inbox for messages that ask you to do something and creates tasks with the right priority, deadline, and context.
+
+<Card title="Example">
+**Email from CFO:** *"Can you have the Q2 numbers ready for the board meeting Friday? Also, Sarah from Legal needs sign-off on the vendor contract by EOD Thursday."*
+
+**Fluso auto-creates:**
+1. **Prepare Q2 numbers for board meeting** — High — Due Friday — Source: CFO email (linked)
+2. **Sign off on vendor contract** — High — Due Thursday — Source: CFO email (linked)
+
+**You did nothing.** They just appeared in your task list.
+</Card>
+
+### Automatically from meetings
+
+When you upload a transcript, Fluso extracts every action item:
+
+| Spoken in the meeting | Task created |
+|---|---|
+| *"I'll follow up with Legal about the contract."* | Follow up with Legal about contract |
+| *"Sarah will own the redesign and have designs by next Friday."* | Complete redesign designs (Sarah, due next Fri) |
+| *"We need to decide on the Q3 budget by the 20th."* | Decide Q3 budget (due May 20) |
+
+### From Slack conversations
+
+> *"Find any action items from the #engineering Slack channel this week and create tasks."*
+
+### Manually when you ask
+
+> *"Remind me to submit the expense report by Monday."*
+
+> *"Create a task: Update onboarding docs with new API changes, due next sprint."*
+
+## Organising tasks
+
+### Categories
+
+Tasks are auto-categorised so you can focus on one area at a time:
+
+| Category | Example |
+|---|---|
+| Emails | Reply to client proposal |
+| Work | Complete Q2 report |
+| Personal | Book dentist appointment |
+| Finance | Submit expense report |
+| Travel | Book flights for conference |
+| Health | Schedule annual checkup |
+| Education | Complete online course module |
+| Shopping | Order new laptop |
+
+### Priorities
+
+Every task gets a priority. Fluso auto-detects from the source message:
+
+| Priority | When | Detected from |
+|---|---|---|
+| **Urgent** | Today | "URGENT", "ASAP", "by EOD" |
+| **High** | This week | "by Friday", "this week", from your manager |
+| **Medium** | Should do, not critical | General requests without urgency signals |
+| **Low** | Nice to have | "when you get a chance", "no rush" |
+
+### Scheduling
+
+Tasks with dates appear next to your calendar events:
+
+> *"Show me my day."*
+
+| Time | What |
+|---|---|
+| 9:00 — 10:00 | Standup meeting |
+| 10:00 — 11:30 | Task: Prepare Q2 report (Friday, High) |
+| 11:30 — 12:00 | 1:1 with Lisa |
+| 1:00 — 2:00 | Task: Review PR #142 |
+| 2:00 — 3:00 | Client call |
+| 3:00 — 4:00 | Focus time (blocked) |
+| 4:00 — 5:00 | Task: Reply to vendor emails |
+
+Tasks and meetings, one view. No separate task manager needed.
+
+## Viewing and filtering
+
+### Dashboard views
+
+| View | What it shows |
+|---|---|
+| **Attention needed** | Overdue + urgent. |
+| **Today** | Everything due or scheduled today. |
+| **This week** | Grouped by day. |
+| **By project** | Tasks per project. |
+| **By category** | Work, Personal, Emails, etc. |
+| **Completed** | Everything you've finished. |
+
+### Search and filter
+
+> *"Show me high-priority tasks due this week."*
+
+> *"What tasks are assigned to Sarah?"*
+
+> *"Find tasks about the product launch."*
+
+> *"Show completed tasks from last month."*
+
+### Task details
+
+Click any task to see everything about it:
+
+<Card title="Sample task">
+**Title:** Sign off on vendor contract
+**Source:** Email from CFO on May 8 (link to original)
+**Due:** Thursday, May 14
+**Priority:** High
+**Category:** Work
+**Context:** CFO says — "Sarah from Legal needs sign-off on the vendor contract by EOD Thursday"
+**Related:** Legal review thread (email), Vendor negotiations (project)
+**History:** Created May 8 · Priority changed Medium → High on May 9
+</Card>
+
+## Managing tasks
+
+### Updating
+
+> *"Mark the vendor contract task as done."*
+
+> *"Make the Q2 report task urgent — board meeting moved up."*
+
+> *"Move the presentation task to next week."*
+
+> *"Assign the design review to Sarah."*
+
+### Bulk actions
+
+> *"Reschedule all overdue tasks to tomorrow."*
+
+> *"Mark all newsletter-related tasks as low priority."*
+
+> *"Archive completed tasks from the Q1 project."*
+
+### History
+
+Every change is tracked:
+
+- Source and creation time.
+- Status changes (pending → in progress → completed).
+- Priority changes.
+- Deadline adjustments.
+- Assignment changes.
+
+Useful for weekly reviews (*"What did I complete this week?"*), status updates (*"Status of the Acme deliverables?"*), and remembering context (*"Why did we deprioritise this?"*).
+
+## Tasks across projects
+
+Tasks belong to projects. When you're inside a project, Fluso surfaces relevant tasks:
+
+> *"Show me all tasks for the Q2 Planning project."*
+
+> *"What's still open on the Acme project?"*
+
+> *"Add a task to the website redesign project: update the hero copy."*
+
+## Reminders and deadlines
+
+### Due-date tracking
+
+> *"What's due this week?"*
+
+> *"Show overdue tasks."*
+
+> *"What deadlines are coming up in the next 3 days?"*
+
+### Recurring tasks
+
+> *"Remind me every Monday to review weekly metrics."*
+
+> *"Recurring task: submit expense reports every other Friday."*
+
+### Notifications
+
+When a deadline approaches, Fluso can alert you in-app, by email, or via Slack.
+
+## Tips
+
+<Tip>
+  **Let Fluso find your tasks.** The real magic is automatic creation. Connect your email and calendar, process meeting transcripts, and watch your task list build itself.
+</Tip>
+
+<Tip>
+  **Review and adjust each morning.** Auto-tasks get priority right ~80% of the time. Two minutes of review handles the rest.
+</Tip>
+
+<Tip>
+  **Use projects.** Tasks for "Acme Corp" should live in the Acme project. This keeps your main view clean.
+</Tip>
+
+<Tip>
+  **Mark things done.** Completion preserves the task in history — you can always look back at what you did.
+</Tip>

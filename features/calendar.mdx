@@ -1,0 +1,194 @@
+---
+title: Calendar & meetings
+sidebarTitle: Calendar
+description: Fluso manages your calendar, preps you for meetings, and turns transcripts into summaries, tasks, and follow-up drafts — automatically.
+---
+
+Fluso handles the entire meeting lifecycle: **before** (prep), **during** (you focus on the conversation), and **after** (summary, tasks, follow-ups).
+
+## Calendar management
+
+### See your schedule
+
+> *"What's on my calendar today?"*
+
+> *"Show me my schedule for tomorrow."*
+
+> *"What does my week look like?"*
+
+Fluso doesn't just list events — it adds context. For each meeting, it shows who's attending and what it's about based on your past interactions.
+
+### Find available time
+
+> *"When am I free for a 30-minute call tomorrow?"*
+
+> *"Find a 1-hour slot this week when the whole engineering team is available."*
+
+> *"I need 2 hours of focus time today — when can I block it?"*
+
+Fluso checks across your calendars (including shared ones), accounts for tasks and existing events, and suggests times that actually work.
+
+### Schedule meetings
+
+> *"Schedule a 30-minute standup tomorrow at 9am."*
+
+> *"Create a meeting with Sarah next Monday at 2pm about the Q3 review."*
+
+> *"Block 3-5pm today for focused work — no interruptions."*
+
+> *"Set up a recurring 1:1 with my direct reports every other Tuesday."*
+
+## Meeting prep
+
+This is where Fluso shines. Before a meeting:
+
+> *"Prep me for my 3pm meeting."*
+
+Fluso pulls together:
+
+<Card title="Sample prep" icon="calendar-clock">
+**Attendees**
+- Sarah Chen (VP Product, Acme Corp) — last emailed 2 weeks ago about the partnership
+- Mark Davis (CTO, Acme Corp) — met at the March conference; discussed API integration
+- Your team: James (Engineering), Lisa (Product)
+
+**Recent context**
+- Email thread from May 2: "Acme wants to expand the pilot"
+- Meeting notes from April 15: agreed Phase 1 scope
+- Slack discussion in #partnerships: "Acme's budget is approved for Q3"
+
+**Open items**
+- Draft contract awaiting Legal review (your action item from April 15)
+- Technical specs due to Acme by Friday (James assigned)
+
+**Likely topics**
+- Pilot expansion timeline
+- API rate limiting (recent Slack questions from their team)
+- Q3 budget and pricing
+</Card>
+
+You walk in knowing what you need to know — without spending 30 minutes piecing it together.
+
+## Meeting intelligence
+
+Upload a transcript or recording and Fluso handles everything.
+
+### Supported formats
+
+- **Transcripts:** `.txt`, `.vtt`, `.srt`, `.docx`, `.md`
+- **Recordings:** audio files (auto-transcribed)
+- **Sources:** Zoom, Google Meet, Microsoft Teams, Otter.ai, Fireflies, Granola, and more
+
+### What you get
+
+> *"Process this meeting transcript."*
+
+| Deliverable | Description |
+|---|---|
+| **Executive summary** | 3-5 paragraphs of what was discussed and decided. |
+| **Decisions** | Bulleted list of every decision made. |
+| **Action items** | Tasks with assignees and deadlines (when mentioned). |
+| **Follow-up email** | Draft email to attendees summarising the meeting. |
+| **Slack update** | Draft message for your team channel. |
+| **Knowledge graph** | Attendees and topics linked to memory for future context. |
+
+### A real example
+
+You upload a 45-minute product review (Zoom `.vtt` file). Fluso returns:
+
+<Card title="Output">
+**Summary.** The team reviewed Q2 product metrics and discussed Q3. Revenue is up 12% but retention dropped 3%. Q3 will prioritize retention over new features. Three features descoped: automated reporting, dark mode, mobile widget.
+
+**Decisions**
+- Q3 priority: retention improvements over new features
+- Automated reporting pushed to Q4
+- Dark mode and mobile widget descoped entirely
+- New UX researcher approved to start July 1
+
+**Tasks**
+1. [Lisa] Draft retention plan — Due May 20
+2. [James] Audit onboarding for friction — Due May 18
+3. [You] Update roadmap doc and share with stakeholders — Due May 17
+4. [HR] Send offer letter to UX candidate — Due May 15
+5. [Lisa] Notify customers of descoped features — Due May 22
+
+**Follow-up email** *(ready to send)*
+
+**Slack draft** *(ready for #product-team)*
+</Card>
+
+What used to take 45 minutes manually took Fluso about 30 seconds.
+
+## Meeting analysis
+
+Fluso can analyse your communication patterns across meetings:
+
+> *"Analyse my meetings from the last 2 weeks."*
+
+| Pattern | What Fluso checks |
+|---|---|
+| **Speaking balance** | Do you dominate, or stay too quiet? Ratio vs. others. |
+| **Clarity** | Are your points landing? Frequent clarifying questions? |
+| **Filler words** | Frequency of "um", "like", "basically", "you know". |
+| **Interruptions** | Who interrupts whom? |
+| **Action orientation** | Do meetings end with clear next steps or vague intent? |
+| **Trends over time** | Are patterns improving or regressing? |
+
+<Card title="Sample analysis">
+- Speaking ratio: 42% — balanced.
+- Filler words: 8/min — above average; try the "pause instead of um" technique.
+- You interrupted others 4 times across 6 meetings; you were interrupted 2 times.
+- Trend: filler words down from 12/min last month; speaking ratio improving.
+- Recommendation: focus on filler words. Otherwise effective.
+</Card>
+
+<Info>
+  Meeting analysis is private. Only you see your analysis. It's designed to help you improve, not to judge.
+</Info>
+
+## Workflows
+
+### The end-to-end meeting
+
+<Steps>
+  <Step title="Before">
+    *"Prep me for the 2pm client call"* → Fluso delivers attendee profiles, recent context, open items.
+  </Step>
+  <Step title="During">
+    Focus on the conversation. Record if you want a transcript.
+  </Step>
+  <Step title="After">
+    *"Process this meeting"* → Fluso delivers summary, tasks, email draft, Slack update.
+  </Step>
+  <Step title="Follow-through">
+    Fluso tracks the tasks it created. If Lisa misses her deadline, you'll know.
+  </Step>
+</Steps>
+
+### Meeting-free day setup
+
+> *"Block off Thursday for deep work — decline or reschedule any non-urgent meetings."*
+
+> *"Show me which meetings this week I can safely skip."*
+
+### Recurring meeting audit
+
+> *"Review my recurring meetings — which have low attendance or could be emails?"*
+
+## Tips
+
+<Tip>
+  **Record your meetings.** Most video tools support recording. A transcript means Fluso can process the meeting completely — no manual notes.
+</Tip>
+
+<Tip>
+  **Prep is the superpower.** A one-minute prep request saves 15 minutes of scrambling and makes you look more prepared.
+</Tip>
+
+<Tip>
+  **Process right after.** Upload immediately while everything is fresh. Tasks get created and follow-ups go out same-day.
+</Tip>
+
+<Warning>
+  Always inform participants if you're recording. Follow your organization's policies on meeting recording and transcription.
+</Warning>
