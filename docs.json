@@ -74,16 +74,11 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Log in",
-        "href": "https://app.fluso.ai"
-      }
-    ],
+    "links": [],
     "primary": {
       "type": "button",
-      "label": "Try Fluso",
-      "href": "https://app.fluso.ai"
+      "label": "Download for Mac or Windows",
+      "href": "https://fluso.ai/download"
     }
   },
   "footer": {
