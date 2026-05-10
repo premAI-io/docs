@@ -1,12 +1,12 @@
 ---
 title: Code
 sidebarTitle: Code
-description: How Fluso works inside a codebase — answering architecture questions, reviewing PRs, scaffolding projects, finding bugs, and writing patches that actually fit the conventions.
+description: How Fluso works inside a codebase. Architecture questions, PR review, scaffolding, bug fixes, and writing patches that fit the conventions you already have.
 ---
 
-Connect GitHub and Fluso starts behaving like a developer who already knows your codebase. The point isn't that it can write code in the abstract — most things can — it's that it reads your repos first and writes things that fit them. The PR it opens uses your patterns. The bug it finds points at the actual file and line.
+Connect GitHub and Fluso starts behaving like a developer who already knows your codebase. The point isn't that it can write code in the abstract — most things can. The point is that it reads your repos first and writes things that fit them. The PR it opens uses your patterns. The bug it finds points at the actual file and line.
 
-What follows is what it does, with concrete examples. The pattern is consistent: you describe an outcome, it does the work, you review the diff before anything is filed.
+What follows is what it does, with concrete examples. The pattern is consistent: describe an outcome, Fluso does the work, you review the diff before anything is filed.
 
 ## Reading a codebase
 
@@ -22,9 +22,7 @@ The most common entry point is asking how something works:
 
 > *"What middleware does each request go through?"*
 
-The replies aren't generic explanations of authentication; they're explanations of authentication in your code, with file paths and line numbers. This is the version of "AI helps with code" that's actually useful — not advice about JWT in general, advice about the specific JWT verification you wrote eight months ago and forgot.
-
-It's especially helpful for the kind of codebase you used to know and now don't quite, or for joining a project mid-stream.
+The replies aren't generic explanations of authentication. They're explanations of authentication in your code, with file paths and line numbers. Useful for the kind of codebase you used to know and now don't quite, or for joining a project mid-stream.
 
 ## Reviewing pull requests
 
@@ -32,11 +30,11 @@ PR review is where the time savings are most visible:
 
 > *"Review the open PR from Sarah. Security, edge cases, test coverage."*
 
-What comes back is a real review, not a "looks good to me". Summary of what the PR does. Issues flagged with their severity — yellow for "address before merge", red for "this is a security hole", green for "no concerns". Suggestions for things that aren't blockers but would improve the patch. A verdict: approve, approve with suggestions, request changes.
+What comes back is a real review, not a "looks good to me". Summary of what the PR does. Issues flagged with severity: yellow for "address before merge", red for "this is a security hole", green for "no concerns". Suggestions for things that aren't blockers but would improve the patch. A verdict.
 
-The review for a rate-limiting PR looks something like: *"Adds rate limiting middleware for the API. Three files changed, 85 lines added. Issues: missing rate limit on /auth/login (brute-force vulnerability); reset window of 1 hour might be too long, 15 minutes seems more standard. Suggestion: add a test for the rate-limit-exceeded response shape; consider making the limit env-configurable. Verdict: approve with suggestions, but address the missing login limit before merge."*
+For a rate-limiting PR it might look like: *"Adds rate limiting middleware for the API. Three files changed, 85 lines added. Issues: missing rate limit on /auth/login (brute-force vulnerability); reset window of 1 hour might be too long, 15 minutes seems more standard. Suggestion: add a test for the rate-limit-exceeded response shape; consider making the limit env-configurable. Verdict: approve with suggestions, but address the missing login limit before merge."*
 
-Other useful review prompts:
+Other useful prompts:
 
 > *"Summarise what changed in PR #42."*
 
@@ -44,17 +42,17 @@ Other useful review prompts:
 
 > *"Which open PRs are safe to merge?"*
 
-The intent is to let humans focus on architecture and design. Fluso catches the mechanical stuff — null checks, error handling gaps, missing tests, inconsistent patterns, security regressions.
+The intent is to let humans focus on architecture and design. Fluso catches mechanical stuff: null checks, error handling gaps, missing tests, inconsistent patterns, security regressions.
 
 ## Bug fixes
 
-The pattern is: describe the symptom, get the diagnosis, optionally let Fluso write the patch.
+The pattern: describe the symptom, get the diagnosis, optionally let Fluso write the patch.
 
 > *"Users report password reset emails aren't arriving. Find the bug in our auth module."*
 
-Fluso traces through the code from request entry to email send, identifies the issue, and tells you the file and line. *"Found it. The password reset email template in templates/reset-password.html line 12 uses https://old-domain.com/reset?token=… The base URL changed when we migrated to the new domain last week. The links in the emails are broken."*
+Fluso traces through the code from request entry to email send, identifies the issue, and tells you the file and line. *"Found it. The password reset email template in `templates/reset-password.html` line 12 uses `https://old-domain.com/reset?token=...`. The base URL changed when we migrated to the new domain last week. The links in the emails are broken."*
 
-If you want it fixed, ask:
+If you want it fixed:
 
 > *"Fix it and create a PR."*
 
@@ -72,9 +70,9 @@ If you need a new service or app from scratch:
 
 > *"Scaffold a Go microservice with gRPC endpoints, Postgres, Docker."*
 
-What you get is a complete project: structure, working code, database models and migrations, endpoints with validation, tests (unit and integration), a README that walks setup, Docker config, CI pipeline. It's not a half-finished sketch — it runs.
+What you get is a complete project: structure, working code, database models and migrations, endpoints with validation, tests (unit and integration), a README that walks setup, Docker config, CI pipeline. It runs.
 
-The stacks Fluso scaffolds well: Next.js + TypeScript, FastAPI + Python, Go + Connect RPC, Rails + Ruby, Rust, Flutter, React.
+Stacks Fluso scaffolds well: Next.js + TypeScript, FastAPI + Python, Go + Connect RPC, Rails + Ruby, Rust, Flutter, React.
 
 ## Writing code
 
@@ -110,7 +108,7 @@ Useful for onboarding:
 
 > *"Create a CodeTour of the authentication module for new team members."*
 
-You get a `.tour` file — a step-by-step walkthrough that links to specific files and line ranges with explanations:
+You get a `.tour` file: a step-by-step walkthrough that links to specific files and line ranges with explanations.
 
 1. `middleware/auth.ts:12-45` — How requests are intercepted and JWT tokens extracted.
 2. `services/jwt.ts:23-67` — Token verification and user lookup.
@@ -133,12 +131,12 @@ All standard, all conversational.
 
 ## Where the savings show up
 
-PR review pipelines: Fluso catches mechanical issues so humans focus on architecture and design.
+PR review: Fluso catches mechanical issues so humans focus on architecture and design.
 
 Bug-to-fix loops: a 2-4 hour debug becomes a 15-minute exchange.
 
 Onboarding: new hires ramp in hours, not weeks, because they can ask the codebase questions in plain English instead of reading 30,000 lines blind.
 
 <Warning>
-  Fluso always asks before modifying repositories. PRs, commits, and issue closes wait for explicit approval. The diff is shown for review every time.
+  Fluso always asks before modifying repositories. PRs, commits, and issue closes wait for explicit approval. The diff or comment is shown for review every time.
 </Warning>

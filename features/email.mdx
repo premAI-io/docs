@@ -8,15 +8,15 @@ Connect Gmail and Fluso starts handling the parts of email that don't really nee
 
 ## Triage
 
-Mornings are the obvious starting point. You haven't checked email since yesterday. Forty-seven unread.
+Mornings are the obvious starting point. Forty-seven unread, you haven't looked since yesterday.
 
 > *"Summarise my unread emails from today."*
 
-You get back something like: three need action (Sarah's contract review by Friday, the CFO's Q2 numbers for the board, an urgent production hotfix); five are FYI (weekly metrics, a roadmap update, two newsletters worth glancing at, a vendor announcement); thirty-nine are noise (notification digests, marketing, automated alerts). Tasks have already been created for the action items; drafts are ready for the two replies that need writing.
+You get back: three need action (Sarah's contract review by Friday, the CFO's Q2 numbers for the board, an urgent production hotfix); five are FYI (weekly metrics, a roadmap update, two newsletters worth glancing at, a vendor announcement); thirty-nine are noise (notification digests, marketing, automated alerts). Tasks for the action items are already created. Drafts for the two replies that need writing are ready.
 
-You spend five minutes. The forty-seven emails are handled.
+Five minutes. Forty-seven emails handled.
 
-That same shape works at sharper grain too:
+The same shape works at sharper grain:
 
 > *"Which emails need a reply today?"*
 
@@ -28,11 +28,11 @@ That same shape works at sharper grain too:
 
 ## Summaries
 
-A long thread is a thing Fluso reads better than you do. Ask:
+A long thread is a thing Fluso reads better than you do.
 
 > *"Summarise the email thread about the vendor negotiation."*
 
-You get who said what, what was decided, where it's stuck, and what's pending. Single emails work the same way — *"summarise the latest email from Legal"* gives you the ask, the deadline, and what you owe back.
+You get who said what, what was decided, where it's stuck, and what's pending. Single emails work the same way. *"Summarise the latest email from Legal"* gives you the ask, the deadline, and what you owe back.
 
 The most useful version is across messages, not within one:
 
@@ -52,7 +52,7 @@ Gmail's search is powerful and almost nobody uses it. Fluso uses it for you, in 
 
 > *"Starred emails from April about the budget."*
 
-Fluso translates the request into a Gmail query and returns the results. If you're vague, it asks; if you're specific, it just finds them.
+Fluso translates the request into a Gmail query and returns the results. If you're vague, it asks. If you're specific, it finds them.
 
 ## Replies
 
@@ -70,9 +70,9 @@ You can iterate after you see the draft:
 
 > *"Make it more formal."* / *"Softer, this is sensitive."* / *"Shorter, just the key points."*
 
-And you can compose from scratch:
+You can compose from scratch:
 
-> *"Write an email to the engineering team announcing the code freeze and what it means for deployments."*
+> *"Write an email to engineering announcing the code freeze and what it means for deployments."*
 
 <Warning>
   Drafts always wait for your approval. Fluso doesn't send anything until you've read it and clicked confirm. Even so: read sensitive or external-facing replies carefully before approving.
@@ -80,13 +80,13 @@ And you can compose from scratch:
 
 ## Auto-tasks
 
-This is the feature most people stop noticing because it works. Fluso scans your inbox in the background and turns messages that ask you to do something into tracked tasks. Title, deadline if mentioned, priority based on tone, link back to the source email.
+This is the feature most people stop noticing because it works. Fluso scans your inbox in the background and turns messages that ask you to do something into tracked tasks. Title, deadline if mentioned, priority based on tone, link back to the source. The tasks themselves live in [Tasks](/features/tasks).
 
-So the CFO writes "Can you have the Q2 numbers ready for the board meeting Friday? Also Sarah from Legal needs sign-off on the vendor contract by EOD Thursday." Two tasks appear in your list before you've opened the email: *Prepare Q2 numbers for board meeting* (high, due Friday) and *Sign off on vendor contract* (high, due Thursday). Both linked back to the source.
+The CFO writes "Can you have the Q2 numbers ready for the board meeting Friday? Also Sarah from Legal needs sign-off on the vendor contract by EOD Thursday." Two tasks appear in your list before you've opened the email: *Prepare Q2 numbers for board meeting* (high, due Friday) and *Sign off on vendor contract* (high, due Thursday). Both linked back to the source.
 
-What gets skipped: newsletters, marketing, "thanks", FYI updates that don't ask for anything, and calendar invites (those go through the calendar integration). The miss rate is low after a couple of days; before then, you may need to mark a few messages as not actually tasks. It learns.
+What gets skipped: newsletters, marketing, "thanks", FYI updates that don't ask for anything, calendar invites (those go through the calendar integration). The miss rate is low after a couple of days. Before then, you may need to mark a few messages as not actually tasks. It learns.
 
-You can adjust priorities, deadlines, or kill misclassifications at any time. The first morning's task list might need ten seconds of cleanup; the third morning's usually doesn't.
+You can adjust priorities, deadlines, or kill misclassifications. The first morning's task list might need ten seconds of cleanup; the third morning's usually doesn't.
 
 ## Follow-ups
 
@@ -110,4 +110,4 @@ A project-scoped sweep when something's been simmering. *"Find all emails about 
 
 ## Notes
 
-Connection lives at [Gmail](/integrations/gmail). The full security picture is in [Security & privacy](/resources/security). Fluso uses OAuth2 — your password is never seen — and you can revoke access from Google or from Fluso at any moment.
+Connection lives at [Gmail](/integrations/gmail). The full security picture is at [Security & privacy](/resources/security). Fluso uses OAuth2; your password is never seen. Revoke access from Google or from Fluso at any moment.

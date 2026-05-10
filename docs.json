@@ -22,8 +22,18 @@
         "pages": [
           "introduction",
           "quickstart",
-          "connect-apps",
-          "first-week"
+          "going-deeper"
+        ]
+      },
+      {
+        "group": "Workflows",
+        "pages": [
+          "workflows/morning-brief",
+          "workflows/meetings",
+          "workflows/research-to-deck",
+          "workflows/content-launch",
+          "workflows/dev-bug-fix",
+          "workflows/knowledge-recall"
         ]
       },
       {
@@ -46,25 +56,11 @@
           "integrations/gmail",
           "integrations/google-calendar",
           "integrations/slack",
-          "integrations/github",
-          "integrations/all-apps"
+          "integrations/github"
         ]
       },
       {
-        "group": "Use cases",
-        "pages": [
-          "use-cases/overview",
-          "use-cases/morning-brief",
-          "use-cases/email-triage",
-          "use-cases/meetings",
-          "use-cases/research-to-deck",
-          "use-cases/content-launch",
-          "use-cases/dev-bug-fix",
-          "use-cases/knowledge-recall"
-        ]
-      },
-      {
-        "group": "Resources",
+        "group": "Reference",
         "pages": [
           "resources/pricing",
           "resources/security",

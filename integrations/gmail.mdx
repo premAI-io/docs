@@ -1,14 +1,14 @@
 ---
 title: Gmail
 sidebarTitle: Gmail
-description: Connecting Fluso to Gmail. Permissions, what it does once connected, common prompts, and troubleshooting.
+description: Connect Gmail. Permissions, prompts that work well, and troubleshooting when something goes sideways.
 ---
 
-Gmail is the highest-leverage connection in Fluso. Email is where most work originates, which means it's where Fluso gets the richest context fastest. Connect this first.
+Connect Gmail first. Email is where most work originates, which means it's where Fluso has the richest context to work from. The payoff is bigger and faster than from any other integration.
 
 ## What changes once it's on
 
-You ask Fluso to summarise your inbox, search for something specific, draft a reply, or pull tasks out of actionable mail, and it does. The full feature page is at [Email](/features/email); the short version of what's available:
+You ask Fluso to summarise your inbox, search for something specific, draft a reply, or pull tasks out of actionable mail, and it does. The full feature page is at [Email](/features/email). The short version of what's available:
 
 - Inbox triage in plain English (*"summarise my unread emails from today"*)
 - Search across the full mailbox (*"find the email where Thomas sent the pricing spreadsheet"*)
@@ -25,9 +25,9 @@ Open **Settings → Connectors** and click **Connect** on the Gmail card. Sign i
 - **Send messages** — for reply drafts. Fluso never sends without your approval.
 - **Read headers** — for categorising messages by sender, label, and date.
 
-Notably absent: anything that lets Fluso delete mail or change account settings. There's no path to either even if it wanted one.
+Missing from the list: anything that lets Fluso delete mail or change account settings. There's no path to either, even if it wanted one.
 
-The whole thing takes about thirty seconds.
+A click and a confirmation screen.
 
 ## Prompts that work well
 
@@ -79,7 +79,7 @@ You can also revoke directly from [Google Account → Security → Third-party a
 
 <AccordionGroup>
   <Accordion title="Fluso isn't finding emails I know exist">
-    Verify Gmail still shows as **Connected** in Settings → Connectors. If it does, disconnect and reconnect. If the issue persists, you may have hit a Gmail API rate limit — wait a few minutes and try again.
+    Verify Gmail still shows as **Connected** in Settings → Connectors. If it does, disconnect and reconnect. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes and try again.
   </Accordion>
   <Accordion title="The connection says it's broken">
     OAuth tokens occasionally expire. In Settings → Connectors, click **Reconnect**. Refresh the page once it's done.
@@ -95,7 +95,7 @@ You can also revoke directly from [Google Account → Security → Third-party a
   <Card title="Email feature" icon="mail" href="/features/email">
     Full deep dive on what Fluso does with your inbox.
   </Card>
-  <Card title="Email triage workflow" icon="inbox" href="/use-cases/email-triage">
-    A worked example of cutting morning email from an hour to five minutes.
+  <Card title="Morning brief workflow" icon="sun" href="/workflows/morning-brief">
+    The most common daily ritual.
   </Card>
 </CardGroup>

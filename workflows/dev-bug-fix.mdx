@@ -1,7 +1,7 @@
 ---
 title: A bug to a PR
 sidebarTitle: Bug → PR
-description: Bug report to merged PR in fifteen minutes. Fluso traces the code, finds the cause, writes the fix, and opens the pull request for your review.
+description: Bug report to merged PR in fifteen minutes. Fluso traces the code, finds the cause, writes the fix, opens the pull request for your review.
 ---
 
 Users report password reset emails aren't arriving. It's affecting customers. You need to find the bug and fix it.
@@ -44,7 +44,7 @@ When there are multiple suspects:
 
 > *"Production hotfix — 5xx errors spiking on /api/orders. Could be the new payment provider integration or the rate limiter we deployed yesterday. Find the cause."*
 
-Fluso reads recent commits, checks both code paths, and isolates the issue.
+Fluso reads recent commits, checks both code paths, isolates the issue.
 
 When you only want diagnosis, not a fix:
 
@@ -54,7 +54,7 @@ Useful when you want a root-cause report before deciding what to do about it.
 
 ## What this is good at, and what it isn't
 
-Bugs that live inside a single repository, where Fluso can read the code and follow the logic, are where it shines. Reproducible bugs are easier than intermittent ones. Fixes that follow existing conventions in the codebase are easier than redesigns. Routine PRs — with tests, with proper docs, ready for review — are exactly the kind of work this is good for.
+Bugs that live inside a single repository, where Fluso can read the code and follow the logic, are where it shines. Reproducible bugs are easier than intermittent ones. Fixes that follow existing conventions are easier than redesigns. Routine PRs — with tests, with proper docs, ready for review — are exactly the kind of work this is good for.
 
 Less good fits: distributed bugs that span multiple services and require runtime introspection. Architectural redesigns where the question is "what's the right approach" not "where's the bug". Performance pathology that needs profiler output you have to gather.
 
