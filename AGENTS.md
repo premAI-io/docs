@@ -79,5 +79,4 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 
 - Never invent feature behaviour. If a capability isn't documented in source materials, leave it out.
 - Always pair "Fluso can send X" with the approval safety note: drafts are shown for review.
-- For product actions, refer users to the App (`https://app.fluso.ai`) and support (`support@premai.io`).
-- Don't write new feature pages for things that fit inside skills (a new skill goes into `/features/skills`, not its own page).
+- For product actions, refer users to download the desktop app from `https://fluso.ai/download` (Mac or Windows) and to support at `support@premai.io`. Don't link to `app.fluso.ai` — Fluso is a desktop app.
