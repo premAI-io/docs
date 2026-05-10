@@ -16,7 +16,7 @@ The IA tracks the user's journey from "just landed" to "pro user". Five sidebar 
 - **Workflows** — `/workflows/*`. Six concrete stories: morning brief, meetings, research-to-deck, content launch, bug-to-PR, knowledge recall.
 - **Features** — the five primitives: `/features/{chat, connectors, skills, tasks, memory}`. Everything Fluso does is some combination of these five.
 - **Connector setup** — `/integrations/{gmail, google-calendar, slack, github}`. Per-app permissions and prompts, not feature pages.
-- **Reference** — `/resources/{pricing, security, privacy, faq}`. Security covers infrastructure; Privacy covers data handling; they're distinct pages.
+- **Reference** — `/resources/{pricing, security, faq}`. Security covers both infrastructure and data handling.
 
 The home page (`/`) is a router into the journey, with three sections: just landed, already set up, daily user.
 
