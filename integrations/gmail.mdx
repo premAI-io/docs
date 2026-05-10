@@ -1,0 +1,119 @@
+---
+title: Gmail
+sidebarTitle: Gmail
+description: Connect Gmail to Fluso for inbox triage, summaries, smart search, draft replies, and automatic task extraction.
+---
+
+Gmail is the highest-value integration. It's where most work originates, so connecting it gives Fluso the richest context about your day. **Connect this first.**
+
+## What it unlocks
+
+| Capability | Example |
+|---|---|
+| **Inbox triage** | *"Summarise my unread emails from today."* |
+| **Smart search** | *"Find the email where the client sent the pricing spreadsheet."* |
+| **Draft replies** | *"Reply to Sarah — I'll have estimates by Thursday."* |
+| **Auto-task extraction** | Tasks created automatically from actionable emails. |
+| **Thread summaries** | *"Summarise the email thread about the vendor negotiation."* |
+| **Follow-up tracking** | *"Has the client responded about the contract?"* |
+
+For the full feature deep dive, see [Email](/features/email).
+
+## Setup
+
+<Steps>
+  <Step title="Open Settings → Connectors">
+    Click **Connect** on the Gmail card.
+  </Step>
+  <Step title="Authorize with Google">
+    Sign in with the Google account you want Fluso to assist with.
+  </Step>
+  <Step title="Review permissions">
+    | Permission | Why |
+    |---|---|
+    | Read emails | Summarise the inbox, search, extract tasks. |
+    | Send emails | Draft and send replies — always with your approval. |
+    | View metadata | Headers used to categorise messages. |
+
+    Fluso does **not** request permission to delete email or change account settings.
+  </Step>
+  <Step title="Confirm">
+    Gmail shows as **Connected**. Setup time: about 30 seconds.
+  </Step>
+</Steps>
+
+## Quick prompts to try
+
+<AccordionGroup>
+  <Accordion title="Triage" icon="inbox">
+    > *"Summarise my unread emails from today."*
+
+    > *"Which emails need a reply today?"*
+
+    > *"Show me only urgent emails."*
+  </Accordion>
+  <Accordion title="Search" icon="search">
+    > *"Find unread emails older than 3 days."*
+
+    > *"Emails from @acme.com in the last 2 weeks that mention 'contract' and have attachments."*
+
+    > *"Starred emails from April about the budget."*
+  </Accordion>
+  <Accordion title="Drafts" icon="pencil">
+    > *"Reply to the client — confirm we'll implement the changes by next sprint."*
+
+    > *"Compose an introduction email to the new client we met at the conference."*
+
+    > *"Make my draft more formal."*
+  </Accordion>
+  <Accordion title="Follow-ups" icon="bell">
+    > *"Has Legal replied to my questions from Monday?"*
+
+    > *"Anyone I emailed last week who hasn't responded?"*
+  </Accordion>
+</AccordionGroup>
+
+## Permissions in detail
+
+<AccordionGroup>
+  <Accordion title="Read emails">
+    Fluso reads emails when you ask it to (e.g., "summarise my inbox") and when running auto-task extraction. Emails are processed for the response and not stored beyond what's needed for your knowledge graph and task references.
+  </Accordion>
+  <Accordion title="Send emails">
+    Fluso never sends an email without your explicit approval. Drafts are always shown for review first.
+  </Accordion>
+  <Accordion title="Metadata">
+    Headers are used for categorisation (sender, subject, labels, date) and are not shared with third parties.
+  </Accordion>
+</AccordionGroup>
+
+## Disconnecting
+
+From **Settings → Connectors**, click **Disconnect** on the Gmail card. All Gmail tokens are deleted immediately and Fluso stops accessing your inbox.
+
+You can also revoke access directly from your [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Fluso isn't finding my emails">
+    Verify Gmail is **Connected** in Settings → Connectors. Try disconnecting and reconnecting. If the issue persists, you may have hit a Gmail API rate limit — wait a few minutes and try again.
+  </Accordion>
+  <Accordion title="Token expired or app not connected">
+    OAuth tokens can expire. Go to Settings → Connectors and click **Reconnect**. Refresh the page once reconnected.
+  </Accordion>
+  <Accordion title="Auto-tasks aren't appearing">
+    Auto-task extraction runs periodically. Give it 24–48 hours to learn the patterns of your inbox. You can also trigger it manually with *"Scan my inbox for tasks."*
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Email feature" icon="mail" href="/features/email">
+    Full deep dive on Fluso's email capabilities.
+  </Card>
+  <Card title="Email triage workflow" icon="inbox" href="/use-cases/email-triage">
+    A worked example of cutting 60 minutes of email down to 5.
+  </Card>
+</CardGroup>

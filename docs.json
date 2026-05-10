@@ -1,12 +1,12 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "almond",
-  "name": "Product Guide",
-  "description": "Step-by-step guides for every product—platform setup, analytics, and integrations in one place.",
+  "name": "Fluso",
+  "description": "Fluso is an AI executive assistant that works inside your tools — email, calendar, Slack, GitHub, and 100+ more. Read the docs to get set up, connect your apps, and put Fluso to work.",
   "colors": {
-    "primary": "#166E3F",
-    "light": "#26BD6C",
-    "dark": "#166E3F"
+    "primary": "#7C3AED",
+    "light": "#A78BFA",
+    "dark": "#5B21B6"
   },
   "favicon": "/favicon.ico",
   "icons": {
@@ -27,40 +27,43 @@
           "href": "/"
         },
         {
-          "anchor": "Changelog",
-          "icon": "scroll-text",
-          "href": "https://www.mintlify.com/docs/changelog"
+          "anchor": "App",
+          "icon": "external-link",
+          "href": "https://app.fluso.ai"
         },
         {
-          "anchor": "Help",
+          "anchor": "Support",
           "icon": "life-buoy",
-          "href": "https://www.mintlify.com/docs/contact-support"
+          "href": "mailto:support@premai.io"
         }
       ]
     },
     "directory": "card",
     "groups": [
       {
-        "group": "Platform",
-        "icon": "layers",
+        "group": "Get started",
+        "icon": "rocket",
         "expanded": true,
         "pages": [
-          "platform/quickstart",
-          "platform/key-concepts",
-          "platform/configuration/settings",
-          "platform/configuration/user-management",
-          "platform/administration/roles-permissions"
+          "introduction",
+          "quickstart",
+          "connect-apps",
+          "first-week"
         ]
       },
       {
-        "group": "Analytics",
-        "icon": "chart-bar",
+        "group": "Features",
+        "icon": "sparkles",
         "expanded": true,
         "pages": [
-          "analytics/quickstart",
-          "analytics/connect-data",
-          "analytics/dashboards/create-dashboard",
-          "analytics/reports/scheduled-reports"
+          "features/chat",
+          "features/email",
+          "features/calendar",
+          "features/tasks",
+          "features/memory",
+          "features/content",
+          "features/research",
+          "features/code"
         ]
       },
       {
@@ -68,10 +71,37 @@
         "icon": "plug",
         "expanded": true,
         "pages": [
-          "integrations/quickstart",
-          "integrations/authentication",
-          "integrations/connectors/crm",
-          "integrations/webhooks/configure"
+          "integrations/overview",
+          "integrations/gmail",
+          "integrations/google-calendar",
+          "integrations/slack",
+          "integrations/github",
+          "integrations/all-apps"
+        ]
+      },
+      {
+        "group": "Use cases",
+        "icon": "lightbulb",
+        "expanded": true,
+        "pages": [
+          "use-cases/overview",
+          "use-cases/morning-brief",
+          "use-cases/email-triage",
+          "use-cases/meetings",
+          "use-cases/research-to-deck",
+          "use-cases/content-launch",
+          "use-cases/dev-bug-fix",
+          "use-cases/knowledge-recall"
+        ]
+      },
+      {
+        "group": "Resources",
+        "icon": "book-open",
+        "expanded": true,
+        "pages": [
+          "resources/pricing",
+          "resources/security",
+          "resources/faq"
         ]
       }
     ]
@@ -81,17 +111,23 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [],
+    "links": [
+      {
+        "label": "Log in",
+        "href": "https://app.fluso.ai"
+      }
+    ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Try Fluso free",
+      "href": "https://app.fluso.ai"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/yourcompany",
-      "linkedin": "https://linkedin.com/company/yourcompany"
+      "x": "https://twitter.com/premai_io",
+      "github": "https://github.com/premAI-io",
+      "linkedin": "https://linkedin.com/company/premai"
     }
   }
 }

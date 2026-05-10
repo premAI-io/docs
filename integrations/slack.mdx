@@ -1,0 +1,103 @@
+---
+title: Slack
+sidebarTitle: Slack
+description: Connect Slack so Fluso can search team conversations, catch you up on channels, surface action items, and post updates with your approval.
+---
+
+Connect Slack and Fluso adds team context to everything else it does — meeting prep gets richer, email replies pull in relevant Slack threads, and you can catch up on a channel in seconds.
+
+## What it unlocks
+
+| Capability | Example |
+|---|---|
+| **Catch up** | *"What did I miss in #engineering today?"* |
+| **Search** | *"Find messages about the server migration from last month."* |
+| **Post updates** | *"Share the meeting summary in #product"* (with your approval) |
+| **Team context** | Meeting prep enriched with relevant Slack discussions |
+| **Action item detection** | Tasks created from Slack messages that assign you work |
+
+## Setup
+
+<Steps>
+  <Step title="Open Settings → Connectors">
+    Click **Connect** on the Slack card.
+  </Step>
+  <Step title="Choose workspace">
+    Pick the Slack workspace you want to connect. You can connect multiple workspaces if needed.
+  </Step>
+  <Step title="Authorize channels">
+    Grant Fluso access to public channels, selected private channels, or all channels you have access to. You decide.
+  </Step>
+  <Step title="Review permissions">
+    | Permission | Why |
+    |---|---|
+    | Read messages in authorized channels | Catch you up, search history, surface action items. |
+    | Send messages | Post updates — always with your approval. |
+  </Step>
+  <Step title="Confirm">
+    Slack shows as **Connected**. Setup time: about 30 seconds.
+  </Step>
+</Steps>
+
+## Quick prompts to try
+
+<AccordionGroup>
+  <Accordion title="Catch up" icon="bell">
+    > *"What did I miss in #engineering today?"*
+
+    > *"Catch me up on #partnerships from this week."*
+
+    > *"Anyone tag me in Slack since yesterday?"*
+  </Accordion>
+  <Accordion title="Search" icon="search">
+    > *"Find Slack discussions about the server migration last month."*
+
+    > *"Show messages where Sarah talked about pricing."*
+
+    > *"What did the team say about the launch in #product?"*
+  </Accordion>
+  <Accordion title="Action items" icon="check-circle">
+    > *"Find any action items from #engineering this week and create tasks."*
+
+    > *"Did anyone in Slack assign me work this morning?"*
+  </Accordion>
+  <Accordion title="Post updates" icon="send">
+    > *"Share the meeting summary in #product."*
+
+    > *"Post a status update in #partnerships about Acme."*
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+  Fluso never posts to Slack without your explicit approval. Drafts are always shown for review first.
+</Warning>
+
+## Cross-app workflows
+
+Slack becomes powerful when combined with other integrations:
+
+> *"A client emailed about API rate limits — find related discussions in #engineering and draft a response."*
+
+> *"Process this meeting transcript and post the summary in #product."*
+
+> *"Prep me for the 3pm meeting — pull in any Slack discussions about the topic."*
+
+## Disconnecting
+
+From **Settings → Connectors**, click **Disconnect** on the Slack card. All tokens are deleted immediately.
+
+You can also revoke access from your Slack workspace at **Settings → Integrations → Manage apps**.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Fluso can't see a private channel">
+    Add the Fluso bot user to the private channel, or re-run the authorization and select the channel.
+  </Accordion>
+  <Accordion title="Multiple workspaces">
+    Connect each workspace separately. Fluso treats them as independent and you can ask "What did I miss in [workspace] #channel?" to disambiguate.
+  </Accordion>
+  <Accordion title="Token expired">
+    OAuth tokens can expire. Click **Reconnect** in Settings → Connectors.
+  </Accordion>
+</AccordionGroup>

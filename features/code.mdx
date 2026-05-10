@@ -1,0 +1,183 @@
+---
+title: Code & development
+sidebarTitle: Code
+description: Fluso is your AI development partner — browse codebases, review pull requests, scaffold projects, fix bugs, and generate code across any language.
+---
+
+Connect GitHub and Fluso becomes a development partner. It reads your code, understands your architecture, reviews PRs, writes code, and scaffolds entire projects — all through conversation.
+
+## What Fluso can do
+
+### Understand your codebase
+
+> *"Show me how authentication works in this repo."*
+
+> *"Find where JWT verification happens."*
+
+> *"What's the architecture of the backend — how are services organised?"*
+
+> *"Where are the database models defined?"*
+
+> *"What middleware does each request go through?"*
+
+Fluso reads your actual code and explains it — not just file names, but how things connect. Invaluable for onboarding or revisiting code you haven't touched in months.
+
+### Review pull requests
+
+> *"Review the open PR from Sarah — security issues, edge cases, test coverage."*
+
+> *"Summarise what changed in PR #42."*
+
+> *"Which open PRs are safe to merge?"*
+
+Fluso reads the diff and returns a structured review:
+
+<Card title="Sample review">
+**Summary.** Adds rate limiting middleware for the API. 3 files changed, 85 lines added.
+
+**Issues**
+- 🟡 Missing rate limit on `/auth/login` — brute-force vulnerability
+- 🟡 Reset window is 1 hour — should probably be 15 minutes
+- 🟢 No obvious bugs or regressions
+
+**Suggestions**
+- Add a test for the rate-limit-exceeded response format
+- Make the rate limit configurable via environment variable
+
+**Verdict.** Approve with suggestions. Address the missing login rate limit before merge.
+</Card>
+
+### Scaffold projects
+
+Describe what you want and get a complete, runnable project:
+
+> *"Build me a REST API for a todo app using FastAPI with SQLite — user auth, CRUD endpoints, tests, API docs."*
+
+> *"Create a Next.js landing page with a blog, contact form, dark mode, and Tailwind CSS."*
+
+> *"Scaffold a Go microservice with gRPC endpoints, PostgreSQL, and Docker."*
+
+You get:
+
+- Complete project structure.
+- Working code with proper patterns.
+- Database models and migrations.
+- API endpoints with validation.
+- Tests (unit + integration).
+- README with setup instructions.
+- Docker configuration.
+- CI/CD pipeline config.
+
+### Supported stacks
+
+| Stack | What Fluso can build |
+|---|---|
+| **Next.js + TypeScript** | Full-stack web apps, landing pages, dashboards. |
+| **FastAPI + Python** | REST APIs, microservices, data pipelines. |
+| **Go + Connect RPC** | High-performance services, CLI tools. |
+| **Rails + Ruby** | Full-stack web applications. |
+| **Rust** | Systems tools, high-performance services. |
+| **Flutter** | Mobile apps (iOS + Android). |
+| **React** | Frontend components, SPAs. |
+
+### Fix bugs
+
+> *"Users report login errors with the new SSO flow — find the issue."*
+
+Fluso traces through the code:
+
+<Steps>
+  <Step title="Reads the auth flow">
+    From entry point through middleware to handler.
+  </Step>
+  <Step title="Identifies the validation logic">
+    Token validation, expiry checks, error paths.
+  </Step>
+  <Step title="Finds the bug">
+    For example: token expiry set to 60 seconds instead of 3600.
+  </Step>
+  <Step title="Shows file and line">
+    *"`auth.py` line 47: `expiry = 60` should be `3600`."*
+  </Step>
+  <Step title="Offers a fix">
+    *"Want me to fix it and create a PR?"*
+  </Step>
+</Steps>
+
+### Write code
+
+> *"Add pagination to `/users` — follow the same pattern as `/products`."*
+
+> *"Write a database migration to add a `role` column to the users table."*
+
+> *"Add input validation to `create user` — email format, password strength, required fields."*
+
+> *"Write unit tests for the payment processing service."*
+
+Fluso reads your existing code, follows your patterns, and writes code that fits your codebase — not generic templates.
+
+### CodeTours for onboarding
+
+> *"Create a CodeTour of the authentication module for new team members."*
+
+Fluso generates a `.tour` file — a step-by-step walkthrough:
+
+<Card>
+1. `middleware/auth.ts:12-45` — How requests are intercepted and JWT tokens extracted.
+2. `services/jwt.ts:23-67` — Token verification and user lookup.
+3. `handlers/login.ts:8-34` — Login flow, credential validation.
+4. `models/user.ts:5-29` — User model and database schema.
+…
+
+Each step links to the exact file and lines with an explanation.
+</Card>
+
+### Manage issues
+
+> *"List the open issues on `fluso-frontend`."*
+
+> *"Create an issue for the login bug — use the bug report template."*
+
+> *"What issues are assigned to me this sprint?"*
+
+> *"Close issue #142 — fix has been deployed."*
+
+## Workflows
+
+### PR review pipeline
+
+| Without Fluso | With Fluso |
+|---|---|
+| Author opens PR → human reads code, checks issues, leaves comments → author addresses → merge | Author opens PR → Fluso auto-reviews and catches mechanical issues → human focuses on architecture and design → merge |
+
+Fluso catches what's easy to miss: null checks, error handling gaps, inconsistent patterns, missing tests, security issues. Humans focus on what matters.
+
+### Bug fix workflow
+
+| Without Fluso | With Fluso |
+|---|---|
+| Bug → reproduce → read code → debug → identify cause → write fix → test → PR → review | Bug → ask Fluso to trace it → verify root cause → Fluso writes the fix → PR |
+
+**Time from report to PR: 15–30 minutes instead of 2–6 hours.**
+
+### Onboarding
+
+| Without Fluso | With Fluso |
+|---|---|
+| New hire reads docs, then reads code blind for days, then asks teammates many small questions, slowly building understanding | New hire asks Fluso "How does X work?" and gets explanations with file-and-line references; follows a generated CodeTour for each module; ramped in hours, not weeks |
+
+## Security and control
+
+<Warning>
+  Fluso always asks for your approval before modifying your repositories. It will never create a PR, commit code, or close an issue without your confirmation. You are always in control.
+</Warning>
+
+### What Fluso can access
+
+- Repositories you've granted access to (public or private).
+- Only the permissions you've authorized (read, write, or both).
+- You can revoke access at any time.
+
+<Tip>
+  **Project-specific context.** Drop a `context.md` in your project workspace describing your tech stack, conventions, and preferences. Fluso reads and follows it when generating code.
+</Tip>

@@ -1,0 +1,95 @@
+---
+title: Integrations overview
+sidebarTitle: Overview
+description: Connect Fluso to the tools you already use — Gmail, Calendar, Slack, GitHub, and 100+ more apps. Two-click setup, no API keys.
+---
+
+Fluso works best connected to your tools. Each integration gives Fluso more context about your work and more ability to help you. Connect any app in two clicks — no passwords, no API keys.
+
+## How integrations work
+
+<Steps>
+  <Step title="Connect">
+    Click **Connect** on an app in **Settings → Connectors**. You're redirected to that app's authorization page.
+  </Step>
+  <Step title="Authorize">
+    Grant Fluso the specific permissions it needs. You see exactly what it can and can't do.
+  </Step>
+  <Step title="Use">
+    Fluso can now use that app as part of your conversations. Just ask for what you want.
+  </Step>
+</Steps>
+
+<Info>
+  Fluso uses OAuth2 for every integration. Your passwords are never seen or stored. You can revoke access at any time from Fluso or from the connected app itself.
+</Info>
+
+## Core integrations
+
+The four that pay off the fastest. Each has a deep dive page.
+
+<CardGroup cols={2}>
+  <Card title="Gmail" icon="mail" href="/integrations/gmail">
+    Inbox triage, summaries, smart search, draft replies, auto-task extraction.
+  </Card>
+  <Card title="Google Calendar" icon="calendar" href="/integrations/google-calendar">
+    Schedule view, find time, schedule meetings, prep with full context.
+  </Card>
+  <Card title="Slack" icon="message-square" href="/integrations/slack">
+    Catch up, search, post updates, surface action items from threads.
+  </Card>
+  <Card title="GitHub" icon="github" href="/integrations/github">
+    Codebase Q&A, PR review, scaffolding, bug fixes, issue management.
+  </Card>
+</CardGroup>
+
+## All other apps
+
+Fluso supports 100+ apps and services across communication, calendar, code, documents, design, business, data, and AI tools.
+
+<Card title="Browse the full catalog" icon="grid" href="/integrations/all-apps">
+  Communication, calendar, code, documents, design, finance, data, AI — see every supported integration.
+</Card>
+
+## Managing integrations
+
+Open **Settings → Connectors** at any time to:
+
+- See what's connected and active.
+- Connect new apps.
+- Disconnect apps you no longer use.
+- Review permissions for each app.
+- See when tokens were last refreshed.
+
+## Security and privacy
+
+<AccordionGroup>
+  <Accordion title="How are credentials stored?">
+    OAuth2 tokens are encrypted at rest in a dedicated secrets manager. Your passwords are never seen or stored.
+  </Accordion>
+  <Accordion title="Can Fluso act without my permission?">
+    Never. Any action that modifies external data — sending email, posting to Slack, creating PRs — requires your explicit approval first.
+  </Accordion>
+  <Accordion title="What happens when I disconnect?">
+    All tokens are deleted immediately. Fluso stops accessing that app. You can also revoke access from the connected app itself.
+  </Accordion>
+  <Accordion title="Can teammates see my connected apps?">
+    No. Your integrations are private to your account. Team plan admins can see which apps members have connected (for management) but cannot access the data.
+  </Accordion>
+</AccordionGroup>
+
+For more, see [Security & privacy](/resources/security).
+
+## Tips
+
+<Tip>
+  **Start with Gmail and Calendar.** Those two save hours in your first week. Add Slack and GitHub as workflows demand them.
+</Tip>
+
+<Tip>
+  **More integrations = more context.** The more apps you connect, the more Fluso understands about your work. But start with the ones you actually use daily.
+</Tip>
+
+<Tip>
+  **Audit monthly.** Disconnect apps you no longer use. A few well-used integrations beat many unused ones.
+</Tip>

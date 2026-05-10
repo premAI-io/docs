@@ -1,51 +1,51 @@
 ---
-title: Home
-description: Everything you need to set up, configure, and get the most out of Platform, Analytics, and Integrations tools.
+title: Fluso docs
+description: Set up Fluso, connect your apps, and put your AI executive assistant to work across email, calendar, Slack, GitHub, and 100+ tools.
 mode: frame
 ---
 
 <div data-product-guide-index className="flex w-full flex-col gap-8 max-w-5xl mx-auto px-4 md:px-8 lg:px-12 py-10 lg:gap-14 lg:py-16">
-  <div className="flex max-w-[540px] flex-col gap-2 self-center text-center">
+  <div className="flex max-w-[640px] flex-col gap-2 self-center text-center">
     <h1 className="text-[30px] font-medium leading-9 tracking-tight text-gray-900 dark:text-gray-50">
-      Product Guide
+      Fluso docs
     </h1>
     <p className="text-balance text-base leading-relaxed tracking-tight text-gray-600 dark:text-gray-400">
-      Everything you need to set up, configure, and get the most out of Platform, Analytics, and Integrations tools.
+      Fluso is an AI executive assistant that works inside your tools — email, calendar, Slack, GitHub, and 100+ more. It reads, writes, creates, researches, codes, and remembers, so you can focus on the work that actually matters.
     </p>
   </div>
 
   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <Card
-      title={<span className="product-guide-feature-card-title">Platform overview</span>}
-      icon="chart-no-axes-gantt"
-      href="/platform"
+      title={<span className="product-guide-feature-card-title">Get started in 5 minutes</span>}
+      icon="rocket"
+      href="/quickstart"
       className="product-guide-feature-card"
       size={64}
     >
-      <span className="product-guide-feature-card-description">Setup, configure, and manage your workspace.</span>
+      <span className="product-guide-feature-card-description">Create an account, connect Gmail and Calendar, send your first message.</span>
     </Card>
 
     <a
-      href="/analytics"
+      href="/features/chat"
       className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
     >
-      <Icon icon="chart-column" color="rgb(var(--primary))" size={18} className="shrink-0" />
+      <Icon icon="sparkles" color="rgb(var(--primary))" size={18} className="shrink-0" />
       <div className="flex flex-col gap-1">
-        <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Analytics</span>
+        <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Features</span>
         <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-          Build, report, and visualize your data.
+          What Fluso can do — chat, email, calendar, tasks, memory, content, research, and code.
         </span>
       </div>
     </a>
     <a
-      href="/integrations"
+      href="/integrations/overview"
       className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
     >
-      <Icon icon="code-xml" color="rgb(var(--primary))" size={18} className="shrink-0" />
+      <Icon icon="plug" color="rgb(var(--primary))" size={18} className="shrink-0" />
       <div className="flex flex-col gap-1">
         <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Integrations</span>
         <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-          Ready-to-use connectors for common platforms and flexible webhooks.
+          Connect Gmail, Calendar, Slack, GitHub, and 100+ apps with two clicks — no API keys.
         </span>
       </div>
     </a>
@@ -54,78 +54,78 @@ mode: frame
   <hr className="border-0 border-t border-border" />
 
   <div className="flex flex-col gap-4">
-    <h2 className="font-serif text-xl font-medium leading-normal text-gray-900 dark:text-gray-50">Common tasks</h2>
+    <h2 className="font-serif text-xl font-medium leading-normal text-gray-900 dark:text-gray-50">Common workflows</h2>
 
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <a
-        href="/platform/configuration/user-management"
+        href="/use-cases/morning-brief"
         className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
       >
-        <Icon icon="users" color="rgb(var(--primary))" size={18} className="shrink-0" />
+        <Icon icon="sun" color="rgb(var(--primary))" size={18} className="shrink-0" />
         <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Manage your team</span>
+          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Run a morning brief</span>
           <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Add members, assign roles, and control access across your workspace.
+            Inbox, calendar, tasks, and follow-ups in two minutes — every day.
           </span>
         </div>
       </a>
       <a
-        href="/analytics/connect-data"
+        href="/use-cases/email-triage"
         className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
       >
-        <Icon icon="database" color="rgb(var(--primary))" size={18} className="shrink-0" />
+        <Icon icon="mail" color="rgb(var(--primary))" size={18} className="shrink-0" />
         <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Connect a data source</span>
+          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Triage your inbox</span>
           <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Link a database, data warehouse, or third-party data provider.
+            Cut 60 minutes of email scanning down to 5. Replies and tasks drafted for review.
           </span>
         </div>
       </a>
       <a
-        href="/integrations/connectors/crm"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="building-2" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Connect your CRM</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Sync your CRM through native connectors or a custom strategy.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/analytics/dashboards/create-dashboard"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="layout-dashboard" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Build a dashboard</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Add charts, set filters, and share a live dashboard.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/integrations/webhooks/configure"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="webhook" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Set up a webhook</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Subscribe to events and route them to any endpoint.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/analytics/reports/scheduled-reports"
+        href="/use-cases/meetings"
         className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
       >
         <Icon icon="calendar-clock" color="rgb(var(--primary))" size={18} className="shrink-0" />
         <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Schedule a report</span>
+          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Run end-to-end meetings</span>
           <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Send recurring snapshots via email or Slack.
+            Prep, transcribe, summarise, extract tasks, and draft follow-ups — automatically.
+          </span>
+        </div>
+      </a>
+      <a
+        href="/use-cases/research-to-deck"
+        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
+      >
+        <Icon icon="presentation" color="rgb(var(--primary))" size={18} className="shrink-0" />
+        <div className="flex flex-col gap-1">
+          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Research to presentation</span>
+          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+            One prompt: a cited research report and a board-ready deck in under an hour.
+          </span>
+        </div>
+      </a>
+      <a
+        href="/use-cases/dev-bug-fix"
+        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
+      >
+        <Icon icon="bug" color="rgb(var(--primary))" size={18} className="shrink-0" />
+        <div className="flex flex-col gap-1">
+          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Find and fix a bug</span>
+          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+            Bug report → root cause → patch → PR, in 15 minutes instead of 4 hours.
+          </span>
+        </div>
+      </a>
+      <a
+        href="/use-cases/knowledge-recall"
+        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
+      >
+        <Icon icon="brain" color="rgb(var(--primary))" size={18} className="shrink-0" />
+        <div className="flex flex-col gap-1">
+          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Recall anything instantly</span>
+          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+            Ask a question. Fluso searches your emails, meetings, and Slack going back months.
           </span>
         </div>
       </a>
