@@ -1,123 +1,85 @@
 ---
 title: Security & privacy
 sidebarTitle: Security
-description: How Fluso protects your data — encryption, isolation, access controls, and our commitment to never act without your approval.
+description: How Fluso handles your data — encryption, isolation, access controls, and the commitment to never act without your approval.
 ---
 
-Your data is yours. Fluso is built to keep it that way.
+Your data is yours. Fluso is built so it stays that way.
 
-## Our principles
+## The principles
 
-<CardGroup cols={2}>
-  <Card title="You control access" icon="key">
-    When you connect an app, you see exactly what Fluso can do — read, write, or both. Revoke any time from Fluso or from the connected app.
-  </Card>
-  <Card title="Approval before action" icon="shield-check">
-    Anything that modifies external data — sending email, posting to Slack, creating PRs — requires your explicit approval. You see the action and decide.
-  </Card>
-  <Card title="Your data is isolated" icon="server">
-    Your workspace runs in its own sandbox. Files, conversations, tasks, and the knowledge graph are private to you.
-  </Card>
-  <Card title="You can delete anything" icon="trash-2">
-    Delete individual entries, disconnect an app (tokens destroyed), or delete your account (everything purged).
-  </Card>
-</CardGroup>
+You control access. When you connect an app, you see the exact permissions Fluso wants and approve only the ones you're comfortable with. Revoke at any time, from Fluso or from the app's own settings.
 
-## How your data is protected
+Action requires approval. Reading happens freely. Anything that writes to another system — sending email, posting to Slack, opening a PR, creating an event — waits for your explicit approval. You see what Fluso is about to do and decide.
 
-### Encryption
+Your workspace is isolated. Files, conversations, tasks, and the knowledge graph live in your own sandbox. Other users never see them.
 
-| Data | Protection |
-|---|---|
-| In transit | TLS (HTTPS) on every connection |
-| Workspace files | Encrypted at rest on disk |
-| Database | Encrypted at rest |
-| OAuth2 tokens | Encrypted in dedicated secrets management |
-| Conversations | Encrypted at rest |
+Anything is deletable. Individual entries, the whole knowledge graph, an entire connected app's data, your account. All of it goes when you say it does.
 
-### Authentication
+## Encryption and infrastructure
 
-- **Clerk** handles user authentication — passwords, multi-factor auth, social login.
-- **OAuth2** for every third-party app connection — your passwords are never seen or stored.
-- **Per-user isolation** — one user's credentials cannot access another's data.
+Connections use TLS. Workspace files are encrypted at rest. The database is encrypted at rest. OAuth tokens live in a dedicated secrets manager, encrypted, never in environment variables. Conversations are encrypted at rest.
 
-### Infrastructure
+Authentication runs through Clerk — passwords, MFA, social login. Third-party app connections use OAuth2, which means your passwords are never seen. Per-user isolation guarantees one user's credentials cannot access another's data.
 
-- Dedicated per-user sandbox containers.
-- Network policies restrict cross-user communication.
-- Credentials delivered via secure boot files, never in environment variables.
-- Automatic token refresh before expiry.
+Each user gets a sandbox container of their own. Network policies prevent cross-user communication. Token refresh happens before expiry, automatically.
 
 ## What Fluso accesses
 
-### Only what you connect
+Only what you connect. If Slack isn't connected, Fluso has no idea what you've discussed in Slack.
 
-Fluso only sees apps you've explicitly connected. If Slack isn't connected, Fluso knows nothing about your Slack activity.
-
-### Permissions you control
-
-For every connected app, you see and approve specific permissions:
+For each connected app, you see and approve the specific permissions:
 
 | App | Permissions | Why |
 |---|---|---|
-| Gmail | Read emails, send emails | Summarise the inbox and draft replies. |
-| Calendar | Read events, create events | Show your schedule and schedule meetings. |
-| Slack | Read messages, send messages | Search conversations and post updates. |
+| Gmail | Read emails, send emails | Inbox triage, drafting replies. |
+| Calendar | Read events, create events | See your schedule, schedule meetings. |
+| Slack | Read messages, send messages | Catch up, search, post updates. |
 | GitHub | Read repos, write issues/PRs | Work with your code. |
 
-### What Fluso never does
+What Fluso never does:
 
-- ❌ Delete your emails or files.
-- ❌ Change your account settings.
-- ❌ Share your data with third parties.
-- ❌ Train AI models on your private data.
-- ❌ Access apps you haven't connected.
-- ❌ Take write actions without your approval.
+- Delete your emails or files.
+- Change your account settings.
+- Share your data with third parties.
+- Train AI models on your private data.
+- Access apps you haven't connected.
+- Take write actions without your approval.
 
 ## Your knowledge graph
 
-The memory Fluso builds — people, projects, conversations — is:
+The memory Fluso builds — people, projects, decisions, conversations — is stored in your isolated workspace. No other user sees it. It's deletable in pieces or in whole. It only ever builds from apps you've connected.
 
-- Stored in your isolated workspace.
-- Inaccessible to other users.
-- Deletable (entries or the whole graph).
-- Built only from apps you've connected.
+If something shouldn't be tracked, just say so:
 
-<Info>
-  The knowledge graph makes Fluso more helpful by remembering context. You're always in control. If something shouldn't be tracked, exclude specific people, projects, or topics with a simple instruction.
-</Info>
+> *"Don't track anything related to Project X."*
 
-## For teams
+> *"Forget everything about this vendor."*
 
-Team plan admins **can**:
+The graph makes Fluso more useful, but you're always in control.
 
-- See which apps team members have connected (for management).
+## On Team plans
+
+Admins can:
+
+- See which apps members have connected (for management).
 - Set security policies.
 - Manage user access.
 
-Team plan admins **cannot**:
+Admins cannot:
 
-- Read team members' messages.
-- Access team members' knowledge graphs.
-- See team members' files without explicit sharing.
+- Read members' messages.
+- Access members' knowledge graphs.
+- See members' files without explicit sharing.
 
 ## Compliance
 
-Fluso is built by Prem AI. For enterprise customers, we offer:
+Fluso is built by Prem AI. For Enterprise customers we offer custom data residency, SSO (SAML/OIDC), audit logging, SLA-backed availability, SOC 2 compliance (in progress), and a Data Processing Agreement. [Contact us](mailto:sales@premai.io) for the security details.
 
-- Custom data residency options.
-- SSO (SAML/OIDC) integration.
-- Audit logging.
-- SLA-backed availability.
-- SOC 2 compliance (in progress).
-- DPA (Data Processing Agreement).
+## Reporting issues
 
-[Contact us](mailto:sales@premai.io) for enterprise security details.
-
-## Report a security issue
-
-If you discover a security vulnerability, email [security@premai.io](mailto:security@premai.io). We respond within 24 hours.
+Found a security vulnerability? [security@premai.io](mailto:security@premai.io). We respond within 24 hours.
 
 <Warning>
-  **Protect your account.** Enable multi-factor authentication in Clerk. Don't share your login credentials. Fluso will never ask for your password by chat or email.
+  Protect your account. Enable multi-factor authentication in Clerk. Don't share your login credentials. Fluso will never ask for your password by chat or email.
 </Warning>

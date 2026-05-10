@@ -1,95 +1,61 @@
 ---
-title: Integrations overview
+title: Integrations
 sidebarTitle: Overview
-description: Connect Fluso to the tools you already use — Gmail, Calendar, Slack, GitHub, and 100+ more apps. Two-click setup, no API keys.
+description: How Fluso connects to your tools — Gmail, Calendar, Slack, GitHub, and the rest. Two clicks, no API keys.
 ---
 
-Fluso works best connected to your tools. Each integration gives Fluso more context about your work and more ability to help you. Connect any app in two clicks — no passwords, no API keys.
+Each app you connect gives Fluso more to work with. More context to understand what you mean. More capability to act on what you ask. The catalog runs to over a hundred services; four of them carry most people's day.
 
-## How integrations work
+## Working model
 
-<Steps>
-  <Step title="Connect">
-    Click **Connect** on an app in **Settings → Connectors**. You're redirected to that app's authorization page.
-  </Step>
-  <Step title="Authorize">
-    Grant Fluso the specific permissions it needs. You see exactly what it can and can't do.
-  </Step>
-  <Step title="Use">
-    Fluso can now use that app as part of your conversations. Just ask for what you want.
-  </Step>
-</Steps>
+You click **Connect** on a card in **Settings → Connectors**. The app's own OAuth screen opens. You see exactly what permissions Fluso wants and approve the ones you're comfortable with. After that, Fluso can use the app inside your conversations. There's no key to copy, no callback URL to set, no shared password anywhere.
 
-<Info>
-  Fluso uses OAuth2 for every integration. Your passwords are never seen or stored. You can revoke access at any time from Fluso or from the connected app itself.
-</Info>
+Tokens live encrypted in a dedicated secrets store. You can revoke from Fluso or from the source app's settings. Disconnecting deletes the token immediately.
 
-## Core integrations
-
-The four that pay off the fastest. Each has a deep dive page.
+## The four that matter most
 
 <CardGroup cols={2}>
   <Card title="Gmail" icon="mail" href="/integrations/gmail">
-    Inbox triage, summaries, smart search, draft replies, auto-task extraction.
+    Triage, summaries, search, drafts, auto-task extraction. Connect this first.
   </Card>
   <Card title="Google Calendar" icon="calendar" href="/integrations/google-calendar">
-    Schedule view, find time, schedule meetings, prep with full context.
+    Schedule, find time, schedule meetings, prep with full context.
   </Card>
   <Card title="Slack" icon="message-square" href="/integrations/slack">
-    Catch up, search, post updates, surface action items from threads.
+    Catch up on channels, search team history, post updates with approval.
   </Card>
   <Card title="GitHub" icon="github" href="/integrations/github">
     Codebase Q&A, PR review, scaffolding, bug fixes, issue management.
   </Card>
 </CardGroup>
 
-## All other apps
+## Everything else
 
-Fluso supports 100+ apps and services across communication, calendar, code, documents, design, business, data, and AI tools.
+Fluso connects to a hundred-plus apps across communication, calendar, code, documents, design, business, data, and AI tools.
 
 <Card title="Browse the full catalog" icon="grid" href="/integrations/all-apps">
-  Communication, calendar, code, documents, design, finance, data, AI — see every supported integration.
+  Every supported integration, grouped by category.
 </Card>
 
-## Managing integrations
+## Managing connections
 
-Open **Settings → Connectors** at any time to:
+Open **Settings → Connectors** to see what's connected and active, when each token was last refreshed, what each app has access to, and to disconnect anything you've stopped using. An audit once a month is a good habit. A few well-used connections beats many half-forgotten ones.
 
-- See what's connected and active.
-- Connect new apps.
-- Disconnect apps you no longer use.
-- Review permissions for each app.
-- See when tokens were last refreshed.
-
-## Security and privacy
+## Common questions
 
 <AccordionGroup>
-  <Accordion title="How are credentials stored?">
-    OAuth2 tokens are encrypted at rest in a dedicated secrets manager. Your passwords are never seen or stored.
+  <Accordion title="What does Fluso actually store?">
+    OAuth tokens, encrypted, in a dedicated secrets manager. Conversations, files, and the knowledge graph live in your isolated workspace. Passwords are never seen.
   </Accordion>
-  <Accordion title="Can Fluso act without my permission?">
-    Never. Any action that modifies external data — sending email, posting to Slack, creating PRs — requires your explicit approval first.
+  <Accordion title="Can it act without me approving?">
+    No. Reads happen freely. Anything that writes to another system — sending mail, posting to Slack, opening a PR, creating an event — waits for your explicit approval.
   </Accordion>
   <Accordion title="What happens when I disconnect?">
-    All tokens are deleted immediately. Fluso stops accessing that app. You can also revoke access from the connected app itself.
+    The token is deleted. Fluso loses access immediately. Anything already in your knowledge graph stays unless you delete it.
   </Accordion>
-  <Accordion title="Can teammates see my connected apps?">
-    No. Your integrations are private to your account. Team plan admins can see which apps members have connected (for management) but cannot access the data.
+  <Accordion title="Can teammates see my apps on a Team plan?">
+    Admins can see which apps a member has connected so they can manage access. They cannot read the data.
   </Accordion>
 </AccordionGroup>
 
-For more, see [Security & privacy](/resources/security).
-
-## Tips
-
-<Tip>
-  **Start with Gmail and Calendar.** Those two save hours in your first week. Add Slack and GitHub as workflows demand them.
-</Tip>
-
-<Tip>
-  **More integrations = more context.** The more apps you connect, the more Fluso understands about your work. But start with the ones you actually use daily.
-</Tip>
-
-<Tip>
-  **Audit monthly.** Disconnect apps you no longer use. A few well-used integrations beat many unused ones.
-</Tip>
+The longer version is in [Security & privacy](/resources/security).

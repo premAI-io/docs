@@ -1,183 +1,144 @@
 ---
-title: Code & development
+title: Code
 sidebarTitle: Code
-description: Fluso is your AI development partner — browse codebases, review pull requests, scaffold projects, fix bugs, and generate code across any language.
+description: How Fluso works inside a codebase — answering architecture questions, reviewing PRs, scaffolding projects, finding bugs, and writing patches that actually fit the conventions.
 ---
 
-Connect GitHub and Fluso becomes a development partner. It reads your code, understands your architecture, reviews PRs, writes code, and scaffolds entire projects — all through conversation.
+Connect GitHub and Fluso starts behaving like a developer who already knows your codebase. The point isn't that it can write code in the abstract — most things can — it's that it reads your repos first and writes things that fit them. The PR it opens uses your patterns. The bug it finds points at the actual file and line.
 
-## What Fluso can do
+What follows is what it does, with concrete examples. The pattern is consistent: you describe an outcome, it does the work, you review the diff before anything is filed.
 
-### Understand your codebase
+## Reading a codebase
+
+The most common entry point is asking how something works:
 
 > *"Show me how authentication works in this repo."*
 
 > *"Find where JWT verification happens."*
 
-> *"What's the architecture of the backend — how are services organised?"*
+> *"What's the architecture of the backend? How are services organised?"*
 
 > *"Where are the database models defined?"*
 
 > *"What middleware does each request go through?"*
 
-Fluso reads your actual code and explains it — not just file names, but how things connect. Invaluable for onboarding or revisiting code you haven't touched in months.
+The replies aren't generic explanations of authentication; they're explanations of authentication in your code, with file paths and line numbers. This is the version of "AI helps with code" that's actually useful — not advice about JWT in general, advice about the specific JWT verification you wrote eight months ago and forgot.
 
-### Review pull requests
+It's especially helpful for the kind of codebase you used to know and now don't quite, or for joining a project mid-stream.
 
-> *"Review the open PR from Sarah — security issues, edge cases, test coverage."*
+## Reviewing pull requests
+
+PR review is where the time savings are most visible:
+
+> *"Review the open PR from Sarah. Security, edge cases, test coverage."*
+
+What comes back is a real review, not a "looks good to me". Summary of what the PR does. Issues flagged with their severity — yellow for "address before merge", red for "this is a security hole", green for "no concerns". Suggestions for things that aren't blockers but would improve the patch. A verdict: approve, approve with suggestions, request changes.
+
+The review for a rate-limiting PR looks something like: *"Adds rate limiting middleware for the API. Three files changed, 85 lines added. Issues: missing rate limit on /auth/login (brute-force vulnerability); reset window of 1 hour might be too long, 15 minutes seems more standard. Suggestion: add a test for the rate-limit-exceeded response shape; consider making the limit env-configurable. Verdict: approve with suggestions, but address the missing login limit before merge."*
+
+Other useful review prompts:
 
 > *"Summarise what changed in PR #42."*
 
+> *"Are there PRs that need my review?"*
+
 > *"Which open PRs are safe to merge?"*
 
-Fluso reads the diff and returns a structured review:
+The intent is to let humans focus on architecture and design. Fluso catches the mechanical stuff — null checks, error handling gaps, missing tests, inconsistent patterns, security regressions.
 
-<Card title="Sample review">
-**Summary.** Adds rate limiting middleware for the API. 3 files changed, 85 lines added.
+## Bug fixes
 
-**Issues**
-- 🟡 Missing rate limit on `/auth/login` — brute-force vulnerability
-- 🟡 Reset window is 1 hour — should probably be 15 minutes
-- 🟢 No obvious bugs or regressions
+The pattern is: describe the symptom, get the diagnosis, optionally let Fluso write the patch.
 
-**Suggestions**
-- Add a test for the rate-limit-exceeded response format
-- Make the rate limit configurable via environment variable
+> *"Users report password reset emails aren't arriving. Find the bug in our auth module."*
 
-**Verdict.** Approve with suggestions. Address the missing login rate limit before merge.
-</Card>
+Fluso traces through the code from request entry to email send, identifies the issue, and tells you the file and line. *"Found it. The password reset email template in templates/reset-password.html line 12 uses https://old-domain.com/reset?token=… The base URL changed when we migrated to the new domain last week. The links in the emails are broken."*
 
-### Scaffold projects
+If you want it fixed, ask:
 
-Describe what you want and get a complete, runnable project:
+> *"Fix it and create a PR."*
 
-> *"Build me a REST API for a todo app using FastAPI with SQLite — user auth, CRUD endpoints, tests, API docs."*
+You get back: *"Done. PR #156 — fixed the reset link domain, added a test that validates the link format. Ready for review."*
 
-> *"Create a Next.js landing page with a blog, contact form, dark mode, and Tailwind CSS."*
+You read the diff before merging. Fluso always asks before opening a PR.
 
-> *"Scaffold a Go microservice with gRPC endpoints, PostgreSQL, and Docker."*
+## Scaffolding projects
 
-You get:
+If you need a new service or app from scratch:
 
-- Complete project structure.
-- Working code with proper patterns.
-- Database models and migrations.
-- API endpoints with validation.
-- Tests (unit + integration).
-- README with setup instructions.
-- Docker configuration.
-- CI/CD pipeline config.
+> *"Build me a REST API for a todo app using FastAPI with SQLite. User auth, CRUD endpoints, tests, API docs."*
 
-### Supported stacks
+> *"Create a Next.js landing page with a blog, contact form, dark mode, Tailwind."*
 
-| Stack | What Fluso can build |
-|---|---|
-| **Next.js + TypeScript** | Full-stack web apps, landing pages, dashboards. |
-| **FastAPI + Python** | REST APIs, microservices, data pipelines. |
-| **Go + Connect RPC** | High-performance services, CLI tools. |
-| **Rails + Ruby** | Full-stack web applications. |
-| **Rust** | Systems tools, high-performance services. |
-| **Flutter** | Mobile apps (iOS + Android). |
-| **React** | Frontend components, SPAs. |
+> *"Scaffold a Go microservice with gRPC endpoints, Postgres, Docker."*
 
-### Fix bugs
+What you get is a complete project: structure, working code, database models and migrations, endpoints with validation, tests (unit and integration), a README that walks setup, Docker config, CI pipeline. It's not a half-finished sketch — it runs.
 
-> *"Users report login errors with the new SSO flow — find the issue."*
+The stacks Fluso scaffolds well: Next.js + TypeScript, FastAPI + Python, Go + Connect RPC, Rails + Ruby, Rust, Flutter, React.
 
-Fluso traces through the code:
+## Writing code
 
-<Steps>
-  <Step title="Reads the auth flow">
-    From entry point through middleware to handler.
-  </Step>
-  <Step title="Identifies the validation logic">
-    Token validation, expiry checks, error paths.
-  </Step>
-  <Step title="Finds the bug">
-    For example: token expiry set to 60 seconds instead of 3600.
-  </Step>
-  <Step title="Shows file and line">
-    *"`auth.py` line 47: `expiry = 60` should be `3600`."*
-  </Step>
-  <Step title="Offers a fix">
-    *"Want me to fix it and create a PR?"*
-  </Step>
-</Steps>
+The thing that matters here is that Fluso reads your existing code first and follows the patterns it finds:
 
-### Write code
+> *"Add pagination to /users. Same pattern as /products."*
 
-> *"Add pagination to `/users` — follow the same pattern as `/products`."*
+> *"Write a database migration to add a 'role' column to the users table."*
 
-> *"Write a database migration to add a `role` column to the users table."*
-
-> *"Add input validation to `create user` — email format, password strength, required fields."*
+> *"Add input validation to create user. Email format, password strength, required fields."*
 
 > *"Write unit tests for the payment processing service."*
 
-Fluso reads your existing code, follows your patterns, and writes code that fits your codebase — not generic templates.
+The output won't have a different style from the rest of the codebase. If your repo uses single quotes and no semicolons, the new code does too. If your tests use a specific helper, Fluso uses it. If you have a particular service-layer convention, the new code lives in the right place.
 
-### CodeTours for onboarding
+Drop a `context.md` in your workspace if your conventions are subtle:
+
+```markdown
+# Project context
+
+- Stack: Next.js 14, TypeScript, Postgres, Drizzle ORM
+- Style: 2-space indent, no semicolons, single quotes
+- Testing: Vitest, Playwright for e2e
+- CI: GitHub Actions, must pass type-check + lint + tests
+- Conventions: route handlers in app/api, services in lib/services
+```
+
+Fluso reads it and follows.
+
+## CodeTours
+
+Useful for onboarding:
 
 > *"Create a CodeTour of the authentication module for new team members."*
 
-Fluso generates a `.tour` file — a step-by-step walkthrough:
+You get a `.tour` file — a step-by-step walkthrough that links to specific files and line ranges with explanations:
 
-<Card>
 1. `middleware/auth.ts:12-45` — How requests are intercepted and JWT tokens extracted.
 2. `services/jwt.ts:23-67` — Token verification and user lookup.
-3. `handlers/login.ts:8-34` — Login flow, credential validation.
+3. `handlers/login.ts:8-34` — Login flow and credential validation.
 4. `models/user.ts:5-29` — User model and database schema.
-…
 
-Each step links to the exact file and lines with an explanation.
-</Card>
+A new hire can step through it instead of reading the code blind for two days.
 
-### Manage issues
+## Issues
 
-> *"List the open issues on `fluso-frontend`."*
+> *"List the open issues on fluso-frontend."*
 
-> *"Create an issue for the login bug — use the bug report template."*
+> *"Create an issue for the login bug. Use the bug report template."*
 
 > *"What issues are assigned to me this sprint?"*
 
-> *"Close issue #142 — fix has been deployed."*
+> *"Close issue #142. Fix is deployed."*
 
-## Workflows
+All standard, all conversational.
 
-### PR review pipeline
+## Where the savings show up
 
-| Without Fluso | With Fluso |
-|---|---|
-| Author opens PR → human reads code, checks issues, leaves comments → author addresses → merge | Author opens PR → Fluso auto-reviews and catches mechanical issues → human focuses on architecture and design → merge |
+PR review pipelines: Fluso catches mechanical issues so humans focus on architecture and design.
 
-Fluso catches what's easy to miss: null checks, error handling gaps, inconsistent patterns, missing tests, security issues. Humans focus on what matters.
+Bug-to-fix loops: a 2-4 hour debug becomes a 15-minute exchange.
 
-### Bug fix workflow
-
-| Without Fluso | With Fluso |
-|---|---|
-| Bug → reproduce → read code → debug → identify cause → write fix → test → PR → review | Bug → ask Fluso to trace it → verify root cause → Fluso writes the fix → PR |
-
-**Time from report to PR: 15–30 minutes instead of 2–6 hours.**
-
-### Onboarding
-
-| Without Fluso | With Fluso |
-|---|---|
-| New hire reads docs, then reads code blind for days, then asks teammates many small questions, slowly building understanding | New hire asks Fluso "How does X work?" and gets explanations with file-and-line references; follows a generated CodeTour for each module; ramped in hours, not weeks |
-
-## Security and control
+Onboarding: new hires ramp in hours, not weeks, because they can ask the codebase questions in plain English instead of reading 30,000 lines blind.
 
 <Warning>
-  Fluso always asks for your approval before modifying your repositories. It will never create a PR, commit code, or close an issue without your confirmation. You are always in control.
+  Fluso always asks before modifying repositories. PRs, commits, and issue closes wait for explicit approval. The diff is shown for review every time.
 </Warning>
-
-### What Fluso can access
-
-- Repositories you've granted access to (public or private).
-- Only the permissions you've authorized (read, write, or both).
-- You can revoke access at any time.
-
-<Tip>
-  **Project-specific context.** Drop a `context.md` in your project workspace describing your tech stack, conventions, and preferences. Fluso reads and follows it when generating code.
-</Tip>

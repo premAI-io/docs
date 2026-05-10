@@ -1,158 +1,96 @@
 ---
 title: Email
 sidebarTitle: Email
-description: Fluso handles your Gmail inbox — triage, summarisation, smart search, drafting replies, and automatic task extraction from actionable emails.
+description: What Fluso does with your Gmail. Triage, summaries, search, drafting replies, and the auto-task extraction that quietly turns actionable mail into tracked work.
 ---
 
-Connect Gmail and Fluso becomes your inbox assistant. It reads, organises, drafts, and extracts action items — so you spend minutes on email instead of hours.
+Connect Gmail and Fluso starts handling the parts of email that don't really need you. Triage. Summaries of long threads. Drafts. Pulling out the things people are asking you to do and turning them into tasks. The mail itself still arrives in Gmail; Fluso just stops you from having to read most of it directly.
 
-## What Fluso can do
+## Triage
 
-- **Triage your inbox** — what needs attention, what's FYI, what's noise.
-- **Summarise emails and threads** — the bottom line, instead of making you read everything.
-- **Search intelligently** — find what you need with natural language.
-- **Draft replies** — responses in your voice, ready for review.
-- **Auto-extract tasks** — actionable emails become tracked tasks automatically.
-- **Track follow-ups** — know who hasn't responded and when to nudge.
-
-## Inbox triage
-
-### Daily brief
+Mornings are the obvious starting point. You haven't checked email since yesterday. Forty-seven unread.
 
 > *"Summarise my unread emails from today."*
 
-A typical response:
+You get back something like: three need action (Sarah's contract review by Friday, the CFO's Q2 numbers for the board, an urgent production hotfix); five are FYI (weekly metrics, a roadmap update, two newsletters worth glancing at, a vendor announcement); thirty-nine are noise (notification digests, marketing, automated alerts). Tasks have already been created for the action items; drafts are ready for the two replies that need writing.
 
-| Bucket | What's in it |
-|---|---|
-| **Needs action (3)** | Sarah Chen: contract review by Friday • CFO: Q2 numbers for board • Engineering: production hotfix approval |
-| **FYI (5)** | Weekly metrics • Product roadmap update • Vendor pricing change • 2 newsletter digests |
-| **Noise (7)** | Notification digests, marketing emails, automated alerts |
+You spend five minutes. The forty-seven emails are handled.
 
-### Focused triage
+That same shape works at sharper grain too:
 
 > *"Which emails need a reply today?"*
 
-> *"Show me only the urgent emails."*
+> *"Show me only urgent emails."*
+
+> *"Anything from my boss I haven't responded to?"*
 
 > *"What emails mention the Acme deal?"*
 
-> *"Are there emails from my boss I haven't responded to?"*
-
 ## Summaries
 
-### Single email
-
-> *"Summarise the latest email from Legal."*
-
-Fluso extracts: who sent it, what they want, the deadline, and what you need to do.
-
-### Full thread
+A long thread is a thing Fluso reads better than you do. Ask:
 
 > *"Summarise the email thread about the vendor negotiation."*
 
-Fluso reads the whole history and gives you who said what, decisions made, where things stand, and what's pending.
+You get who said what, what was decided, where it's stuck, and what's pending. Single emails work the same way — *"summarise the latest email from Legal"* gives you the ask, the deadline, and what you owe back.
 
-### Topic across the inbox
+The most useful version is across messages, not within one:
 
 > *"Summarise all emails from last week about the product launch."*
 
-Fluso finds matching messages across your inbox and synthesises them into one summary.
+Fluso finds them itself, groups them, and gives you one synthesis instead of fifteen messages.
 
-## Smart search
+## Search
 
-You describe what you want. Fluso constructs the search:
+Gmail's search is powerful and almost nobody uses it. Fluso uses it for you, in plain English:
 
-| You ask | Fluso finds |
-|---|---|
-| *"The email where Thomas sent the pricing spreadsheet"* | Emails from Thomas with spreadsheet attachments. |
-| *"Emails from last month about the server migration"* | All matching messages in that timeframe. |
-| *"Emails with 'invoice' and 'overdue'"* | Messages matching both terms. |
-| *"Unread emails older than 3 days"* | Messages you might have missed. |
-| *"Emails with attachments from the design team"* | Sender + attachment filter. |
+> *"Find the email where Thomas sent the pricing spreadsheet."*
 
-Fluso also handles complex queries:
+> *"Emails from @acme.com in the last two weeks that mention 'contract' and have attachments."*
 
-> *"Emails from @acme.com in the last 2 weeks that mention 'contract' and have attachments."*
+> *"Unread mail older than three days."*
 
 > *"Starred emails from April about the budget."*
 
-## Drafting replies
+Fluso translates the request into a Gmail query and returns the results. If you're vague, it asks; if you're specific, it just finds them.
 
-### Reply to an existing email
+## Replies
 
-> *"Reply to Sarah's email — say I've reviewed the proposal and have three changes. Detailed feedback by Thursday."*
+Drafts are the part most people take a beat to trust, and reasonably so. A few patterns work well.
 
-> *"Draft a response to the client — thank them for the feedback, confirm we'll implement the changes by next sprint."*
+The simplest is direct:
 
-> *"Reply briefly to the team: sounds good, let's discuss in tomorrow's standup."*
+> *"Reply to Sarah's email. I've reviewed the proposal and have three changes. I'll send detailed feedback by Thursday."*
 
-### Adjust tone
+You can hand off the gist and let Fluso shape the prose:
 
-> *"Make it more formal."*
+> *"Reply briefly to the team. Sounds good, let's discuss in tomorrow's standup."*
 
-> *"Softer — this is a sensitive topic."*
+You can iterate after you see the draft:
 
-> *"Shorter — just the key points."*
+> *"Make it more formal."* / *"Softer, this is sensitive."* / *"Shorter, just the key points."*
 
-> *"Add more detail about the timeline."*
+And you can compose from scratch:
 
-### Compose new emails
-
-> *"Email the engineering team announcing the code freeze and what it means for deployments."*
-
-> *"Compose an introduction email to the new client we met at the conference."*
+> *"Write an email to the engineering team announcing the code freeze and what it means for deployments."*
 
 <Warning>
-  Fluso never sends an email without your explicit approval. Every draft is shown for review before anything goes out.
+  Drafts always wait for your approval. Fluso doesn't send anything until you've read it and clicked confirm. Even so: read sensitive or external-facing replies carefully before approving.
 </Warning>
 
-## Automatic task extraction
+## Auto-tasks
 
-Fluso scans your inbox for messages that ask you to do something and creates tasks automatically — no manual entry.
+This is the feature most people stop noticing because it works. Fluso scans your inbox in the background and turns messages that ask you to do something into tracked tasks. Title, deadline if mentioned, priority based on tone, link back to the source email.
 
-### What it does
+So the CFO writes "Can you have the Q2 numbers ready for the board meeting Friday? Also Sarah from Legal needs sign-off on the vendor contract by EOD Thursday." Two tasks appear in your list before you've opened the email: *Prepare Q2 numbers for board meeting* (high, due Friday) and *Sign off on vendor contract* (high, due Thursday). Both linked back to the source.
 
-<Steps>
-  <Step title="Scan">
-    Fluso periodically reads your recent unread mail.
-  </Step>
-  <Step title="Identify">
-    It picks out messages where someone is asking you for action.
-  </Step>
-  <Step title="Create">
-    A task appears with title, priority, deadline (when mentioned), and a link back to the original email.
-  </Step>
-</Steps>
+What gets skipped: newsletters, marketing, "thanks", FYI updates that don't ask for anything, and calendar invites (those go through the calendar integration). The miss rate is low after a couple of days; before then, you may need to mark a few messages as not actually tasks. It learns.
 
-### Examples
+You can adjust priorities, deadlines, or kill misclassifications at any time. The first morning's task list might need ten seconds of cleanup; the third morning's usually doesn't.
 
-| Email says | Task created |
-|---|---|
-| "Can you review this by Friday?" | **Review document** — High — Due Friday |
-| "Please send me the Q2 numbers" | **Send Q2 numbers to [sender]** — Medium |
-| "We need someone to present at the all-hands" | **Prepare all-hands presentation** — Low |
-| "URGENT: production issue needs your sign-off" | **Approve production hotfix** — Urgent |
+## Follow-ups
 
-### What doesn't get captured
-
-Fluso skips:
-
-- Newsletters and marketing.
-- "Thank you" and acknowledgement messages.
-- FYI updates that don't ask for action.
-- Calendar invites (handled by the Calendar integration).
-
-### Managing auto-tasks
-
-You can:
-
-- Adjust priority or deadline.
-- Mark as not a task if Fluso misidentified.
-- Add notes or context.
-- Link to related projects.
-
-## Follow-up tracking
+Fluso remembers when you sent something that wanted a response and tracks whether one came back:
 
 > *"Has the client responded about the contract?"*
 
@@ -160,50 +98,16 @@ You can:
 
 > *"Anyone I emailed last week who hasn't responded?"*
 
-If they haven't, Fluso can draft a polite nudge.
+If the answer is no and the silence is awkward, you can ask for a polite nudge and approve it.
 
-## Workflows
+## Patterns that pay off
 
-### Morning routine
+A morning brief instead of opening Gmail. *"Morning brief"* combines the email summary, today's calendar, tasks due, and follow-ups. Two minutes start to finish.
 
-<Card title="Morning brief" icon="sun">
-  > *"Morning brief"*
+A weekly digest on Friday. *"Give me a weekly summary — what happened in my email this week?"* surfaces decisions, pending items, and people you've gone quiet on.
 
-  - Email summary (3 action, 5 FYI, 7 noise)
-  - Today's calendar (3 meetings)
-  - Tasks due today (2)
-  - Follow-ups needed (1)
-  - Auto-tasks created from new actionable emails
+A project-scoped sweep when something's been simmering. *"Find all emails about the Acme project and tell me where things stand."* Even months of mail get groomed into a status update.
 
-  **About 45 minutes saved.** Every day.
-</Card>
+## Notes
 
-### Weekly digest
-
-> *"Give me a weekly summary — what happened in my email this week?"*
-
-Fluso surfaces key conversations, decisions made, pending items, and people you haven't responded to.
-
-### Project-specific email
-
-> *"Find all emails related to the Acme project and summarise where things stand."*
-
-Fluso searches across your inbox, groups by thread, and gives you a status update — even if the emails span months and multiple people.
-
-## Tips
-
-<Tip>
-  **Connect Gmail first.** Email is where most work originates. Connecting Gmail gives Fluso the richest source of context about your work.
-</Tip>
-
-<Tip>
-  **Let auto-tasking run for a few days.** Task extraction gets better as Fluso learns which of your emails typically contain action items.
-</Tip>
-
-<Tip>
-  **Drafts are starting points.** Fluso's drafts are excellent, but add your personal touch — especially for sensitive or high-stakes emails.
-</Tip>
-
-<Info>
-  Fluso uses OAuth2 to access Gmail. Your password is never seen or stored. Revoke access anytime from your Google account or from Fluso's Connectors page.
-</Info>
+Connection lives at [Gmail](/integrations/gmail). The full security picture is in [Security & privacy](/resources/security). Fluso uses OAuth2 — your password is never seen — and you can revoke access from Google or from Fluso at any moment.
