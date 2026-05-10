@@ -1,0 +1,134 @@
+---
+title: Skills
+sidebarTitle: Skills
+description: Specialised capabilities Fluso reaches for when a request needs them. Document creation, research, code, image generation, meeting intelligence, and the custom ones you can write yourself.
+---
+
+A skill is a specialised capability Fluso uses when a request calls for it. Generating a PDF. Running deep research with citations. Reviewing a pull request. Producing a 12-slide deck. Each is a skill. You don't install them. You don't pick them. You ask for what you want and Fluso reaches for the right one.
+
+This page is the catalog plus the bit at the end about writing your own.
+
+## How activation works
+
+You ask:
+
+> *"Make a 5-slide deck about our roadmap."*
+
+Fluso recognises the request shape, picks the presentation skill, generates the deck, and hands you a file. You didn't say "use the presentation skill". You wouldn't.
+
+The same goes for everything below. The trigger is the request itself. If you describe the outcome clearly, Fluso picks the skill that produces it.
+
+## Document and content creation
+
+The most common skills, lumped together because they share the same shape: describe what you want, get a file back.
+
+**Documents.** PDFs, Word docs. Reports, proposals, memos, letters, manuals. Formatted properly with headings, tables, charts, page numbers, a TOC. *"Write a project proposal for the Acme partnership. Executive summary, scope, timeline, budget, team."*
+
+**Presentations.** Pitch decks, board decks, training, conference talks. Slide titles that mean something, charts where charts belong, speaker notes. *"Create a 10-slide pitch deck for our Series A."*
+
+**Spreadsheets.** Budgets, trackers, analyses with real formulas (SUM, VLOOKUP, conditional logic) and conditional formatting. *"Q3 budget by department. Actuals, forecast, variance columns. Add charts."*
+
+**Images.** Logos, hero images, social graphics, mockups, infographics. The more specific the description (palette, mood, aspect ratio), the better the result.
+
+**Diagrams.** Flowcharts, architecture, org charts, timelines, mind maps. Hand-drawn-style output that reads cleanly in docs and slides.
+
+**Web pages.** Real HTML, CSS (Tailwind), and React. Landing pages, dashboards, full apps. Deployable, not wireframes.
+
+[A launch in an afternoon](/workflows/content-launch) shows landing page + blog + social graphics in one workflow.
+
+## Research and analysis
+
+**Deep research.** Web search across multiple sources, cross-referenced, structured into a cited report. Three depths: a quick lookup ("NVIDIA's market cap?"), a standard report (3 min), a deep one (5–10 min, 15–30 sources, structured). Specificity drives quality more than anything else.
+
+**Video summaries.** Paste a YouTube link, get back the executive summary, key topics, timestamped highlights, notable quotes. Saved to a personal library you can search later.
+
+**Statistical analysis.** A/B test significance, effect size, confidence intervals, plain-English interpretation. Survey responses, before/after comparisons, correlation, sample-size calculations.
+
+**Data quality auditing.** Missing values, format inconsistencies, outliers, duplicates. Prioritised by severity.
+
+[From a CEO request to a board deck](/workflows/research-to-deck) walks the research-to-artifact pattern end to end.
+
+## Code
+
+Connect GitHub and the code skills become available. They read your repos first, so the output fits the codebase.
+
+**Codebase Q&A.** Ask how something works in your repo. Get an answer with file paths and line numbers, not a generic explanation. *"Show me how authentication works in this repo."*
+
+**PR review.** Real reviews, not "looks good to me". Issues flagged with severity, suggestions, a verdict. Catches mechanical things (null checks, missing tests, security regressions) so humans focus on architecture.
+
+**Bug diagnosis and fix.** Describe the symptom, get the file and line. Optionally let Fluso write the patch and open the PR. Always with your approval.
+
+**Scaffolding.** Complete projects from a description. Next.js, FastAPI, Go, Rails, Rust, Flutter. Working code, tests, README, CI config.
+
+**Code generation that follows your conventions.** Reads existing code, writes new code in the same style. A `context.md` in the repo makes this even sharper.
+
+[A bug to a PR](/workflows/dev-bug-fix) is the worked example.
+
+## Meeting intelligence
+
+Upload a transcript or recording. Fluso produces:
+
+- An executive summary in 3–5 paragraphs.
+- Every decision as a bullet.
+- Action items as tasks (with assignees and deadlines if mentioned).
+- A draft follow-up email for attendees.
+- A draft Slack update for the relevant channel.
+- Attendees and topics linked into your knowledge graph.
+
+Accepts `.txt`, `.vtt`, `.srt`, `.docx`, `.md` for text and audio for recordings. Transcripts from Zoom, Meet, Teams, Otter, Fireflies, Granola all work.
+
+[A meeting, end to end](/workflows/meetings) walks the full lifecycle.
+
+## Email and calendar
+
+When you connect Gmail and Google Calendar, the email and calendar skills become available. They look like ordinary chat but use the connectors directly.
+
+**Email.** Inbox triage, summaries of long threads, smart search, reply drafting in your voice, automatic task extraction from actionable mail, follow-up tracking.
+
+**Calendar.** See your schedule with context (who's there, what you've discussed before), find time across multiple calendars, schedule meetings from chat, prep before each call.
+
+The setup pages at [Gmail](/integrations/gmail) and [Google Calendar](/integrations/google-calendar) cover permissions and prompts. The morning ritual is at [Morning brief](/workflows/morning-brief).
+
+## Built-in skills, by plan
+
+| Skill | Free | Pro | Team |
+|---|---|---|---|
+| PDF and Word documents | ✅ | ✅ | ✅ |
+| Presentations | ✅ | ✅ | ✅ |
+| Spreadsheets | ✅ | ✅ | ✅ |
+| Email handling | ✅ | ✅ | ✅ |
+| Calendar management | ✅ | ✅ | ✅ |
+| Tasks | ✅ | ✅ | ✅ |
+| Code (basic) | ✅ | ✅ | ✅ |
+| Image generation | — | ✅ | ✅ |
+| Diagrams | — | ✅ | ✅ |
+| Web pages | — | ✅ | ✅ |
+| Deep research with citations | — | ✅ | ✅ |
+| Video summaries | — | ✅ | ✅ |
+| Meeting intelligence | — | ✅ | ✅ |
+| Statistical analysis | — | ✅ | ✅ |
+| Custom skills (`SKILL.md`) | — | ✅ | ✅ |
+
+## Custom skills
+
+A custom skill is a `SKILL.md` file in your workspace describing a workflow Fluso should follow when the trigger matches. Useful for things you do repeatedly with a specific shape.
+
+```markdown
+# weekly-investor-update
+
+When asked to "draft the weekly investor update":
+
+1. Pull this week's metrics from the dashboard (revenue, signups, churn)
+2. Pull major decisions from this week's meeting transcripts
+3. Write 250 words in the tone of past updates I've sent
+4. Format: subject line, three short paragraphs, one chart
+5. Output as a Gmail draft to investors@list, not sent
+```
+
+Available on Pro and Team. The skill activates when you say something close to its trigger.
+
+For more on the patterns that make custom skills worth writing, see [Going deeper](/going-deeper#custom-skills).
+
+## A small note
+
+You don't need to know which skill is running. The framing here is for you, not Fluso. Ask for what you want. The right skill activates.
