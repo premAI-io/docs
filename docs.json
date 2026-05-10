@@ -60,7 +60,6 @@
         "pages": [
           "resources/pricing",
           "resources/security",
-          "resources/privacy",
           "resources/faq"
         ]
       }
