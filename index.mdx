@@ -1,134 +1,66 @@
 ---
 title: Fluso docs
+sidebarTitle: Home
 description: Set Fluso up, connect your apps, and put it to work across email, calendar, Slack, GitHub, and the rest of your tools.
-mode: frame
 ---
 
-<div data-product-guide-index className="flex w-full flex-col gap-8 max-w-5xl mx-auto px-4 md:px-8 lg:px-12 py-10 lg:gap-14 lg:py-16">
-  <div className="flex max-w-[640px] flex-col gap-2 self-center text-center">
-    <h1 className="text-[30px] font-medium leading-9 tracking-tight text-gray-900 dark:text-gray-50">
-      Fluso docs
-    </h1>
-    <p className="text-balance text-base leading-relaxed tracking-tight text-gray-600 dark:text-gray-400">
-      Fluso is an AI assistant that lives inside the apps you already use. It reads your email, runs your calendar, processes your meetings, drafts what you'd otherwise write, and remembers all of it. These docs cover setup, every feature, and the workflows people actually run.
-    </p>
-  </div>
+Fluso is an AI assistant that lives inside the apps you already use. It reads your email, runs your calendar, processes your meetings, drafts what you'd otherwise write, and remembers all of it. These docs cover setup, every feature, and the workflows people actually run.
 
-  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-    <Card
-      title={<span className="product-guide-feature-card-title">Set up in five minutes</span>}
-      icon="rocket"
-      href="/quickstart"
-      className="product-guide-feature-card"
-      size={64}
-    >
-      <span className="product-guide-feature-card-description">Sign up, connect Gmail and Calendar, and try a few prompts. The full setup fits in a coffee break.</span>
-    </Card>
+## Start here
 
-    <a
-      href="/features/chat"
-      className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-    >
-      <Icon icon="sparkles" color="rgb(var(--primary))" size={18} className="shrink-0" />
-      <div className="flex flex-col gap-1">
-        <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Features</span>
-        <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-          Chat, email, calendar, tasks, memory, content, research, code. One page each.
-        </span>
-      </div>
-    </a>
-    <a
-      href="/integrations/overview"
-      className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-    >
-      <Icon icon="plug" color="rgb(var(--primary))" size={18} className="shrink-0" />
-      <div className="flex flex-col gap-1">
-        <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Integrations</span>
-        <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-          OAuth into Gmail, Calendar, Slack, GitHub, and a hundred more. Two clicks, no API keys.
-        </span>
-      </div>
-    </a>
-  </div>
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Sign up, connect Gmail and Calendar, and try a few prompts. Five minutes.
+  </Card>
+  <Card title="What Fluso is" icon="circle-help" href="/introduction">
+    Read this first if you want the why before the how.
+  </Card>
+  <Card title="Connect your apps" icon="plug" href="/connect-apps">
+    Permissions, scope, and what changes when each integration is on.
+  </Card>
+  <Card title="Your first week" icon="calendar-days" href="/first-week">
+    A loose, day-by-day plan to actually build the habit.
+  </Card>
+</CardGroup>
 
-  <hr className="border-0 border-t border-border" />
+## Workflows
 
-  <div className="flex flex-col gap-4">
-    <h2 className="font-serif text-xl font-medium leading-normal text-gray-900 dark:text-gray-50">Workflows people actually run</h2>
+Concrete examples of what an ordinary day with Fluso looks like.
 
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <a
-        href="/use-cases/morning-brief"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="sun" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Morning brief</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Inbox, calendar, tasks, follow-ups. Two sentences instead of an hour of triage.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/use-cases/email-triage"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="mail" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Inbox triage</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Action, FYI, noise. Replies drafted. Nothing important slipped.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/use-cases/meetings"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="calendar-clock" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">A meeting, end to end</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Walk in prepped. Walk out with the summary, tasks, and follow-up email already drafted.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/use-cases/research-to-deck"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="presentation" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">From a CEO request to a board deck</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            One prompt. A cited research report and a 12-slide deck come back ready to skim.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/use-cases/dev-bug-fix"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="bug" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">A bug to a PR</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Describe the symptom. Get the file, the line, the fix, and the open PR.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/use-cases/knowledge-recall"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="brain" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">"What did we decide about that?"</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Ask. Fluso searches months of email, meetings, and Slack and tells you.
-          </span>
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
+<CardGroup cols={2}>
+  <Card title="Morning brief" icon="sun" href="/use-cases/morning-brief">
+    Inbox, schedule, tasks, follow-ups in two minutes instead of forty-five.
+  </Card>
+  <Card title="Inbox triage" icon="mail" href="/use-cases/email-triage">
+    A Monday with 94 unread becomes five minutes of review.
+  </Card>
+  <Card title="A meeting, end to end" icon="calendar-clock" href="/use-cases/meetings">
+    Prep, transcript, summary, tasks, follow-ups.
+  </Card>
+  <Card title="Research → deck" icon="presentation" href="/use-cases/research-to-deck">
+    A CEO request on Monday becomes a board-ready deck by 10am.
+  </Card>
+  <Card title="A bug to a PR" icon="bug" href="/use-cases/dev-bug-fix">
+    Fifteen minutes from "we have a bug" to "the bug is fixed."
+  </Card>
+  <Card title="Recall, mid-meeting" icon="brain" href="/use-cases/knowledge-recall">
+    The thing you researched in January, retrieved in time to sound informed.
+  </Card>
+</CardGroup>
+
+## Deeper
+
+<CardGroup cols={2}>
+  <Card title="Features" icon="sparkles" href="/features/chat">
+    Chat, email, calendar, tasks, memory, content, research, code.
+  </Card>
+  <Card title="Integrations" icon="grid" href="/integrations/overview">
+    Gmail, Calendar, Slack, GitHub, and a hundred more.
+  </Card>
+  <Card title="Pricing" icon="credit-card" href="/resources/pricing">
+    Free, Pro, Team. Start free, upgrade when you need more.
+  </Card>
+  <Card title="Security & privacy" icon="shield-check" href="/resources/security">
+    What's encrypted, what's stored, what Fluso never does.
+  </Card>
+</CardGroup>

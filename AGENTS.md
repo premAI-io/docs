@@ -10,7 +10,7 @@
 
 ## Information architecture
 
-- `/` — home (custom landing layout in `index.mdx`).
+- `/` — home. Cards-only landing in `index.mdx`. No custom JSX or images; only `<CardGroup>` and `<Card>`.
 - `/introduction` — what Fluso is and who it's for.
 - `/quickstart` — 5-minute setup.
 - `/connect-apps` — detailed connector walkthroughs.
@@ -27,6 +27,14 @@
 - **Knowledge graph** — Fluso's persistent memory of people, projects, decisions, and conversations. Capitalise as "knowledge graph" (lowercase).
 - **Skills** — specialised capabilities that activate automatically (PDF generation, deep research, etc.).
 - **Projects** — workspaces that scope context, files, and tasks.
+
+## Visual design
+
+- Theme: `mint` (Mintlify's cleanest variant).
+- Palette: deep purple primary (`#5B21B6`), with `#7C3AED` as the light variant and `#3B0764` as the dark.
+- Logo: minimal text wordmark in `logo/{light,dark}.svg`. Favicon: `favicon.svg` (simple "F" mark on the brand purple).
+- `style.css` is intentionally near-empty. Resist the urge to add decorative CSS. If a page needs visual structure, reach for Mintlify components first.
+- Do not introduce hero images, gradient backgrounds, or other template-y artifacts. Minimal is the brand.
 
 ## Style preferences
 
