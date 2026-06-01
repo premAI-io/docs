@@ -1,91 +1,70 @@
 ---
 title: Memory
 sidebarTitle: Memory
-description: How Fluso quietly builds a graph of your people, projects, and decisions, and why that matters more the longer you use it.
+description: How Fluso remembers what's worth remembering across sessions, without turning every chat into part of a permanent transcript.
 ---
 
-Fluso doesn't forget. Every email, every meeting transcript, every Slack thread, every doc you create — they all feed a connected map of your work. People. Projects. Decisions. The companies you talk to and the topics you keep coming back to. It's running in the background and you mostly don't think about it.
+Memory is what Fluso carries forward between chats. Your preferences, durable facts about your work, and the context of whichever project you are in. It loads quietly at the start of every conversation so you do not have to explain yourself twice.
 
-The reason it matters is the question you can ask three months later: *"What do I know about Company X?"* The answer is the actual answer, not your hazy recollection of one.
+The rule it follows is stricter than you might expect. Memory saves stable things, not everything. A preference you have stated, a fact about your team, a decision you made inside a project. Not the message you sent five minutes ago, not the one-off question, not whatever you happened to ask about today.
 
-## What's in there
+## Three scopes
 
-People you interact with end up with a profile. Sarah Chen, VP Product at Acme, sarah@acme.com. First contact in March at the conference. Twelve emails, three meetings, two Slack mentions since. Topics: partnership, API integration, Q3 budget, pilot. Open with you: contract awaiting Legal review, your action item. Style: direct, data-driven, prefers async follow-ups.
+Memory lives in three layers, each with its own reach.
 
-You didn't write any of that. Fluso built it from the traffic.
+**Global preferences.** User-level things that should apply everywhere. Your timezone, the response style you have asked for, workflow choices, standing instructions like *"always show me drafts in plain text"*.
 
-Projects get the same treatment. The Acme project's memory has the documents shared, the meeting notes and decisions, the people involved with their roles, the timeline of milestones, the open questions, what's blocked and on whom. Asking *"What's the status of the Acme project?"* gets you a real status: last activity Sarah's email on May 8 about pilot expansion, next milestone the contract signing on May 20, blocked on Legal review (3 days overdue), team is you plus James and Lisa, the key decision agreed April 15 was the Q3 scope.
+**Global long-term memory.** Durable facts and patterns about you that are useful across every project. The shape of your role, the kind of work you do, the people and companies that recur.
 
-Organisations and topics get tracked the same way: who's at which company, which projects connect to which clients, which competitors you've discussed and when, which technologies keep coming up.
+**Project context.** Facts, decisions, conventions, and preferences that belong only to the project you are in. The Q3 roadmap decision. The naming convention you agreed with the team. The pricing approach for this client.
 
-## How it builds
+The split matters because Fluso is careful about scope. If something looks project-specific, it stays in project context and does not leak into global memory. One client's notes do not surface inside another client's project.
 
-Without you doing anything. There's no tagging, no foldering, no "save to memory" button. An email from sarah@acme.com gets linked to Sarah's profile and the Acme project. A meeting transcript gets parsed for decisions and action items. A Slack discussion about a competitor gets connected to the last time that competitor came up.
+<Note>
+  **Diagram —** Three layers shown with their scope: **Global preferences** (widest reach), **Global long-term memory**, and **Project context** (narrowest, scoped to one project). Visual should make clear that project context does not leak upward into global memory.
+</Note>
 
-A person in the graph is also a meeting attendee, a Slack handle, a doc collaborator. A project spans email threads, meetings, conversations, and files. So when you ask "what do I know about the pricing discussion?", Fluso doesn't search one source. It pulls from all of them.
+## How it loads
 
-You don't browse it. You ask it questions:
+At the start of every new chat, Fluso pulls in three things as background context:
 
-> *"What did we decide about the Q3 budget?"*
+- Your global preferences
+- Your global long-term memory
+- The current project's context, if you are in a project
 
-> *"When did I last talk to the Stripe team?"*
+Memory is context for the conversation, not a script. Your current message still drives the response.
 
-> *"Who from Deloitte was at the cybersecurity meeting?"*
+## How it updates
 
-> *"What have we discussed about AI regulation?"*
+Two paths. Both are conservative on purpose.
 
-## What you do with it
+**You ask explicitly.** Say *"remember this"*, *"forget this"*, *"add this to memory"*, or *"update my preference"* and Fluso changes memory directly. Clear intent only. A passing line like *"I like detailed answers"* is not treated as a memory write. That kind of inference goes through the other path.
 
-Recall is the obvious one:
+**Background learning.** After replies, a background process reviews the conversation and decides whether anything durable came up. Preferences get checked often, because they tend to be short and useful. Long-term observation is more cautious: it activates after roughly 30,000 tokens of eligible conversation, then may write to global memory, global preferences, or project context depending on what it finds. If nothing durable is there, it writes nothing.
 
-> *"What's the history of our relationship with Acme Corp?"*
+The guardrail on explicit updates exists for a reason. Vague or accidental wording should not mutate the layer that follows you across every chat.
 
-A timeline comes back. First contact, key meetings, decisions made, current status, open items. From email, meetings, and Slack together.
+## What gets saved
 
-Meeting prep is recall in tighter form:
+- Stable preferences you have stated.
+- Durable facts about your work, your team, the projects you run.
+- Decisions, conventions, and patterns inside a project.
 
-> *"Brief me on my 3pm with Sarah."*
+## What does not get saved
 
-You get her role and background, your communication history, last meeting topics, open action items, recent emails, related Slack discussions, and anything she's shared with you. The thing you'd otherwise spend half an hour assembling.
+- One-time task details.
+- Greetings and small talk.
+- Temporary instructions for a single chat.
+- Guesses Fluso is not confident about.
 
-Decision recovery is the one that surprises people:
+This line is what keeps memory useful instead of noisy. The longer Fluso runs alongside your work, the more visible the difference becomes.
 
-> *"What did we decide about the product roadmap in the April planning meeting?"*
+## What memory is not
 
-Even if it was six weeks ago and you didn't take notes, the answer is there because you uploaded the transcript at the time.
+Memory is not a full transcript archive. Fluso does not keep every message you have ever sent. It keeps the curated layer of things worth carrying forward. Preferences, durable facts, project context.
 
-There's also the find-who-knows-what version: *"Who on the team has worked on the authentication system?"*, *"Who's been in client meetings with Acme?"*
+If you need the exact text of an old conversation, that is a different question for a different system. Memory is what helps the next chat start in the right place.
 
-The relationship-health version: *"How's the Acme relationship going? Any red flags?"* Fluso surfaces patterns that are easy to miss yourself: slower response times, fewer meetings, terser emails.
+## Next
 
-The connection-finding version: *"Is there any link between the Acme deal and the Stripe conversation?"* Same person on both threads, same project mentioned in two contexts, both surfaced in the same week. Connections you wouldn't bother to look for.
-
-## Privacy and control
-
-The graph is yours. It lives in your isolated workspace. No other user sees it. Nothing leaves it for third parties. Fluso doesn't train models on it.
-
-You can delete any entry, or wipe the whole thing, at any time. The graph only ever builds from apps you've connected. Disconnect Slack and Slack data stops contributing.
-
-For things you don't want tracked, you say so:
-
-> *"Don't track anything related to Project X."*
-
-> *"Forget everything about this vendor."*
-
-## The shape of the value over time
-
-In the first week, the graph knows your frequent contacts and current projects. Recent things are summarisable; older context is thin.
-
-By the end of the first month, the history of key relationships is in there, project status is real-time, and your communication patterns are visible. Meeting prep starts feeling genuinely sharp.
-
-Three months in, Fluso starts surfacing things you wouldn't have thought to ask: relationships you've gone quiet on, projects that are stalled, topics that keep resurfacing without resolution.
-
-After six months, it's institutional memory. *"What was the outcome of that vendor negotiation in January?"* gets a direct answer, with citations.
-
-The graph doesn't feel transformative on day three. By week six it's quietly indispensable.
-
-<Tip>
-  The most common mistake is judging memory after a few days. It's subtle until it isn't. Use Fluso normally for a couple of weeks before deciding what it can or can't recall. The difference between week one and week three is large.
-</Tip>
-
-For the workflow version — what mid-meeting recall actually looks like — see [Recall, mid-meeting](/workflows/knowledge-recall).
+For the patterns that build a useful memory layer over time, see [Going deeper](/going-deeper).

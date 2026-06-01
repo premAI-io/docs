@@ -71,7 +71,7 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 - Bold for UI elements: **Settings → Connectors**.
 - Code formatting for file names, commands, paths, code references.
 - Sample user prompts in italicised blockquotes: `> *"Summarise my unread emails."*`.
-- Mintlify components (`<Card>`, `<CardGroup>`, `<Steps>`, `<AccordionGroup>`, `<Note>`, `<Tip>`, `<Warning>`) over raw HTML.
+- Mintlify components (`<Card>`, `<CardGroup>`, `<Steps>`, `<Accordion>`, `<Note>`, `<Tip>`, `<Warning>`) over raw HTML.
 - Tables for comparison. Lists for sequences. Prose for stories.
 - No emojis in body text. Acceptable in tables (✅, —) where they reduce visual clutter.
 
@@ -79,4 +79,4 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 
 - Never invent feature behaviour. If a capability isn't documented in source materials, leave it out.
 - Always pair "Fluso can send X" with the approval safety note: drafts are shown for review.
-- For product actions, refer users to download the desktop app from `https://fluso.ai/download` (Mac or Windows) and to support at `support@premai.io`. Don't link to `app.fluso.ai` — Fluso is a desktop app.
+- For product actions, point users to the macOS download at `https://fluso.ai/` and to support at `support@premai.io`. Don't link to `app.fluso.ai`. Fluso is a desktop app.
