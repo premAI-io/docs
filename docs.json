@@ -26,6 +26,16 @@
         ]
       },
       {
+        "group": "Features",
+        "pages": [
+          "features/chat",
+          "features/connectors",
+          "features/skills",
+          "features/tasks",
+          "features/memory"
+        ]
+      },
+      {
         "group": "Workflows",
         "pages": [
           "workflows/morning-brief",
@@ -34,16 +44,6 @@
           "workflows/content-launch",
           "workflows/dev-bug-fix",
           "workflows/knowledge-recall"
-        ]
-      },
-      {
-        "group": "Features",
-        "pages": [
-          "features/chat",
-          "features/connectors",
-          "features/skills",
-          "features/tasks",
-          "features/memory"
         ]
       },
       {
@@ -74,8 +74,8 @@
     "links": [],
     "primary": {
       "type": "button",
-      "label": "Download for Mac or Windows",
-      "href": "https://fluso.ai/download"
+      "label": "Download for Mac",
+      "href": "https://fluso.ai/"
     }
   },
   "footer": {

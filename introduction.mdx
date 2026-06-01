@@ -1,78 +1,63 @@
 ---
-title: What Fluso is
+title: Introduction
 sidebarTitle: Introduction
-description: Fluso is an AI assistant that lives inside Gmail, Calendar, Slack, and GitHub. It reads, drafts, schedules, processes, codes, and remembers — for you, in plain English.
+description: Fluso is a private AI workspace that turns scattered work into finished documents, tasks, and drafts.
 ---
 
-Fluso is an AI assistant. The difference from the others: it lives inside the apps you already use.
+Fluso is a private AI workspace. It turns scattered work into finished documents, tasks, and drafts.
 
-You connect Gmail. You connect your calendar. Maybe Slack, maybe GitHub. After that, you can ask Fluso to do almost anything you'd otherwise do yourself in those tools, in plain English, and it does it. Drafts the email. Schedules the meeting. Processes the transcript. Writes the deck. Opens the PR. You review and approve.
+The context lives all over your day. Email, calendar events, files, meetings, notes, project threads, documents. Fluso reads it, brings it into one place, and lets you ask in plain English for the work you need.
 
-This page is the five-minute version. If you want to skip ahead and try it, go to the [Quickstart](/quickstart).
+<Note>
+🎥 **Hero video — 20 to 30 seconds. P1.**
+A real query in Fluso: *"Summarise this project and tell me what to do next."* Show Fluso pulling context from Gmail, a Drive file, and a Slack thread. The answer streams in with inline citations. One task auto-appears in a side panel. This is the moment a non-technical reader understands what Fluso actually is.
+</Note>
 
-## Not a chatbot
+## What you can ask for
 
-A chatbot answers questions in a window separate from your work. To use it, you copy and paste context in.
+Anything that starts in one place and finishes somewhere else.
 
-Fluso connects to where the context already is. When you ask it to summarise your inbox, it reads your inbox. When you ask it to find a Slack thread, it searches Slack. When you ask it to review a PR, it reads your repo. The savings on each task aren't from the answer being better; they're from not having to assemble the context yourself.
-
-That's also why Fluso is more useful the more apps you connect. The compounding effect is real even though I'm not going to use the word twice.
-
-## What it does, with examples
-
-Instead of scanning fifty unread emails: ask for a summary, get back what needs action, what's FYI, and what's noise. Tasks for the action items appear automatically. Drafts for the replies that need writing.
-
-Instead of staring at a blank Google Doc: describe a project proposal with executive summary, timeline, and budget. A formatted PDF is in chat thirty seconds later.
-
-Instead of digging through three months of Slack: ask what the team decided about pricing. Fluso quotes the message and links to it.
-
-Instead of reading a two-hour transcript: upload it. Get a summary, decisions, action items as tasks with assignees, a follow-up email draft, and a Slack update draft. Two minutes of review beats an hour of cleanup.
-
-Instead of opening fifteen tabs: ask for a competitive analysis of five enterprise platforms with citations. Get a report and a deck.
-
-The pattern is the same across all of them. Describe the outcome. Review what comes back. Approve or edit.
+- A brief drawn from a research thread and the latest files.
+- A reply built from yesterday's meeting and three open emails.
+- A weekly investor update from roadmap changes, revenue notes, and risks.
+- A vendor comparison with evidence, tradeoffs, and a recommendation.
+- Owners, blockers, deadlines, and next actions from a launch thread.
 
 ## The five primitives
 
-Almost everything Fluso does is a combination of five things:
+Every project is built from five things working together.
 
-- **Chat** is the interface. You talk to Fluso. Fluso answers, asks back, or hands you a file.
-- **Connectors** are the plugs. Gmail, Calendar, Slack, GitHub, and a hundred more. They give Fluso the ability to read and act on what's in those apps.
-- **Skills** are the capabilities. Drafting an email, generating a PDF, processing a transcript, reviewing a PR. They activate automatically when a request matches one.
-- **Tasks** is the list. Things you've been asked to do, mostly extracted automatically from email and meetings.
-- **Memory** is what Fluso remembers. People, projects, decisions, conversations. It builds in the background as you work.
-
-Everything else — email triage, calendar prep, code review, deck generation — is one or more of those five primitives in combination. Once you have the model, the rest of the docs are easier to navigate.
-
-## How writes work
-
-Reads happen freely. If you ask for a summary, Fluso reads what it needs and answers.
-
-Anything that touches another person waits for your approval. Drafts of email and Slack messages get shown before they go. Pull requests get shown before they're filed. You read the diff or the message, you click send. There's no batch-send mode that bypasses this.
-
-This is the speed of an AI plus the judgment of a person, and the discipline matters more than the speed.
-
-## Memory, in the background
-
-Every email, every transcript, every Slack thread, every doc — they all feed a connected map of your work. People you talk to. Projects you work on. Decisions you've made.
-
-You don't have to do anything to maintain it. Six weeks later, when someone mentions a company you researched in January, ask Fluso what you know about them. The answer is the actual answer, not your hazy recollection of one.
-
-The graph isn't impressive on day three. By week six it's quietly indispensable.
+- **[Chat](/features/chat)**, where you ask for work in plain English.
+- **[Connectors](/features/connectors)**, the tools where your work already lives. Gmail, Calendar, Drive, Slack, GitHub, and a hundred more.
+- **[Skills](/features/skills)**, repeatable workflows Fluso can run on demand.
+- **[Tasks](/features/tasks)**, the commitments Fluso finds or creates. Each one has an owner, a deadline, and a source.
+- **[Memory](/features/memory)**, a curated record of preferences, decisions, and project context that travels with you across chats.
 
 ## Who it's for
 
-Founders and executives who lose a couple of hours a day to email and meeting overhead. Developers who'd rather not stop coding to triage PRs. PMs who synthesise things for a living. Researchers who Google for hours and then format what they found. Teams that need shared context without yet another sync.
+Fluso is for people whose work depends on connected context. Founders, lawyers, investors, marketers, researchers, doctors, consultants, sales leaders, operations leaders.
 
-Anyone whose work is mostly digital and mostly conversation.
+The job titles differ, but the work has the same shape.
 
-## Where to next
+- You collect information from meetings, files, emails, messages, and tools.
+- You turn it into decisions, updates, documents, and follow-ups.
+- You need to remember what happened before, who owns what, and what's blocked.
+- You repeat the same work each week and want Fluso to follow the same process.
 
-<CardGroup cols={2}>
-  <Card title="Quickstart" icon="rocket" href="/quickstart">
-    Account, two integrations, first prompts. Five minutes.
-  </Card>
-  <Card title="Workflows" icon="lightbulb" href="/workflows/morning-brief">
-    Six concrete examples, each a real day's work.
-  </Card>
-</CardGroup>
+## A normal first project
+
+Pick one piece of work. A launch, a client account, a research project, a board update. Add the files you already have. Connect the tools that matter. Then ask for one useful result.
+
+> *"Summarise this project. What is decided, what is blocked, and what should I do next?"*
+
+You will see how Fluso reads context, where it finds evidence, and how much review the output needs.
+
+## Privacy
+
+Your workspace runs inside a dedicated environment. Data is not used to train shared models, is hosted in Europe, and is grounded in Switzerland through Prem AI's infrastructure.
+
+Enterprise customers can choose private VPC, on-prem, or air-gapped deployments. See [Privacy](/resources/privacy) and [Security](/resources/security) for the full picture.
+
+## Next
+
+Start with the [Quickstart](/quickstart). For a daily routine, see the [Morning brief](/workflows/morning-brief).
