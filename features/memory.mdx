@@ -10,6 +10,10 @@ The rule it follows is stricter than you might expect. Memory saves stable thing
 
 ## Three scopes
 
+<Note>
+  **Diagram —** Three layers shown with their scope: **Global preferences** (widest reach), **Global long-term memory**, and **Project context** (narrowest, scoped to one project). Visual should make clear that project context does not leak upward into global memory.
+</Note>
+
 Memory lives in three layers, each with its own reach.
 
 **Global preferences.** User-level things that should apply everywhere. Your timezone, the response style you have asked for, workflow choices, standing instructions like *"always show me drafts in plain text"*.
@@ -19,10 +23,6 @@ Memory lives in three layers, each with its own reach.
 **Project context.** Facts, decisions, conventions, and preferences that belong only to the project you are in. The Q3 roadmap decision. The naming convention you agreed with the team. The pricing approach for this client.
 
 The split matters because Fluso is careful about scope. If something looks project-specific, it stays in project context and does not leak into global memory. One client's notes do not surface inside another client's project.
-
-<Note>
-  **Diagram —** Three layers shown with their scope: **Global preferences** (widest reach), **Global long-term memory**, and **Project context** (narrowest, scoped to one project). Visual should make clear that project context does not leak upward into global memory.
-</Note>
 
 ## How it loads
 

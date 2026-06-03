@@ -62,40 +62,29 @@ The first PR Fluso writes after you add this will make the value obvious.
 
 ## Custom skills
 
-Skills are the prebuilt capabilities Fluso reaches for when a request needs them: PDF generation, deep research, meeting intelligence, image generation, and so on. You can write your own.
+Skills are the prebuilt capabilities Fluso reaches for when a request needs them: PDF generation, deep research, meeting intelligence, image generation, and so on. You can build your own — without writing code or markdown.
 
-A custom skill is a `SKILL.md` file in your workspace. It describes a workflow Fluso should follow when invoked. Useful for things you do repeatedly with a specific shape:
+A custom skill captures a workflow you repeat with the same shape: a weekly investor update, a standard offer letter, a board-prep checklist. To build one, open **Customization → Skills**, click **Add skill** at the top right, and pick **Build with Fluso**. You land back in chat with a prompt ready to send:
 
-```markdown
-# weekly-investor-update
+> *"Create a skill using skill-creator. First, ask what workflow it should handle."*
 
-When asked to "draft the weekly investor update":
+Submit it. The skill-creator skill asks what the workflow is, what inputs it takes, what the output should look like, and which tools or connectors are involved. It writes the skill and adds it to **My Skills**. From then on, the skill activates whenever a request matches it.
 
-1. Pull this week's metrics from the dashboard (revenue, signups, churn)
-2. Pull major decisions from this week's meeting transcripts
-3. Write 250 words in the tone of past updates I've sent
-4. Format: subject line, three short paragraphs, one chart
-5. Output as a Gmail draft to investors@list, not sent
-```
+The full mechanics are in [Skills](/features/skills). The bar for building one is low: if you have caught yourself re-explaining the same task three times, it is probably worth a skill.
 
-Available on Pro and Team plans. The skill activates when you say something close to its trigger.
+## Memory hygiene
 
-## Knowledge graph hygiene
+Memory builds itself in the background. You do not have to maintain it. A few habits keep it useful and on-scope. The mechanics are in [Memory](/features/memory) — this is what to do with them.
 
-<Note>
-🗺️ **Diagram — P2.**
-A simple illustration of the graph: people, meetings, decisions, and files as nodes; the connections between them as edges; a date axis showing it accumulating over time. The graph is invisible by design, so a diagram is the only way to show what's being built behind the scenes.
-</Note>
+**Be explicit when something is durable.** *"Remember that I prefer drafts in plain text"*, *"add to project context: the Q3 launch ships on August 14"*. Background learning is conservative on purpose; explicit asks are the fast path.
 
-The graph builds itself. You don't have to maintain it. But a few maintenance habits keep it useful:
+**Tell Fluso to forget when you need to.** *"Forget my old timezone"*, *"don't track anything about this vendor"*. The same explicit channel works in reverse.
 
-**Process meeting transcripts even when you took notes.** The transcript is what enters the graph. Without it, the meeting effectively didn't happen for memory purposes. Two minutes per meeting; the recall payoff is months later.
+**Scope by project when working on something specific.** Switching into a project before asking a question keeps the project's context in scope and stops one client's notes from surfacing in another client's chat.
 
-**Tell Fluso to forget when you need to.** *"Don't track anything related to Project X"* or *"Forget everything about this vendor"*. The graph won't remember what you don't want it to.
+**Process meeting transcripts.** Decisions and action items from the transcript become durable project context. Without processing, the meeting effectively did not happen for memory.
 
-**Scope by project when working on something specific.** Switching into a project before asking a question pulls the answer from that project's slice of the graph instead of from everything.
-
-**Audit once a quarter.** *"What relationships have I gone quiet on?"* surfaces things worth re-engaging. *"What projects have stalled?"* surfaces work that's drifted. The graph sees patterns you don't.
+**Audit once a quarter.** *"What's in my long-term memory right now?"* and *"What's in this project's context?"* surface anything stale or wrong. Trim what no longer applies.
 
 ## Cross-app workflows
 
@@ -103,7 +92,7 @@ The single-integration prompts are useful. The compounding ones are where things
 
 > *"A client emailed about API rate limits. Find related discussions in #engineering and draft a response that includes the relevant context."*
 
-This pulls from Gmail (the client email), Slack (the engineering discussion), and your knowledge graph (what you've discussed with this client before), then produces a draft. None of those steps would be possible without all three integrations connected.
+This pulls from Gmail (the client email), Slack (the engineering discussion), and Fluso's memory of what you have discussed with this client before, then produces a draft. None of those steps would be possible without all three integrations connected.
 
 A few more that pay back the integration investment:
 
@@ -119,22 +108,17 @@ The pattern: name the inputs, name the output, let Fluso connect them.
 
 ## Approval discipline
 
-<Note>
-📸 **Screenshot — P2.**
-A draft email or PR description sitting in the "awaiting approval" state, with Approve, Edit, and Reject controls visible. Makes the trust model concrete for non-technical readers worried about "what will it send without me?"
-</Note>
+Reads happen freely. Writes wait for approval. The approval is conversational: when Fluso has a message or change ready to send, it ends its reply with something like *"Shall I send this to sarah@acme.com?"* and waits for your yes or no in chat.
 
-Reads happen freely. Writes wait for approval. The instinct on day one is to read every draft carefully; by day twenty, you'll be tempted to batch-approve. Don't.
+The instinct on day one is to read every draft carefully. By day twenty, you will be tempted to wave things through. Don't.
 
-A few things that pay off:
+**Read every external-facing draft.** Anything to a client, anything sensitive, anything where the relationship matters more than the message. Fluso has good instincts. You have specific knowledge it does not.
 
-**Read every external-facing draft.** Especially anything to a client, anything sensitive, anything where the relationship matters more than the message. Fluso has good instincts. You have specific knowledge it doesn't.
+**Quick yes is fine for low-stakes internal sends.** Replies to teammates, internal Slack updates, tasks for yourself. The cost of a bad internal send is small; the cost of a slow inbox is not.
 
-**Batch internal drafts.** Replies to teammates, internal Slack updates, tasks for yourself — those are safe to read in groups of five rather than one at a time.
+**Always read PR diffs.** Fluso writes good code. You are still the engineer of record. Run the tests locally before merging.
 
-**Always read PR diffs.** Fluso writes good code. You're still the engineer of record. Run the tests locally before merging.
-
-**When you say no, say why.** *"Too formal, make it warmer"* or *"don't mention pricing"* — Fluso uses the feedback for the next draft. Generic *"no, try again"* leaves it guessing.
+**When you say no, say why.** *"Too formal, make it warmer"* or *"don't mention pricing"* — Fluso uses the feedback for the next draft. A bare *"no, try again"* leaves it guessing.
 
 ## For teams
 
@@ -164,8 +148,8 @@ These aren't power features. They're just easy to forget exist.
 
 ## When you want to keep going
 
-By the time you're using all of the above, the docs run out of things to teach you. The remaining gains come from your own patterns: your own SKILL.md files, your own project structure, your own prompt phrasings that produce work you don't have to edit.
+By the time you're using all of the above, the docs run out of things to teach you. The remaining gains come from your own patterns: your own skills, your own project structure, your own prompt phrasings that produce work you don't have to edit.
 
-If a workflow you do every week isn't fast yet, write a skill for it. If you keep telling Fluso the same context, put it in a `context.md`. If Fluso keeps getting something wrong in the same way, tell it once at the project level and stop fighting the same battle.
+If a workflow you do every week isn't fast yet, build a skill for it. If you keep telling Fluso the same context, put it in a `context.md`. If Fluso keeps getting something wrong in the same way, tell it once at the project level and stop fighting the same battle.
 
 The pros aren't using a different product. They're just asking it for things in a way that gets useful answers the first time.
