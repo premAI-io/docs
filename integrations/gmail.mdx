@@ -19,7 +19,7 @@ You ask Fluso to summarise your inbox, search for something specific, draft a re
 
 ## Setup
 
-Open **Settings → Connectors** and click **Connect** on the Gmail card. Sign in to Google with the account you want Fluso to assist with. The OAuth screen lists three permissions:
+Open **Customization → Connectors** and click **Connect** on the Gmail card. Sign in to Google with the account you want Fluso to assist with. The OAuth screen lists three permissions:
 
 - **Read your messages** — for summaries, search, and task extraction.
 - **Send messages** — for reply drafts. Fluso never sends without your approval.
@@ -71,17 +71,17 @@ Header metadata is used for categorisation only and never shared with third part
 
 ## Disconnecting
 
-In **Settings → Connectors**, click **Disconnect** on the Gmail card. The token is deleted immediately and Fluso loses access.
+In **Customization → Connectors**, click **Disconnect** on the Gmail card. The token is deleted immediately and Fluso loses access.
 
 You can also revoke directly from [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
 
 ## Troubleshooting
 
   <Accordion title="Fluso isn't finding emails I know exist">
-    Verify Gmail still shows as **Connected** in Settings → Connectors. If it does, disconnect and reconnect. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes and try again.
+    Verify Gmail still shows as **Connected** in Customization → Connectors. If it does, disconnect and reconnect. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes and try again.
   </Accordion>
   <Accordion title="The connection says it's broken">
-    OAuth tokens occasionally expire. In Settings → Connectors, click **Reconnect**. Refresh the page once it's done.
+    OAuth tokens occasionally expire. In Customization → Connectors, click **Reconnect**. Refresh the page once it's done.
   </Accordion>
   <Accordion title="Auto-tasks haven't appeared yet">
     Auto-task extraction runs periodically and learns the shape of your inbox over a couple of days. You can also force a sweep with *"Scan my inbox for tasks."*

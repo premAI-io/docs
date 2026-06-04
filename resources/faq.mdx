@@ -80,7 +80,7 @@ description: The questions that come up most often. What Fluso is, how it works,
     No. Your private data is never used to train AI models.
   </Accordion>
   <Accordion title="What if I want to stop using a connected app?">
-    Disconnect from Settings → Connectors. Tokens are deleted immediately. You can also revoke directly from the app (Google Account, Slack workspace, GitHub apps).
+    Disconnect from Customization → Connectors. Tokens are deleted immediately. You can also revoke directly from the app (Google Account, Slack workspace, GitHub apps).
   </Accordion>
 </AccordionGroup>
 
@@ -115,7 +115,7 @@ Plan details on [Pricing](/resources/pricing).
     No. Fluso picks the right skill based on the request.
   </Accordion>
   <Accordion title="Can I build my own?">
-    Yes, on Pro and Team. Add a `SKILL.md` file to your workspace describing the workflow, tools, and outputs. See [Going deeper](/going-deeper#custom-skills) for the pattern.
+    Yes. Open **Customization → Skills**, click **Add skill** at the top right, and pick **Build with Fluso**. The skill-creator skill takes it from there in chat: it asks what workflow the skill should handle, what inputs it takes, what shape the output should have, and which tools or connectors are involved, then writes the skill and adds it to **My Skills**. See [Skills](/features/skills#building-your-own) for the full flow.
   </Accordion>
   <Accordion title="Free vs Pro skills?">
     Free includes the document-shaped ones: PDFs, Word, decks, spreadsheets. Pro adds image generation, deep research with citations, meeting intelligence, video summaries.
@@ -126,13 +126,13 @@ Plan details on [Pricing](/resources/pricing).
 
 <AccordionGroup>
   <Accordion title="Fluso isn't finding my emails">
-    Check Gmail is connected (Settings → Connectors). Try disconnecting and reconnecting. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes.
+    Check Gmail is connected (Customization → Connectors). Try disconnecting and reconnecting. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes.
   </Accordion>
   <Accordion title="The response seems off">
     Start a new thread (the **+** button) if the conversation has drifted. *"Forget the context so far and start fresh on this topic"* also works. Being more specific in the request usually helps.
   </Accordion>
   <Accordion title="A connected app says it isn't connected">
-    Refresh the page or reconnect. OAuth tokens occasionally expire. Settings → Connectors → **Reconnect**.
+    Refresh the page or reconnect. OAuth tokens occasionally expire. Customization → Connectors → **Reconnect**.
   </Accordion>
   <Accordion title="How do I contact support?">
     [support@premai.io](mailto:support@premai.io). Pro gets priority email. Team gets priority chat. Enterprise gets dedicated support.

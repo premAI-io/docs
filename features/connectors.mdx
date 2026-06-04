@@ -16,6 +16,10 @@ You sign in once. The token persists across sessions. You do not paste API keys,
 
 ## Where to find them
 
+<Frame>
+  <img src="/images/features/connectors/connectors-page.png" alt="Fluso Connectors page showing the Connected section (Exa, GitHub, Google Super, Slack) with green ticks, and the Available section starting with Airtable, Apaleo, Asana, and Attio." />
+</Frame>
+
 Open **Customization** in the left sidebar, then the **Connectors** tab. You see two sections.
 
 **Connected.** Everything Fluso currently has access to. A green tick sits next to each one.
@@ -24,31 +28,27 @@ Open **Customization** in the left sidebar, then the **Connectors** tab. You see
 
 Use the search bar at the top to jump to an app by name.
 
-<Note>
-  **Image —** Customization → Connectors page showing the **Connected** section (rows with green ticks) and **Available** section (rows with **+** buttons).
-</Note>
-
 ## Connecting an app
 
 Click the **+** on any row in **Available**. A small browser window opens with the app's own login and permission screen. Sign in, review what Fluso is asking for, and approve.
 
 The window closes by itself. The app moves up into **Connected** with a green tick. Fluso can use it from the next message onward.
 
-You grant permissions at this step. Fluso never asks for more than it needs. If an app supports per-scope choices, like per-repo for GitHub, per-channel for Slack, or per-calendar for Google, the app's screen is where you pick.
-
 <Note>
   **Video —** Short loop (5–8s): click **+** on an Available row, OAuth popup opens on the app's own domain, approve permissions, popup closes by itself, the row moves up into **Connected** with a green tick.
 </Note>
+
+You grant permissions at this step. Fluso never asks for more than it needs. If an app supports per-scope choices, like per-repo for GitHub, per-channel for Slack, or per-calendar for Google, the app's screen is where you pick.
 
 ## Disconnecting an app
 
 Click the green tick on a connected row. A small dialog asks you to confirm. Click **Disconnect**.
 
-Fluso loses access to the app from the next message onward, and the row drops back into **Available**. You can reconnect anytime from the same page.
+<Frame>
+  <img src="/images/features/connectors/disconnect-modal.png" alt="Disconnect Exa confirmation modal: 'Fluso will lose access to this app on the next message. You can reconnect anytime from this page.' with Cancel and Disconnect buttons." />
+</Frame>
 
-<Note>
-  **Image —** The disconnect confirmation modal: *"Disconnect Exa? Fluso will lose access to this app on the next message. You can reconnect anytime from this page."*
-</Note>
+Fluso loses access to the app from the next message onward, and the row drops back into **Available**. You can reconnect anytime from the same page.
 
 ## What changes after you connect
 

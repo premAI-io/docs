@@ -24,45 +24,45 @@ You can also type tasks in yourself. The **+ Add a task...** input at the top of
 
 ## The Tasks page
 
+<Frame>
+  <img src="/images/features/tasks/tasks-page.png" alt="Fluso Tasks page: daily brief at the top reading 'Today features 8 meetings, including two Prem App Standups, alongside 17 tasks, with 4 tasks currently overdue', a 4 OVERDUE pill below it, an Add a task input, then Today and This week sections with task rows showing Gmail source icons on the right. Completed and Synced pills sit at the top right." />
+</Frame>
+
 Open **Tasks** from the left sidebar.
 
-The first thing you see is a short brief Fluso writes for you each day. What today looks like, how many meetings and tasks you have, what is overdue, the specific items behind the overdue count. A pulse on the day before you start poking at the list.
+The first thing you see is a short brief Fluso writes for you each day. What today looks like, how many meetings and tasks you have, what is overdue. Below it, an **Overdue** pill counting the items pulling on you from earlier in the week. A pulse on the day before you start poking at the list.
 
-Below the brief, the list itself. Sections are time-based.
+Under the brief, an **+ Add a task…** input, and below that the list itself. Sections are time-based.
 
-- **Just in.** Tasks Fluso has picked up in the last hour.
-- **Today.** Everything queued for the day, in the batches it came in.
+- **Today.** Tasks for today, with the count next to the heading.
+- **This week.** Everything else queued for the week, in the batches it came in.
 
-Every task shows a small source icon on the right. A Slack mark for tasks from Slack, an envelope for tasks from email. One glance tells you where the work came from.
+Every task row shows a small source icon on the right. A Slack mark for tasks from Slack, an envelope for tasks from email. One glance tells you where the work came from. The right rail also labels the batch the row arrived in, like **Today's batches** or **Past 7 days**.
 
-At the top right, a **Completed** pill flips the view to tasks you have already finished.
-
-<Note>
-  **Image —** Full Tasks page with the daily brief at the top, the **3 OVERDUE** pill, the **Just in** and **Today** sections, and the source icons (Slack, Gmail) on each row.
-</Note>
+At the top right, a **Completed** pill flips the view to tasks you have already finished, and a **Synced** pill shows how recently Fluso last checked your apps.
 
 ## Opening a task
 
+<Frame>
+  <img src="/images/features/tasks/task-expanded.png" alt="A task expanded in place: title 'Attend Prem App Standup on Wed Jun 3, 2026 at 9pm IST', a Gmail thread link pill underneath, a short summary of the meeting, three suggested-action buttons (Find related Slack discussion, Show meeting timeline, Confirm attendance preference), a 'Reply in Home' dropdown, and an 'Ask Fluso for more context, or describe an action…' input with a Send button." />
+</Frame>
+
 Click a task and it expands in place. You see:
 
-- The **source** as a pill at the top, linking back to the original message or thread.
+- The **source** as a pill at the top, linking back to the original message or thread. A *Gmail thread* link for email tasks, a Slack link for Slack tasks.
 - A short summary of the task, written from the context Fluso read.
-- A row of suggested next steps for this specific task. On a meeting task, that might be *Review meeting timeline*, *Confirm meeting time*, *Add meeting to calendar*. Each button kicks off the action.
-- A reply input. **Reply in [Project]** scopes the conversation to a project. Use it to ask Fluso for more context, or to describe an action in your own words instead of picking a suggestion.
+- A row of suggested next steps for this specific task. On a meeting task, that might be *Find related Slack discussion*, *Show meeting timeline*, *Confirm attendance preference*. Each button kicks off the action.
+- A reply input. **Reply in [Project]** scopes the conversation to a project, defaulting to **Home**. Use it to ask Fluso for more context, or to describe an action in your own words instead of picking a suggestion.
 
 You read the brief, pick a suggestion or describe what you want, and move on.
 
-<Note>
-  **Image —** A task expanded in place, showing the source pill at the top, the short summary, the row of suggested next-step buttons, and the **Reply in [Project]** input below.
-</Note>
-
 ## Sync activity
 
-Top right of the Tasks page sits a small status. **Syncing now** when Fluso is reading your connected apps, idle when it is not. Click it for a feed of what came in and from where: *5 new messages from Gmail an hour ago, 2 new messages from Slack 50 minutes ago, nothing 3 hours ago*. Useful when you want to know whether something landed without going to check the source app.
+<Frame>
+  <img src="/images/features/tasks/sync-dropdown.png" alt="Sync activity dropdown opened from the Synced pill: header 'Fluso · sync activity' with GMAIL · SLACK on the right, and a chronological feed — 'Slack sync is queued. 5h ago', '5 new messages. 3m ago' (Gmail), then a run of 'No new messages.' entries with hourly timestamps." />
+</Frame>
 
-<Note>
-  **Image —** The **Syncing now** dropdown showing the recent feed of Gmail and Slack sync events with timestamps.
-</Note>
+Top right of the Tasks page sits a small **Synced** pill with how long ago Fluso last checked your apps. Click it for the **Fluso · sync activity** feed: a chronological list of what came in and from where: *Slack sync is queued, 5 new messages from Gmail three minutes ago, no new messages an hour ago, no new messages two hours ago*. Useful when you want to know whether something landed without going to check the source app.
 
 ## Updating tasks
 

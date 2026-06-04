@@ -30,7 +30,7 @@ OAuth tokens never appear in environment variables, logs, or anywhere outside th
 
 **Sandbox containers.** Each user gets a dedicated container. Network policies prevent cross-user communication.
 
-**Token refresh.** OAuth tokens are refreshed automatically before expiry. Failed refreshes show as a "Reconnect" prompt in Settings → Connectors instead of silent denial.
+**Token refresh.** OAuth tokens are refreshed automatically before expiry. Failed refreshes show as a "Reconnect" prompt in Customization → Connectors instead of silent denial.
 
 **Secret delivery.** Credentials reach containers via secure boot files, not environment variables. They cannot be enumerated by reading process state.
 
@@ -42,7 +42,7 @@ A few things to do, regardless of plan:
 
 **Enable multi-factor authentication.** In Clerk's account settings. Fluso doesn't enforce it by default, but it's the single biggest improvement to account security and takes a minute.
 
-**Review connected apps monthly.** Settings → Connectors. Disconnect anything you've stopped using. Fewer connected apps means a smaller attack surface and a more focused knowledge graph.
+**Review connected apps monthly.** Customization → Connectors. Disconnect anything you've stopped using. Fewer connected apps means a smaller attack surface and a more focused knowledge graph.
 
 **Watch for phishing.** Fluso will never ask for your password by chat or email. Genuine support requests come from `@premai.io`. If something looks off, [email security](mailto:security@premai.io) directly to verify.
 
