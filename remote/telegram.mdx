@@ -1,0 +1,124 @@
+---
+title: Telegram
+sidebarTitle: Telegram
+description: Fluso's Telegram bot. Sign in once, then chat with Fluso from a private Telegram conversation.
+---
+
+Fluso has a Telegram bot for the times you are away from your Mac. Sign in once with your Fluso account, and the bot is the same Fluso you use on the Mac app, just over Telegram.
+
+The bot only works in private chats. One Telegram account, one Fluso. It will not work in group chats.
+
+## Find the bot in the Mac app
+
+The easiest way to get to the bot is from inside Fluso:
+
+1. In the Fluso Mac app, click your name at the bottom left.
+2. Pick **Settings** from the menu.
+3. Scroll to the bottom of Settings. You will see a **Telegram** panel with a QR code and an **Open Telegram** button.
+4. Scan the QR code with your phone, or click **Open Telegram** if Telegram is already on your computer.
+
+Either way, you land in a private chat with `@fluso_bot`. That is the bot.
+
+## Sign in
+
+Once you are in the chat with `@fluso_bot`:
+
+1. Send `/login`.
+2. Tap the **Sign in** button the bot sends back.
+3. Finish signing in to Fluso in your browser.
+4. Telegram opens again and the bot confirms you are signed in.
+
+You will get signed out after a while. If the bot ever asks you to sign in again, send `/login` once more.
+
+## Connect your apps
+
+Before Fluso can read your Gmail, post in your Slack, or open issues for you, it needs to be connected to those apps. You only have to do this once per app. Connections you make here on Telegram are shared with the Mac app, so you do not have to set them up twice.
+
+- `/connect` shows the list of apps you can connect.
+- `/connect <app>` connects an app by name. Try `/connect google`, `/connect github`, `/connect slack`, or `/connect linear`.
+
+When you connect **Google**, you get all of Google in one go: Gmail, Drive, Docs, Sheets, Slides, Calendar, Meet, and Tasks. You do not need to connect Gmail or Calendar separately.
+
+`/status` tells you what is connected right now. `/disconnect` removes a connection. `/apps` shows the full list of apps you can connect.
+
+## What to ask
+
+Once you are signed in and have at least one app connected, ask in plain English.
+
+> *"Summarise my unread Gmail from today."*
+
+> *"Find the latest issue assigned to me in Linear."*
+
+> *"Search Slack for the deployment thread from yesterday."*
+
+> *"Read this document and pull out the key numbers."*
+
+> *"Use this voice note as my instruction."*
+
+If you ask for something that needs an app you have not connected yet, the bot will say so. Send `/connect <app>` and ask again.
+
+Before Fluso sends anything for you (an email, a Slack message, a new issue), it shows you the draft and waits for your yes. Nothing goes out without your approval.
+
+## Files, images, voice
+
+You can send more than just text:
+
+- **Files and documents** — Fluso saves them and reads them for you.
+- **Images** — same thing. Fluso can look at the picture and answer questions about it.
+- **Voice or audio** — Fluso treats it as your instruction. The reply may come back as voice or as text.
+- **Video and video notes** — these work too.
+- **Animated and video stickers** — these are not supported.
+
+Very large files may not go through. If a file is rejected, send a smaller version or split it into parts.
+
+## Conversation controls
+
+| Command | What it does |
+|---|---|
+| `/newchat` | Start a fresh conversation. Your files are kept. |
+| `/reset` | Wipes everything: files, chat history, and what Fluso has learned. Cannot be undone. |
+| `/abort` | Stop what Fluso is doing right now. |
+| `/schedules` | Show anything Fluso has scheduled, if any. |
+| `/logout` | Sign out of the Telegram bot. |
+| `/help` | Show the bot's commands. |
+
+<Warning>
+  `/reset` cannot be undone. It clears your files, chat history, and everything Fluso has remembered on Telegram. If you only want a fresh conversation, use `/newchat` instead.
+</Warning>
+
+## While Fluso is working
+
+A long answer may arrive as a few Telegram messages in a row instead of one big message. Any files Fluso creates for you will arrive as attachments.
+
+If Fluso is still starting up, the bot will say so and ask you to try again in about a minute.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The bot keeps asking me to sign in">
+    You have been signed out. Send `/login` and finish the browser sign-in to start again.
+  </Accordion>
+  <Accordion title="Fluso says an app is not connected">
+    Send `/connect <app>`, then ask your original question again.
+  </Accordion>
+  <Accordion title="My file was rejected">
+    The file is too big. Send a smaller version, or split it into parts.
+  </Accordion>
+  <Accordion title="Fluso is stuck or taking too long">
+    Send `/abort` to stop it. If the bot says it is still loading, wait a moment and try again.
+  </Accordion>
+  <Accordion title="The conversation feels confused">
+    Send `/newchat` to start fresh. Your files are kept. Only use `/reset` if you want to wipe everything.
+  </Accordion>
+</AccordionGroup>
+
+## See also
+
+<CardGroup cols={2}>
+  <Card title="Connectors" icon="plug" href="/features/connectors">
+    What connectors are and how to manage them in the Mac app.
+  </Card>
+  <Card title="Chat" icon="message-circle" href="/features/chat">
+    How chat works in Fluso. Telegram works the same way.
+  </Card>
+</CardGroup>

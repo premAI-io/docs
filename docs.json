@@ -8,7 +8,7 @@
     "light": "#7C3AED",
     "dark": "#3B0764"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "icons": {
     "library": "lucide"
   },
@@ -33,6 +33,12 @@
           "features/skills",
           "features/tasks",
           "features/memory"
+        ]
+      },
+      {
+        "group": "Remote access",
+        "pages": [
+          "remote/telegram"
         ]
       },
       {
