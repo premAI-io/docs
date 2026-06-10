@@ -124,6 +124,20 @@ Every connected server shows up as a row with status, tool count, and last-used 
 
 **Disconnect** removes the row. Fluso loses access from the next message on. This only removes the sign-in from Fluso's side. To revoke it on the server, do that from the server's own settings page. Most providers list "Fluso MCP Proxy" as an authorized application you can remove.
 
+## Connection lifecycle
+
+MCP connections live in the backend, not in the chat or the agent's runtime sandbox. That has a few consequences worth knowing.
+
+**Connections are per account, not per session.** Sign in once on any device. The connection is there in every new chat, on every other device you sign in to Fluso from, and it survives if we restart your runtime sandbox in the background.
+
+**The sandbox is ephemeral. Your connections aren't.** Each chat runs in a per-user sandbox that we recycle on deploys, on long idles, or if it crashes. When a fresh sandbox starts, the agent asks the backend for your connected servers and rebuilds its workspace config files. No re-authorization. Mid-chat sandbox restarts are invisible to you.
+
+**The runtime never stores tokens.** Tools call the backend for a short-lived access token per request, use it, drop it. Even if a sandbox were compromised, the on-disk state is config (URLs, server IDs, scopes), not secrets.
+
+**Tokens refresh in the background.** While a connection is **Connected**, Fluso renews tokens before they expire. You only see this when refresh fails, which is what flips the row to **Needs reauth**.
+
+**Disconnect is immediate.** From the next message on, no agent in any chat or sandbox can call that server's tools. The row, the workspace config, and the stored token all go away.
+
 ## Adding a server from chat
 
 If you don't know whether a service has an MCP endpoint, don't go hunting. Ask Fluso.
