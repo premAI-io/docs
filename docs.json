@@ -30,6 +30,7 @@
         "pages": [
           "features/chat",
           "features/connectors",
+          "features/mcp",
           "features/skills",
           "features/tasks",
           "features/memory"
