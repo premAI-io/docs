@@ -1,0 +1,151 @@
+---
+title: MCP servers
+sidebarTitle: MCP
+description: Add any MCP-compatible service to Fluso by URL. Sign in once. From then on, every chat can call its tools.
+---
+
+MCP servers are how Fluso reaches tools that live outside its built-in connectors. Anything that speaks the Model Context Protocol — a Linear MCP, a Notion MCP, a private MCP your team runs internally — can be plugged in by URL.
+
+You connect once. After that, every chat can use the new tools, and Fluso picks the right one without you having to name it.
+
+This is the universal escape hatch. If we do not have a connector for it but it has an MCP endpoint, you can still wire it in.
+
+## How it works
+
+You paste the server's URL. Fluso checks what kind of sign-in the server uses, asks you for exactly that, and stores the result encrypted in the backend. From then on, requests that need that server's tools just work.
+
+You do not run a tunnel. You do not configure a callback URL. You do not paste secrets into a config file. The sign-in happens in a popup on the server's own domain, the same way Fluso connects to Gmail or Slack.
+
+## Two ways to connect
+
+You can add an MCP server from the dedicated tab, or by asking Fluso to do it in chat.
+
+**The MCP tab.** Paste a URL, sign in, done. Best when you already know which server you want.
+
+**Chat.** Ask Fluso to *"connect to Linear MCP"* or paste a docs URL. Fluso reads the docs, figures out the endpoint, and surfaces the same sign-in card right in the conversation. Best when you are not sure the server even has an MCP endpoint yet.
+
+Both paths land at the same place. A server you add in chat shows up in the MCP tab. A server you add in the MCP tab is usable from chat from the next message onward.
+
+## Where to find them
+
+<Frame>
+  <img src="/images/features/mcp/mcp-page.png" alt="Fluso MCP servers page with the heading 'MCP servers', the description 'Connect any MCP-compatible endpoint by URL. Auth is handled in-app.', an empty 'Custom MCP servers' section, and an 'Add MCP server' button at the top right." />
+</Frame>
+
+Open **Customization** in the left sidebar, then the **MCP** tab. The page lists every MCP server connected to this workspace, with status and tool count. An empty list looks like the above. **Add MCP server** is at the top right.
+
+## Adding a server from the MCP tab
+
+Click **Add MCP server**. A dialog opens with a single URL field.
+
+<Frame>
+  <img src="/images/features/mcp/add-dialog-empty.png" alt="Add MCP server dialog with a URL field placeholder 'https://mcp.linear.app', a Close button, and a disabled Continue button." />
+</Frame>
+
+Paste the URL of the MCP server itself, or the docs page that documents one. Click **Continue**.
+
+Fluso then probes the URL — quietly, without sending any credentials — to figure out what kind of sign-in the server uses. **The dialog adapts to match.**
+
+This is the bit that matters. We could have shown one generic *"Connect"* button and let it figure itself out, but you would have no idea what was about to happen. Instead, Fluso tells you up front, and the next step is the right one for this specific server.
+
+There are four shapes the dialog can take.
+
+**Modern OAuth with one-click sign-in.** The most common case. A green check, the server's display name, *"Uses OAuth with Dynamic Client Registration. One click to sign in."*, and an **Authorize** button. This is what Linear, Notion, Asana, Atlassian, Sentry, Cloudflare, and most other modern MCP servers look like.
+
+<Frame>
+  <img src="/images/features/mcp/probe-dcr-supported.png" alt="Add MCP server dialog with the URL 'https://mcp.linear.app' entered. A green tick card shows 'Linear — Uses OAuth with Dynamic Client Registration. One click to sign in.' An Authorize button is visible at the bottom." />
+</Frame>
+
+**OAuth that needs a developer-console detour.** The server supports OAuth but does not let Fluso register itself automatically. The dialog reveals a *Client ID* and *Client secret* form. You go to the server's developer console, register an app with the redirect URI Fluso shows you, paste the credentials back, and click **Connect**.
+
+**A static API key or bearer token.** The server has no OAuth at all. The dialog reveals a single key or token field. Paste the value and click **Connect**. The key goes straight to the backend over HTTPS and is stored encrypted at rest, the same way OAuth tokens are. It never sits in your browser.
+
+**An error.** The URL is wrong, the server is down, or it is not actually an MCP server. The dialog shows the underlying message. Fix the URL and try again.
+
+<Note>
+  The probe only reads the server's public sign-in metadata. It does not send credentials, does not start any flow, and times out after a few seconds. If it cannot reach the server or the server tells it nothing useful, Fluso assumes the server uses a static key and asks for one — so you can still connect.
+</Note>
+
+## Signing in
+
+For OAuth servers, clicking **Authorize** opens a popup on the server's own login screen.
+
+<Frame>
+  <img src="/images/features/mcp/authorizing.png" alt="Add MCP server dialog in waiting state: spinner card reads 'Waiting for Linear… Complete sign-in in the opened tab. This dialog updates automatically.' A 'Cancel authorization' button and a disabled 'Waiting…' button are at the bottom." />
+</Frame>
+
+Sign in there. The popup closes itself. The dialog flips to the connected state without you having to refresh anything.
+
+If the popup gets blocked, allow popups for the Fluso domain and click **Authorize** again. If you close the popup before signing in, Fluso notices and rolls back so you can retry.
+
+You can take your time on the sign-in page. The pending session stays open for 15 minutes. After that, it expires server-side and you start over.
+
+## Managing connections
+
+<Frame>
+  <img src="/images/features/mcp/connections-list.png" alt="MCP servers page with three connected rows: Linear (mcp.linear.app, Connected, 11 tools, last used 12m ago), Notion (mcp.notion.com, Needs reauth), Asana (mcp.asana.com, Connected, 8 tools, last used 2h ago). Each row has a three-dot action button." />
+</Frame>
+
+Every connected server shows up as a row, with status, tool count, and when it was last used.
+
+**Connected.** Fluso has a current sign-in for the server. Tokens that are close to expiring get refreshed automatically the next time a chat needs them. You will not see this happen.
+
+**Needs reauth.** The sign-in expired and Fluso could not refresh it on its own — usually because the server's refresh token was revoked or rotated. Click the three dots and choose **Reconnect**.
+
+The per-row menu has two options.
+
+<Frame>
+  <img src="/images/features/mcp/row-menu.png" alt="Row action menu open on the Linear row, showing two options: Reconnect (with refresh icon) and Disconnect (in red, with trash icon)." />
+</Frame>
+
+**Reconnect.** Drops the stored sign-in first, then re-opens the Add dialog with the URL already filled in. Use this when the row says **Needs reauth**, or when you want to sign in as a different account on the same server.
+
+**Disconnect.** Removes the server from this workspace. The row disappears from the list. Fluso loses access from the next message onward.
+
+Disconnecting only removes the sign-in from Fluso's side. If you want it revoked on the server too, do that from the server's own settings page — most providers list "Fluso MCP Proxy" as an authorised application you can remove.
+
+## Adding a server from chat
+
+If you do not know whether a service even has an MCP endpoint, do not go hunting. Ask Fluso.
+
+> *"Connect to Linear MCP."*
+
+> *"Set up Asana for me: https://developers.asana.com/docs/mcp."*
+
+Fluso reads whatever docs you point it at, finds the endpoint, and writes a small config for itself. Then it surfaces the same sign-in card right in the chat — the same green check, the same popup, the same automatic wait for you to finish. You sign in, the card flips to **Connected**, and Fluso carries on with whatever you actually asked for.
+
+Servers you add in chat show up in the MCP tab. Servers you add in the MCP tab become usable from chat from the next message onward. There is one list, two ways in.
+
+When you have several servers connected and ask Fluso for something it can do across more than one of them, it picks the right one. You do not have to name a server in your prompt any more than you would name a skill.
+
+## When something goes wrong
+
+A few situations come up often enough to be worth flagging.
+
+**The popup says "Authorization expired."** You spent more than 15 minutes on the sign-in page. Close the popup, click **Authorize** again, the new session starts fresh.
+
+**The popup says "A newer authorization replaced this one."** You clicked **Authorize** twice for the same server before the first popup finished. The newer one won. Close this popup and finish the flow in the other tab.
+
+**Fluso says it cannot find the server's sign-in metadata.** The URL you pasted is probably not the MCP endpoint. The docs URL and the MCP endpoint URL are usually different — the MCP endpoint tends to be at `mcp.<service>.com` or `<service>.com/mcp`. Try that.
+
+**A row stays on "Needs reauth" after a Reconnect.** You signed in successfully but the server gave Fluso back a sign-in it cannot use. Disconnect the row entirely and add the server fresh.
+
+**The dialog asked for a client ID and secret. Where do they come from?** The server's developer console. Look for "OAuth apps", "Integrations", or "API clients" in its settings. Register an application, set the redirect URI to the one Fluso shows you in the dialog, copy the client credentials, paste them back.
+
+**Fluso said the URL points to a private or reserved address.** Working as intended. The MCP tab does not let you point Fluso at internal IPs from the public app — that would be a security hole. For an internal MCP server, run Fluso against a backend that can reach it directly, or expose the server publicly behind its own auth.
+
+**An agent keeps re-authorizing the same server every conversation.** Something is wrong with the runtime's connection to the backend. Reach out to support — this is not normal behaviour and we should fix it on our side.
+
+**Sign-in fails with no clear reason.** The server returned an error without an explanation. The usual causes: you denied consent on the popup, the server's app configuration is broken, or the scopes the server is asking for are not granted to the account you signed in with. Check the server's docs for the scopes it expects.
+
+## Things to know
+
+- **You can connect anything that speaks MCP.** Modern OAuth, OAuth without auto-registration, plain API keys, bearer tokens — the dialog adapts. Nothing gets blocked because of how it handles sign-in.
+- **All credentials are stored encrypted.** Whether you sign in with OAuth or paste an API key, the value lives encrypted in the backend. Never in logs, never in plain text.
+- **Tokens never reach your browser or your runtime.** Sign-in happens between you and the server. Fluso just keeps the result.
+- **Disconnect is local.** It removes Fluso's access on our side. To revoke it on the server too, do that from the server's own settings.
+- **MCP servers are third parties.** Treat them the way you would treat any external integration. Only connect ones you trust to act on your behalf — Fluso will execute whatever tools the server advertises.
+
+## Next
+
+See [Connectors](/features/connectors) for first-party integrations that do not need an MCP endpoint. See [Skills](/features/skills) for capabilities that shape *how* Fluso thinks, rather than *what* it can reach.
