@@ -1,0 +1,42 @@
+name: deploy to Mintlify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: mintlify-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Trigger Mintlify redeploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secrets are configured
+        env:
+          MINTLIFY_API_KEY: ${{ secrets.MINTLIFY_API_KEY }}
+          MINTLIFY_PROJECT_ID: ${{ secrets.MINTLIFY_PROJECT_ID }}
+        run: |
+          if [ -z "$MINTLIFY_API_KEY" ] || [ -z "$MINTLIFY_PROJECT_ID" ]; then
+            echo "::error::MINTLIFY_API_KEY and MINTLIFY_PROJECT_ID must be set as repo secrets."
+            exit 1
+          fi
+
+      - name: Trigger redeploy
+        env:
+          MINTLIFY_API_KEY: ${{ secrets.MINTLIFY_API_KEY }}
+          MINTLIFY_PROJECT_ID: ${{ secrets.MINTLIFY_PROJECT_ID }}
+        run: |
+          response=$(curl -sS -w '\n%{http_code}' \
+            -X POST "https://api.mintlify.com/v1/project/update/${MINTLIFY_PROJECT_ID}" \
+            -H "Authorization: Bearer ${MINTLIFY_API_KEY}")
+          body=$(echo "$response" | head -n -1)
+          code=$(echo "$response" | tail -n 1)
+          echo "HTTP $code"
+          echo "$body"
+          if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
+            echo "::error::Mintlify redeploy failed (HTTP $code)"
+            exit 1
+          fi
