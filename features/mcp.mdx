@@ -162,7 +162,13 @@ These come up enough to be worth flagging.
 
 **Sign-in fails with no clear reason.** The server returned an error without a message. The usual causes: you denied consent, the server's app config is broken, the scopes don't match what the account you signed in with has access to. Check the server's docs for the scopes it expects.
 
-**The dialog says "DCR rejected."** The server says it supports Dynamic Client Registration but rejected Fluso's request. Switch to the **OAuth (BYO)** tab and register the app manually.
+**The dialog says "DCR rejected."** The server advertises Dynamic Client Registration but rejected Fluso's request. The error usually carries the provider's own message attached.
+
+<Frame>
+  <img src="/images/features/mcp/dialog-dcr-error.png" alt="Add MCP server dialog showing a red error card: 'MCP OAuth DCR rejected: HTTP 400 {\"error\":\"invalid_client_metadata\",\"error_description\":\"Request body does not match the expected schema\"}'. Close and Try again buttons." />
+</Frame>
+
+Click **Try again**, or switch to the **OAuth (BYO)** tab and register an app on the provider's side manually.
 
 ## Things to know
 
