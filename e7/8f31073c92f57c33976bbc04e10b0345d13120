@@ -1,0 +1,29 @@
+.cspell.json
+  s_f7ec96f59a049d::t_63f6d98a358e5f 3
+  s_f7ec96f59a049d::t_fae42dacdfb913 24,26
+  s_f7ec96f59a049d::t_370e88e85c665e 1-2,4-20,22-23,25,28-36,38-63,67-68,70-76
+  s_f7ec96f59a049d::t_4eacdba00d61be 27
+  s_f7ec96f59a049d::t_52b3bd2ebf6c9b 37
+  s_f7ec96f59a049d::t_9c8aaf421cfcd7 21
+  s_f7ec96f59a049d::t_f2abfb359f1d46 64-66,69
+.github/workflows/deploy.yml
+  s_f7ec96f59a049d::t_e95884ffe13240 1-42
+.github/workflows/docs-checks.yml
+  s_f7ec96f59a049d::t_677ec8119cfbe3 1-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "e78f31073c92f57c33976bbc04e10b0345d13120",
+  "prompts": {},
+  "sessions": {
+    "s_f7ec96f59a049d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "28cc2078-4907-4628-9ead-1df59a17ecb2",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
