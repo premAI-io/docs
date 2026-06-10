@@ -1,0 +1,19 @@
+features/mcp.mdx
+  s_f7ec96f59a049d::t_6e9a4a39ddb0e6 147-176
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "a93846596f08e6ee0881bfb1440df652711aca44",
+  "prompts": {},
+  "sessions": {
+    "s_f7ec96f59a049d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "28cc2078-4907-4628-9ead-1df59a17ecb2",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
