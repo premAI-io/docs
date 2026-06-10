@@ -144,31 +144,36 @@ This is deliberate. A custom MCP you set up is almost always more specific to yo
 
 The same rule applies in reverse for capabilities. If a connected MCP server covers what a connector would do, Fluso won't ask you to add the connector. The MCP is enough.
 
-## When something goes wrong
+## Troubleshooting
 
-These come up enough to be worth flagging.
+<Accordion title='The popup says "Authorization expired"'>
+  Sign-in took longer than 15 minutes. Close the popup, click **Authorize** again.
+</Accordion>
+<Accordion title='The popup says "A newer authorization replaced this one"'>
+  You clicked **Authorize** twice for the same server. Finish the flow in the newer popup, close this one.
+</Accordion>
+<Accordion title="Fluso can't find the server's sign-in metadata">
+  The URL is probably the docs page, not the MCP endpoint. Try `mcp.<service>.com` or `<service>.com/mcp`.
+</Accordion>
+<Accordion title='The row stays on "Needs reauth" after a Reconnect'>
+  The server returned a sign-in Fluso can't use. Disconnect the row and add the server fresh.
+</Accordion>
+<Accordion title='The dialog rejected my URL as "private or reserved address space"'>
+  Working as intended. The public app can't point at internal IPs. Expose the server publicly behind its own auth, or run Fluso against a backend that can reach it.
+</Accordion>
+<Accordion title="An agent keeps re-authorizing the same server every conversation">
+  Something is wrong with the runtime's connection to the backend. Reach out to support.
+</Accordion>
+<Accordion title="Sign-in fails with no clear reason">
+  Usually one of: you denied consent, the server's app config is broken, the scopes don't match the account you signed in with. Check the server's docs.
+</Accordion>
+<Accordion title='The dialog says "DCR rejected"'>
+  The server advertises Dynamic Client Registration but rejected Fluso. Click **Try again**, or switch to **OAuth (BYO)** and register an app yourself.
 
-**The popup says "Authorization expired."** You spent more than 15 minutes on the sign-in page. Close the popup. Click **Authorize** again. Fresh session.
-
-**The popup says "A newer authorization replaced this one."** You clicked **Authorize** twice for the same server before the first popup finished. The newer one won. Close this one, finish in the other tab.
-
-**Fluso can't find the server's sign-in metadata.** The URL you pasted is probably not the MCP endpoint. The docs URL and the MCP endpoint URL are usually different. Try `mcp.<service>.com` or `<service>.com/mcp`.
-
-**The row stays on "Needs reauth" after a Reconnect.** The server gave Fluso back a sign-in it can't use. Disconnect the row entirely and add the server fresh.
-
-**The dialog rejected my URL with "must not point to private or reserved address space."** Working as intended. You can't point the public app at an internal IP. For an internal MCP server, run Fluso against a backend that can reach it directly, or expose the server publicly behind your own auth.
-
-**An agent keeps re-authorizing the same server every conversation.** Something is wrong with the runtime's connection to the backend. Reach out to support. This isn't normal.
-
-**Sign-in fails with no clear reason.** The server returned an error without a message. The usual causes: you denied consent, the server's app config is broken, the scopes don't match what the account you signed in with has access to. Check the server's docs for the scopes it expects.
-
-**The dialog says "DCR rejected."** The server advertises Dynamic Client Registration but rejected Fluso's request. The error usually carries the provider's own message attached.
-
-<Frame>
-  <img src="/images/features/mcp/dialog-dcr-error.png" alt="Add MCP server dialog showing a red error card: 'MCP OAuth DCR rejected: HTTP 400 {\"error\":\"invalid_client_metadata\",\"error_description\":\"Request body does not match the expected schema\"}'. Close and Try again buttons." />
-</Frame>
-
-Click **Try again**, or switch to the **OAuth (BYO)** tab and register an app on the provider's side manually.
+  <Frame>
+    <img src="/images/features/mcp/dialog-dcr-error.png" alt="Add MCP server dialog with a red error card carrying the provider's HTTP 400 response and a Try again button." />
+  </Frame>
+</Accordion>
 
 ## Things to know
 
