@@ -1,0 +1,246 @@
+name: Publish release notes
+
+# Turns engineering GitHub release notes into customer-facing release notes on
+# docs.fluso.ai. You paste one or more release URLs; Claude (the `release-notes`
+# skill from premAI-io/fluso-development-skills) rewrites them into a single
+# Mintlify <Update> entry, opens a PR, and DMs you on Slack. Approving the
+# `docs-release` environment on the run merges the PR to main and Mintlify
+# deploys.
+#
+# ── Required secrets ─────────────────────────────────────────────────────────
+#   CLAUDE_CODE_OAUTH_TOKEN  Claude Code action auth (same token as other repos).
+#   SOURCE_RELEASES_PAT      PAT with read access to the private source repos
+#                            (fluso-frontend, premapp-backend, chronograph, …)
+#                            AND to fluso-development-skills. Used only to fetch
+#                            release bodies and clone the skill.
+#   SLACK_BOT_TOKEN          Slack bot token (xoxb-…) with chat:write. Optional —
+#                            if unset, the Slack steps no-op and publishing still
+#                            works.
+# ── Required variables ───────────────────────────────────────────────────────
+#   SLACK_RELEASE_DM_TARGET  Slack member ID to DM (e.g. U0123ABCD), or a channel
+#                            ID. Optional alongside SLACK_BOT_TOKEN.
+# ── One-time setup (IMPORTANT) ───────────────────────────────────────────────
+#   Settings → Environments → create `docs-release` and add a Required reviewer.
+#   That reviewer approval IS the publish gate. If the environment has no
+#   required reviewer, the merge is NOT gated and happens automatically.
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_urls:
+        description: "Release URL(s), space- or newline-separated. List a desktop release and its backend cycle together to publish them as one note."
+        required: true
+        type: string
+      version_label:
+        description: "Optional entry label override, e.g. 'Desktop 1.0.9'. Leave blank to let Claude infer it from the releases."
+        required: false
+        type: string
+
+concurrency:
+  group: publish-release-notes
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+      actions: read
+    outputs:
+      pr_number: ${{ steps.pr.outputs.pr_number }}
+      pr_url: ${{ steps.pr.outputs.pr_url }}
+    steps:
+      - name: Checkout docs
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Fetch source release notes
+        env:
+          GH_TOKEN: ${{ secrets.SOURCE_RELEASES_PAT }}
+          RELEASE_URLS: ${{ inputs.release_urls }}
+        run: |
+          set -euo pipefail
+          mkdir -p .release-input
+          manifest=.release-input/manifest.json
+          echo "[]" > "$manifest"
+          urls=$(printf '%s' "$RELEASE_URLS" | tr ', \t\r' '\n' | sed '/^$/d')
+          [ -n "$urls" ] || { echo "::error::No release URLs provided"; exit 1; }
+          i=0
+          while IFS= read -r url; do
+            url=${url%/}
+            path=${url#https://github.com/}
+            owner=$(printf '%s' "$path" | cut -d/ -f1)
+            repo=$(printf '%s' "$path" | cut -d/ -f2)
+            tag=${url##*/tag/}
+            i=$((i + 1))
+            body_file=".release-input/body-${i}.md"
+            echo "Fetching ${owner}/${repo} @ ${tag}"
+            gh release view "$tag" -R "${owner}/${repo}" \
+              --json body,tagName,publishedAt,url,name > ".release-input/meta-${i}.json"
+            jq -r '.body' ".release-input/meta-${i}.json" > "$body_file"
+            jq --arg owner "$owner" --arg repo "$repo" --arg bf "$body_file" \
+               --slurpfile m ".release-input/meta-${i}.json" \
+               '. + [{owner:$owner, repo:$repo, tag:$m[0].tagName, name:$m[0].name,
+                      published:$m[0].publishedAt, url:$m[0].url, body_file:$bf}]' \
+               "$manifest" > "${manifest}.tmp" && mv "${manifest}.tmp" "$manifest"
+          done <<< "$urls"
+          echo "Fetched ${i} release(s):"
+          jq -r '.[] | "  - \(.owner)/\(.repo) @ \(.tag) (\(.published))"' "$manifest"
+
+      - name: Load release-notes skill
+        env:
+          SKILLS_PAT: ${{ secrets.SOURCE_RELEASES_PAT }}
+        run: |
+          set -euo pipefail
+          git clone --depth 1 \
+            "https://x-access-token:${SKILLS_PAT}@github.com/premAI-io/fluso-development-skills.git" \
+            /tmp/fluso-skills
+          mkdir -p .claude/skills
+          cp -R /tmp/fluso-skills/skills/release-notes .claude/skills/release-notes
+          echo "Installed skill:"; ls -R .claude/skills/release-notes
+
+      - name: Generate release note
+        uses: anthropics/claude-code-action@v1
+        env:
+          GH_TOKEN: ${{ secrets.SOURCE_RELEASES_PAT }}
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
+          claude_args: "--model claude-opus-4-8 --effort max --allowedTools Bash,Read,Write,Edit,Glob,Grep"
+          prompt: |
+            You are running in CI (GitHub Actions) inside the premAI-io/docs repository — the Mintlify site published at docs.fluso.ai.
+
+            GOAL: turn the fetched engineering release notes into ONE clean, customer-facing release-note entry and leave it staged for review. You are the writer, not the publisher — do not touch git.
+
+            THE SKILL — read first, follow exactly:
+            - `.claude/skills/release-notes/SKILL.md`
+            - `.claude/skills/release-notes/references/release-notes-playbook.md`
+            Read both before writing anything. They define the customer voice, the repo→audience mapping, the theme taxonomy, the combine-vs-separate rules, and the exact Mintlify `<Update>` output contract. Do not deviate from them.
+
+            INPUTS — already fetched for you (do not re-fetch):
+            - `.release-input/manifest.json` — an array of the source releases, each with `owner`, `repo`, `tag`, `name`, `published` (date), `url`, and `body_file`.
+            - Each `body_file` holds the raw engineering release notes for one source release.
+
+            FRONTEND vs BACKEND AWARENESS — this is the core of the task:
+            - `fluso-frontend` is the desktop app users see directly. Lead with it and label the entry by its version (e.g. "Desktop 1.0.9").
+            - `premapp-backend`, `chronograph`, and infra repos are invisible to users as versions. Never print a backend version. Fold their user-perceptible effects into the theme they belong to (connectors & sync, assistant reliability, smarter assistant, trust). Drop anything with no user-facing effect.
+            - The operator pasted these releases together on purpose: treat them as ONE release window and produce a SINGLE combined `<Update>` entry. Dedupe any capability that appears in both a frontend and a backend release into one bullet.
+            - If no frontend release is present, label the entry "Platform update".
+
+            WRITE:
+            1. Read the skill files, then the manifest and every body file.
+            2. Create or update `release-notes.mdx` per the playbook's output contract: prepend ONE new `<Update>` block (newest first). Use the latest source release's `published` date as the `label` (YYYY-MM-DD) and the desktop version as the `description`${{ inputs.version_label && format(' (use exactly "{0}")', inputs.version_label) || '' }}. RSS-safe: bold subsection labels, never `##` headings inside the block.
+            3. Order content by the theme taxonomy, Highlights first; include only themes that have content; one benefit-led line per bullet; strip every PR number, commit SHA, @handle, file path, and internal mechanism; omit reverts and compliance-claim walkbacks.
+            4. Register the page in `docs.json` exactly once — add the "Release notes" nav group only if it is missing.
+
+            CONSTRAINTS:
+            - Do NOT run git, commit, push, or open a PR. Leave the edited files in the working tree; the workflow handles git.
+            - Change only `release-notes.mdx` and `docs.json`. Never invent features the source bodies do not support.
+
+            When finished, print a 3–5 line summary: the entry's label and description, the themes you included, and any notable source items you intentionally dropped as non-user-facing.
+
+      - name: Prepare branch & commit
+        id: prep
+        env:
+          RELEASE_URLS: ${{ inputs.release_urls }}
+        run: |
+          set -euo pipefail
+          rm -rf .release-input .claude/skills/release-notes
+          rmdir .claude/skills .claude 2>/dev/null || true
+          if [ -z "$(git status --porcelain -- release-notes.mdx docs.json)" ]; then
+            echo "::error::No release-notes changes were produced."
+            exit 1
+          fi
+          branch="release-notes/run-${{ github.run_id }}"
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
+          git config user.name "fluso-release-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add release-notes.mdx docs.json
+          git commit -m "docs: publish customer release notes" -m "Source releases:
+          ${RELEASE_URLS}
+
+          Generated by the publish-release-notes workflow.
+          Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git push origin "$branch"
+
+      - name: Open PR
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_URLS: ${{ inputs.release_urls }}
+        run: |
+          set -euo pipefail
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          body=$(cat <<EOF
+          Customer-facing release notes generated from:
+
+          ${RELEASE_URLS}
+
+          Review the rendered diff. **To publish, approve the \`docs-release\` environment on [the workflow run](${run_url})** — that merges this PR to \`main\` and Mintlify deploys to docs.fluso.ai.
+
+          🤖 Generated with [Claude Code](https://claude.com/claude-code)
+          EOF
+          )
+          url=$(gh pr create --base main --head "${{ steps.prep.outputs.branch }}" \
+            --title "docs: release notes" --body "$body")
+          echo "pr_url=${url}" >> "$GITHUB_OUTPUT"
+          echo "pr_number=$(gh pr view "$url" --json number --jq .number)" >> "$GITHUB_OUTPUT"
+          echo "Opened ${url}"
+
+      - name: Slack DM — ready to confirm
+        if: always() && steps.pr.outputs.pr_url != ''
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          TARGET: ${{ vars.SLACK_RELEASE_DM_TARGET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SLACK_BOT_TOKEN:-}" ] || [ -z "${TARGET:-}" ]; then
+            echo "Slack not configured (SLACK_BOT_TOKEN / SLACK_RELEASE_DM_TARGET) — skipping DM."
+            exit 0
+          fi
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          text=$(printf '📝 *Release notes ready to publish*\n\n• Review: %s\n• Approve to publish: %s\n\nApprove the docs-release environment on the run to merge to main and deploy to docs.fluso.ai.' \
+            "${{ steps.pr.outputs.pr_url }}" "$run_url")
+          payload=$(jq -n --arg ch "$TARGET" --arg text "$text" '{channel:$ch, text:$text}')
+          resp=$(curl -sS -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
+            -H "Content-type: application/json; charset=utf-8" --data "$payload")
+          echo "$resp" | jq -e '.ok' >/dev/null || { echo "::warning::Slack DM failed: $(echo "$resp" | jq -r '.error // "unknown"')"; }
+
+  publish:
+    needs: draft
+    if: needs.draft.outputs.pr_number != ''
+    runs-on: ubuntu-latest
+    environment: docs-release
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Merge PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh pr merge "${{ needs.draft.outputs.pr_number }}" \
+            -R "${{ github.repository }}" --squash --delete-branch
+
+      - name: Slack DM — published
+        if: success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          TARGET: ${{ vars.SLACK_RELEASE_DM_TARGET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SLACK_BOT_TOKEN:-}" ] || [ -z "${TARGET:-}" ]; then
+            echo "Slack not configured — skipping."
+            exit 0
+          fi
+          text=$(printf '✅ Release notes published to docs.fluso.ai (PR #%s merged).' "${{ needs.draft.outputs.pr_number }}")
+          payload=$(jq -n --arg ch "$TARGET" --arg text "$text" '{channel:$ch, text:$text}')
+          curl -sS -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
+            -H "Content-type: application/json; charset=utf-8" --data "$payload" >/dev/null || true
