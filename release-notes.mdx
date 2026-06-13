@@ -1,0 +1,84 @@
+---
+title: "Release notes"
+description: "What's new in Fluso — product updates, improvements, and fixes."
+---
+
+<Update label="2026-06-13" description="Desktop 1.0.9" tags={["Desktop"]}>
+
+**Highlights**
+- A cleaner, more cohesive app after a top-to-bottom design pass.
+- Search your threads right from the sidebar.
+- The assistant got noticeably smarter at research, drafting, and visuals.
+
+**Polish & experience**
+- Normalised typography, spacing, and layout across the whole app — sidebars, headers, buttons, cards, and empty states all feel more consistent.
+- A clearer step-details panel in the work log.
+- On macOS, the window frame now follows your light/dark theme — no more dark strip at the top on launch.
+
+**Find things faster**
+- Search past conversations from the sidebar, with matches highlighted.
+- Telegram chats are now labelled in the sidebar so you can tell sources apart at a glance.
+
+**Smarter assistant**
+- Deep Research asks a clarifying question when your request is ambiguous instead of guessing, and uses refreshed web-search connectors.
+- Draft emails and Slack messages get an automatic polish pass so they read like a person wrote them — before you approve and send.
+- Slide decks use richer visuals for pitch and brand decks, while data-heavy decks stay clean.
+- Sharper image generation, now powered by GPT-5.4 Image 2.
+
+**Reliability, privacy & trust**
+- Backend services now run in the EU region for European users.
+- Fewer noisy banners — the "Technical Issue" banner only appears when something user-facing is genuinely broken.
+- Security hardening across the app from a recent external review.
+
+</Update>
+
+<Update label="2026-06-04" description="Desktop 1.0.8" tags={["Desktop"]}>
+
+**Highlights**
+- The app updates itself now — new versions install quietly in the background.
+- Drop your connection mid-answer and the assistant picks back up — nothing lost.
+- Syncs recover on their own instead of getting stuck.
+
+**Updates & installation**
+- Background auto-updates: once you're on 1.0.8+, new builds install on their own. A sidebar dot shows when one is ready, and Settings has a "Check for updates" button.
+- Windows and Linux now use the same clean, frameless window style as macOS.
+- Windows builds are properly signed — no more "unknown publisher" warning — and the taskbar shows the Fluso icon.
+
+**Connectors & sync**
+- Gmail and Slack syncs recover on their own from rate limits and hiccups. If a Gmail connection truly expires, you're clearly prompted to reconnect.
+- Queued syncs honestly show as "queued" instead of pretending to run.
+- Google Drive: once a file is uploaded, clicking it again opens it in Drive instead of uploading a duplicate.
+
+**Assistant reliability**
+- If your connection drops or your laptop sleeps mid-response, your answer is preserved and finishes on its own.
+- In-progress tasks are no longer lost if something restarts behind the scenes.
+- The "Worked for X seconds" timer is honest now, and empty voice notes no longer break the conversation.
+
+**Plans & onboarding**
+- Free and Sponsored Pro plan limits were raised — more headroom before you hit a cap.
+- The name, role, and preferences you set during onboarding now carry across the whole app.
+
+**Reliability & offline**
+- Open the app with no network and you get a clean "No internet connection" screen with a Try Again button that auto-recovers when you reconnect.
+
+</Update>
+
+<Update label="2026-05-29" description="Desktop 1.0.6" tags={["Desktop"]}>
+
+**Highlights**
+- Clearer sync history and status across your connectors.
+- A smoother connectors page and onboarding.
+
+**Connectors & sync**
+- Sync history shows clear, readable failure reasons when something goes wrong.
+- Upload files to Google Drive straight from chat.
+- The connectors page handles 100+ integrations without locking up, and stalled OAuth connections can be recovered instead of getting stuck.
+
+**Onboarding & tasks**
+- Onboarding, sign-in, and project-switching polish throughout.
+- Dismiss tasks you don't want surfaced, and filter to completed-only.
+
+**Reliability**
+- Open the app offline and you get a clean "No internet" screen that recovers when you reconnect.
+
+</Update>
