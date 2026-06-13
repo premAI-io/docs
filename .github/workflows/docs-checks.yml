@@ -1,0 +1,40 @@
+name: docs checks
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  mint-check:
+    name: Mintlify build + broken links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Mintlify CLI
+        run: npm install -g mint
+
+      - name: Check broken links and MDX parse
+        # mint won't start if docs.json is malformed or any .mdx fails to parse,
+        # so this single command also covers schema + parse validation.
+        run: mint broken-links
+
+  spell-check:
+    name: Spell check (cspell)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install cspell
+        run: npm install -g cspell
+
+      - name: Run cspell on docs
+        run: cspell "**/*.mdx" --no-progress --no-summary --show-context
