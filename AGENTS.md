@@ -80,3 +80,17 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 - Never invent feature behaviour. If a capability isn't documented in source materials, leave it out.
 - Always pair "Fluso can send X" with the approval safety note: drafts are shown for review.
 - For product actions, point users to the macOS download at `https://fluso.ai/` and to support at `support@premai.io`. Don't link to `app.fluso.ai`. Fluso is a desktop app.
+
+## Publishing release notes
+
+Customer release notes live on `/release-notes` (`release-notes.mdx`) as a stack of Mintlify `<Update>` blocks, newest first. They are published through a workflow, not edited by hand.
+
+The flow:
+
+1. **Actions → Publish release notes → Run workflow.** Paste one or more GitHub release URLs. List a desktop release and the backend cycle behind it together to publish them as one note.
+2. The workflow fetches each release body, loads the `release-notes` skill from [`fluso-development-skills`](https://github.com/premAI-io/fluso-development-skills), and has Claude rewrite them into one `<Update>` entry: frontend-led and version-labelled, backend folded into themes, deduped, customer voice, engineering detail removed. It follows this file's voice rules.
+3. The workflow opens a PR with that diff and sends a Slack DM with the link.
+4. **Review and merge the PR to publish.** `main` requires an approving review from someone other than the last pusher, so your review is the gate. Merging deploys to docs.fluso.ai.
+5. The companion workflow `release-notes-published.yml` then DMs you the published notes, formatted to forward to the prem-app channel if you choose.
+
+Claude writes the entry and opens the PR; it never merges. Your review and merge is the gate, enforced by the branch ruleset. The skill (`SKILL.md` and `references/release-notes-playbook.md`) is the source of truth for how releases map to customer voice and when to combine frontend and backend.
