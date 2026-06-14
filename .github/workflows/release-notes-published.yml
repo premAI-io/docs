@@ -1,0 +1,56 @@
+name: Release notes published
+
+# Fires when release-notes.mdx lands on main (i.e. you merged a release-notes
+# PR). DMs the newest published entry, formatted for Slack, so you can forward
+# it to the prem-app channel if you choose.
+#
+# Uses SLACK_BOT_TOKEN + SLACK_RELEASE_DM_TARGET (same as publish-release-notes).
+# No-ops if Slack isn't configured.
+
+on:
+  push:
+    branches: [main]
+    paths: ["release-notes.mdx"]
+
+concurrency:
+  group: release-notes-published
+  cancel-in-progress: false
+
+jobs:
+  dm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: DM the published notes
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          TARGET: ${{ vars.SLACK_RELEASE_DM_TARGET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SLACK_BOT_TOKEN:-}" ] || [ -z "${TARGET:-}" ]; then
+            echo "Slack not configured — skipping."
+            exit 0
+          fi
+          # Take the newest <Update> block (top of the file).
+          awk '/<Update /{f=1} f{print} /<\/Update>/{if(f){exit}}' release-notes.mdx > /tmp/entry.mdx
+          label=$(grep -oE 'label="[^"]*"' /tmp/entry.mdx | head -1 | sed -E 's/label="(.*)"/\1/' || true)
+          desc=$(grep -oE 'description="[^"]*"' /tmp/entry.mdx | head -1 | sed -E 's/description="(.*)"/\1/' || true)
+          # Strip the <Update>/</Update> lines; convert **bold**->*bold* and "- "->"• " for Slack mrkdwn.
+          body=$(sed '1d;$d' /tmp/entry.mdx | sed -E 's/\*\*([^*]+)\*\*/*\1*/g; s/^- /• /')
+          if [ -z "$body" ]; then
+            echo "No <Update> entry found — skipping."
+            exit 0
+          fi
+          payload=$(jq -n --arg ch "$TARGET" --arg label "$label" --arg desc "$desc" --arg body "$body" '
+            {channel: $ch, unfurl_links: false,
+             text: ("✅ *Published: " + $desc + "* (" + $label + ")\nLive at https://docs.fluso.ai/release-notes\n\n"
+                    + $body
+                    + "\n\n_Forward to the prem-app channel if you want to share it._")}')
+          resp=$(curl -sS -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
+            -H "Content-type: application/json; charset=utf-8" --data "$payload")
+          echo "$resp" | jq -e '.ok' >/dev/null || echo "::warning::Slack DM failed: $(echo "$resp" | jq -r '.error // "unknown"')"

@@ -2,27 +2,22 @@ name: Publish release notes
 
 # Turns engineering GitHub release notes into customer-facing release notes on
 # docs.fluso.ai. You paste one or more release URLs; Claude (the `release-notes`
-# skill from premAI-io/fluso-development-skills) rewrites them into a single
-# Mintlify <Update> entry, opens a PR, and DMs you on Slack. Approving the
-# `docs-release` environment on the run merges the PR to main and Mintlify
-# deploys.
+# skill) rewrites them into ONE Mintlify <Update> entry and opens a PR.
+#
+# Review and merge that PR to publish. `main` requires an approving review from
+# someone other than the last pusher (branch ruleset), so your review IS the
+# gate — the workflow never merges. When the PR merges, the companion workflow
+# `release-notes-published.yml` DMs you the published notes to forward.
 #
 # ── Required secrets ─────────────────────────────────────────────────────────
-#   CLAUDE_CODE_OAUTH_TOKEN  Claude Code action auth (same token as other repos).
+#   CLAUDE_CODE_OAUTH_TOKEN  Claude Code action auth.
 #   SOURCE_RELEASES_PAT      PAT with read access to the private source repos
 #                            (fluso-frontend, premapp-backend, chronograph, …)
-#                            AND to fluso-development-skills. Used only to fetch
-#                            release bodies and clone the skill.
+#                            and to fluso-development-skills.
 #   SLACK_BOT_TOKEN          Slack bot token (xoxb-…) with chat:write. Optional —
-#                            if unset, the Slack steps no-op and publishing still
-#                            works.
-# ── Required variables ───────────────────────────────────────────────────────
-#   SLACK_RELEASE_DM_TARGET  Slack member ID to DM (e.g. U0123ABCD), or a channel
-#                            ID. Optional alongside SLACK_BOT_TOKEN.
-# ── One-time setup (IMPORTANT) ───────────────────────────────────────────────
-#   Settings → Environments → create `docs-release` and add a Required reviewer.
-#   That reviewer approval IS the publish gate. If the environment has no
-#   required reviewer, the merge is NOT gated and happens automatically.
+#                            if unset, the Slack step no-ops.
+# ── Required variable ────────────────────────────────────────────────────────
+#   SLACK_RELEASE_DM_TARGET  Slack member ID to DM (e.g. U0123ABCD).
 
 on:
   workflow_dispatch:
@@ -48,9 +43,6 @@ jobs:
       pull-requests: write
       id-token: write
       actions: read
-    outputs:
-      pr_number: ${{ steps.pr.outputs.pr_number }}
-      pr_url: ${{ steps.pr.outputs.pr_url }}
     steps:
       - name: Checkout docs
         uses: actions/checkout@v6
@@ -120,6 +112,8 @@ jobs:
             - `.claude/skills/release-notes/references/release-notes-playbook.md`
             Read both before writing anything. They define the customer voice, the repo→audience mapping, the theme taxonomy, the combine-vs-separate rules, and the exact Mintlify `<Update>` output contract. Do not deviate from them.
 
+            Also read this repository's `AGENTS.md` and follow its voice rules: banned vocabulary (seamless, robust, leverage, unlock, empower, transform, crucial, …), sentence-case labels, straight quotes, em dashes sparingly, and no emojis in body text.
+
             INPUTS — already fetched for you (do not re-fetch):
             - `.release-input/manifest.json` — an array of the source releases, each with `owner`, `repo`, `tag`, `name`, `published` (date), `url`, and `body_file`.
             - Each `body_file` holds the raw engineering release notes for one source release.
@@ -174,13 +168,12 @@ jobs:
           RELEASE_URLS: ${{ inputs.release_urls }}
         run: |
           set -euo pipefail
-          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           body=$(cat <<EOF
           Customer-facing release notes generated from:
 
           ${RELEASE_URLS}
 
-          Review the rendered diff. **To publish, approve the \`docs-release\` environment on [the workflow run](${run_url})** — that merges this PR to \`main\` and Mintlify deploys to docs.fluso.ai.
+          **Review the rendered diff and merge to publish.** \`main\` requires an approving review, so your review is the gate — merging deploys to docs.fluso.ai and DMs you the published notes to forward.
 
           🤖 Generated with [Claude Code](https://claude.com/claude-code)
           EOF
@@ -188,10 +181,9 @@ jobs:
           url=$(gh pr create --base main --head "${{ steps.prep.outputs.branch }}" \
             --title "docs: release notes" --body "$body")
           echo "pr_url=${url}" >> "$GITHUB_OUTPUT"
-          echo "pr_number=$(gh pr view "$url" --json number --jq .number)" >> "$GITHUB_OUTPUT"
           echo "Opened ${url}"
 
-      - name: Slack DM — ready to confirm
+      - name: Slack DM — ready to review
         if: always() && steps.pr.outputs.pr_url != ''
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -202,45 +194,10 @@ jobs:
             echo "Slack not configured (SLACK_BOT_TOKEN / SLACK_RELEASE_DM_TARGET) — skipping DM."
             exit 0
           fi
-          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          text=$(printf '📝 *Release notes ready to publish*\n\n• Review: %s\n• Approve to publish: %s\n\nApprove the docs-release environment on the run to merge to main and deploy to docs.fluso.ai.' \
-            "${{ steps.pr.outputs.pr_url }}" "$run_url")
-          payload=$(jq -n --arg ch "$TARGET" --arg text "$text" '{channel:$ch, text:$text}')
+          text=$(printf '📝 *Release notes ready*\n\nReview and merge to publish: %s\n\nMerging deploys to docs.fluso.ai, and the published notes come back here for you to forward.' \
+            "${{ steps.pr.outputs.pr_url }}")
+          payload=$(jq -n --arg ch "$TARGET" --arg text "$text" '{channel:$ch, text:$text, unfurl_links:false}')
           resp=$(curl -sS -X POST https://slack.com/api/chat.postMessage \
             -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
             -H "Content-type: application/json; charset=utf-8" --data "$payload")
-          echo "$resp" | jq -e '.ok' >/dev/null || { echo "::warning::Slack DM failed: $(echo "$resp" | jq -r '.error // "unknown"')"; }
-
-  publish:
-    needs: draft
-    if: needs.draft.outputs.pr_number != ''
-    runs-on: ubuntu-latest
-    environment: docs-release
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Merge PR to main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          gh pr merge "${{ needs.draft.outputs.pr_number }}" \
-            -R "${{ github.repository }}" --squash --delete-branch
-
-      - name: Slack DM — published
-        if: success()
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          TARGET: ${{ vars.SLACK_RELEASE_DM_TARGET }}
-        run: |
-          set -euo pipefail
-          if [ -z "${SLACK_BOT_TOKEN:-}" ] || [ -z "${TARGET:-}" ]; then
-            echo "Slack not configured — skipping."
-            exit 0
-          fi
-          text=$(printf '✅ Release notes published to docs.fluso.ai (PR #%s merged).' "${{ needs.draft.outputs.pr_number }}")
-          payload=$(jq -n --arg ch "$TARGET" --arg text "$text" '{channel:$ch, text:$text}')
-          curl -sS -X POST https://slack.com/api/chat.postMessage \
-            -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
-            -H "Content-type: application/json; charset=utf-8" --data "$payload" >/dev/null || true
+          echo "$resp" | jq -e '.ok' >/dev/null || echo "::warning::Slack DM failed: $(echo "$resp" | jq -r '.error // "unknown"')"
