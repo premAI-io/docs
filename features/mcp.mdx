@@ -29,14 +29,14 @@ Both paths land at the same place. A server added in chat shows up in the MCP ta
 ## Where to find them
 
 <Frame>
-  <img src="/images/features/mcp/mcp-page.png" alt="Fluso MCP servers page with the heading 'MCP servers', a description line, an empty 'Custom MCP servers' section, and an Add MCP server button at the top right." />
+  <img src="/images/features/mcp/mcp-page.png" alt="Fluso MCP servers page in its empty state: heading 'MCP servers', a description line, a centered visual of a slow-rotating dashed ring around a pinging accent core with four cardinal dots, the heading 'No servers connected', a helper line 'Wire any MCP-compatible endpoint to extend what your agent can reach.', and a 'Connect a server' pill button." />
 </Frame>
 
-Every server connected to this workspace shows up under **Customization → MCP**, with status and tool count. **Add MCP server** is at the top right.
+Every server connected to this workspace shows up under **Customization → MCP**, with status and tool count. When the list is empty, the page centers a single **Connect a server** button. Once you have a few servers, the page switches to the list view shown below, with **Add MCP server** at the top right.
 
 ## Adding a server
 
-Click **Add MCP server**. A dialog opens.
+Click **Connect a server** (or **Add MCP server**, once you have any connected). A dialog opens.
 
 <Frame>
   <img src="/images/features/mcp/add-dialog.png" alt="Add MCP server dialog with URL 'https://mcp.linear.app', a green-tick suggestion banner reading 'Linear, Suggested: OAuth with Dynamic Client Registration (one-click). Pick what the server actually uses.', a four-tab strip (OAuth selected, then OAuth (BYO), API key, Bearer), and an Authorize button." />
@@ -98,31 +98,47 @@ For the OAuth tabs, **Authorize** opens a popup on the server's sign-in page.
   <img src="/images/features/mcp/authorizing.png" alt="Add MCP server dialog after clicking Authorize: a spinner card reads 'Waiting for Linear… Complete sign-in in the opened tab. This dialog updates automatically.' Cancel authorization and Waiting buttons at the bottom." />
 </Frame>
 
-Sign in there. The popup closes itself. The dialog flips to the connected state without you having to refresh.
+Sign in there. The popup briefly lands on a Fluso confirmation page before closing itself.
 
-Take your time. The pending session holds for 15 minutes. After that it expires and you start over.
+<Frame>
+  <img src="/images/features/mcp/oauth-callback-success.png" alt="Fluso OAuth callback page: a centered card with the Prem logomark, a pulsing green status ring with an animated check mark, heading 'Authorization complete', and the message 'You're connected. You can close this tab.'" />
+</Frame>
+
+The dialog in the main tab flips to the connected state without you having to refresh.
+
+Take your time. The pending session holds for 15 minutes. After that it expires and the same page reports the failure:
+
+<Frame>
+  <img src="/images/features/mcp/oauth-callback-error.png" alt="Fluso OAuth callback page in error state: the same card, but with a pulsing red status ring around an animated X glyph, heading 'Authorization expired', and the message 'This authorization link is no longer valid. Please start over from the chat.'" />
+</Frame>
 
 If your browser blocks the popup, allow popups for the Fluso domain and click **Authorize** again. If you close the popup before signing in, Fluso notices and lets you retry from the same dialog.
 
 ## Managing connections
 
 <Frame>
-  <img src="/images/features/mcp/connections-list.png" alt="MCP servers page with three rows: Linear (mcp.linear.app, Connected, 11 tools, Last used 12m ago), Notion (mcp.notion.com, Needs reauth), Asana (mcp.asana.com, Connected, 8 tools, Last used 2h ago). Each row has a three-dot menu." />
+  <img src="/images/features/mcp/connections-list.png" alt="MCP servers page with three rows. Each row's left icon is the server's favicon. Row 1: mcp.linear.app (Connected, 11 tools, Last used 12m ago). Row 2: mcp.notion.com (Needs reauth). Row 3: mcp.asana.com (Connected, 8 tools, Last used 2h ago). Each row has a three-dot action menu on the right." />
 </Frame>
 
-Every connected server shows up as a row with status, tool count, and last-used timestamp.
+Every connected server shows up as a row with the server's favicon, the endpoint, status, tool count, and a last-used timestamp.
 
 **Connected.** Fluso has a current sign-in. Tokens that are close to expiring get refreshed in the background. You don't see this happen.
 
 **Needs reauth.** The token expired and Fluso couldn't refresh it. The server probably revoked the refresh token or rotated keys. Hit the three-dot menu and click **Reconnect**.
 
 <Frame>
-  <img src="/images/features/mcp/row-menu.png" alt="Row action menu open on the Linear row, with two options: Reconnect (refresh icon) and Disconnect (red, trash icon)." />
+  <img src="/images/features/mcp/row-menu.png" alt="Row action menu open on the first row, with two options: Reconnect (refresh icon) and Disconnect (red, trash icon)." />
 </Frame>
 
 **Reconnect** drops the stored sign-in first, then re-opens the Add dialog with the URL filled in. Use it after a **Needs reauth**, or when you want to sign in as a different account on the same server.
 
-**Disconnect** removes the row. Fluso loses access from the next message on. This only removes the sign-in from Fluso's side. To revoke it on the server, do that from the server's own settings page. Most providers list "Fluso MCP Proxy" as an authorized application you can remove.
+**Disconnect** opens a confirmation:
+
+<Frame>
+  <img src="/images/features/mcp/disconnect-dialog.png" alt="Disconnect confirmation dialog: title 'Disconnect mcp.linear.app?', body 'Your stored credentials for mcp.linear.app will be removed. The agent loses access to this server's tools until you reconnect.', a Cancel button and a red Disconnect button." />
+</Frame>
+
+Confirm and the row is removed. Fluso loses access from the next message on. This only removes the sign-in from Fluso's side. To revoke it on the server, do that from the server's own settings page. Most providers list "Fluso MCP Proxy" as an authorized application you can remove.
 
 ## Connection lifecycle
 
