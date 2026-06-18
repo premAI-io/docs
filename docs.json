@@ -33,7 +33,8 @@
           "features/mcp",
           "features/skills",
           "features/tasks",
-          "features/memory"
+          "features/memory",
+          "features/confidential"
         ]
       },
       {

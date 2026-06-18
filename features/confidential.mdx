@@ -1,0 +1,91 @@
+---
+title: Confidential mode
+sidebarTitle: Confidential
+description: Run your work through models hosted in a hardware-sealed enclave, encrypted with a key only you hold.
+---
+
+Confidential mode routes your inference through Prem's confidential compute, so the work you send Fluso stays private even from the people running the servers. It's available on the Max plan and, once enabled, it stays on. The sections below cover what confidential compute is, how the protection works, and how to switch it on from Settings.
+
+## What is confidential compute
+
+Confidential compute lets you run open-source models inside Prem's Enclave. The enclave sits in a Trusted Execution Environment, a hardware-isolated region of the server that keeps your code and data sealed off from the host OS, the hypervisor, and anyone operating the infrastructure. Every request is encrypted with a key that only you hold. Prem can't read your data, the cloud provider can't read it, and someone with physical access to the hardware can't read it either.
+
+For the underlying platform, see Prem's [confidential compute documentation](https://docs.prem.io/basics/learn-more/overview).
+
+## How the protection is enforced
+
+This doesn't rest on a policy or a promise. It's enforced by the hardware and you can verify it cryptographically. Before any key is released into the enclave, the workload produces hardware evidence signed by the silicon vendor. Prem verifies that signature, and only then do your keys enter the enclave. The trust boundary moves from operator promises to a guarantee rooted in the hardware. The principle Prem builds on is short: don't trust the operator, trust the signature.
+
+Payloads are protected with post-quantum encryption (`XWing`, a hybrid of `X25519` and `ML-KEM 768`), so your traffic holds up even against future quantum attacks. Every request carries its own attestation.
+
+## Plans
+
+Confidential mode is a Max plan feature. Every Fluso account starts on a sponsored Pro plan, which covers normal inference at no cost to you. The setting lives in **Settings** under **Confidential APIs**, and on the sponsored Pro plan it shows up locked behind a **Max plan** badge.
+
+Open your profile from the bottom of the left sidebar. The plan you're on shows next to **Manage plan**.
+
+<Frame>
+  <img src="/images/features/confidential/profile-modal.png" alt="Fluso account menu opened from the bottom of the left sidebar, showing Settings, Manage account, and Manage plan with a Sponsored Pro badge." />
+</Frame>
+
+Open **Settings**. The Confidential APIs panel carries a **Max plan** badge and the toggle is disabled, with an "Available on the Max plan" prompt that links to plans.
+
+<Frame>
+  <img src="/images/features/confidential/settings-page.png" alt="Fluso Settings page. The Confidential APIs panel shows a Max plan badge, a disabled Off toggle, and an 'Available on the Max plan — unlock confidential inference' prompt. Billing reads Sponsored Pro plan." />
+</Frame>
+
+## Turning it on
+
+<Steps>
+  <Step title="Switch to Max">
+    From the Confidential APIs prompt or **Settings → Plans**, pick **Max** and complete checkout. New accounts get a 30-day free trial.
+
+    <Frame>
+      <img src="/images/features/confidential/upgrade-max.png" alt="Plans grid showing Basic, Plus, Pro, and Max. The Max card reads '$119/month — all the advantages of the Pro plan with the most private settings'." />
+    </Frame>
+  </Step>
+  <Step title="Enable confidential mode">
+    With Max active, you can flip the toggle. The panel warns that the change is permanent first.
+
+    <Frame>
+      <img src="/images/features/confidential/confidential-available.png" alt="Confidential APIs panel on the Max plan: the toggle is enabled and an amber 'Heads up — this is permanent' note explains that requests will stay on confidential inference. Billing reads Max plan." />
+    </Frame>
+
+    A dialog confirms the one-way switch and lists what gets disabled in this mode.
+
+    <Frame>
+      <img src="/images/features/confidential/confidential-confirm.png" alt="Turn on confidential mode dialog: 'Every request routes through end-to-end encrypted inference. This is permanent — it can't be turned off once enabled.' Disabled in this mode: automated task generation, image generation. Cancel and Enable permanently buttons." />
+    </Frame>
+  </Step>
+  <Step title="Confirm it's active">
+    The panel turns green with an **Active** badge and reads "Confidential mode is locked on". From here on, your inference runs through the enclave.
+
+    <Frame>
+      <img src="/images/features/confidential/confidential-active.png" alt="Confidential APIs panel in the active state: green ACTIVE badge, On toggle, and a green 'Confidential mode is locked on' card. Billing reads Max plan." />
+    </Frame>
+  </Step>
+</Steps>
+
+<Warning>
+  Enabling confidential mode is permanent. Once your workspace is in confidential mode, you can't switch back to standard inference. Image generation and automated task creation are disabled while it's on.
+</Warning>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I switch back to normal mode after enabling it?">
+    No. Turning on confidential mode is a one-way change for your workspace. Once you're in confidential mode, there's no path back to standard inference.
+  </Accordion>
+  <Accordion title="What happens if confidential inference isn't working?">
+    Confidential mode never falls back to standard inference, because a silent fallback would route your data through a non-confidential path. If the enclave can't be reached, the request fails and you'll see an error instead. Retry once the enclave is reachable again. If it stays down, [contact support](mailto:support@premai.io).
+  </Accordion>
+  <Accordion title="What's disabled while confidential mode is on?">
+    Image generation and automated task creation. Both rely on paths that would take your data outside the enclave, so they're turned off in this mode. Everything else keeps working.
+  </Accordion>
+  <Accordion title="Which plan do I need?">
+    The Max plan. Every account starts on a sponsored Pro plan, which runs normal inference. Confidential mode is the reason to move to Max. New accounts can start a 30-day Max trial.
+  </Accordion>
+  <Accordion title="Can Prem see my data in confidential mode?">
+    No. Your data is encrypted with a key only you hold, and the model runs inside a hardware-sealed enclave. Prem, the cloud provider, and anyone with physical access to the hardware are all outside that boundary.
+  </Accordion>
+</AccordionGroup>
