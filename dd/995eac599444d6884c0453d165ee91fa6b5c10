@@ -1,0 +1,27 @@
+.cspell.json
+  s_a8eb4201412495::t_421c8f9e6d36ce 43
+docs.json
+  s_a8eb4201412495::t_700d3070e12146 36-37
+features/confidential.mdx
+  s_a8eb4201412495::t_336ca6129165cf 52
+  s_a8eb4201412495::t_8eff0cd10c88f0 23
+  s_a8eb4201412495::t_19dde94179a2cf 27,29,32,35,38,44-45,48,53-58,61,65,68,74
+  s_a8eb4201412495::t_5a5cb7ad96962a 1-22,24-26,28,30-31,33-34,36-37,39-43,46-47,49-51,59-60,62-64,66-67,69-73,75-85,89,91-95
+  s_a8eb4201412495::t_72f752053e8b5a 86-88,90
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "dd995eac599444d6884c0453d165ee91fa6b5c10",
+  "prompts": {},
+  "sessions": {
+    "s_a8eb4201412495": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9569d52d-1d6a-41a7-8dd3-88b9c8d6ec83",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
