@@ -12,10 +12,6 @@ Confidential compute lets you run open-source models inside Prem's Enclave. The 
 
 For the underlying platform, see Prem's [confidential compute documentation](https://docs.prem.io/basics/learn-more/overview).
 
-## How your data is secured
-
-Your data is encrypted on your device before it leaves, so the network only ever carries scrambled bytes. Files and keys are stored encrypted, and no plaintext touches Prem's storage. The piece most systems leave exposed is data in use, the moment a model actually reads your request. Confidential mode closes that gap: because the model runs inside the TEE, your data stays sealed even while it's being processed. It never exists in plaintext outside your device and the sealed enclave.
-
 ## How the protection is enforced
 
 This doesn't rest on a policy or a promise. It's enforced by the hardware and you can verify it cryptographically. Before any key is released into the enclave, the workload produces hardware evidence signed by the silicon vendor. Prem verifies that signature, and only then do your keys enter the enclave. The trust boundary moves from operator promises to a guarantee rooted in the hardware. The principle Prem builds on is short: don't trust the operator, trust the signature.
