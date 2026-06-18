@@ -1,22 +1,20 @@
 ---
 title: Confidential mode
 sidebarTitle: Confidential
-description: Run your work through models hosted in a hardware-sealed enclave, encrypted with a key only you hold.
+description: Run your work through models hosted in a hardware-sealed enclave.
 ---
 
-Confidential mode routes your inference through Prem's confidential compute, so the work you send Fluso stays private even from the people running the servers. It's available on the Max plan and, once enabled, it stays on. The sections below cover what confidential compute is, how the protection works, and how to switch it on from Settings.
+Confidential mode routes your inference through Prem API's confidential compute, an isolated enclave that infrastructure operators and the cloud provider cannot access. It's available on the Max plan and, once enabled, it stays on. The sections below cover what it adds, how to switch it on from Settings, and what to expect once it's active.
 
-## What is confidential compute
+## What it protects
 
-Confidential compute lets you run open-source models inside Prem's Enclave. The enclave sits in a Trusted Execution Environment, a hardware-isolated region of the server that keeps your code and data sealed off from the host OS, the hypervisor, and anyone operating the infrastructure. Every request is encrypted with a key that only you hold. Prem can't read your data, the cloud provider can't read it, and someone with physical access to the hardware can't read it either.
+At the gateway, your request is encrypted for processing and sent to an enclave: hardware-isolated regions of the server that the host OS, the hypervisor, and anyone operating the infrastructure cannot read. The cloud provider can't see your data there. Someone with physical access to the hardware can't either.
 
-For the underlying platform, see Prem's [confidential compute documentation](https://docs.prem.io/basics/learn-more/overview).
+Before the gateway, your requests pass through Fluso's infrastructure on AWS. Both the sandbox and gateway run in a secure cloud environment we control.
 
-## How the protection is enforced
+The enclave itself isn't protected by a policy or a promise. Isolation is enforced in the hardware, and attestation reports signed by the chip vendor let you verify it.
 
-This doesn't rest on a policy or a promise. It's enforced by the hardware and you can verify it cryptographically. Before any key is released into the enclave, the workload produces hardware evidence signed by the silicon vendor. Prem verifies that signature, and only then do your keys enter the enclave. The trust boundary moves from operator promises to a guarantee rooted in the hardware. The principle Prem builds on is short: don't trust the operator, trust the signature.
-
-Payloads are protected with post-quantum encryption (`XWing`, a hybrid of `X25519` and `ML-KEM 768`), so your traffic holds up even against future quantum attacks. Every request carries its own attestation.
+For the full technical picture, see Prem's [confidential compute documentation](https://docs.prem.io/basics/learn-more/overview).
 
 ## Plans
 
@@ -54,7 +52,7 @@ Open **Settings**. The Confidential APIs panel carries a **Max plan** badge and 
     A dialog confirms the one-way switch and lists what gets disabled in this mode.
 
     <Frame>
-      <img src="/images/features/confidential/confidential-confirm.png" alt="Turn on confidential mode dialog: 'Every request routes through end-to-end encrypted inference. This is permanent — it can't be turned off once enabled.' Disabled in this mode: automated task generation, image generation. Cancel and Enable permanently buttons." />
+      <img src="/images/features/confidential/confidential-confirm.png" alt="Turn on confidential mode dialog: 'Every request routes through confidential inference in a hardware-sealed enclave. Disabled in this mode: automated task generation, image generation. Cancel and Enable permanently buttons.'" />
     </Frame>
   </Step>
   <Step title="Confirm it's active">
@@ -85,7 +83,7 @@ Open **Settings**. The Confidential APIs panel carries a **Max plan** badge and 
   <Accordion title="Which plan do I need?">
     The Max plan. Every account starts on a sponsored Pro plan, which runs normal inference. Confidential mode is the reason to move to Max. New accounts can start a 30-day Max trial.
   </Accordion>
-  <Accordion title="Can Prem see my data in confidential mode?">
-    No. Your data is encrypted with a key only you hold, and the model runs inside a hardware-sealed enclave. Prem, the cloud provider, and anyone with physical access to the hardware are all outside that boundary.
+  <Accordion title="Can anyone access my data during confidential inference?">
+    Inside the enclave, no. At the gateway, your request is encrypted for a hardware-sealed environment that infrastructure operators and the cloud provider cannot access. Before that, traffic passes through Fluso's AWS infrastructure.
   </Accordion>
 </AccordionGroup>
