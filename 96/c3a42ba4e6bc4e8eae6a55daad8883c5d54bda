@@ -1,0 +1,20 @@
+features/confidential.mdx
+  s_a8eb4201412495::t_5487e731a358b1 21,29,32
+  s_a8eb4201412495::t_72a0f70263fd52 46,49,55,59,62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "96c3a42ba4e6bc4e8eae6a55daad8883c5d54bda",
+  "prompts": {},
+  "sessions": {
+    "s_a8eb4201412495": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9569d52d-1d6a-41a7-8dd3-88b9c8d6ec83",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
