@@ -18,7 +18,7 @@ For the full technical picture, see Prem's [confidential compute documentation](
 
 ## Plans
 
-Confidential mode is a Max plan feature. Every Fluso account starts on a sponsored Pro plan, which covers normal inference at no cost to you. The setting lives in **Settings** under **Confidential APIs**, and on the sponsored Pro plan it shows up locked behind a **Max plan** badge.
+Confidential mode is a Max plan feature. Every Fluso account starts on a sponsored Pro plan, which covers normal inference at no cost to you. The setting lives in **Settings** under **Confidential APIs**, and on the sponsored Pro plan it reads "Available on the Max plan" with an **Upgrade** button.
 
 Open your profile from the bottom of the left sidebar. The plan you're on shows next to **Manage plan**.
 
@@ -26,10 +26,10 @@ Open your profile from the bottom of the left sidebar. The plan you're on shows 
   <img src="/images/features/confidential/profile-modal.png" alt="Fluso account menu opened from the bottom of the left sidebar, showing Settings, Manage account, and Manage plan with a Sponsored Pro badge." />
 </Frame>
 
-Open **Settings**. The Confidential APIs panel carries a **Max plan** badge and the toggle is disabled, with an "Available on the Max plan" prompt that links to plans.
+Open **Settings**. The Confidential APIs row reads "End-to-end encrypted inference. Available on the Max plan" with an **Upgrade** button on the right.
 
 <Frame>
-  <img src="/images/features/confidential/settings-page.png" alt="Fluso Settings page. The Confidential APIs panel shows a Max plan badge, a disabled Off toggle, and an 'Available on the Max plan — unlock confidential inference' prompt. Billing reads Sponsored Pro plan." />
+  <img src="/images/features/confidential/settings-page.png" alt="Fluso Settings page. The Confidential APIs row reads 'End-to-end encrypted inference. Available on the Max plan' with an Upgrade button. Billing reads Sponsored Pro plan." />
 </Frame>
 
 ## Turning it on
@@ -43,23 +43,23 @@ Open **Settings**. The Confidential APIs panel carries a **Max plan** badge and 
     </Frame>
   </Step>
   <Step title="Enable confidential mode">
-    With Max active, you can flip the toggle. The panel warns that the change is permanent first.
+    With Max active, you can flip the toggle. The panel notes that the change is permanent first: "Permanent once enabled. Requests stay on confidential inference; image generation and automated task creation are disabled."
 
     <Frame>
-      <img src="/images/features/confidential/confidential-available.png" alt="Confidential APIs panel on the Max plan: the toggle is enabled and an amber 'Heads up — this is permanent' note explains that requests will stay on confidential inference. Billing reads Max plan." />
+      <img src="/images/features/confidential/confidential-available.png" alt="Confidential APIs panel on the Max plan: the toggle is enabled and a note reads 'Permanent once enabled. Requests stay on confidential inference; image generation and automated task creation are disabled.' Billing reads Max plan." />
     </Frame>
 
     A dialog confirms the one-way switch and lists what gets disabled in this mode.
 
     <Frame>
-      <img src="/images/features/confidential/confidential-confirm.png" alt="Turn on confidential mode dialog: 'Every request routes through confidential inference in a hardware-sealed enclave. Disabled in this mode: automated task generation, image generation. Cancel and Enable permanently buttons.'" />
+      <img src="/images/features/confidential/confidential-confirm.png" alt="Turn on confidential mode dialog: 'Every request routes through end-to-end encrypted inference. Permanent — it can't be turned off once enabled.' Disabled in this mode: automated task generation, image generation. Cancel and Enable permanently buttons." />
     </Frame>
   </Step>
   <Step title="Confirm it's active">
-    The panel turns green with an **Active** badge and reads "Confidential mode is locked on". From here on, your inference runs through the enclave.
+    The panel turns green and the toggle reads **On**. From here on, your inference runs through the enclave.
 
     <Frame>
-      <img src="/images/features/confidential/confidential-active.png" alt="Confidential APIs panel in the active state: green ACTIVE badge, On toggle, and a green 'Confidential mode is locked on' card. Billing reads Max plan." />
+      <img src="/images/features/confidential/confidential-active.png" alt="Confidential APIs panel in the active state: green shield icon, On toggle, green background, and a note that image generation and automated task creation are disabled in this mode. Billing reads Max plan." />
     </Frame>
   </Step>
 </Steps>
