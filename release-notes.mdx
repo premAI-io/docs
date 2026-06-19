@@ -3,6 +3,38 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
+<Update label="2026-06-19" description="Desktop 1.1.0" tags={["Desktop"]}>
+
+**Highlights**
+- Confidential mode on the Max plan: run your chats and voice through end-to-end encrypted inference, so your work stays on a private path.
+- Manage your connected tool servers in one place, with per-tool permissions and a clean reconnect.
+- The assistant recovers from mid-task hiccups instead of hanging on "Working".
+- Report a bug from inside the app and it becomes a tracked issue the team follows up on.
+
+**Polish & experience**
+- Attachments stay put when you switch chats: image previews and files you haven't sent yet are kept per conversation.
+- Sidebar chat titles start from your first message and refine once your intent is clear, and never overwrite a title you set yourself.
+- The bug-report dialog now takes PDF and Markdown files, and you can paste files straight in.
+
+**Connectors & sync**
+- See your connected MCP servers on one screen, set what each tool is allowed to do, and reconnect without dropping your current connection. Credentials are stored encrypted on the server, not in local files.
+- More tool servers connect on the first try and stay connected, so providers like Supabase and Linear no longer quietly expire.
+- If you have many connected apps, the ones past the first ten no longer show as "not connected".
+
+**Assistant reliability**
+- The assistant recovers from mid-task network and provider hiccups instead of leaving you on "Working", and stops cleanly when you ask it to.
+- Voice notes come back as proper sentences, with punctuation and capitalisation.
+
+**Smarter assistant**
+- Emails the assistant drafts arrive as properly formatted HTML and sign off with "Sent via fluso.ai", which you can turn off or rename. You still approve every message before it sends.
+
+**Reliability, privacy & trust**
+- On the Max plan, turn on "Confidential APIs" from settings or the chat composer. It's a one-way switch: while it's on, file uploads, image generation, and background syncing pause so nothing leaves the private path.
+- A new Beta badge on the home screen sets expectations and gives you a one-click way to report a bug.
+- API keys your tools use can no longer be read back through the assistant's shell.
+
+</Update>
+
 <Update label="2026-06-13" description="Desktop 1.0.9" tags={["Desktop"]}>
 
 **Highlights**
