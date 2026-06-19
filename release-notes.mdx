@@ -3,6 +3,40 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
+<Update label="2026-06-19" description="Platform update" tags={["Platform"]}>
+
+**Highlights**
+- Confidential Mode is here: on the Max plan, route your chats and voice through confidential inference instead of the usual model providers.
+- Manage your connected tool servers (MCP) in one place, with per-tool permissions and a clean reconnect.
+- The assistant recovers from mid-task network and provider hiccups instead of hanging on "Working", and stops cleanly when you ask it to.
+- Reporting a bug is easier, and each report now opens a tracked issue so it doesn't get lost.
+
+**Polish & experience**
+- Image previews and files you haven't sent yet now stay with each chat when you switch conversations.
+- Sidebar chat titles are drawn from your first message and refined as your intent becomes clear, and a title you set yourself is never overwritten.
+- A "Beta" badge on the home screen gives you a one-click way to report a bug.
+- The feedback box now takes PDF and Markdown files alongside images and video, and you can paste files straight in.
+
+**Connectors & sync**
+- A new MCP screen lists your connected tool servers, lets you set what each tool can do (allow, ask, or deny), and reconnects without dropping the current connection.
+- Tool servers you add from chat now show up there too, with their credentials stored securely on the server instead of in workspace files.
+- More tool servers connect on the first try, and connections that used to expire quietly, like Supabase and Linear, stay healthy.
+- If you have many connected apps, the ones past the first ten no longer show as "not connected".
+
+**Assistant reliability**
+- Voice messages come back as clean, punctuated sentences.
+- A long task that goes quiet for a while is no longer cut off while the assistant is still working.
+
+**Smarter assistant**
+- Draft emails come out properly formatted instead of raw text, and sign off with a "Sent via fluso.ai" line you can turn off or rename.
+
+**Reliability, privacy & trust**
+- In Confidential Mode, file uploads and background syncing are switched off, and tools that use your synced data are paused, so nothing leaves the private path. Each is explained where it happens.
+- You confirm before Confidential Mode turns on, and once on it stays on, so a confidential session can't quietly fall back to the standard path.
+- Security hardening so the keys your tools use can't be read back through the assistant.
+
+</Update>
+
 <Update label="2026-06-13" description="Desktop 1.0.9" tags={["Desktop"]}>
 
 **Highlights**
