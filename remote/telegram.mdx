@@ -59,6 +59,12 @@ If you ask for something that needs an app you have not connected yet, the bot w
 
 Before Fluso sends anything for you (an email, a Slack message, a new issue), it shows you the draft and waits for your yes. Nothing goes out without your approval.
 
+## Fast mode
+
+Send `/fast` to toggle faster replies. Fast mode turns reasoning off for quick, lighter work and can use fewer tokens. Send `/fast` again to return to Default mode.
+
+This is saved to your Fluso account. If you change it in Telegram, **Settings → Model mode** in the Mac app changes too, and the reverse is also true. See [Model mode](/features/chat#model-mode) for the desktop setting.
+
 ## Files, images, voice
 
 You can send more than just text:
@@ -76,6 +82,7 @@ Very large files may not go through. If a file is rejected, send a smaller versi
 | Command | What it does |
 |---|---|
 | `/newchat` | Start a fresh conversation. Your files are kept. |
+| `/fast` | Toggle faster replies for quick, lighter work. |
 | `/reset` | Wipes everything: files, chat history, and what Fluso has learned. Cannot be undone. |
 | `/abort` | Stop what Fluso is doing right now. |
 | `/schedules` | Show anything Fluso has scheduled, if any. |
