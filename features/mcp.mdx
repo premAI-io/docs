@@ -10,6 +10,10 @@ You paste the URL. Fluso handles the sign-in. From the next message on, every ch
 
 If a service is already in [Connectors](/features/connectors), use that. It's vetted, the scopes are tuned, and you skip a step. MCP is for everything else.
 
+<Note>
+Looking to connect to third party? Use this redirect URL:  https://api.fluso.ai/v1/mcp-oauth/callback
+</Note>
+
 ## How it works
 
 When you connect a server, Fluso checks what kind of sign-in it uses, asks you for exactly that, and stores the result encrypted on the backend. Sign-in happens in a popup on the server's own login page, like Gmail or Slack. After that, the runtime fetches a fresh token from the backend whenever a tool needs one.
