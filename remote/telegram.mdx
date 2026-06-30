@@ -61,9 +61,9 @@ Before Fluso sends anything for you (an email, a Slack message, a new issue), it
 
 ## Fast mode
 
-Send `/fast` to toggle faster replies. Fast mode turns reasoning off for quick, lighter work and can use fewer tokens. Send `/fast` again to return to Default mode.
+Send `/fast` to toggle faster replies for the current Telegram conversation. Fast mode turns reasoning off for quick, lighter work and can use fewer tokens. Send `/fast` again to return to High mode.
 
-This is saved to your Fluso account. If you change it in Telegram, **Settings → Model mode** in the Mac app changes too, and the reverse is also true. See [Model mode](/features/chat#model-mode) for the desktop setting.
+This is session-specific, not an account setting. `/newchat` starts a fresh conversation back in High mode.
 
 ## Files, images, voice
 
@@ -82,7 +82,7 @@ Very large files may not go through. If a file is rejected, send a smaller versi
 | Command | What it does |
 |---|---|
 | `/newchat` | Start a fresh conversation. Your files are kept. |
-| `/fast` | Toggle faster replies for quick, lighter work. |
+| `/fast` | Toggle Fast mode for the current conversation. `/newchat` resets it to High. |
 | `/reset` | Wipes everything: files, chat history, and what Fluso has learned. Cannot be undone. |
 | `/abort` | Stop what Fluso is doing right now. |
 | `/schedules` | Show anything Fluso has scheduled, if any. |
