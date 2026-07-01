@@ -59,6 +59,16 @@ If you ask for something that needs an app you have not connected yet, the bot w
 
 Before Fluso sends anything for you (an email, a Slack message, a new issue), it shows you the draft and waits for your yes. Nothing goes out without your approval.
 
+## Fast mode
+
+Send `/fast` to switch the current Telegram conversation to Fast mode. Fast mode turns reasoning off for quick, lighter work and can use fewer tokens.
+
+Send `/fast` again in the same Telegram conversation to switch back to High mode. The bot sends a short confirmation each time, so you can see whether Fast mode is on or off.
+
+This is conversation-specific, not an account setting. `/newchat` starts a fresh Telegram conversation back in High mode.
+
+Telegram mode and app mode are separate. Using `/fast` in Telegram does not change any chat in the app, and changing the app's High/Fast dropdown does not change Telegram.
+
 ## Files, images, voice
 
 You can send more than just text:
@@ -76,6 +86,7 @@ Very large files may not go through. If a file is rejected, send a smaller versi
 | Command | What it does |
 |---|---|
 | `/newchat` | Start a fresh conversation. Your files are kept. |
+| `/fast` | Toggle the current conversation between Fast and High. `/newchat` resets it to High. |
 | `/reset` | Wipes everything: files, chat history, and what Fluso has learned. Cannot be undone. |
 | `/abort` | Stop what Fluso is doing right now. |
 | `/schedules` | Show anything Fluso has scheduled, if any. |
