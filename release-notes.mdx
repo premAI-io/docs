@@ -3,6 +3,43 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
+<Update label="2026-07-02" description="Desktop 1.2.0" tags={["Desktop"]}>
+
+**Highlights**
+- Edit a delivered file right in the chat, and your manual changes are kept.
+- A per-chat Fast mode for the turns where you want a quick answer over a deep one.
+- Replies come back faster, and multi-step turns finish sooner.
+- The app is time-aware: relative times like "tomorrow at 9" resolve to your local timezone.
+- Finished replies settle cleanly, with no stranded answers or a stuck "Working".
+
+**Polish & experience**
+- Consistent icons and better dark-mode contrast across the app.
+- The green "chat finished" dots in the sidebar survive a reload instead of vanishing.
+- Links only trigger on real web addresses, so ordinary dotted text isn't turned into a link.
+
+**Connectors & sync**
+- Email stays draft-first: the assistant writes to your Gmail drafts and sends only after you confirm.
+- Adding tool servers like Linear from chat now completes sign-in instead of failing partway.
+- When you ask about your email, the assistant reads across your recent messages instead of occasionally checking only the latest one.
+
+**Assistant reliability**
+- The assistant no longer strands a finished reply, lingers on "Working" after it's done, or replays a previous turn's answer into a new message.
+- Brief provider hiccups mid-turn recover on their own instead of ending the reply.
+
+**Smarter assistant**
+- The inline editor opens Markdown, documents, and code, with a per-thread list of the files in that chat. Your edits are handed back to the assistant instead of being overwritten the next time it works on the file.
+- Fast mode lives in the composer and stays set for that thread, and the composer shows which model you're on.
+- The assistant is clearer about what it can and can't do, and points you to the docs for how it works rather than claiming features that aren't set up.
+
+**Plans & limits**
+- After you upgrade your plan, the whole app reflects it right away instead of showing the old plan for a few minutes.
+
+**Reliability, privacy & trust**
+- Connected-account actions are locked to your own account.
+- File uploads work again while confidential mode is on.
+
+</Update>
+
 <Update label="2026-06-19" description="Desktop 1.1.0" tags={["Desktop"]}>
 
 **Highlights**
