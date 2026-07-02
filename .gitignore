@@ -1,1 +1,6 @@
 .DS_Store
+
+# Host large media (video) externally (e.g. S3), never commit to the repo.
+*.mp4
+*.mov
+*.webm
