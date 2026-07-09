@@ -6,10 +6,8 @@ description: "What's new in Fluso — product updates, improvements, and fixes."
 <Update label="2026-07-09" description="Desktop 1.3.0" tags={["Desktop"]}>
 
 **Highlights**
-- Steer a running reply, or queue what's next, and nothing is lost to a refresh, a dropped connection, or a stop.
-- Projects now remember where they stood — pick one back up after a while and ask "where did we leave off," and you get a real answer instead of re-explaining yourself.
-- Chat streams live: replies and tool activity now appear as they happen instead of arriving all at once after a delay.
-- Confidential Mode is now live-verified. The Encrypted badge opens a view that cryptographically re-checks the confidential server in real time, and the plan is renamed to Confidential.
+- Switching from ChatGPT, Codex, or another AI app? Bring the whole conversation with you — import turns an export into a real, continuous thread here, so you're not starting from zero.
+- Projects now have working memory — Fluso keeps a running sense of what's done, what's open, and how you like things handled, so picking one back up never feels like starting over.
 - Tasks that use your connected apps (GitHub, Linear, Slack, and more) finish in about half the time, with far fewer wrong-tool guesses.
 - A hung or unresponsive assistant now recovers in a couple of minutes with nothing lost, instead of a wait that could previously stretch past half an hour.
 
@@ -19,8 +17,8 @@ description: "What's new in Fluso — product updates, improvements, and fixes."
 - A Markdown file in the file viewer shows one Download button instead of two.
 
 **Connectors & sync**
-- Multi-step tasks that use your connected apps (GitHub, Linear, Notion, Slack, and the rest) finish in about half the time, with far fewer wrong-tool guesses or repeated attempts.
-- The assistant reaches for the right app-specific guide before it acts on a connector instead of guessing, and asks you to connect an account it isn't already connected to.
+- The assistant is lighter on its feet now: old tool results get cleared out once they're no longer needed, instead of being carried forward turn after turn, so a task takes fewer tool calls and uses less of its token budget along the way.
+- The assistant reaches for the right app-specific guide before it acts on a connector, instead of guessing.
 
 **Assistant reliability**
 - Send a message while the assistant is working and it either steers the current reply or joins an editable queue to run next, with edit, send-now, and cancel controls. None of it depends on keeping the tab open: refresh, close it, or come back on another device later, and it is exactly where you left it.
@@ -30,11 +28,11 @@ description: "What's new in Fluso — product updates, improvements, and fixes."
 - Stopping a turn now reads "Stopped after Xs" instead of the misleading "Worked for Xs".
 
 **Smarter assistant**
-- Projects carry a running sense of their own state (current work, open items, files touched) into every message, on top of your existing preferences. Teach it a convention once (a house rule, a style, a correction) and it holds until you change it, without leaking into a different project.
-- Reading a Word document no longer leaks hidden formatting junk, and documents the assistant creates for you now get real Word tables instead of literal Markdown pipe syntax.
+- Working memory means each project remembers itself: open items, recent files, and any convention you've taught it (a house rule, a style, a correction) carry forward automatically, on top of your regular preferences, and stay scoped to that project. Come back after a few weeks and ask "where did we leave off" and you'll get a real answer, not a blank page.
+- The assistant reads and creates Word documents more reliably now: no hidden formatting junk when it reads one, and real Word tables, not raw Markdown, in the documents it creates for you.
 
 **Onboarding & profile**
-- Bring your Claude or ChatGPT conversation history in — a new import flow on the Projects page turns an exported zip into a real thread in your workspace.
+- A new import flow lives on the Projects page — upload an exported chat from Claude, ChatGPT, Codex, or another agent app, and it becomes a real thread here, ready to continue.
 - An expired sign-in code can now be resent from the verification screen instead of starting over.
 
 **Reliability, privacy & trust**
