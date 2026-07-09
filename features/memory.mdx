@@ -4,33 +4,31 @@ sidebarTitle: Memory
 description: How Fluso remembers what's worth remembering across sessions, without turning every chat into part of a permanent transcript.
 ---
 
-Memory is what Fluso carries forward between chats. Your preferences, durable facts about your work, and the context of whichever project you are in. It loads quietly at the start of every conversation so you do not have to explain yourself twice.
+Memory is what Fluso carries forward between chats. Your preferences, durable facts about your work, and a working sense of what each project has been up to. It loads quietly with every message so you do not have to explain yourself twice.
 
-The rule it follows is stricter than you might expect. Memory saves stable things, not everything. A preference you have stated, a fact about your team, a decision you made inside a project. Not the message you sent five minutes ago, not the one-off question, not whatever you happened to ask about today.
+Durable memory follows a stricter rule than you might expect: it saves stable things, not everything. A preference you have stated, a fact about your team, a decision you made inside a project. On top of that sits working memory, which keeps the recent thread of the work itself — so a new chat in a project picks up where the last one left off.
 
-## Three scopes
+## Three layers
 
 <Note>
-  **Diagram —** Three layers shown with their scope: **Global preferences** (widest reach), **Global long-term memory**, and **Project context** (narrowest, scoped to one project). Visual should make clear that project context does not leak upward into global memory.
+  **Diagram —** Three layers shown with their scope: **Global preferences** (widest reach), **Project context** (durable, scoped to one project), and **Project working memory** (recent activity, also project-scoped). Visual should make clear that project material does not leak into other projects.
 </Note>
 
-Memory lives in three layers, each with its own reach.
+**Global preferences.** User-level things that should apply everywhere. Your timezone, the response style you have asked for, workflow choices, standing instructions like *"always show me drafts in plain text"*. These live in `preferences.md` in your workspace, where you can read them.
 
-**Global preferences.** User-level things that should apply everywhere. Your timezone, the response style you have asked for, workflow choices, standing instructions like *"always show me drafts in plain text"*.
+**Project context.** Facts, decisions, conventions, and preferences that belong only to the project you are in. The Q3 roadmap decision. The naming convention you agreed with the team. The pricing approach for this client. Each project keeps its own `context.md`.
 
-**Global long-term memory.** Durable facts and patterns about you that are useful across every project. The shape of your role, the kind of work you do, the people and companies that recur.
+**Project working memory.** An automatic, short-lived record of what the conversations in a project have been doing: the current state of each, open items, files touched. Fluso keeps it up to date on its own, so asking *"where did we leave off?"* in a new chat gets a real answer.
 
-**Project context.** Facts, decisions, conventions, and preferences that belong only to the project you are in. The Q3 roadmap decision. The naming convention you agreed with the team. The pricing approach for this client.
-
-The split matters because Fluso is careful about scope. If something looks project-specific, it stays in project context and does not leak into global memory. One client's notes do not surface inside another client's project.
+The split matters because Fluso is careful about scope. Project material stays in the project. One client's notes do not surface inside another client's chat.
 
 ## How it loads
 
-At the start of every new chat, Fluso pulls in three things as background context:
+With every message, Fluso pulls in three things as background context:
 
 - Your global preferences
-- Your global long-term memory
-- The current project's context, if you are in a project
+- The current project's context
+- The project's recent working memory
 
 Memory is context for the conversation, not a script. Your current message still drives the response.
 
@@ -38,9 +36,9 @@ Memory is context for the conversation, not a script. Your current message still
 
 Two paths. Both are conservative on purpose.
 
-**You ask explicitly.** Say *"remember this"*, *"forget this"*, *"add this to memory"*, or *"update my preference"* and Fluso changes memory directly. Clear intent only. A passing line like *"I like detailed answers"* is not treated as a memory write. That kind of inference goes through the other path.
+**You ask explicitly.** Say *"remember this"*, *"forget this"*, *"add this to project context"*, or *"update my preference"* and Fluso edits `preferences.md` or the project's `context.md` directly. Clear intent only. A passing line like *"I like detailed answers"* is not treated as a memory write; that kind of inference goes through the other path.
 
-**Background learning.** After replies, a background process reviews the conversation and decides whether anything durable came up. Preferences get checked often, because they tend to be short and useful. Long-term observation is more cautious: it activates after roughly 30,000 tokens of eligible conversation, then may write to global memory, global preferences, or project context depending on what it finds. If nothing durable is there, it writes nothing.
+**Background learning.** After each reply, a background pass updates the project's working memory. When something durable shows up — a stated preference, a clear correction, a convention you keep repeating, a decision — it also adds that to your preferences or the project's context, marked as auto-saved and deduplicated against what is already there. Anything that looks like a secret or credential is dropped rather than saved. If nothing durable came up, it writes nothing durable.
 
 The guardrail on explicit updates exists for a reason. Vague or accidental wording should not mutate the layer that follows you across every chat.
 
@@ -49,21 +47,28 @@ The guardrail on explicit updates exists for a reason. Vague or accidental wordi
 - Stable preferences you have stated.
 - Durable facts about your work, your team, the projects you run.
 - Decisions, conventions, and patterns inside a project.
+- The recent state of each project's work, in working memory.
 
 ## What does not get saved
 
-- One-time task details.
 - Greetings and small talk.
 - Temporary instructions for a single chat.
 - Guesses Fluso is not confident about.
+- Secrets, credentials, or anything that looks like one.
 
-This line is what keeps memory useful instead of noisy. The longer Fluso runs alongside your work, the more visible the difference becomes.
+One-off task details stay out of the durable files too. They live in working memory while the work is fresh, then fall away instead of following you forever.
+
+## Reading and correcting it
+
+Memory is inspectable. Ask *"what do you remember about me?"* or *"what's in this project's context?"* and Fluso reads the files back to you. `preferences.md` and each project's `context.md` sit in your workspace as plain markdown you can open yourself.
+
+Corrections work the same way: *"forget my old timezone"*, *"that decision was reversed, update the context"*. If you want a clean slate for a project's working memory, ask Fluso to reset it.
 
 ## What memory is not
 
-Memory is not a full transcript archive. Fluso does not keep every message you have ever sent. It keeps the curated layer of things worth carrying forward. Preferences, durable facts, project context.
+Memory is not a full transcript archive. Fluso does not keep every message you have ever sent in context. It keeps the curated layer of things worth carrying forward: preferences, durable facts, project context, and a short summary of recent work.
 
-If you need the exact text of an old conversation, that is a different question for a different system. Memory is what helps the next chat start in the right place.
+If you need the exact text of an old conversation, open the thread — it is still there in the sidebar. Memory is what helps the next chat start in the right place.
 
 ## Next
 
