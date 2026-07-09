@@ -3,6 +3,46 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
+<Update label="2026-07-09" description="Desktop 1.3.0" tags={["Desktop"]}>
+
+**Highlights**
+- Steer a running reply, or queue what's next, and nothing is lost to a refresh, a dropped connection, or a stop.
+- Projects now remember where they stood — pick one back up after a while and ask "where did we leave off," and you get a real answer instead of re-explaining yourself.
+- Chat streams live: replies and tool activity now appear as they happen instead of arriving all at once after a delay.
+- Confidential Mode is now live-verified. The Encrypted badge opens a view that cryptographically re-checks the confidential server in real time, and the plan is renamed to Confidential.
+- Tasks that use your connected apps (GitHub, Linear, Slack, and more) finish in about half the time, with far fewer wrong-tool guesses.
+- A hung or unresponsive assistant now recovers in a couple of minutes with nothing lost, instead of a wait that could previously stretch past half an hour.
+
+**Polish & experience**
+- Running a task from a task card now gives the assistant the full task details right away, not just its title.
+- In-app voice messages show their real length instead of a stuck 0:00.
+- A Markdown file in the file viewer shows one Download button instead of two.
+
+**Connectors & sync**
+- Multi-step tasks that use your connected apps (GitHub, Linear, Notion, Slack, and the rest) finish in about half the time, with far fewer wrong-tool guesses or repeated attempts.
+- The assistant reaches for the right app-specific guide before it acts on a connector instead of guessing, and asks you to connect an account it isn't already connected to.
+
+**Assistant reliability**
+- Send a message while the assistant is working and it either steers the current reply or joins an editable queue to run next, with edit, send-now, and cancel controls. None of it depends on keeping the tab open: refresh, close it, or come back on another device later, and it is exactly where you left it.
+- A dropped connection partway through a long file or command now retries and resumes on its own instead of failing the turn.
+- The action chips under a task no longer get permanently stuck if one model hiccups — it falls back automatically, with a Retry button for a genuine network blip.
+- Reloading mid-reply, or leaving a tab open a while, can no longer leave a conversation showing your message with no answer, or blank it entirely.
+- Stopping a turn now reads "Stopped after Xs" instead of the misleading "Worked for Xs".
+
+**Smarter assistant**
+- Projects carry a running sense of their own state (current work, open items, files touched) into every message, on top of your existing preferences. Teach it a convention once (a house rule, a style, a correction) and it holds until you change it, without leaking into a different project.
+- Reading a Word document no longer leaks hidden formatting junk, and documents the assistant creates for you now get real Word tables instead of literal Markdown pipe syntax.
+
+**Onboarding & profile**
+- Bring your Claude or ChatGPT conversation history in — a new import flow on the Projects page turns an exported zip into a real thread in your workspace.
+- An expired sign-in code can now be resent from the verification screen instead of starting over.
+
+**Reliability, privacy & trust**
+- Confidential Mode is now live-verified: the Encrypted badge opens a view that cryptographically re-checks the confidential server in real time, covering the attested CPU and GPU and the model being served. The plan is also renamed to Confidential for sponsored accounts.
+- A focused internal security audit closed six findings this cycle, spanning token validation, account isolation, and file-handling safety.
+
+</Update>
+
 <Update label="2026-07-02" description="Desktop 1.2.0" tags={["Desktop"]}>
 
 **Highlights**
