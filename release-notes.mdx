@@ -3,6 +3,45 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
+<Update label="2026-07-09" description="Desktop 1.3.0" tags={["Desktop"]}>
+
+**Highlights**
+- Bring your context in from ChatGPT, Claude, or another agent app (Codex and more) — [import](https://docs.fluso.ai/features/imports) turns an old export into real Fluso projects, with the decisions, notes, and files intact, so you're not starting from zero.
+- Projects now have [working memory](https://docs.fluso.ai/features/memory) — Fluso keeps a running sense of what's done, what's open, and how you like things handled, so picking one back up never feels like starting over.
+- Steer a running reply, or queue up what's next — durable enough to walk away for hours, or a day, and find it exactly as you left it.
+- Tasks that use your connected apps (GitHub, Linear, Slack, and more) finish in about half the time, with far fewer wrong-tool guesses.
+- A hung or unresponsive assistant now recovers in a couple of minutes with nothing lost, instead of a wait that could previously stretch past half an hour.
+
+**Polish & experience**
+- Running a task from a task card now gives the assistant the full task details right away, not just its title.
+- In-app voice messages show their real length instead of a stuck 0:00.
+- A Markdown file in the file viewer shows one Download button instead of two.
+
+**Connectors & sync**
+- The assistant is lighter on its feet now: old tool results get cleared out once they're no longer needed, instead of being carried forward turn after turn, so a task takes fewer tool calls and uses less of its token budget along the way.
+- The assistant reaches for the right app-specific guide before it acts on a connector, instead of guessing.
+
+**Assistant reliability**
+- Send a message while the assistant is working and it either steers the current reply or joins an editable queue to run next, with edit, send-now, and cancel controls. The queue lives on the server, not your browser tab, so you can line up a stretch of work, close the laptop, and come back an hour later, or the next day, to find it exactly where you left it — steer and queue are built for real, unattended runs, not just quick back-and-forth, backed by the reliability work below.
+- A dropped connection partway through a long file or command now retries and resumes on its own instead of failing the turn.
+- The action chips under a task no longer get permanently stuck if one model hiccups — it falls back automatically, with a Retry button for a genuine network blip.
+- Reloading mid-reply, or leaving a tab open a while, can no longer leave a conversation showing your message with no answer, or blank it entirely.
+- Stopping a turn now reads "Stopped after Xs" instead of the misleading "Worked for Xs".
+
+**Smarter assistant**
+- Working memory means each project remembers itself: open items, recent files, and any convention you've taught it (a house rule, a style, a correction) carry forward automatically, on top of your regular preferences, and stay scoped to that project. Come back after a few weeks and ask "where did we leave off" and you'll get a real answer, not a blank page.
+- The assistant reads and creates Word documents more reliably now: no hidden formatting junk when it reads one, and real Word tables, not raw Markdown, in the documents it creates for you.
+
+**Onboarding & profile**
+- The import flow lives on the Projects page: upload the export and Fluso sorts it into projects automatically, with a running thread you can watch while it works and a summary when it's done.
+- An expired sign-in code can now be resent from the verification screen instead of starting over.
+
+**Reliability, privacy & trust**
+- [Confidential Mode](https://docs.fluso.ai/features/confidential) is now live-verified: the Encrypted badge opens a view that cryptographically re-checks the confidential server in real time, covering the attested CPU and GPU and the model being served. The plan is also renamed to Confidential for sponsored accounts.
+- A focused internal security audit closed six findings this cycle, spanning token validation, account isolation, and file-handling safety.
+
+</Update>
+
 <Update label="2026-07-02" description="Desktop 1.2.0" tags={["Desktop"]}>
 
 **Highlights**
