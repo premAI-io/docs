@@ -54,31 +54,9 @@ Use any connected app as part of an answer. Pull the latest message from Sarah, 
 
 ## While Fluso is working
 
-The composer stays live during a run. A message you send mid-run takes one of two paths: it can **steer** the work in progress, or wait in a queue and run right after.
-
-| | Steer | Queued follow-up |
-|---|---|---|
-| Send with | **Enter** | **Tab**, or **Queue follow-up** in the menu |
-| When it runs | Inside the current run, at its next pause | After the run finishes, as its own request |
-| Use it for | Corrections to the work being made now | The next task |
-
-### Steering
-
-Start typing while Fluso works and the send button switches to **Steer now**. Press Enter, and the message folds into the running reply at its next pause between steps. Nothing restarts: work already done stands, and the same reply answers both.
-
-<Frame>
-  <img src="/images/features/chat/steer-send-button.png" alt="The chat composer in dark mode with a correction typed while the agent is running. The send button shows a Steer now tooltip, with a small arrow button next to it." />
-</Frame>
-
-Steer with whatever you would say to a colleague mid-task: *"one page max"*, *"skip Fireflies"*, *"use last quarter's numbers"*. If you can see a reply going wrong, steer it instead of waiting for a wrong answer to finish. And if the run happens to end just before your message arrives, the message starts a reply of its own — either way it runs once.
+The composer stays live during a run. Press Enter and your message joins a visible queue above it. Tab keeps its normal focus-navigation behavior. The square **Stop** button remains available even when the composer contains text.
 
 ### Queuing follow-ups
-
-When the message is the next task rather than a correction, press **Tab** instead, or pick **Queue follow-up** from the small arrow next to the send button.
-
-<Frame>
-  <img src="/images/features/chat/active-run-menu.png" alt="The active-run menu open next to the send button, with two items: Queue follow-up with a Tab shortcut, and Stop agent." />
-</Frame>
 
 Queued follow-ups wait above the composer and run in order once the current run finishes, each as its own request, exactly once. The queue lives on the server: reload the app or switch devices and it is still there. Attachments queue along with the text.
 
@@ -86,13 +64,13 @@ Queued follow-ups wait above the composer and run in order once the current run 
   <img src="/images/features/chat/queued-tray.png" alt="Two queued follow-ups stacked above the composer, each row with edit, send now, and cancel buttons. The send button below shows the square stop control of an active run." />
 </Frame>
 
-Each row has three controls. **Edit** (the pencil) moves the message into the composer; press Enter to save, and what runs is the last version you saved. **Send now** (the play button) skips the wait: the follow-up folds into the live run as a steer, or starts immediately if nothing is running. **Cancel** (the cross) removes it for good.
+To steer the run in progress, queue the message, then click **Send now** (the play button) on its row. Fluso sends it into the live run immediately, or starts it as a new request if the run has already finished. **Edit** (the pencil) lets you rewrite the message first; **Cancel** (the cross) removes it.
 
 Two safeguards worth knowing. If a follow-up starts while you are still editing it, the save is refused with a notice and your text stays in the composer — nothing sends twice. And if a follow-up cannot reach the server, the row is marked failed with a retry, not silently dropped.
 
 ### Stopping pauses the queue
 
-Stop the run — the square button, or **Stop agent** in the same menu — and queued follow-ups pause instead of firing into a conversation you cut short. The same happens if the run fails. Paused follow-ups never start on their own: **Send now** runs one, **Edit** rewrites it first, **Cancel** clears it.
+Stop the run with the square button and queued follow-ups pause instead of firing into a conversation you cut short. The same happens if the run fails. Paused follow-ups never start on their own: **Send now** runs one, **Edit** rewrites it first, **Cancel** clears it.
 
 <Frame>
   <img src="/images/features/chat/tray-paused.png" alt="Two queued follow-ups marked with a Paused badge after the run was stopped." />
