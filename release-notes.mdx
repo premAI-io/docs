@@ -3,6 +3,37 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
+<Update label="2026-07-16" description="Desktop 1.3.5" tags={["Desktop"]}>
+
+**Highlights**
+- Messages you send while the assistant is working now queue to run next, instead of steering the reply that's already in progress. Stop is the one direct way to interrupt a run.
+- Non-image attachments show as compact cards, so files no longer crowd out the composer.
+- An open file updates itself when the assistant rewrites it, with no reload.
+- Export a project to a ZIP again.
+- Reference images you attach or link now carry through when the assistant redesigns or iterates on an image.
+
+**Polish & experience**
+- PDFs, Word files, spreadsheets, and other non-image attachments show as compact cards in the composer instead of large previews. Images and voice notes are unchanged.
+- New Chat starts clean: attachments and voice notes you just sent no longer linger in the dashboard composer when you come back.
+- A ZIP you attach uploads as the archive itself, instead of being unpacked into separate files.
+- An already-open file viewer picks up a replaced file automatically, so you don't reload to see the latest version.
+- A chat you start from the Tasks page gets a real, generated title instead of staying on "New thread".
+
+**Connectors & sync**
+- When a lot is syncing in from your connectors, the app holds up better, with fewer errors and timeouts.
+
+**Assistant reliability**
+- Queued edits, cancels, and follow-ups no longer hang when the assistant is busy or still warming up, and a retried edit can't apply twice.
+- A queued edit or retry that finishes after you've switched chats no longer drops its draft or error into the chat you're viewing.
+
+**Smarter assistant**
+- When you attach or link reference images, the assistant keeps them through redesign and follow-up generations, instead of dropping them.
+
+**Plans & limits**
+- On sponsored accounts, the billing page shows your Confidential plan clearly instead of a contradictory "Basic" marker, with the full comparison behind a "Compare plans" toggle.
+
+</Update>
+
 <Update label="2026-07-09" description="Desktop 1.3.0" tags={["Desktop"]}>
 
 **Highlights**
