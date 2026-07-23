@@ -3,6 +3,37 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
+<Update label="2026-07-23" description="v1.4.0" tags={["Desktop"]}>
+
+**Highlights**
+- The sidebar's chat list is rebuilt, with reworked chat groups, drag-and-drop between them, and pinned chats.
+- Organize your projects and threads with labels you create, and filter to them from a new "By Label" view.
+- Queued follow-ups are steadier: one that runs automatically now streams its progress live, and a bug that could freeze a whole thread is fixed.
+- Confidential mode can now analyze images, alongside the image generation it already supported.
+- Fluso can draw on your past conversations as searchable memory, so it reuses earlier work and recalls what you discussed before.
+
+**Polish & experience**
+- The sidebar's chat list is rebuilt from the ground up: chat groups, drag-and-drop between them, projects, and pinned chats. The unread dot shows the right color when the sidebar is collapsed and clears once you delete a thread.
+- Label your projects and threads however you like, give a thread more than one label, and switch to a new "By Label" view in the sidebar.
+- Cmd/Ctrl+1–9 chat switching now works while your cursor is in the composer or another input, instead of being read as typing.
+- Your name in the sidebar updates as soon as you rename yourself in your profile.
+
+**Assistant reliability**
+- A queued follow-up that starts the moment a turn settles now streams its work log and reply live, instead of sitting on a blank "Working" until it finishes.
+- A bug that could freeze a whole thread, so you could not send, stop, or edit the queue, is fixed. Any thread still stuck recovers on its own.
+- Longer audio and voice recordings no longer time out when you upload them.
+
+**Smarter assistant**
+- Fluso can now search across your past conversations as project [memory](https://docs.fluso.ai/features/memory), so it reuses earlier work and recalls what you discussed instead of starting cold.
+- The accept and reject feedback you give on tasks now shapes how Fluso handles similar work later.
+- The assistant is more consistent about when to ask versus act: before committing to a long run, it asks one focused question when an unresolved choice would change the result, and starts right away when the request is already clear.
+- Flow diagrams render more reliably: labels fit their boxes, connectors stay attached to shapes, and dense diagrams no longer fail to draw.
+
+**Reliability, privacy & trust**
+- Image analysis is available in confidential mode chats, so that work stays on the private path.
+
+</Update>
+
 <Update label="2026-07-16" description="Desktop 1.3.5" tags={["Desktop"]}>
 
 **Highlights**
