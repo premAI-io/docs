@@ -29,6 +29,7 @@
         "group": "Features",
         "pages": [
           "features/chat",
+          "features/approvals",
           "features/connectors",
           "features/imports",
           "features/mcp",
