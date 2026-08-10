@@ -1,0 +1,26 @@
+features/mcp.mdx
+  s_ae4bb68b38e07f::t_50064d59cc82b1 181-186
+features/approvals.mdx
+  s_ae4bb68b38e07f::t_50064d59cc82b1 1-31,33-95,97-173
+  s_ae4bb68b38e07f::t_ebabf596206ae8 32,96
+docs.json
+  s_ae4bb68b38e07f::t_50064d59cc82b1 32
+features/chat.mdx
+  s_ae4bb68b38e07f::t_50064d59cc82b1 31-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "dcb1010683d63290725e8e1a0cd1b44cbd6b021f",
+  "prompts": {},
+  "sessions": {
+    "s_ae4bb68b38e07f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fecee-0f12-77f1-bf98-81ec95d9440a",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
