@@ -1,0 +1,19 @@
+features/approvals.mdx
+  s_ae4bb68b38e07f::t_5692b6817c6594 32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "0fef478c0de6a2f73dba81a2cd48652fdabcb8ec",
+  "prompts": {},
+  "sessions": {
+    "s_ae4bb68b38e07f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fecee-0f12-77f1-bf98-81ec95d9440a",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
