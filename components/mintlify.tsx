@@ -70,7 +70,7 @@ export function Card({
       ) : null}
       <p className="mb-1 font-medium text-fd-card-foreground">{title}</p>
       {children ? (
-        <div className="text-sm text-fd-muted-foreground prose-no-margin">
+        <div className="space-y-2.5 text-sm text-fd-muted-foreground [&_strong]:font-semibold [&_strong]:text-fd-card-foreground [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:ps-5 [&_ol]:list-decimal [&_ol]:ps-5">
           {children}
         </div>
       ) : null}
