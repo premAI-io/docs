@@ -1,0 +1,22 @@
+app/(docs)/[[...slug]]/page.tsx
+  s_51e97acd59a594::t_bbfbbd457d77ec 9
+  s_51e97acd59a594::t_c442b1f19dba77 34
+components/view-options.tsx
+  s_51e97acd59a594::t_25db807bd8ec5b 1-149
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "dc6f2e97780d9857003aabf7d1895edf6e5a8b4a",
+  "prompts": {},
+  "sessions": {
+    "s_51e97acd59a594": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "742b5b4e-3a75-4eb3-a31d-3a326916b6b8",
+        "model": "claude-fable-5"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
