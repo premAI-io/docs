@@ -1,0 +1,19 @@
+content/docs/features/meta.json
+  s_51e97acd59a594::t_9ae4742e7dbca3 10-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "de4e61923477a8122d905ed80793cde8d93ba768",
+  "prompts": {},
+  "sessions": {
+    "s_51e97acd59a594": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "742b5b4e-3a75-4eb3-a31d-3a326916b6b8",
+        "model": "claude-fable-5"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
