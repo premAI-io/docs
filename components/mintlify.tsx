@@ -64,20 +64,22 @@ export function Card({
   const inner = (
     <>
       {icon ? (
-        <div className="mb-2 w-fit rounded-md border bg-fd-muted p-1.5 text-fd-primary [&_svg]:size-4">
+        <div className="mb-4 w-fit rounded-lg border bg-fd-muted/50 p-2 text-fd-primary [&_svg]:size-5">
           <LucideIcon name={icon} />
         </div>
       ) : null}
-      <p className="mb-1 font-medium text-fd-card-foreground">{title}</p>
+      <p className="mb-2 text-base font-semibold text-fd-card-foreground">
+        {title}
+      </p>
       {children ? (
-        <div className="space-y-2.5 text-sm text-fd-muted-foreground [&_strong]:font-semibold [&_strong]:text-fd-card-foreground [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:ps-5 [&_ol]:list-decimal [&_ol]:ps-5">
+        <div className="space-y-3 text-sm leading-relaxed text-fd-muted-foreground [&_strong]:font-semibold [&_strong]:text-fd-card-foreground [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:ps-4 [&_ul]:marker:text-fd-muted-foreground/40 [&_ol]:list-decimal [&_ol]:ps-4">
           {children}
         </div>
       ) : null}
     </>
   );
   const className =
-    'not-prose block rounded-lg border bg-fd-card p-4 text-fd-card-foreground no-underline shadow-sm transition-colors';
+    'not-prose block rounded-xl border bg-fd-card p-6 text-fd-card-foreground no-underline shadow-sm transition-colors';
 
   if (href) {
     return (
