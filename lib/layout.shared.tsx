@@ -1,6 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import Image from 'next/image';
-import { gitConfig } from './shared';
 
 export function baseOptions(): BaseLayoutProps {
   return {
@@ -31,6 +30,5 @@ export function baseOptions(): BaseLayoutProps {
         url: 'https://fluso.ai/',
       },
     ],
-    githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
   };
 }

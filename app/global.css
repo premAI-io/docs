@@ -37,6 +37,11 @@
   padding: 1.25rem;
 }
 
+/* Footer: shrink the pill to just the theme toggle */
+#nd-sidebar > div:last-child > div {
+  width: fit-content;
+}
+
 html {
   scrollbar-gutter: stable;
 }

@@ -98,8 +98,20 @@ export function ViewOptions({
           title="Open in Fluso"
           onClick={openFluso}
           icon={
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img src="/favicon.svg" alt="" className="rounded" />
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo/light.svg"
+                alt=""
+                className="size-4 object-cover object-center dark:hidden"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo/dark.svg"
+                alt=""
+                className="hidden size-4 object-cover object-center dark:block"
+              />
+            </>
           }
         />
         <Item
