@@ -1,0 +1,27 @@
+app/(docs)/[[...slug]]/page.tsx
+  s_51e97acd59a594::t_a2b9c1dccacb65 8
+lib/layout.shared.tsx
+  s_51e97acd59a594::t_47ee986456c859 29
+app/(docs)/layout.tsx
+  s_51e97acd59a594::t_ee2af04911c2c9 2,7,9-14
+components/mintlify.tsx
+  s_51e97acd59a594::t_2ddda4d9d87b9a 235-241,243-245
+app/global.css
+  s_51e97acd59a594::t_78ac803aa51c8d 28,36-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "f3a4964924cfe275b71e650c78e5576091bbc085",
+  "prompts": {},
+  "sessions": {
+    "s_51e97acd59a594": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "742b5b4e-3a75-4eb3-a31d-3a326916b6b8",
+        "model": "claude-fable-5"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
