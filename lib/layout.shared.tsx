@@ -27,7 +27,7 @@ export function baseOptions(): BaseLayoutProps {
     links: [
       {
         type: 'button',
-        text: 'Download for Mac',
+        text: 'Download',
         url: 'https://fluso.ai/',
       },
     ],
