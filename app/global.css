@@ -25,21 +25,30 @@
 }
 
 /* Plain nav look: no collapse button, more breathing room */
-#nd-sidebar button[aria-label='Collapse Sidebar'] {
+button[aria-label='Collapse Sidebar'] {
   display: none;
-}
-
-#nd-sidebar > div:first-child {
-  padding: 1.25rem 1.25rem 0.5rem;
 }
 
 #nd-sidebar [data-id$='-viewport'] {
   padding: 1.25rem;
 }
 
-/* Footer: shrink the pill to just the theme toggle */
-#nd-sidebar > div:last-child > div {
-  width: fit-content;
+/* Navbar: primary-button CTA and spacing before the theme toggle */
+#nd-subnav a[href='https://fluso.ai/'] {
+  background: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.6rem;
+  font-weight: 500;
+}
+
+#nd-subnav a[href='https://fluso.ai/']:hover {
+  color: var(--color-fd-primary-foreground);
+  opacity: 0.9;
+}
+
+#nd-subnav div[class*='justify-end'] {
+  gap: 1rem;
 }
 
 html {

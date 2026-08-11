@@ -232,24 +232,17 @@ export function Update({
   return (
     <div className="my-8 flex flex-col gap-4 border-b pb-8 last:border-b-0 md:flex-row md:gap-8">
       <div className="shrink-0 md:w-40">
-        <div className="md:sticky md:top-24">
-          <p className="font-medium text-fd-foreground">{label}</p>
-          {description ? (
-            <p className="mt-1 text-sm text-fd-muted-foreground">
-              {description}
+        <div className="flex flex-col items-start gap-2 md:sticky md:top-24">
+          <span className="rounded-lg bg-fd-primary/10 px-2.5 py-1 text-sm font-medium text-fd-primary">
+            {label}
+          </span>
+          {tags?.map((tag) => (
+            <p key={tag} className="text-sm font-medium text-fd-foreground">
+              {tag}
             </p>
-          ) : null}
-          {tags?.length ? (
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-fd-primary/10 px-2.5 py-0.5 text-xs font-medium text-fd-primary"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+          ))}
+          {description ? (
+            <p className="text-sm text-fd-muted-foreground">{description}</p>
           ) : null}
         </div>
       </div>
