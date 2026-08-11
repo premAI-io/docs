@@ -65,6 +65,10 @@ OAuth, but the server doesn't let Fluso register itself. Register an app in the 
 
 Client ID and secret go where they say. Authorization and token endpoints are auto-detected if left blank. **Authorize** works the same as the OAuth tab from there.
 
+<Note>
+  When the provider's console asks for a redirect URL, use: `https://api.fluso.ai/v1/mcp-oauth/callback`
+</Note>
+
 ### API key
 
 The server expects a key in an HTTP header. Paste the key; the header name defaults to `X-Api-Key`. Click **Save**.
