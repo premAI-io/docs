@@ -1,0 +1,21 @@
+components/view-options.tsx
+  s_51e97acd59a594::t_d01589717515d2 101-114
+app/global.css
+  s_51e97acd59a594::t_c540c8869e6c65 40-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "96d4db24eb6bff51ac412984f05f26f2e91e63b2",
+  "prompts": {},
+  "sessions": {
+    "s_51e97acd59a594": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "742b5b4e-3a75-4eb3-a31d-3a326916b6b8",
+        "model": "claude-fable-5"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
