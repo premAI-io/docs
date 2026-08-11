@@ -12,15 +12,16 @@ export function baseOptions(): BaseLayoutProps {
             alt="Fluso"
             width={92}
             height={24}
-            className="dark:hidden"
+            className="size-6 object-cover object-center dark:hidden"
           />
           <Image
             src="/logo/dark.svg"
             alt="Fluso"
             width={92}
             height={24}
-            className="hidden dark:block"
+            className="hidden size-6 object-cover object-center dark:block"
           />
+          <span className="font-semibold">Fluso</span>
         </>
       ),
     },
