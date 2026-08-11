@@ -137,7 +137,7 @@ export function Accordion({
         </svg>
         {title}
       </summary>
-      <div className="prose-no-margin px-4 pb-4 ps-10 text-sm text-fd-muted-foreground">
+      <div className="px-4 pb-4 ps-10 text-sm text-fd-muted-foreground [&>:first-child]:mt-0 [&>:last-child]:mb-0">
         {children}
       </div>
     </details>
@@ -208,8 +208,8 @@ export function Step({
 }) {
   return (
     <div>
-      {title ? <p className="mb-2 font-medium">{title}</p> : null}
-      <div className="prose-no-margin text-fd-muted-foreground text-sm">
+      {title ? <p className="mt-0 mb-2 font-medium">{title}</p> : null}
+      <div className="text-sm text-fd-muted-foreground [&>:first-child]:mt-0 [&>:last-child]:mb-0">
         {children}
       </div>
     </div>
