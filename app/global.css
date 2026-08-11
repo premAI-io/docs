@@ -51,6 +51,12 @@ button[aria-label='Collapse Sidebar'] {
   gap: 1rem;
 }
 
+/* Center the content column between the sidebar and the TOC */
+#nd-page > * {
+  width: 100%;
+  margin-inline: auto;
+}
+
 html {
   scrollbar-gutter: stable;
 }
