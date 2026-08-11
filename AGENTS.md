@@ -2,11 +2,11 @@
 
 ## About this project
 
-- This is the Fluso product documentation site, built on [Mintlify](https://mintlify.com).
-- Pages are MDX files with YAML frontmatter.
-- Configuration lives in `docs.json`.
-- Run `mint dev` to preview locally.
-- Run `mint broken-links` to check links.
+- This is the Fluso product documentation site, built on [Fumadocs](https://fumadocs.dev) (Next.js, static export).
+- Pages are MDX files with YAML frontmatter, in `content/docs/`.
+- Sidebar navigation lives in `content/docs/meta.json` (plus per-folder `meta.json` files for ordering).
+- Mintlify-compatible MDX components (`<Card>`, `<Accordion>`, `<Note>`, `<Update>`, …) are provided by `components/mintlify.tsx`, so pages keep the Mintlify component vocabulary.
+- Run `npm run dev` to preview locally; `npm run build` builds the static site into `out/`.
 
 ## Information architecture
 
@@ -44,10 +44,10 @@ Email, calendar, code, content, research are skills, not separate features. The 
 
 ## Visual design
 
-- Theme: `mint` (Mintlify's cleanest variant).
+- Theme: Fumadocs neutral preset with the brand primary overridden in `app/global.css`.
 - Palette: deep purple primary (`#5B21B6`), `#7C3AED` light, `#3B0764` dark.
-- Logo: minimal text wordmark in `logo/{light,dark}.svg`. Favicon: `favicon.svg`.
-- `style.css` is intentionally near-empty. Resist the urge to add decorative CSS. If a page needs visual structure, reach for Mintlify components first.
+- Logo: minimal text wordmark in `public/logo/{light,dark}.svg`. Favicon: `public/favicon.svg`.
+- Custom CSS stays minimal. Resist the urge to add decorative CSS. If a page needs visual structure, reach for the components in `components/mintlify.tsx` first.
 - No hero images, gradient backgrounds, or template artifacts. Minimal is the brand.
 
 ## Voice and writing rules
@@ -71,7 +71,7 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 - Bold for UI elements: **Settings → Connectors**.
 - Code formatting for file names, commands, paths, code references.
 - Sample user prompts in italicised blockquotes: `> *"Summarise my unread emails."*`.
-- Mintlify components (`<Card>`, `<CardGroup>`, `<Steps>`, `<Accordion>`, `<Note>`, `<Tip>`, `<Warning>`) over raw HTML.
+- Mintlify-style components (`<Card>`, `<CardGroup>`, `<Steps>`, `<Accordion>`, `<Note>`, `<Tip>`, `<Warning>`, from `components/mintlify.tsx`) over raw HTML.
 - Tables for comparison. Lists for sequences. Prose for stories.
 - No emojis in body text. Acceptable in tables (✅, —) where they reduce visual clutter.
 
@@ -83,7 +83,7 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 
 ## Publishing release notes
 
-Customer release notes live on `/release-notes` (`release-notes.mdx`) as a stack of Mintlify `<Update>` blocks, newest first. They are published through a workflow, not edited by hand.
+Customer release notes live on `/release-notes` (`content/docs/release-notes.mdx`) as a stack of `<Update>` blocks, newest first. They are published through a workflow, not edited by hand.
 
 The flow:
 

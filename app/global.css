@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* Fluso brand (ported from Mintlify docs.json colors) */
+:root {
+  --color-fd-primary: #5b21b6;
+}
+
+.dark {
+  --color-fd-primary: #a78bfa;
+}
+
+/* Full-width layout: keep the sidebar flush against the left edge instead of
+   centering the whole layout with gutters on wide screens. */
+:root {
+  --fd-layout-width: 100vw;
+}
+
+/* Slimmer sidebar than the 268px default */
+@media (min-width: 768px) {
+  #nd-docs-layout {
+    --fd-sidebar-width: 248px;
+  }
+}
+
+/* Plain nav look: no collapse button, more breathing room */
+#nd-sidebar button[aria-label='Collapse Sidebar'] {
+  display: none;
+}
+
+#nd-sidebar > div:first-child {
+  padding: 1.25rem 1.25rem 0.5rem;
+}
+
+#nd-sidebar [data-id$='-viewport'] {
+  padding: 1.25rem;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}

@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  mint-check:
-    name: Mintlify build + broken links
+  build-check:
+    name: Build (MDX parse + static export)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,14 +14,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
 
-      - name: Install Mintlify CLI
-        run: npm install -g mint
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Check broken links and MDX parse
-        # mint won't start if docs.json is malformed or any .mdx fails to parse,
-        # so this single command also covers schema + parse validation.
-        run: mint broken-links
+      - name: Build
+        # next build fails if any .mdx fails to parse or frontmatter is invalid,
+        # so this also covers schema + parse validation.
+        run: npm run build
 
   spell-check:
     name: Spell check (cspell)

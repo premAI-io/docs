@@ -10,7 +10,7 @@ name: Release notes published
 on:
   push:
     branches: [main]
-    paths: ["release-notes.mdx"]
+    paths: ["content/docs/release-notes.mdx"]
 
 concurrency:
   group: release-notes-published
@@ -36,7 +36,7 @@ jobs:
             exit 0
           fi
           # Take the newest <Update> block (top of the file).
-          awk '/<Update /{f=1} f{print} /<\/Update>/{if(f){exit}}' release-notes.mdx > /tmp/entry.mdx
+          awk '/<Update /{f=1} f{print} /<\/Update>/{if(f){exit}}' content/docs/release-notes.mdx > /tmp/entry.mdx
           label=$(grep -oE 'label="[^"]*"' /tmp/entry.mdx | head -1 | sed -E 's/label="(.*)"/\1/' || true)
           desc=$(grep -oE 'description="[^"]*"' /tmp/entry.mdx | head -1 | sed -E 's/description="(.*)"/\1/' || true)
           # Strip the <Update>/</Update> lines; convert **bold**->*bold* and "- "->"• " for Slack mrkdwn.
