@@ -1,0 +1,19 @@
+components/mintlify.tsx
+  s_51e97acd59a594::t_f7ede60cedb890 67,71-73,75,82
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "085ac734013273032e57bb031c0aa145580b612c",
+  "prompts": {},
+  "sessions": {
+    "s_51e97acd59a594": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "742b5b4e-3a75-4eb3-a31d-3a326916b6b8",
+        "model": "claude-fable-5"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
