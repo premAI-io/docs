@@ -1,0 +1,64 @@
+content/docs/integrations/google-calendar.mdx
+  s_51e97acd59a594::t_9bf0becefb0019 66
+  s_51e97acd59a594::t_7f82f1c01f91bb 15,17
+  s_51e97acd59a594::t_976b3bf4b547c5 53
+content/docs/integrations/slack.mdx
+  s_51e97acd59a594::t_2ede1116d71f3d 13,15,17
+  s_51e97acd59a594::t_d9638ce4a45bff 67
+  s_51e97acd59a594::t_97a89a03887ab0 80
+content/docs/features/skills.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 77
+content/docs/resources/pricing.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 20,34,89,119
+content/docs/meta.json
+  s_51e97acd59a594::t_bbb7f6ffdc536f 14
+content/docs/remote/telegram.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 129-130
+content/docs/features/approvals.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 173
+content/docs/index.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 51,53
+content/docs/introduction.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 36
+content/docs/features/meta.json
+  s_51e97acd59a594::t_ea8b63d4ca1fb2 6
+content/docs/integrations/github.mdx
+  s_51e97acd59a594::t_78aeb921225402 13,15,17
+  s_51e97acd59a594::t_65824806b31c5c 81
+content/docs/resources/faq.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 83,118,129,135
+AGENTS.md
+  s_51e97acd59a594::t_a78f9e3b6c86bd 17-18,30,40,71
+content/docs/integrations/gmail.mdx
+  s_51e97acd59a594::t_9c98dca6d38466 77,80
+  s_51e97acd59a594::t_03347e47e18572 22,24,26
+  s_51e97acd59a594::t_8d0aa073322751 70
+content/docs/quickstart.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 109,211
+content/docs/features/chat.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 93
+content/docs/going-deeper.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 68
+content/docs/resources/security.mdx
+  s_51e97acd59a594::t_ec88cd01426f9e 33,45
+content/docs/features/connectors.mdx
+  s_51e97acd59a594::t_0f31051b15c910 4,7,9,11-13,15
+content/docs/features/mcp.mdx
+  s_51e97acd59a594::t_d45a0f3a406550 2-4,7,9,11-12,17,20,22,24,27,30,32,34-36,38,40,42,44-46,48,51,54,56,58,60,63,66-70,74,77,81,84,86,88,91,94,96,98,101,104-106,108,110,112,115,118,120,122,124-127,129-131,138-139,141-142,144-145,150
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "0f69776253ffcdf1fda6f153bd2e0acbeca74dce",
+  "prompts": {},
+  "sessions": {
+    "s_51e97acd59a594": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "742b5b4e-3a75-4eb3-a31d-3a326916b6b8",
+        "model": "claude-fable-5"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
