@@ -91,3 +91,9 @@ html > body[data-scroll-locked] {
 .release-entry > p:has(> strong:only-child) + ol {
   margin-top: 0.25rem;
 }
+
+/* Release-note bullets carry a full point each, so they need room to breathe. */
+.release-entry li {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
