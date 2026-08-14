@@ -58,7 +58,7 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 
 **Banned patterns.** Negative parallelisms ("not just X, it's Y"). Rule-of-three padding. -ing analysis modifiers ("ensuring smooth onboarding"). Vague attributions ("most users find"). Throat-clearing transitions. Title-case headings (sentence case only). Curly quotes (straight only). Adjective stacks ("modern, clean, professional").
 
-**Em dashes.** Sparingly, for genuine asides. Never as a generic punchy substitute for a comma or period. If a period would work, use the period.
+**Em dashes.** Do not use them. Use a hyphen, a comma, or a period instead. If a period would work, use the period. This applies to release notes and every other page.
 
 **Specifics over abstractions.** Numbers, file paths, commands, real prompts. Cut "very", "really", "simply".
 

@@ -112,7 +112,8 @@ jobs:
             - `.claude/skills/release-notes/references/release-notes-playbook.md`
             Read both before writing anything. They define the customer voice, the repo→audience mapping, the theme taxonomy, the combine-vs-separate rules, and the exact `<Update>` output contract. Do not deviate from them.
 
-            Also read this repository's `AGENTS.md` and follow its voice rules: banned vocabulary (seamless, robust, leverage, unlock, empower, transform, crucial, …), sentence-case labels, straight quotes, em dashes sparingly, and no emojis in body text.
+            Also read this repository's `AGENTS.md` and follow its voice rules: banned vocabulary (seamless, robust, leverage, unlock, empower, transform, crucial, …), sentence-case labels, straight quotes, and no emojis in body text. NOTE: the house rules below
+            override AGENTS.md on punctuation - release notes use hyphens, never em dashes.
 
             INPUTS — already fetched for you (do not re-fetch):
             - `.release-input/manifest.json` — an array of the source releases, each with `owner`, `repo`, `tag`, `name`, `published` (date), `url`, and `body_file`.
