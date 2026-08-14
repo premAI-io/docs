@@ -3,6 +3,45 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
+<Update label="2026-08-14" description="Fluso 1.5.0" tags={["Desktop"]}>
+
+**Highlights**
+- The assistant asks before it reaches out to a site or uses a tool you haven't approved, and the choice you make sticks.
+- Every connected app now connects the same way: Gmail, Slack, Drive, and any custom MCP server.
+- Share a chat as a public, read-only link that anyone can open without signing in.
+- You can now leave Confidential Mode and switch back to standard inference, where that used to be one-way.
+- A new default chat model, Kimi K3, that holds up better on long, multi-step work.
+- Waking your laptop or switching networks no longer shows a false maintenance page or signs you out, and one stuck turn no longer freezes a whole thread.
+
+**Polish & experience**
+- Excel and CSV files render like real spreadsheets in the file viewer, keeping cell colors, merged cells, and column widths instead of a flattened table.
+- Opening an HTML file in your system browser works, instead of failing to load.
+- Steadier sidebar drag-and-drop, with no jump on a same-folder drop, real chat-count previews on hover, and cleaner keyboard focus and contrast. The app now uses your operating system's default font.
+- The Projects page no longer flickers when you have many projects, and onboarding's Terms and Privacy links now go where they should.
+
+**Connected apps**
+- Connecting Gmail, Slack, Drive, or your own MCP server all works the same way now, through managed MCP. A server that needs an API key is authorized in the secure connection dialog instead of pasting the key into chat.
+- Turns that use your connected apps finish faster, with fewer wasted tool calls.
+- A message that happens to mention words like "thread" or "channel" is no longer misread as a Slack request.
+- Organizations with an Apthorp legal license can connect a new Fluso Legal MCP server for guided legal research and citation checks.
+
+**Assistant reliability**
+- A crashed session, a failed model call, or a slow background pass no longer freezes a whole thread or times out the app. Each thread runs on its own, and a failed turn cleans up and retries instead of getting stuck.
+- After your laptop sleeps or your network changes, the app reconnects on its own instead of sitting on a dead connection, and it no longer mistakes a lost connection for scheduled maintenance.
+- You stay signed in through brief authentication hiccups, and a session now lasts up to 30 days of inactivity instead of a hard 7-day cutoff.
+
+**Smarter assistant**
+- Chat's default model is now Kimi K3, which is steadier when a task takes many steps.
+- Text that Fluso writes for you reads less like AI wrote it.
+
+**Reliability, privacy & trust**
+- Network and tool approvals are saved as durable decisions that survive reloads, each labeled as coming from your organization or from you. A decision you make sticks, even when an organization policy would otherwise keep asking.
+- Per-tool allow, ask, and deny controls sit under every MCP connection, with an auto-approve switch for read-only tools.
+- A shared chat link shows text only. It leaves out tool activity, reasoning, and file paths, and you can refresh or revoke it whenever you want.
+- Switching out of Confidential Mode warns you first that context you already built may use standard routing.
+
+</Update>
+
 <Update label="2026-07-23" description="v1.4.0" tags={["Desktop"]}>
 
 **Highlights**
