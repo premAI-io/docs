@@ -1,0 +1,173 @@
+---
+title: Approvals and permissions
+sidebarTitle: Approvals
+description: Choose when Fluso asks before network requests and connector actions, review approval cards, and manage saved rules.
+---
+
+Approvals let you decide how much Fluso can do without stopping for confirmation. You can keep every external action behind a prompt, allow ordinary network requests while reviewing connector tools, or let both continue automatically.
+
+Your choice belongs to a chat. Existing chats keep their current mode. A choice made before a new chat starts is pending until you send the first message and the chat is created.
+
+<Note>
+  Organization rules and your saved **Deny** rules always apply. An automatic mode cannot override them.
+</Note>
+
+## Choose an approval mode
+
+| Mode | Network access | Connector tools |
+|---|---|---|
+| **Ask for everything** | Ask before a new hostname is reached | Ask before a tool runs |
+| **Ask for critical** | Approve new hostnames automatically | Ask before a tool runs |
+| **Don't ask permission** | Approve new hostnames automatically | Approve tools automatically |
+
+Use **Ask for everything** when you want to inspect each new external action. **Ask for critical** removes routine network prompts but still pauses before a connector can read or change data. **Don't ask permission** is best for work you trust Fluso to finish without waiting for you.
+
+<video
+  className="w-full aspect-video rounded-xl"
+  controls
+  muted
+  playsInline
+  preload="metadata"
+  aria-label="Choosing approval modes from the Fluso chat composer"
+  src="https://fluso-docs-assets.s3.us-east-1.amazonaws.com/approvals/composer-modes-v2.webm"
+></video>
+
+### Set the mode from the composer
+
+<Steps>
+  <Step title="Open the permission menu">
+    Start a new chat and click the shield control beside the model mode in the composer.
+  </Step>
+  <Step title="Choose a mode">
+    Pick **Ask for everything**, **Ask for critical**, or **Don't ask permission**. The menu explains which requests will still pause.
+  </Step>
+  <Step title="Send the first message">
+    Before a thread exists, the composer labels the choice as **Pending**. Sending your first message creates the chat and confirms its mode.
+  </Step>
+</Steps>
+
+You can change the mode between messages. The updated choice applies to later actions in that chat. It does not change other existing chats.
+
+## Network approval cards
+
+With **Ask for everything**, Fluso pauses the first time work needs an HTTPS hostname that has no saved rule. The card shows:
+
+- The exact hostname Fluso wants to reach.
+- The blocked HTTP method and path, so you can see what prompted the request.
+- **Keep blocked** and **Allow** actions.
+
+Choose **Allow** to let the current work continue and save an allow rule for that hostname. Choose **Keep blocked** to stop the request and remember the deny rule. Fluso will not keep asking about a hostname you denied until you change or remove that rule in Settings.
+
+<Warning>
+  A network rule covers the whole HTTPS hostname, not only the path shown in the card. Allowing `api.example.com/v1/report` also allows other HTTPS paths on `api.example.com`. A subdomain such as `files.example.com` is a separate hostname and asks separately.
+</Warning>
+
+Redirects are checked again at their destination. Allowing the first hostname does not silently allow a redirect to another one.
+
+If the card expires or the run is canceled before you decide, ask Fluso to try the action again. An organization-managed deny is locked and cannot be approved from chat.
+
+## Connector tool approval cards
+
+Connector and MCP tools can read or change data in another service. When a tool needs approval, the card shows the connector or server, tool name, a short argument summary, and an expandable view of the exact arguments.
+
+You can choose:
+
+- **Allow once** to run this tool only with the arguments shown on the card.
+- **Always allow** to save an allow rule for this tool.
+- **Deny** to reject this request without creating a permanent tool deny.
+
+If the required app is not connected, the card asks you to **Connect** first. Complete sign-in and Fluso resumes the waiting action. If the request changes while you are deciding, it fails closed instead of applying your decision to different arguments.
+
+<Tip>
+  Use **Allow once** for a sensitive write or an unusual set of arguments. Use **Always allow** for a tool you expect this chat to call repeatedly.
+</Tip>
+
+## Manage approvals in Settings
+
+Open your account menu, choose **Settings**, then open **Approvals & permissions**. This panel controls the mode for your next new chat and lists the network rules saved for your account.
+
+<video
+  className="w-full aspect-video rounded-xl"
+  controls
+  muted
+  playsInline
+  preload="metadata"
+  aria-label="Managing approval modes and network access in Fluso Settings"
+  src="https://fluso-docs-assets.s3.us-east-1.amazonaws.com/approvals/settings-management-v3.webm"
+></video>
+
+<Frame>
+  <img src="/images/features/approvals/settings-permissions.png" alt="Fluso Approvals and permissions dialog with three auto-approval modes and the network access rule editor." />
+</Frame>
+
+### Set the default for the next chat
+
+The **Auto-approval** section has the same three modes as the composer. A Settings change is staged for your next new chat. It does not rewrite the mode of chats that already exist.
+
+### Add a network rule
+
+<Steps>
+  <Step title="Enter a hostname">
+    In **Network access**, enter a public HTTPS hostname such as `api.github.com`. You can paste an HTTPS URL; Fluso saves its hostname.
+  </Step>
+  <Step title="Choose Allow or Deny">
+    **Allow** lets Fluso reach the hostname. **Deny** blocks it and suppresses future approval prompts for that hostname.
+  </Step>
+  <Step title="Add the rule">
+    Click **Add**. The saved row is available to every chat on your account.
+  </Step>
+</Steps>
+
+There is no saved **Ask** rule. Asking is the default when a hostname has no user or organization rule, so remove a user rule to return that hostname to ask-on-use behavior.
+
+Hostnames approved automatically are marked **Auto-approved**. You can remove auto-approved rows in bulk without removing rules you chose yourself. An origin managed by an MCP connection may return as an ask rule while that connection remains active.
+
+## Which rule wins
+
+Fluso applies the most restrictive relevant rule. In practical terms:
+
+1. An organization **Deny** always blocks the hostname or tool.
+2. Your **Deny** can block something the organization allows.
+3. An organization **Allow** can make an action available, unless you denied it.
+4. Your **Allow** can approve an action when the organization has not blocked it.
+5. With no saved rule, the current chat mode decides whether Fluso asks or continues automatically.
+
+This is why switching to **Don't ask permission** does not open something that your organization or you explicitly blocked.
+
+## Manage MCP tool rules
+
+Open **Plugins**, select an MCP server, and open its tool permissions. Each tool can be set to **Allow**, **Ask**, or **Deny**.
+
+You can also enable automatic approval for tools classified as read-only, such as list, search, fetch, and GET operations. An explicit **Ask** or **Deny** on a tool takes precedence over that read-only setting.
+
+See [MCP servers](/features/mcp) for connection setup and credential handling.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="I changed the mode in Settings, but this chat still asks">
+    Settings changes apply to the next new chat. Existing chats keep their current mode. Change the shield control in this chat, or start a new one.
+  </Accordion>
+  <Accordion title="The composer says Pending">
+    The chat has not been created yet. Send the first message to commit that mode to the new chat.
+  </Accordion>
+  <Accordion title="I allowed one URL, but another URL still asks">
+    Compare the hostnames. Rules are exact per HTTPS hostname. Subdomains and redirect destinations are checked separately.
+  </Accordion>
+  <Accordion title="Fluso keeps blocking a hostname without showing an approval card">
+    Check **Settings → Approvals & permissions** for a saved **Deny**. If the rule is locked or marked as managed by your organization, only an organization administrator can change it.
+  </Accordion>
+  <Accordion title="An approval card expired">
+    Ask Fluso to retry the action. Approval cards are bound to one pending request and cannot approve a later or changed request.
+  </Accordion>
+  <Accordion title="I chose Always allow, but a different connector tool still asks">
+    Tool rules apply to the specific tool, not every tool on the connector or MCP server. Review that server's tool permissions under **Plugins**.
+  </Accordion>
+  <Accordion title="How do I make a hostname ask again?">
+    Remove its user rule in **Settings → Approvals & permissions**. With no saved allow or deny, the chat mode controls what happens next.
+  </Accordion>
+</AccordionGroup>
+
+## Next
+
+See [Chat](/features/chat) for thread and composer behavior, and [Apps and MCP servers](/features/mcp) for app access and third-party tools.

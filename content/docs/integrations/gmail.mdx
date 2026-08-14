@@ -1,0 +1,95 @@
+---
+title: Gmail
+sidebarTitle: Gmail
+description: Connect Gmail. Permissions, prompts that work well, and troubleshooting when something goes sideways.
+---
+
+Connect Gmail first. Email is where most work originates, which means it's where Fluso has the richest context to work from. The payoff is bigger and faster than from any other integration.
+
+## What changes once it's on
+
+You ask Fluso to summarise your inbox, search for something specific, draft a reply, or pull tasks out of actionable mail, and it does. The email skill is one of several that activate automatically once Gmail is connected — see [Skills](/features/skills) for the full catalog. The short version of what's available:
+
+- Inbox triage in plain English (*"summarise my unread emails from today"*)
+- Search across the full mailbox (*"find the email where Thomas sent the pricing spreadsheet"*)
+- Draft replies in your voice (*"reply to Sarah, I'll have estimates by Thursday"*)
+- Auto-task extraction running in the background
+- Thread summaries (*"summarise the email thread about the vendor negotiation"*)
+- Follow-up tracking (*"has the client responded about the contract?"*)
+
+## Setup
+
+Gmail comes in through the **Google Workspace** app, which also covers Calendar, Drive, Docs, Sheets, Slides, Meet, and Tasks in one sign-in.
+
+Open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **Google Workspace**. Sign in to Google with the account you want Fluso to assist with and approve the permissions on Google's own screen. Reading powers summaries, search, and task extraction; sending is for reply drafts, and Fluso never sends without your approval.
+
+A click and a confirmation screen. You can also just ask in chat — *"connect my Gmail"* — and approve the access card that appears.
+
+## Prompts that work well
+
+Triage:
+
+> *"Summarise my unread emails from today."*
+
+> *"Which emails need a reply today?"*
+
+> *"Anything from my boss I haven't responded to?"*
+
+Search:
+
+> *"Find unread emails older than three days."*
+
+> *"Emails from @acme.com in the last two weeks that mention 'contract' and have attachments."*
+
+> *"Starred emails from April about the budget."*
+
+Drafts:
+
+> *"Reply to the client. Confirm we'll implement the changes by next sprint."*
+
+> *"Compose an introduction email to the new client we met at the conference."*
+
+> *"Make my last draft more formal."*
+
+Follow-ups:
+
+> *"Did Legal reply to my questions from Monday?"*
+
+> *"Anyone I emailed last week who hasn't responded?"*
+
+## How permissions actually behave
+
+Reading happens when you ask for it (*"summarise my inbox"*) and continuously in the background for auto-task extraction. Messages are processed for the response and not stored beyond what's referenced in your knowledge graph and tasks.
+
+Sending requires your explicit approval. Drafts are always shown first. There's no batch-send mode that bypasses the review.
+
+Header metadata is used for categorisation only and never shared with third parties.
+
+## Disconnecting
+
+In **Plugins**, open the Google Workspace row's three-dot menu and click **Disconnect**. The token is deleted immediately and Fluso loses access.
+
+You can also revoke directly from [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
+
+## Troubleshooting
+
+  <Accordion title="Fluso isn't finding emails I know exist">
+    Verify Google Workspace still shows as **Connected** in Plugins. If it does, reconnect from the row's menu. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes and try again.
+  </Accordion>
+  <Accordion title="The connection says it's broken">
+    OAuth tokens occasionally expire. In **Plugins**, open the row's three-dot menu and click **Reconnect**.
+  </Accordion>
+  <Accordion title="Auto-tasks haven't appeared yet">
+    Auto-task extraction runs periodically and learns the shape of your inbox over a couple of days. You can also force a sweep with *"Scan my inbox for tasks."*
+  </Accordion>
+
+## See also
+
+<CardGroup cols={2}>
+  <Card title="Skills" icon="sparkles" href="/features/skills">
+    Email handling and the rest of the skills Gmail makes available.
+  </Card>
+  <Card title="Morning brief workflow" icon="sun" href="/workflows/morning-brief">
+    The most common daily ritual.
+  </Card>
+</CardGroup>

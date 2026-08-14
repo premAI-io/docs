@@ -1,0 +1,140 @@
+---
+title: FAQ
+sidebarTitle: FAQ
+description: The questions that come up most often. What Fluso is, how it works, security, pricing, getting started, and the occasional troubleshooting nudge.
+---
+
+## About Fluso
+
+<AccordionGroup>
+  <Accordion title="What exactly is Fluso?">
+    An AI assistant that connects to your apps — Gmail, Calendar, Slack, GitHub, and a hundred more — and helps you manage work through conversation. It reads your inbox, drafts replies, runs your calendar, creates documents, researches topics, writes code, and remembers everything along the way.
+  </Accordion>
+  <Accordion title="Is it just another chatbot?">
+    No. A chatbot answers questions. Fluso performs actions: sending mail, scheduling, opening PRs, generating files. It works across the apps where your work already happens, not just inside a chat window.
+  </Accordion>
+  <Accordion title="How is it different from ChatGPT or Claude?">
+    Those are general-purpose assistants in a chat window. Fluso connects directly to your tools, builds a private knowledge graph from your work, takes action across apps, and remembers what's happened. It's an executive assistant, not a conversational AI.
+  </Accordion>
+  <Accordion title="Who is it for?">
+    Anyone who loses too much time to email, meetings, research, content creation, or context-switching. Founders, executives, developers, PMs, researchers, and teams all use it.
+  </Accordion>
+</AccordionGroup>
+
+## Getting started
+
+<AccordionGroup>
+  <Accordion title="How long does setup take?">
+    About five minutes. Account, connect Gmail, start using it. The more apps you connect, the more useful Fluso gets.
+  </Accordion>
+  <Accordion title="Which apps should I connect first?">
+    Gmail and Calendar. They give you the most immediate value. Add Slack if your team lives there. Add GitHub if you write code.
+  </Accordion>
+  <Accordion title="Do I need technical skills?">
+    No. The interface is plain English. If you write code, Fluso can help with that, but you don't need a technical background for email, calendar, tasks, or content.
+  </Accordion>
+  <Accordion title="How do I get the most out of it?">
+    Connect two or three apps. Use it daily for a week. Process a meeting transcript. Try creating a document or deck. Make a project for each major area of work. Most of the value is in the rhythm, not in any single feature. After a couple of weeks, [Going deeper](/going-deeper) is the next step.
+  </Accordion>
+</AccordionGroup>
+
+## Using Fluso
+
+<AccordionGroup>
+  <Accordion title="What can I ask it to do?">
+    Anything related to your connected tools and workspace. Summarise the inbox, draft replies, manage the calendar, research topics, create documents and decks, write and review code, analyse data, process meeting transcripts. If it involves your digital work, it probably fits.
+  </Accordion>
+  <Accordion title="How does it know what to do?">
+    It understands the request in context. It knows your connected apps, projects, preferences, and conversation history. It picks the right tools — searching email, reading files, calling APIs, generating content — to fulfil your request.
+  </Accordion>
+  <Accordion title="Can it handle multiple things at once?">
+    Yes. *"Summarise my unread emails, check my calendar for tomorrow, and draft a reply to the client"* gets all three in sequence.
+  </Accordion>
+  <Accordion title="What if it doesn't understand?">
+    It asks clarifying questions: *"Which project?"* or *"What format?"* Answer for a better result.
+  </Accordion>
+  <Accordion title="What platforms does it run on?">
+    Fluso runs on macOS today. Download it from [fluso.ai](https://fluso.ai/). Windows and iOS are coming later.
+  </Accordion>
+  <Accordion title="Does it work in other languages?">
+    Primarily English, but it understands and responds in many. Quality varies by language and task.
+  </Accordion>
+</AccordionGroup>
+
+## Privacy and security
+
+<AccordionGroup>
+  <Accordion title="Can it see all my emails?">
+    It reads emails when you ask it to (e.g., *"summarise my inbox"*) and as part of auto-task extraction. It doesn't permanently store copies or share them.
+  </Accordion>
+  <Accordion title="Does it send mail without my permission?">
+    Never. Drafts always wait for your explicit approval.
+  </Accordion>
+  <Accordion title="Where is my data stored?">
+    In your isolated workspace on encrypted infrastructure. Files, conversations, tasks, and the knowledge graph are private to you.
+  </Accordion>
+  <Accordion title="Can I delete my data?">
+    Yes. Individual entries, connected apps' data (tokens destroyed), or the entire account. Deletion is permanent.
+  </Accordion>
+  <Accordion title="Does it train on my data?">
+    No. Your private data is never used to train AI models.
+  </Accordion>
+  <Accordion title="What if I want to stop using a connected app?">
+    Disconnect from **Plugins**: open the connection row's three-dot menu and click **Disconnect**. Tokens are deleted immediately. You can also revoke directly from the app (Google Account, Slack workspace, GitHub apps).
+  </Accordion>
+</AccordionGroup>
+
+The full picture is split across [Security](/resources/security) (infrastructure, encryption, account safety) and [Privacy](/resources/privacy) (what's collected, what isn't, your rights to delete).
+
+## Pricing
+
+<AccordionGroup>
+  <Accordion title="Is there a free version?">
+    Yes. Free includes full chat, 3 connected apps, 1 project, 100 messages a month, and the basic skills. Enough to decide whether it works for you.
+  </Accordion>
+  <Accordion title="Can I try Pro before paying?">
+    Yes. Fourteen days, no card.
+  </Accordion>
+  <Accordion title="What happens at Free limits?">
+    You're notified when you're getting close. Upgrade to continue. Your data is preserved.
+  </Accordion>
+  <Accordion title="Cancel anytime?">
+    Yes. Pro access stays until the end of the billing period, then reverts to Free.
+  </Accordion>
+</AccordionGroup>
+
+Plan details on [Pricing](/resources/pricing).
+
+## Skills
+
+<AccordionGroup>
+  <Accordion title="What are skills?">
+    Specialised capabilities: creating PDFs, generating images, processing meetings, deep research. They activate when you ask for something they can do.
+  </Accordion>
+  <Accordion title="Do I install them?">
+    No. Fluso picks the right skill based on the request.
+  </Accordion>
+  <Accordion title="Can I build my own?">
+    Yes. Open **Plugins → Skills**, click **Add skill** at the top right, and pick **Build with Fluso**. The skill-creator skill takes it from there in chat: it asks what workflow the skill should handle, what inputs it takes, what shape the output should have, and which tools or apps are involved, then writes the skill and adds it to **My Skills**. See [Skills](/features/skills#building-your-own) for the full flow.
+  </Accordion>
+  <Accordion title="Free vs Pro skills?">
+    Free includes the document-shaped ones: PDFs, Word, decks, spreadsheets. Pro adds image generation, deep research with citations, meeting intelligence, video summaries.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Fluso isn't finding my emails">
+    Check Google Workspace is connected (**Plugins**). Try reconnecting from the row's menu. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes.
+  </Accordion>
+  <Accordion title="The response seems off">
+    Start a new thread (the **+** button) if the conversation has drifted. *"Forget the context so far and start fresh on this topic"* also works. Being more specific in the request usually helps.
+  </Accordion>
+  <Accordion title="A connected app says it isn't connected">
+    Refresh the page or reconnect. OAuth tokens occasionally expire. **Plugins** → row menu → **Reconnect**.
+  </Accordion>
+  <Accordion title="How do I contact support?">
+    [support@premai.io](mailto:support@premai.io). Pro gets priority email. Team gets priority chat. Enterprise gets dedicated support.
+  </Accordion>
+</AccordionGroup>

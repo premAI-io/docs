@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* Fluso brand (ported from Mintlify docs.json colors) */
+:root {
+  --color-fd-primary: #5b21b6;
+}
+
+.dark {
+  --color-fd-primary: #a78bfa;
+}
+
+/* Full-width layout: keep the sidebar flush against the left edge instead of
+   centering the whole layout with gutters on wide screens. */
+:root {
+  --fd-layout-width: 100vw;
+}
+
+/* Slimmer sidebar than the 268px default */
+@media (min-width: 768px) {
+  #nd-docs-layout {
+    --fd-sidebar-width: 248px;
+  }
+}
+
+/* Plain nav look: no collapse button, more breathing room */
+button[aria-label='Collapse Sidebar'] {
+  display: none;
+}
+
+#nd-sidebar [data-id$='-viewport'] {
+  padding: 1.25rem;
+}
+
+/* Navbar: primary-button CTA and spacing before the theme toggle */
+#nd-subnav a[href='https://fluso.ai/'] {
+  background: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.6rem;
+  font-weight: 500;
+}
+
+#nd-subnav a[href='https://fluso.ai/']:hover {
+  color: var(--color-fd-primary-foreground);
+  opacity: 0.9;
+}
+
+#nd-subnav div[class*='justify-end'] {
+  gap: 1rem;
+}
+
+/* Center the content column between the sidebar and the TOC */
+#nd-page > * {
+  width: 100%;
+  margin-inline: auto;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}

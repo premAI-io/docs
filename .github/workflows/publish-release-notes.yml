@@ -2,7 +2,7 @@ name: Publish release notes
 
 # Turns engineering GitHub release notes into customer-facing release notes on
 # docs.fluso.ai. You paste one or more release URLs; Claude (the `release-notes`
-# skill) rewrites them into ONE Mintlify <Update> entry and opens a PR.
+# skill) rewrites them into ONE <Update> entry and opens a PR.
 #
 # Review and merge that PR to publish. `main` requires an approving review from
 # someone other than the last pusher (branch ruleset), so your review IS the
@@ -103,14 +103,14 @@ jobs:
           show_full_output: true
           claude_args: "--model claude-opus-4-8 --effort max --allowedTools Bash,Read,Write,Edit,Glob,Grep"
           prompt: |
-            You are running in CI (GitHub Actions) inside the premAI-io/docs repository — the Mintlify site published at docs.fluso.ai.
+            You are running in CI (GitHub Actions) inside the premAI-io/docs repository — the Fumadocs site published at docs.fluso.ai.
 
             GOAL: turn the fetched engineering release notes into ONE clean, customer-facing release-note entry and leave it staged for review. You are the writer, not the publisher — do not touch git.
 
             THE SKILL — read first, follow exactly:
             - `.claude/skills/release-notes/SKILL.md`
             - `.claude/skills/release-notes/references/release-notes-playbook.md`
-            Read both before writing anything. They define the customer voice, the repo→audience mapping, the theme taxonomy, the combine-vs-separate rules, and the exact Mintlify `<Update>` output contract. Do not deviate from them.
+            Read both before writing anything. They define the customer voice, the repo→audience mapping, the theme taxonomy, the combine-vs-separate rules, and the exact `<Update>` output contract. Do not deviate from them.
 
             Also read this repository's `AGENTS.md` and follow its voice rules: banned vocabulary (seamless, robust, leverage, unlock, empower, transform, crucial, …), sentence-case labels, straight quotes, em dashes sparingly, and no emojis in body text.
 
@@ -126,13 +126,13 @@ jobs:
 
             WRITE:
             1. Read the skill files, then the manifest and every body file.
-            2. Create or update `release-notes.mdx` per the playbook's output contract: prepend ONE new `<Update>` block (newest first). Use the latest source release's `published` date as the `label` (YYYY-MM-DD) and the desktop version as the `description`${{ inputs.version_label && format(' (use exactly "{0}")', inputs.version_label) || '' }}. RSS-safe: bold subsection labels, never `##` headings inside the block.
+            2. Create or update `content/docs/release-notes.mdx` per the playbook's output contract: prepend ONE new `<Update>` block (newest first). Use the latest source release's `published` date as the `label` (YYYY-MM-DD) and the desktop version as the `description`${{ inputs.version_label && format(' (use exactly "{0}")', inputs.version_label) || '' }}. RSS-safe: bold subsection labels, never `##` headings inside the block.
             3. Order content by the theme taxonomy, Highlights first; include only themes that have content; one benefit-led line per bullet; strip every PR number, commit SHA, @handle, file path, and internal mechanism; omit reverts and compliance-claim walkbacks.
-            4. Register the page in `docs.json` exactly once — add the "Release notes" nav group only if it is missing.
+            4. The page is already registered in the sidebar via `content/docs/meta.json` — do not edit navigation unless the "release-notes" entry is missing.
 
             CONSTRAINTS:
             - Do NOT run git, commit, push, or open a PR. Leave the edited files in the working tree; the workflow handles git.
-            - Change only `release-notes.mdx` and `docs.json`. Never invent features the source bodies do not support.
+            - Change only `content/docs/release-notes.mdx` (and `content/docs/meta.json` only if the page is unregistered). Never invent features the source bodies do not support.
 
             When finished, print a 3–5 line summary: the entry's label and description, the themes you included, and any notable source items you intentionally dropped as non-user-facing.
 
@@ -144,7 +144,7 @@ jobs:
           set -euo pipefail
           rm -rf .release-input .claude/skills/release-notes
           rmdir .claude/skills .claude 2>/dev/null || true
-          if [ -z "$(git status --porcelain -- release-notes.mdx docs.json)" ]; then
+          if [ -z "$(git status --porcelain -- content/docs/release-notes.mdx content/docs/meta.json)" ]; then
             echo "::error::No release-notes changes were produced."
             exit 1
           fi
@@ -153,7 +153,7 @@ jobs:
           git config user.name "fluso-release-bot"
           git config user.email "actions@users.noreply.github.com"
           git checkout -b "$branch"
-          git add release-notes.mdx docs.json
+          git add content/docs/release-notes.mdx content/docs/meta.json
           git commit -m "docs: publish customer release notes" -m "Source releases:
           ${RELEASE_URLS}
 

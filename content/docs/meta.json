@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "index",
+    "---Get started---",
+    "introduction",
+    "quickstart",
+    "going-deeper",
+    "---Features---",
+    "...features",
+    "---Remote access---",
+    "...remote",
+    "---Workflows---",
+    "...workflows",
+    "---App setup---",
+    "...integrations",
+    "---Reference---",
+    "...resources",
+    "---Release notes---",
+    "release-notes"
+  ]
+}

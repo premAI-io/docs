@@ -2,11 +2,11 @@
 
 ## About this project
 
-- This is the Fluso product documentation site, built on [Mintlify](https://mintlify.com).
-- Pages are MDX files with YAML frontmatter.
-- Configuration lives in `docs.json`.
-- Run `mint dev` to preview locally.
-- Run `mint broken-links` to check links.
+- This is the Fluso product documentation site, built on [Fumadocs](https://fumadocs.dev) (Next.js, static export).
+- Pages are MDX files with YAML frontmatter, in `content/docs/`.
+- Sidebar navigation lives in `content/docs/meta.json` (plus per-folder `meta.json` files for ordering).
+- Mintlify-compatible MDX components (`<Card>`, `<Accordion>`, `<Note>`, `<Update>`, …) are provided by `components/mintlify.tsx`, so pages keep the Mintlify component vocabulary.
+- Run `npm run dev` to preview locally; `npm run build` builds the static site into `out/`.
 
 ## Information architecture
 
@@ -14,8 +14,8 @@ The IA tracks the user's journey from "just landed" to "pro user". Five sidebar 
 
 - **Get started** — `/introduction`, `/quickstart`, `/going-deeper`. The path from "is this for me?" through "I have it set up" to "I've made it part of my work".
 - **Workflows** — `/workflows/*`. Six concrete stories: morning brief, meetings, research-to-deck, content launch, bug-to-PR, knowledge recall.
-- **Features** — the five primitives: `/features/{chat, connectors, skills, tasks, memory}`. Everything Fluso does is some combination of these five.
-- **Connector setup** — `/integrations/{gmail, google-calendar, slack, github}`. Per-app permissions and prompts, not feature pages.
+- **Features** — the five primitives: `/features/{chat, mcp, skills, tasks, memory}`. Everything Fluso does is some combination of these five.
+- **App setup** — `/integrations/{gmail, google-calendar, slack, github}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
 - **Reference** — `/resources/{pricing, security, privacy, faq}`. Security covers infrastructure; Privacy covers data handling; they're distinct pages.
 
 The home page (`/`) is a router into the journey, with three sections: just landed, already set up, daily user.
@@ -27,7 +27,7 @@ The home page (`/`) is a router into the journey, with three sections: just land
 This is the mental model the docs use. Every page should reinforce it, not contradict it:
 
 - **Chat** is the interface.
-- **Connectors** are the plugs into external apps.
+- **Apps & MCP** are the plugs into external apps. Every connection is an MCP connection: managed apps from the catalog, or custom servers by URL.
 - **Skills** are the capabilities Fluso reaches for when a request matches one (built-in or custom via `SKILL.md`).
 - **Tasks** is the unified to-do system, populated mostly automatically.
 - **Memory** is the knowledge graph that builds in the background.
@@ -37,17 +37,17 @@ Email, calendar, code, content, research are skills, not separate features. The 
 ## Terminology
 
 - **Fluso** — the product.
-- **Connectors** / **integrations** — the connections to third-party apps. Use interchangeably. "Connector" is what users see in **Settings → Connectors**.
+- **Apps** / **MCP connections** — the connections to third-party apps. There is no separate connector system; "Plugins" is the sidebar item, and connections live under **Plugins → MCP**. Don't introduce "connector" in new copy except where the app itself still says "connector tools" (the approvals settings).
 - **Knowledge graph** — Fluso's persistent memory. Lowercase.
 - **Skills** — specialised capabilities that activate automatically. Built-in or custom (`SKILL.md`).
 - **Projects** — workspaces that scope context, files, and tasks.
 
 ## Visual design
 
-- Theme: `mint` (Mintlify's cleanest variant).
+- Theme: Fumadocs neutral preset with the brand primary overridden in `app/global.css`.
 - Palette: deep purple primary (`#5B21B6`), `#7C3AED` light, `#3B0764` dark.
-- Logo: minimal text wordmark in `logo/{light,dark}.svg`. Favicon: `favicon.svg`.
-- `style.css` is intentionally near-empty. Resist the urge to add decorative CSS. If a page needs visual structure, reach for Mintlify components first.
+- Logo: minimal text wordmark in `public/logo/{light,dark}.svg`. Favicon: `public/favicon.svg`.
+- Custom CSS stays minimal. Resist the urge to add decorative CSS. If a page needs visual structure, reach for the components in `components/mintlify.tsx` first.
 - No hero images, gradient backgrounds, or template artifacts. Minimal is the brand.
 
 ## Voice and writing rules
@@ -68,10 +68,10 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 
 - Active voice, second person ("you").
 - Sentence case for headings.
-- Bold for UI elements: **Settings → Connectors**.
+- Bold for UI elements: **Plugins → MCP**.
 - Code formatting for file names, commands, paths, code references.
 - Sample user prompts in italicised blockquotes: `> *"Summarise my unread emails."*`.
-- Mintlify components (`<Card>`, `<CardGroup>`, `<Steps>`, `<Accordion>`, `<Note>`, `<Tip>`, `<Warning>`) over raw HTML.
+- Mintlify-style components (`<Card>`, `<CardGroup>`, `<Steps>`, `<Accordion>`, `<Note>`, `<Tip>`, `<Warning>`, from `components/mintlify.tsx`) over raw HTML.
 - Tables for comparison. Lists for sequences. Prose for stories.
 - No emojis in body text. Acceptable in tables (✅, —) where they reduce visual clutter.
 
@@ -83,7 +83,7 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 
 ## Publishing release notes
 
-Customer release notes live on `/release-notes` (`release-notes.mdx`) as a stack of Mintlify `<Update>` blocks, newest first. They are published through a workflow, not edited by hand.
+Customer release notes live on `/release-notes` (`content/docs/release-notes.mdx`) as a stack of `<Update>` blocks, newest first. They are published through a workflow, not edited by hand.
 
 The flow:
 

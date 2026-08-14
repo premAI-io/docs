@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "chat",
+    "approvals",
+    "mcp",
+    "imports",
+    "skills",
+    "tasks",
+    "memory",
+    "confidential",
+    "!connectors"
+  ]
+}
