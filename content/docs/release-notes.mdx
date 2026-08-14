@@ -6,7 +6,7 @@ description: "What's new in Fluso - product updates, improvements, and fixes."
 <Update label="2026-08-14" description="Fluso 1.5.0" tags={["Desktop", "iOS"]}>
 
 **Highlights**
-- Fluso asks before it reaches a new site or uses a tool you haven't approved, your answer sticks, and you can change any of it later in settings.
+- Fluso asks before it reaches a new site or uses a tool you haven't approved. Your answer sticks, and stays editable in settings.
 - Granular per-tool [permissions](https://docs.fluso.ai/features/approvals): let an agent read your inbox, but require your approval before it sends anything.
 - Fluso is now on the [iOS App Store](https://apps.apple.com/in/app/fluso/id6780937477).
 - Works end to end with any [MCP server](https://docs.fluso.ai/features/mcp): ours, hosted, or your own.
@@ -15,31 +15,79 @@ description: "What's new in Fluso - product updates, improvements, and fixes."
 - Move in and out of Confidential Mode whenever you want.
 
 **Permissions built for teams**
-Most organisations want agents doing real work and are wary of letting them loose on company systems. Fluso makes that a setting rather than a leap of faith. Every tool on every connection carries its own [allow, ask or deny](https://docs.fluso.ai/features/approvals), so an agent can read your Gmail freely while sending an email always stops for your approval, and the same split works across Slack, Drive, your trackers and anything else you connect. Network access follows the same rule: reaching a site nobody approved raises a card instead of happening quietly. Decisions are durable, survive reloads and restarts, and each one shows whether it came from your organisation or from you. Read-only tools can be auto-approved in one switch, and everything stays editable in settings whenever you change your mind. The first time it is live for your account, a short walkthrough shows how it works.
+
+- Most organisations want agents doing real work, and are wary of letting them loose on company systems.
+- Fluso makes that a setting rather than a leap of faith.
+- Every tool on every connection carries its own [allow, ask or deny](https://docs.fluso.ai/features/approvals).
+- An agent can read your Gmail freely, while sending an email always stops for your approval.
+- The same split works across Slack, Drive, your trackers and anything else you connect.
+- Network access follows the same rule. Reaching a site nobody approved raises a card instead of happening quietly.
+- Your decisions are durable, and survive reloads and restarts.
+- Each one shows whether it came from your organisation or from you.
+- Read-only tools can be auto-approved in one switch.
+- Everything stays editable in settings whenever you change your mind.
+- The first time it is live for your account, a short walkthrough shows how it works.
 
 **Any MCP, from anyone, anywhere, end to end**
-Every connected app now runs through [MCP](https://docs.fluso.ai/features/mcp): Gmail, Slack, Drive, the managed servers we host, any hosted server you already use, and anything you run yourself. They all connect the same way, and a server that needs an API key is authorised in the secure connection dialog instead of pasting a key into chat. Turns that use connected apps finish faster with fewer wasted tool calls, and a message that happens to say "thread" or "channel" is no longer mistaken for a Slack request. Web search is now called what it is.
+
+- Every connected app now runs through [MCP](https://docs.fluso.ai/features/mcp).
+- Gmail, Slack, Drive, the managed servers we host, any hosted server you already use, and anything you run yourself: they all connect the same way.
+- A server that needs an API key is authorised in the secure connection dialog, instead of pasting a key into chat.
+- Turns that use connected apps finish faster, with fewer wasted tool calls.
+- A message that happens to say "thread" or "channel" is no longer mistaken for a Slack request.
+- Web search is now called what it is.
 
 **Fluso on iPhone**
-Fluso is now on the [iOS App Store](https://apps.apple.com/in/app/fluso/id6780937477). Fluso is built to accumulate your context, your projects, your apps and the way you like work done, and until now all of it lived on the desktop, which does little for you when you are walking out of a meeting or sitting on a train. Now it travels with you: ask for something by voice while you walk, snap a photo of a whiteboard and send it straight in, check what is overdue between meetings, or pick a project thread back up where you left it. The full work log comes with you, so you can watch Fluso work through a task instead of waiting on a blank screen. Confidential Mode works on mobile too: turn it on from the desktop and your phone's requests run through the same encrypted path. Creating projects and switching Confidential Mode on are still desktop only, and connecting MCP servers from your phone is lined up for the next release. If something you reach for is not there, shake the phone and send a report. We read all of them.
+
+- Fluso is now on the [iOS App Store](https://apps.apple.com/in/app/fluso/id6780937477).
+- Fluso accumulates your context: your projects, your apps, and the way you like work done.
+- Until now all of that lived on the desktop, which does little for you when you are walking out of a meeting.
+- Ask for something by voice while you walk, or snap a photo of a whiteboard and send it straight in.
+- Check what is overdue between meetings, or pick a project thread back up where you left it.
+- The full work log comes with you, so you can watch Fluso work through a task instead of waiting on a blank screen.
+- Confidential Mode works on mobile too. Turn it on from the desktop and your phone's requests run through the same encrypted path.
+- Creating projects and switching Confidential Mode on are still desktop only, and connecting MCP servers from your phone is lined up for the next release.
+- If something you reach for is not there, shake the phone and send a report. We read all of them.
 
 **Kimi K3 is the default model**
-Chat now runs on Kimi K3. It holds its own against the best closed-source frontier models on the long, multi-step work people actually hand to an assistant, and it is fully open source, so the quality you get does not depend on a vendor's roadmap.
+
+- Chat now runs on Kimi K3.
+- It holds its own against the best closed-source frontier models on the long, multi-step work people actually hand to an assistant.
+- It is fully open source, so the quality you get does not depend on a vendor's roadmap.
 
 **Confidential Mode, on your terms**
-You can move in and out of [Confidential Mode](https://docs.fluso.ai/features/confidential) whenever you want. It used to be a one-way switch.
+
+- You can move in and out of [Confidential Mode](https://docs.fluso.ai/features/confidential) whenever you want. It used to be a one-way switch.
 
 **Share a chat**
-Turn any conversation into a public read-only link that opens without signing in. It shows the text only, with no tool activity, no reasoning and no file paths, and you can refresh or revoke it whenever you like.
+
+- Turn any conversation into a public read-only link that opens without signing in.
+- It shows the text only, with no tool activity, no reasoning and no file paths.
+- Refresh or revoke the link whenever you like.
 
 **Spreadsheets and files**
-Excel and CSV files render as real spreadsheets in the viewer, keeping cell colours, merged cells and column widths instead of flattening everything into plain text. HTML files open properly in your browser.
+
+- Excel and CSV files render as real spreadsheets in the viewer, with cell colours, merged cells and column widths kept.
+- HTML files open properly in your browser.
 
 **Steadier sessions**
-Each thread runs on its own, so a crashed session or a failed model call no longer freezes everything, and a failed turn cleans up and retries instead of hanging. After sleep or a network change the app reconnects itself rather than sitting on a dead connection, and it stops mistaking a lost connection for scheduled maintenance. You stay signed in through brief authentication hiccups, and a session now lasts 30 days of inactivity instead of 7.
+
+- Each thread runs on its own, so a crashed session or a failed model call no longer freezes everything.
+- A failed turn cleans up and retries instead of hanging.
+- After sleep or a network change the app reconnects itself, instead of sitting on a dead connection.
+- It stops mistaking a lost connection for scheduled maintenance.
+- You stay signed in through brief authentication hiccups.
+- A session now lasts 30 days of inactivity instead of 7.
 
 **Fixes and polish**
-Slash commands no longer break a chat. Steadier sidebar drag-and-drop, with chat-count previews on hover and cleaner keyboard focus and contrast. Task icons match their real source. The Projects page stops flickering when you have many projects, onboarding's Terms and Privacy links go where they should, and the app now uses your system font. Desktop now versions independently of the web app.
+
+- Slash commands no longer break a chat.
+- Steadier sidebar drag-and-drop, with chat-count previews on hover and cleaner keyboard focus and contrast.
+- Task icons match their real source.
+- The Projects page stops flickering when you have many projects.
+- Onboarding's Terms and Privacy links go where they should.
+- The app now uses your system font.
+- Desktop now versions independently of the web app.
 
 </Update>
 

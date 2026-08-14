@@ -65,3 +65,55 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+/* Release notes: each entry uses bold labels as its section headings. They are not
+   real headings on purpose - the page holds every release, so real headings would
+   put a hundred items in the table of contents. Give the labels the spacing and
+   weight a heading would have, so a section reads as heading + body, not one block. */
+.release-entry > p:has(> strong:only-child) {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-fd-foreground);
+}
+
+.release-entry > p:has(> strong:only-child) > strong {
+  font-weight: 600;
+}
+
+.release-entry > p:first-child:has(> strong:only-child) {
+  margin-top: 0;
+}
+
+/* A label followed by its list should not carry the full paragraph gap. */
+.release-entry > p:has(> strong:only-child) + ul,
+.release-entry > p:has(> strong:only-child) + ol {
+  margin-top: 0.25rem;
+}
+
+/* Release-note bullets carry a full point each, so they need room to breathe. */
+.release-entry li {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+/* The date badge and the version line link to their own entry. They are
+   navigation, not prose, so they carry no underline. */
+.release-anchor-link {
+  text-decoration: none;
+}
+
+/* The version alias (#v1.5.0) is a target only. It sits above the entry so the
+   sticky header does not cover the heading after the jump. */
+.release-anchor {
+  position: relative;
+}
+
+.release-anchor-alias {
+  position: absolute;
+  top: -6rem;
+  left: 0;
+  width: 0;
+  height: 0;
+}

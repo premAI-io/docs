@@ -134,7 +134,8 @@ jobs:
             HOUSE RULES FOR THIS ENTRY - these come from Bis's own edits to past entries, follow them over any generic instinct:
             - Punctuation: use hyphens, never em dashes. Straight quotes only.
             - Highlights are scannable one-liners that do NOT repeat the sections below. One capability per line. Never club two unrelated capabilities into a single line.
-            - Every section is a bold label plus one to four plain sentences. No bullet soup inside a section unless the items are genuinely parallel.
+            - Structure, non-negotiable: the bold label sits ALONE on its line, then a BLANK LINE, then the body. Markdown joins a label to the sentence directly beneath it, and the whole entry renders as one wall of text with no visible section breaks.
+            - Every section is a bold label, a blank line, then SHORT BULLETS - one point per bullet, one or two sentences each. This is what the older entries do and it is what Bis wants: the page has to breathe. A section written as a dense five-sentence paragraph gets rejected, however good the prose is.
             - Lead the biggest capability by answering the objection a buyer actually has, then generalise. Example that worked: teams are wary of letting agents loose on company systems, so show per-tool control with a concrete pair - an agent may read Gmail freely, sending an email always stops for approval.
             - Prefer a concrete example over an abstraction. Name the app, name the action.
             - When a behaviour is user-changeable, say where it lives ("you can change any of it later in settings").
