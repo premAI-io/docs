@@ -19,15 +19,11 @@ You ask Fluso to summarise your inbox, search for something specific, draft a re
 
 ## Setup
 
-Open **Customization → Connectors** and click **Connect** on the Gmail card. Sign in to Google with the account you want Fluso to assist with. The OAuth screen lists three permissions:
+Gmail comes in through the **Google Workspace** app, which also covers Calendar, Drive, Docs, Sheets, Slides, Meet, and Tasks in one sign-in.
 
-- **Read your messages** — for summaries, search, and task extraction.
-- **Send messages** — for reply drafts. Fluso never sends without your approval.
-- **Read headers** — for categorising messages by sender, label, and date.
+Open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **Google Workspace**. Sign in to Google with the account you want Fluso to assist with and approve the permissions on Google's own screen. Reading powers summaries, search, and task extraction; sending is for reply drafts, and Fluso never sends without your approval.
 
-Missing from the list: anything that lets Fluso delete mail or change account settings. There's no path to either, even if it wanted one.
-
-A click and a confirmation screen.
+A click and a confirmation screen. You can also just ask in chat — *"connect my Gmail"* — and approve the access card that appears.
 
 ## Prompts that work well
 
@@ -71,17 +67,17 @@ Header metadata is used for categorisation only and never shared with third part
 
 ## Disconnecting
 
-In **Customization → Connectors**, click **Disconnect** on the Gmail card. The token is deleted immediately and Fluso loses access.
+In **Plugins**, open the Google Workspace row's three-dot menu and click **Disconnect**. The token is deleted immediately and Fluso loses access.
 
 You can also revoke directly from [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
 
 ## Troubleshooting
 
   <Accordion title="Fluso isn't finding emails I know exist">
-    Verify Gmail still shows as **Connected** in Customization → Connectors. If it does, disconnect and reconnect. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes and try again.
+    Verify Google Workspace still shows as **Connected** in Plugins. If it does, reconnect from the row's menu. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes and try again.
   </Accordion>
   <Accordion title="The connection says it's broken">
-    OAuth tokens occasionally expire. In Customization → Connectors, click **Reconnect**. Refresh the page once it's done.
+    OAuth tokens occasionally expire. In **Plugins**, open the row's three-dot menu and click **Reconnect**.
   </Accordion>
   <Accordion title="Auto-tasks haven't appeared yet">
     Auto-task extraction runs periodically and learns the shape of your inbox over a couple of days. You can also force a sweep with *"Scan my inbox for tasks."*

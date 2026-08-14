@@ -1,114 +1,15 @@
 ---
 title: Connectors
 sidebarTitle: Connectors
-description: How Fluso plugs into the apps your work already lives in. What a connector does, how the connection is made, and what happens once it is.
+description: Connectors have been replaced by MCP connections. Everything now connects through the Plugins page.
 ---
 
-Connectors link Fluso to the apps where your work already lives, so it can read what is there and act through them when you ask. Each connector is one app: Gmail, Calendar, Slack, GitHub, Linear, Notion, and over a hundred more.
+Connectors no longer exist as a separate system. Every app connection in Fluso is now an MCP connection: the same one-click sign-in, managed through **Plugins** in the sidebar, with per-tool permissions on top.
 
-Without connectors, Fluso is a smart blank page. With them, it can answer a question grounded in your actual inbox, draft a reply that knows what the meeting on Tuesday is about, and open a PR against the right repo.
+What you used to do here:
 
-## How it works
+- **Connect Gmail, Slack, GitHub, and other apps** — now the **Apps** tab of the Add MCP dialog. Same one-click sign-in on the app's own page. See [Apps and MCP servers](/features/mcp).
+- **Per-app setup guides** — unchanged: [Gmail](/integrations/gmail), [Google Calendar](/integrations/google-calendar), [Slack](/integrations/slack), [GitHub](/integrations/github).
+- **Disconnect an app** — the connection row's menu on the Plugins page.
 
-A connector is a saved authorisation. When you connect an app, you sign in on that app's own login screen, approve the permissions Fluso asks for, and the app hands back a token. Fluso stores the token encrypted and uses it from then on whenever a request needs that app.
-
-You sign in once. The token persists across sessions. You do not paste API keys, you do not configure callback URLs, you do not share passwords.
-
-## Where to find them
-
-<Frame>
-  <img src="/images/features/connectors/connectors-page.png" alt="Fluso Connectors page showing the Connected section (Exa, GitHub, Google Super, Slack) with green ticks, and the Available section starting with Airtable, Apaleo, Asana, and Attio." />
-</Frame>
-
-Open **Customization** in the left sidebar, then the **Connectors** tab. You see two sections.
-
-**Connected.** Everything Fluso currently has access to. A green tick sits next to each one.
-
-**Available.** Everything you can add. Each row has a **+** button.
-
-Use the search bar at the top to jump to an app by name.
-
-## Connecting an app
-
-Click the **+** on any row in **Available**. A small browser window opens with the app's own login and permission screen. Sign in, review what Fluso is asking for, and approve.
-
-The window closes by itself. The app moves up into **Connected** with a green tick. Fluso can use it from the next message onward.
-
-<Note>
-  **Video —** Short loop (5–8s): click **+** on an Available row, OAuth popup opens on the app's own domain, approve permissions, popup closes by itself, the row moves up into **Connected** with a green tick.
-</Note>
-
-You grant permissions at this step. Fluso never asks for more than it needs. If an app supports per-scope choices, like per-repo for GitHub, per-channel for Slack, or per-calendar for Google, the app's screen is where you pick.
-
-## Disconnecting an app
-
-Click the green tick on a connected row. A small dialog asks you to confirm. Click **Disconnect**.
-
-<Frame>
-  <img src="/images/features/connectors/disconnect-modal.png" alt="Disconnect Exa confirmation modal: 'Fluso will lose access to this app on the next message. You can reconnect anytime from this page.' with Cancel and Disconnect buttons." />
-</Frame>
-
-Fluso loses access to the app from the next message onward, and the row drops back into **Available**. You can reconnect anytime from the same page.
-
-## What changes after you connect
-
-Reads happen freely. Writes wait for your approval. That pattern holds across every app.
-
-Once connected, Fluso can search, summarise, and pull context from the app whenever a chat needs it. It can also draft writes for you. Emails, Slack messages, calendar invites, pull requests. Every draft is shown for review before it goes. There is no auto-send mode.
-
-## A handful that carry most days
-
-Gmail, Calendar, and Drive activate together as one Google connector. Slack and GitHub each get their own.
-
-<CardGroup cols={2}>
-  <Card title="Gmail" icon="mail" href="/integrations/gmail">
-    Triage, summaries, search, drafts, auto-task extraction. Connect this first.
-  </Card>
-  <Card title="Google Calendar" icon="calendar" href="/integrations/google-calendar">
-    Find time, schedule meetings, prep with full context.
-  </Card>
-  <Card title="Slack" icon="message-square" href="/integrations/slack">
-    Catch up on channels, search team history, post updates with approval.
-  </Card>
-  <Card title="GitHub" icon="github" href="/integrations/github">
-    Codebase Q&A, PR review, scaffolding, bug fixes, issue management.
-  </Card>
-</CardGroup>
-
-## The wider catalog
-
-Over a hundred apps are available out of the box, including:
-
-- **Google services.** Gmail, Calendar, and Drive bundled into one connector.
-- **Team chat.** Slack, Microsoft Teams, Discord.
-- **Code.** GitHub, GitLab, Bitbucket.
-- **Project and CRM.** Linear, Jira, Asana, ClickUp, Attio, HubSpot, Salesforce, Capsule CRM.
-- **Docs and storage.** Notion, Confluence, Dropbox, OneDrive, Box.
-- **Design.** Figma, Canva.
-- **Payments and finance.** Stripe, QuickBooks, Xero.
-- **Search.** Exa.
-
-If something you need is not in **Available**, email [support@premai.io](mailto:support@premai.io). The catalog grows based on what people ask for.
-
-## Things to know
-
-- **Permissions are set at sign-in.** Change scope by reconnecting, or in the source app's own settings.
-- **Tokens are encrypted.** Stored in a dedicated secrets manager. Never in logs, never in plain text.
-- **Disconnect anytime.** Click the tick, confirm, and Fluso loses access from the next message. Reconnect from the same page when you need it back.
-- **Your tokens are yours alone.** On Team plans, admins manage seats but cannot read your messages or files.
-
-For the deeper picture, see [Security](/resources/security) and [Privacy](/resources/privacy).
-
-## A reasonable order
-
-**Google first.** Most work happens across email and calendar, and one approval gives Fluso Gmail, Calendar, and Drive together. This is the fastest path to a useful assistant.
-
-**Slack** if your team coordinates there. If most coordination happens in email, skipping Slack costs nothing.
-
-**GitHub** if you write code. The features are good. They are also irrelevant if you do not.
-
-**Everything else** as the need comes up. Connect when you reach for an app, not pre-emptively.
-
-## Next
-
-Per-app setup and prompts: [Gmail](/integrations/gmail), [Google Calendar](/integrations/google-calendar), [Slack](/integrations/slack), [GitHub](/integrations/github).
+Head to [Apps and MCP servers](/features/mcp) for the full picture.

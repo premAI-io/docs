@@ -12,14 +12,9 @@ Calendar enables several skills that activate automatically — see [Skills](/fe
 
 ## Setup
 
-Open **Customization → Connectors** and click **Connect** on the Google Calendar card. The Google OAuth flow opens. If you already authorised Gmail with the same account, this is even shorter.
+Calendar comes in through the **Google Workspace** app — the same connection that covers Gmail, Drive, Docs, and the rest of the suite. If you already connected it for Gmail, Calendar is on and there is nothing to do here.
 
-Permissions:
-
-- **Read events** — to see your schedule and check availability.
-- **Create and modify events** — to schedule meetings on your behalf.
-
-Without write access the morning brief still works, but scheduling from chat doesn't.
+Otherwise: open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **Google Workspace**. Sign in with the Google account whose calendar you want Fluso to run, and approve the permissions on Google's screen. Reading is what shows your schedule and availability; write access is what lets Fluso create and modify events when you ask.
 
 ## Prompts that work well
 
@@ -55,7 +50,7 @@ Prep:
 
 ## Disconnecting
 
-In **Customization → Connectors**, click **Disconnect** on the Google Calendar card. Tokens are deleted immediately.
+In **Plugins**, open the Google Workspace row's three-dot menu and click **Disconnect**. Tokens are deleted immediately. Note this disconnects the whole Google Workspace connection, Gmail included.
 
 You can also revoke from [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions).
 
@@ -68,7 +63,7 @@ You can also revoke from [Google Account → Security → Third-party apps](http
     Confirm your timezone in Fluso settings matches your Google Calendar timezone. Mismatches shift event times.
   </Accordion>
   <Accordion title="Can't create events">
-    Verify the **Create and modify events** permission is granted. Reconnect if the original prompt only asked for read access.
+    Verify write access was granted on Google's permission screen. Reconnect from the row's menu in **Plugins** if the original sign-in only granted read access.
   </Accordion>
 
 ## See also
