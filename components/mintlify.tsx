@@ -231,23 +231,44 @@ export function Update({
   tags?: string[];
   children: ReactNode;
 }) {
+  // Every entry is linkable two ways: by its date (#2026-08-14) and by its
+  // version (#v1.5.0). The date badge and the version line are the links, so a
+  // reader can copy the address of one release instead of the whole page.
+  const version = description?.match(/\d+\.\d+(\.\d+)?/)?.[0];
+  const versionAnchor = version ? `v${version}` : undefined;
+
   return (
     <div
       id={label}
-      className="my-8 scroll-mt-24 flex flex-col gap-4 border-b pb-8 last:border-b-0 md:flex-row md:gap-8"
+      className="release-anchor my-8 scroll-mt-24 flex flex-col gap-4 border-b pb-8 last:border-b-0 md:flex-row md:gap-8"
     >
+      {versionAnchor ? (
+        <span id={versionAnchor} className="release-anchor-alias" aria-hidden="true" />
+      ) : null}
       <div className="shrink-0 md:w-40">
         <div className="flex flex-col items-start gap-2 md:sticky md:top-24">
-          <span className="rounded-lg bg-fd-primary/10 px-2.5 py-1 text-sm font-medium text-fd-primary">
+          <a
+            href={`#${label}`}
+            className="release-anchor-link rounded-lg bg-fd-primary/10 px-2.5 py-1 text-sm font-medium text-fd-primary hover:bg-fd-primary/20"
+          >
             {label}
-          </span>
+          </a>
           {tags?.map((tag) => (
             <p key={tag} className="text-sm font-medium text-fd-foreground">
               {tag}
             </p>
           ))}
           {description ? (
-            <p className="text-sm text-fd-muted-foreground">{description}</p>
+            versionAnchor ? (
+              <a
+                href={`#${versionAnchor}`}
+                className="release-anchor-link text-sm text-fd-muted-foreground hover:text-fd-foreground"
+              >
+                {description}
+              </a>
+            ) : (
+              <p className="text-sm text-fd-muted-foreground">{description}</p>
+            )
           ) : null}
         </div>
       </div>

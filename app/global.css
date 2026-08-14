@@ -97,3 +97,23 @@ html > body[data-scroll-locked] {
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
 }
+
+/* The date badge and the version line link to their own entry. They are
+   navigation, not prose, so they carry no underline. */
+.release-anchor-link {
+  text-decoration: none;
+}
+
+/* The version alias (#v1.5.0) is a target only. It sits above the entry so the
+   sticky header does not cover the heading after the jump. */
+.release-anchor {
+  position: relative;
+}
+
+.release-anchor-alias {
+  position: absolute;
+  top: -6rem;
+  left: 0;
+  width: 0;
+  height: 0;
+}
