@@ -232,7 +232,10 @@ export function Update({
   children: ReactNode;
 }) {
   return (
-    <div className="my-8 flex flex-col gap-4 border-b pb-8 last:border-b-0 md:flex-row md:gap-8">
+    <div
+      id={label}
+      className="my-8 scroll-mt-24 flex flex-col gap-4 border-b pb-8 last:border-b-0 md:flex-row md:gap-8"
+    >
       <div className="shrink-0 md:w-40">
         <div className="flex flex-col items-start gap-2 md:sticky md:top-24">
           <span className="rounded-lg bg-fd-primary/10 px-2.5 py-1 text-sm font-medium text-fd-primary">
@@ -248,7 +251,7 @@ export function Update({
           ) : null}
         </div>
       </div>
-      <div className="min-w-0 grow">{children}</div>
+      <div className="release-entry min-w-0 grow">{children}</div>
     </div>
   );
 }

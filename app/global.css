@@ -65,3 +65,29 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+/* Release notes: each entry uses bold labels as its section headings. They are not
+   real headings on purpose - the page holds every release, so real headings would
+   put a hundred items in the table of contents. Give the labels the spacing and
+   weight a heading would have, so a section reads as heading + body, not one block. */
+.release-entry > p:has(> strong:only-child) {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-fd-foreground);
+}
+
+.release-entry > p:has(> strong:only-child) > strong {
+  font-weight: 600;
+}
+
+.release-entry > p:first-child:has(> strong:only-child) {
+  margin-top: 0;
+}
+
+/* A label followed by its list should not carry the full paragraph gap. */
+.release-entry > p:has(> strong:only-child) + ul,
+.release-entry > p:has(> strong:only-child) + ol {
+  margin-top: 0.25rem;
+}
