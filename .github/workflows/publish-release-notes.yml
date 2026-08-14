@@ -101,7 +101,7 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           show_full_output: true
-          claude_args: "--model claude-opus-4-8 --effort max --allowedTools Bash,Read,Write,Edit,Glob,Grep"
+          claude_args: "--model claude-opus-5 --effort max --allowedTools Bash,Read,Write,Edit,Glob,Grep"
           prompt: |
             You are running in CI (GitHub Actions) inside the premAI-io/docs repository — the Fumadocs site published at docs.fluso.ai.
 
@@ -129,6 +129,24 @@ jobs:
             2. Create or update `content/docs/release-notes.mdx` per the playbook's output contract: prepend ONE new `<Update>` block (newest first). Use the latest source release's `published` date as the `label` (YYYY-MM-DD) and the desktop version as the `description`${{ inputs.version_label && format(' (use exactly "{0}")', inputs.version_label) || '' }}. RSS-safe: bold subsection labels, never `##` headings inside the block.
             3. Order content by the theme taxonomy, Highlights first; include only themes that have content; one benefit-led line per bullet; strip every PR number, commit SHA, @handle, file path, and internal mechanism; omit reverts and compliance-claim walkbacks.
             4. The page is already registered in the sidebar via `content/docs/meta.json` — do not edit navigation unless the "release-notes" entry is missing.
+
+            HOUSE RULES FOR THIS ENTRY - these come from Bis's own edits to past entries, follow them over any generic instinct:
+            - Punctuation: use hyphens, never em dashes. Straight quotes only.
+            - Highlights are scannable one-liners that do NOT repeat the sections below. One capability per line. Never club two unrelated capabilities into a single line.
+            - Every section is a bold label plus one to four plain sentences. No bullet soup inside a section unless the items are genuinely parallel.
+            - Lead the biggest capability by answering the objection a buyer actually has, then generalise. Example that worked: teams are wary of letting agents loose on company systems, so show per-tool control with a concrete pair - an agent may read Gmail freely, sending an email always stops for approval.
+            - Prefer a concrete example over an abstraction. Name the app, name the action.
+            - When a behaviour is user-changeable, say where it lives ("you can change any of it later in settings").
+            - Model changes: never write "a new default model". Name the model, say it becomes the default, and position it on quality and, where true, on being open source.
+            - When a mobile or desktop app ships in the window, give it its own section and put the store link inline, in the Highlights line and again in the section.
+            - Omit licensee-only or customer-specific integrations unless the operator asks for them.
+            - If a change has no user-visible symptom you can describe honestly, drop it. Never invent a benefit to justify including internal work.
+
+            COMPLETENESS AUDIT - do this before you write the summary:
+            - Build the list of every pull request in the window from the source bodies, then check your entry against it item by item.
+            - Read every commit subject, not only the ones with conventional-commit prefixes; real features hide behind subjects like "FLU-336 - Public read-only chat sharing".
+            - If a change was reverted inside the same window, exclude both the change and the revert.
+            - In your closing summary, name every item you deliberately left out and why. An omission you cannot justify is a bug.
 
             CONSTRAINTS:
             - Do NOT run git, commit, push, or open a PR. Leave the edited files in the working tree; the workflow handles git.
