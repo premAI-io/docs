@@ -3,43 +3,6 @@ title: "Release notes"
 description: "What's new in Fluso — product updates, improvements, and fixes."
 ---
 
-<Update label="2026-08-14" description="v1.5.0" tags={["Desktop"]}>
-
-**Highlights**
-- Approve what the assistant can reach and run. Network and tool approvals are durable decisions now, and they show whether a rule comes from you or your organization.
-- One connection path for every app: Gmail, Slack, Drive, and any MCP server you add connect the same way.
-- Confidential mode is reversible now. If your account is eligible, you can switch back to standard inference.
-- Share a chat as a public, read-only link that anyone can open without signing in.
-- Waking your laptop or switching networks no longer signs you out or shows a false maintenance page.
-
-**Polish & experience**
-- Excel and CSV files render as real spreadsheets in the file viewer. Cell colors, merged cells, and column widths are kept instead of a flattened, truncated table.
-- Share any chat as a public, read-only link. Publish a snapshot, copy the link, and refresh or revoke it whenever you want. The snapshot keeps only visible text, so tool activity, reasoning, and file paths never appear.
-- A steadier sidebar: drag-and-drop no longer jumps on same-folder drops, folders show real chat-count previews on hover, and focus rings and label contrast got a cleanup pass.
-- The app now uses your operating system's font.
-- Tasks the assistant creates no longer show a Slack icon, onboarding's Terms and Privacy links work, and the Projects page no longer flickers when you have many projects.
-
-**Connectors & sync**
-- Every connected app connects the same way now: Gmail, Slack, Drive, and any MCP server you add. A server that needs an API key is authorized through a secure dialog, so the key never goes into chat.
-- Connector-heavy turns finish faster and use fewer tokens.
-- A message that mentions words like "thread" or "channel" is no longer mistaken for a Slack request.
-
-**Assistant reliability**
-- Waking your laptop or switching networks no longer shows a false maintenance page, leaves the assistant unable to start, or signs you out.
-- Sessions now last up to 30 days of inactivity instead of a hard 7-day cutoff.
-- A crashed session, a failed model call, or a slow background pass no longer freezes a whole thread. A stuck thread recovers on its own.
-
-**Smarter assistant**
-- Fluso's default model is now Kimi K3, which handles long, multi-step tasks more reliably.
-- Drafts the assistant writes for you — email, Slack, documents — read less like AI wrote them. You still approve every message before it sends.
-
-**Reliability, privacy & trust**
-- Network and tool approvals are durable decisions now. Allow or deny something once and your choice survives a reload, and the settings show whether a rule comes from you or from your organization.
-- Every MCP connection has per-tool Allow, Ask, and Deny controls, plus a switch to auto-approve read-only tools. The first time approvals are live for your account, a short walkthrough explains them.
-- Confidential mode is reversible: if your account is eligible, you can switch back to standard inference. Before you switch, the app reminds you that context you've already built may run on the standard, non-confidential path.
-
-</Update>
-
 <Update label="2026-07-23" description="v1.4.0" tags={["Desktop"]}>
 
 **Highlights**
