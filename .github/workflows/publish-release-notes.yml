@@ -140,6 +140,7 @@ jobs:
             - When a behaviour is user-changeable, say where it lives ("you can change any of it later in settings").
             - Model changes: never write "a new default model". Name the model, say it becomes the default, and position it on quality and, where true, on being open source.
             - When a mobile or desktop app ships in the window, give it its own section and put the store link inline, in the Highlights line and again in the section.
+            - Link to the docs. Before writing, list `content/docs/**/*.mdx` in this repo. If a feature in the entry has a page, link it inline on a natural noun phrase, once in its Highlights line and once in its section body, as an absolute `https://docs.fluso.ai/<slug>` URL (the slug is the path under `content/docs/`, without the extension). Never link a page that does not exist, and never invent an anchor.
             - Omit licensee-only or customer-specific integrations unless the operator asks for them.
             - If a change has no user-visible symptom you can describe honestly, drop it. Never invent a benefit to justify including internal work.
 
