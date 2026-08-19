@@ -6,11 +6,11 @@ description: "What's new in Fluso - product updates, improvements, and fixes."
 <Update label="2026-08-14" description="Fluso 1.5.0" tags={["Desktop", "iOS"]}>
 
 **Highlights**
-- Fluso asks before it reaches a new site or uses a tool you haven't approved. Your answer sticks, and stays editable in settings.
+- Fluso asks before it uses a tool you haven't approved. Your answer sticks, and stays editable in settings.
 - Granular per-tool [permissions](https://docs.fluso.ai/features/approvals): let an agent read your inbox, but require your approval before it sends anything.
 - Fluso is now on the [iOS App Store](https://apps.apple.com/in/app/fluso/id6780937477).
 - Works end to end with any [MCP server](https://docs.fluso.ai/features/mcp): ours, hosted, or your own.
-- Kimi K3 becomes the default model.
+- Kimi K3 becomes the default model in standard chats, and Confidential Mode runs DeepSeek V4 Flash on the encrypted path.
 - Share a chat as a public read-only link.
 - Move in and out of Confidential Mode whenever you want.
 
@@ -21,12 +21,10 @@ description: "What's new in Fluso - product updates, improvements, and fixes."
 - Every tool on every connection carries its own [allow, ask or deny](https://docs.fluso.ai/features/approvals).
 - An agent can read your Gmail freely, while sending an email always stops for your approval.
 - The same split works across Slack, Drive, your trackers and anything else you connect.
-- Network access follows the same rule. Reaching a site nobody approved raises a card instead of happening quietly.
 - Your decisions are durable, and survive reloads and restarts.
 - Each one shows whether it came from your organisation or from you.
 - Read-only tools can be auto-approved in one switch.
 - Everything stays editable in settings whenever you change your mind.
-- The first time it is live for your account, a short walkthrough shows how it works.
 
 **Any MCP, from anyone, anywhere, end to end**
 
@@ -51,9 +49,10 @@ description: "What's new in Fluso - product updates, improvements, and fixes."
 
 **Kimi K3 is the default model**
 
-- Chat now runs on Kimi K3.
+- Chat now runs on Kimi K3 for standard, non-confidential work.
 - It holds its own against the best closed-source frontier models on the long, multi-step work people actually hand to an assistant.
 - It is fully open source, so the quality you get does not depend on a vendor's roadmap.
+- Confidential Mode runs its own model on the encrypted path: every confidential request goes through DeepSeek V4 Flash.
 
 **Confidential Mode, on your terms**
 
