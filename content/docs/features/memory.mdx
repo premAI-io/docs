@@ -10,9 +10,7 @@ Durable memory follows a stricter rule than you might expect: it saves stable th
 
 ## Three layers
 
-<Note>
-  **Diagram —** Three layers shown with their scope: **Global preferences** (widest reach), **Project context** (durable, scoped to one project), and **Project working memory** (recent activity, also project-scoped). Visual should make clear that project material does not leak into other projects.
-</Note>
+<MemoryScopeDiagram />
 
 **Global preferences.** User-level things that should apply everywhere. Your timezone, the response style you have asked for, workflow choices, standing instructions like *"always show me drafts in plain text"*. These live in `preferences.md` in your workspace, where you can read them.
 
