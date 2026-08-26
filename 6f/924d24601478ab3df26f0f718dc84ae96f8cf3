@@ -1,0 +1,35 @@
+content/docs/going-deeper.mdx
+  s_3a6bd82e3c3e81::t_e8c6f10f73b00f 76-77
+components/provider.tsx
+  s_3a6bd82e3c3e81::t_f09141eb8e3a09 7-14
+components/mintlify.tsx
+  s_3a6bd82e3c3e81::t_f09141eb8e3a09 18-30
+components/diagrams.tsx
+  s_3a6bd82e3c3e81::t_e8c6f10f73b00f 1-204
+components/mdx.tsx
+  s_3a6bd82e3c3e81::t_e8c6f10f73b00f 3,9
+lib/source.ts
+  s_3a6bd82e3c3e81::t_f09141eb8e3a09 5-6,26-36
+content/docs/release-notes.mdx
+  s_3a6bd82e3c3e81::t_f09141eb8e3a09 3
+lib/layout.shared.tsx
+  s_3a6bd82e3c3e81::t_adc5a7fd78151a 4-30,60-83
+content/docs/features/memory.mdx
+  s_3a6bd82e3c3e81::t_e8c6f10f73b00f 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "6f924d24601478ab3df26f0f718dc84ae96f8cf3",
+  "prompts": {},
+  "sessions": {
+    "s_3a6bd82e3c3e81": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03e59-70a6-78f2-8bbe-69fc2b03147c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "charitra-prem <charitra@premai.io>"
+    }
+  }
+}
