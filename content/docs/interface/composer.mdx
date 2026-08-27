@@ -1,0 +1,259 @@
+---
+title: Composer
+sidebarTitle: Composer
+description: The box you type in. Attachments, the @ menu, prompt history, reasoning modes and permissions.
+---
+
+The composer is the box you type in. Almost everything below is one keystroke, and most of it is invisible until you know it is there.
+
+If you only learn two, learn `@` and `↑`.
+
+## Getting files in
+
+Three ways, and you never have to aim:
+
+- **Drag** a file onto the chat. Anywhere on it, not a small target.
+- **Click the `+`** to the left of the input and pick from disk.
+
+Each chip carries the icon of its own format, so a spreadsheet, a PDF and a screenshot are told apart without reading the names.
+
+When attachments outgrow the row they collapse into a **N more** pill. Hover it to peek at the full list, click to keep the list open, and the bin icon there clears every attachment at once.
+- **Paste.** Images, screenshots, and documents go straight into the composer.
+
+In the desktop app, `⌘⇧2` (`Ctrl+Shift+2` on Windows) grabs a region of the screen straight into the composer, so you never touch a Downloads folder.
+
+### Letting Fluso capture the screen
+
+macOS guards screen capture, and the first `⌘⇧2` is spent asking rather than capturing. What happens, in order:
+
+<Steps>
+<Step title="Press the shortcut once">
+macOS puts up its own dialog naming Fluso. This is the only moment it offers the permission by itself.
+</Step>
+<Step title="Allow it">
+Either from that dialog, or by opening **System Settings → Privacy & Security → Screen Recording** and switching Fluso on. Fluso is in that list from the moment it first asked, so there is nothing to add by hand.
+</Step>
+<Step title="Reopen Fluso">
+This step is not optional and it is the one people miss. macOS decides what an app may record when the app starts, so a permission granted to a running Fluso reaches it only after a restart. macOS offers to do it for you, in a dialog with a **Quit & Reopen** button; take it. Choosing **Later** leaves the permission granted and the shortcut still dead until you restart yourself.
+</Step>
+</Steps>
+
+From then on `⌘⇧2` draws the crosshair straight away.
+
+<Accordion title="Watch the whole thing, once">
+  <Frame>
+    <video
+      className="w-full rounded-xl"
+      controls
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      aria-label="Choosing Take screenshot brings up the macOS dialog asking whether Fluso may record the screen. Opening System Settings from it needs the Mac unlocked, then Fluso is switched on in the Screen and System Audio Recording list. macOS follows with a Quit and Reopen prompt, and a second request about bypassing the private window picker."
+      src="/images/interface/composer/screen-permission.mp4"
+    ></video>
+  </Frame>
+</Accordion>
+
+<Note>
+  macOS 15 and later ask a **second** question the first time you capture, about bypassing the system window picker to reach the screen directly. Every capture tool gets it, and it returns about once a month. **Allow For One Month** is the answer that keeps the shortcut working.
+</Note>
+
+If a press does nothing at all and no dialog appears, the shortcut is being taken by another app before Fluso sees it. Type `@` and use **Take screenshot** instead, or give the shortcut away in that other app.
+
+And a fourth, for files that are already here. Drag a file out of the conversation above, or out of the files panel, and drop it back on the composer to use it again in the next message. Nothing uploads a second time: the file is already on the server, so only its address travels, and the chip arrives ready. The composer's border traces itself while such a drag is in flight, which is how you know it is the target.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Files of every kind gather in the composer as chips, each with the icon of its own format, and the overflow folds into a plus-N pill. The at-menu shows the same files listed under this chat, and the Recent files row opens into a strip of thumbnails to pick from."
+    src="/images/interface/composer/attaching-files.mp4"
+  ></video>
+</Frame>
+
+<Tip>
+  Paste more than about 6,000 characters and Fluso turns it into a `.txt` attachment instead of flooding the input. A log or a spec stays readable, and the token cost stops repeating on every turn. If you wanted the text inline after all, the toast has an **Undo**.
+</Tip>
+
+## The @ menu
+
+Type `@` and the composer offers what it can reach: files from this conversation, files in the project, and prompts you saved. Attaching a file this way reuses the copy already on the server, so nothing uploads twice.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Typing the at sign opens a sectioned popup with the project files listed under upload, screenshot and recent files. Typing files after it shows the whole project, chat narrows to the files already used in this conversation, a file extension filters by format, and plain letters search by name."
+    src="/images/interface/composer/at-menu.mp4"
+  ></video>
+</Frame>
+
+| Type | You get |
+| --- | --- |
+| `@` | everything in reach, by section |
+| `@files` | every file in the current project |
+| `@chat` | files already used in this conversation |
+| `@prompts` | prompts you saved |
+
+Search works two ways. Type part of a name (`@quarterly`), or type a format (`@pdf`, `@xlsx`, `@png`) to filter by file type.
+
+Two actions live in the menu itself, so an empty project is not a dead end: **Upload from computer** opens the file picker, and **Save prompt** stores whatever is currently in the composer.
+
+The whole menu is keyboard-only if you want it: `↑` `↓` to move, `PgUp` `PgDn` to jump, `Enter` or `Tab` to accept, `→` to reach a row's delete control, `Esc` to close without losing your caret.
+
+### Saved prompts
+
+A prompt you write twice is a prompt worth keeping. `⌘⇧S` files the current draft straight into the library without opening anything; the same thing sits in the `@` menu as **Save prompt** when you would rather see it happen. Either way it joins the **Prompts** section, and selecting it inserts the text, so you can edit before sending.
+
+`⇧` is not decoration there. Plain `⌘S` is the save every other site trains you to press, so it stays out of the way.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="A draft is written in the composer and saved, and a Prompt saved confirmation slides in. Typing at prompts brings up the library with it listed among the others, each row carrying a delete control, and picking one drops its text back into the composer."
+    src="/images/interface/composer/saved-prompts.mp4"
+  ></video>
+</Frame>
+
+<Note>
+  Saved prompts live in the browser profile you saved them from. They do not follow you to another machine yet.
+</Note>
+
+### Recent files
+
+The `@` menu carries a **Recent files** row that starts folded away. Press `⏎` on it and the files you have attached lately appear as a strip you can pick from, without knowing where any of them live. It stays open until you fold it back.
+
+## Bringing back what you already sent
+
+Press `↑` in an empty composer and your last message comes back. Keep pressing to walk further back. A counter above the input tells you where you are and when that message was sent.
+
+Attachments come back with the text. If a file has since been deleted, its chip says so instead of failing silently.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="The up arrow fills the empty composer with the last prompt sent, and a counter beneath it reads which one of how many, with the date and time it was sent. Pressing again steps further back through them."
+    src="/images/interface/composer/prompt-history.mp4"
+  ></video>
+</Frame>
+
+
+`↓` walks back towards the present, and the last step returns the draft you were half-way through writing. `Esc` leaves history where it is.
+
+History keeps the last 50 prompts per thread for three days, and goes away when the chat does. The first message of a chat you have only just started counts too, so `↑` works before there is any history to speak of.
+
+## While Fluso is working
+
+The composer stays live during a run. Press `Enter` and the message joins a queue above it rather than waiting on your patience. Rows can be edited in place (`Enter` saves, `Esc` cancels), sent immediately, or dropped.
+
+See [Chat](/features/chat) for how the queue behaves across reloads, stops, and failures.
+
+## How hard Fluso thinks
+
+The mode button on the composer toolbar sets reasoning effort for the current chat. `⌘\` (`Ctrl+\`) cycles it without leaving the keyboard.
+
+| Mode | Use it for |
+| --- | --- |
+| **Quick** | straightforward questions and small edits |
+| **Deep** | complex tasks, reviews, planning |
+| **Max** | the hardest problems, when you would rather wait |
+
+The choice belongs to the chat, not the app, so a quick lookup and a long refactor can sit side by side in your sidebar at different settings. In [confidential mode](/features/confidential) the reasoning level is fixed, so Max is not offered there.
+
+## What Fluso may do on its own
+
+Beside the mode button, one control sets how much Fluso does before checking with you. `⌘⇧\` steps through the three levels.
+
+| Level | Behaviour |
+| --- | --- |
+| **Ask me first** | asks before reaching the web and before any connected app |
+| **Allow web** | searches the web on its own, still asks before connected apps |
+| **Allow everything** | acts without asking |
+
+Your choice sticks as the default for new chats. [Approvals and permissions](/features/approvals) covers the approval cards, saved tool rules, and what an organization policy can override.
+
+## Dictating
+
+`⌘D` starts and stops dictation, mid-sentence if you like. Voice notes play back with a real waveform, a scrub bar, and a timecode, so you can check what was captured before sending.
+
+## Looking at what you attached
+
+Click a file chip and it opens in a preview panel on the right. Images, PDFs, Word documents, spreadsheets, audio, and video all open full screen, and `Esc` closes it.
+
+Spreadsheets open as a grid, not a screenshot of one: search across cells, switch sheets by tab, drag column edges to widen them.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="A PDF is picked from the recent files strip and attached, then opened from its chip into a preview panel beside the conversation. The panel carries page thumbnails down one side, a page counter, zoom, and controls to download or print, with the chat still in view."
+    src="/images/interface/composer/file-preview.mp4"
+  ></video>
+</Frame>
+
+In the desktop app, a preview can reveal the original file in Finder or Explorer.
+
+## Finding the shortcuts
+
+An empty composer rotates through short hints. Every one of them maps to something that actually works.
+
+Hold `⌘` and each toolbar control labels itself with its own shortcut. Hold it, rather than tap it: there is a short dwell before the labels appear, so every ordinary `⌘`-something you press does not flash the whole interface at you.
+
+`⌘I` opens the full map: composer, `@` menu, queue, files, editor, sidebar, mouse gestures, and the single-key commands inside every menu.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="An empty composer types out one hint after another, each naming something it can do. Holding the modifier key then labels the controls around it with their own shortcuts, in the composer and across the rest of the window."
+    src="/images/interface/composer/hints-and-shortcuts.mp4"
+  ></video>
+</Frame>
+
+## Keyboard reference
+
+| Key | Does |
+| --- | --- |
+| `Enter` | send, or queue while a run is active |
+| `⇧ Enter` | new line |
+| `↑` / `↓` | walk prompt history, then back to your draft |
+| `@` | open the context menu |
+| `⌘\` | cycle Quick, Deep, Max |
+| `⌘⇧\` | cycle what Fluso may do alone |
+| `⌘D` | start or stop dictation |
+| `⌘⇧2` | screenshot into the composer (desktop app) |
+| `⌘S` | save the file you are editing |
+| `Esc` | leave history, close the `@` menu, or jump to the sidebar |
+| `⌘⇧S` | save the draft as a prompt |
+| `⌘I` | every shortcut, in one dialog |
+
+## Next
+
+[Chat](/features/chat) is what the composer sends into: how a turn is assembled, how the follow-up queue behaves, and what happens while Fluso is working.

@@ -20,17 +20,17 @@ Describe the outcome. Get the outcome. Review.
 
 ## Model mode
 
-Use the model mode dropdown in the chat composer to choose **High** or **Fast** for the current chat.
+Use the mode button in the composer to set how much reasoning Fluso spends on the current chat: **Quick**, **Deep**, or **Max**. `⌘\` cycles through them.
 
-High uses full reasoning for harder work. Fast turns reasoning off for quick, lighter requests where speed matters more than depth. It can respond sooner and use fewer tokens.
+Quick answers straightforward questions and small edits. Deep takes longer on complex tasks, reviews, and planning. Max is for the hardest problems. [Composer](/interface/composer) has the full comparison.
 
-The mode is chat-specific. You can change it between messages, and new chats start in High mode unless you switch them.
+The mode is chat-specific. You can change it between messages, and new chats start in Deep unless you switch them.
 
-This only affects the chat you are using in the app. Telegram has its own conversation mode: using `/fast` in Telegram does not change an app chat, and changing the app dropdown does not change Telegram.
+This only affects the chat you are using in the app. Telegram has its own conversation mode: using `/fast` in Telegram does not change an app chat, and changing the app control does not change Telegram.
 
 ## Approval mode
 
-Use the shield control beside the model mode to choose when Fluso asks before connector and MCP tool actions. The choice belongs to the current chat. Before a new chat exists, it remains pending until you send the first message.
+Use the access control beside the mode button to choose when Fluso asks before connector and MCP tool actions. It shows a hand for **Ask me first**, a globe for **Allow web**, and an open lock for **Allow everything**; `⌘⇧\` steps through them. The choice belongs to the current chat. Before a new chat exists, it remains pending until you send the first message.
 
 See [Approvals and permissions](/features/approvals) for the modes, in-chat approval cards, saved tool rules, and organization policy behavior.
 
