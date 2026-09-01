@@ -36,6 +36,44 @@ The Agent definition includes its name, description, goal, instructions, allowed
 
 Ordinary project chats can use global user preferences, project instructions, and `context.md`. Saved Agent threads use the Agent's saved definition instead. They can still use project files and working-memory summaries shared by the project.
 
+## Keep contexts isolated
+
+### What stays in one thread
+
+- Its messages and attached-file references.
+- In-progress turn state and temporary session data.
+- The Agent definition captured when the thread started.
+
+A new thread does not receive another thread's conversation history.
+
+### What threads can share
+
+Threads started from the same Agent can use the same knowledge files and capabilities. Threads in the same project can also use its files and short working-memory summaries. If two threads edit the same resource at once, their changes can conflict.
+
+### When to start a new thread
+
+Start one when the topic or customer changes, when a task needs its own history, or when independent work can progress separately. Keep the current thread when the next step depends on its full conversation.
+
+## Use parent and child threads
+
+A top-level Agent thread can create direct child threads for separate tasks. Each child receives a bounded task and works in its own conversation. The hierarchy has one level: a parent can create several children, but a child cannot create another child.
+
+### Choose when children are created
+
+| Setting | Behavior |
+| --- | --- |
+| Off | The Agent cannot manage other threads. |
+| Explicit | The Agent creates a child only when you ask or its instructions require one. This is the default. |
+| Proactive | The Agent may create direct children for distinct tasks that can progress independently. |
+
+### Give a child enough context
+
+A child sees the task message, not the parent's transcript. Include the task, source material, constraints, approval boundaries, and expected result. The parent can receive the result, send follow-up work to that child, or cancel its delegated request.
+
+### Work in parallel safely
+
+Use separate children for read-only research or changes to different outputs. Keep changes to the same files or shared APIs in one thread, then combine the work there.
+
 ## Pick the right scope
 
 - Put stable Agent behavior in **Instructions**.
@@ -44,6 +82,6 @@ Ordinary project chats can use global user preferences, project instructions, an
 - Start a new thread for a clean conversation.
 - Use a child thread only when the task can progress with the context you send it.
 
-## Next
+## Related guides
 
-Read [Context isolation in threads](/developers/context-isolation-in-threads), [Project context](/developers/project-context), and [User preferences](/developers/user-preferences) for each boundary.
+Read [Project context](/developers/project-context) and [User preferences](/developers/user-preferences) for the remaining context boundaries. See [Threads and messages](/developers/api-ref/threads-and-messages) for the public thread API.

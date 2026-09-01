@@ -2,33 +2,7 @@
 title: Context isolation in threads
 sidebarTitle: Context isolation
 icon: lock-keyhole
-description: Understand what an Agent thread keeps to itself and what it shares with other threads.
+description: Find the combined guide to thread context, isolation, and delegation.
 ---
 
-Each Agent thread has its own conversation history and session state. Starting a new thread gives you a clean conversation. Sending work to a child thread passes the message you send, not the parent's full transcript.
-
-A new thread does not receive another thread's conversation history, but it can still access shared project files and other resources.
-
-## What stays in one thread
-
-- The message history for that conversation.
-- In-progress turn state and temporary session data.
-- The Agent definition captured when the thread was created.
-- References to attached files in that thread's history.
-
-## What threads can share
-
-Each thread uses the resources in the saved Agent definition it started with. Threads started from the same definition can use the same knowledge files and capabilities. Threads in the same configured project can also use:
-
-- The project's files.
-- Short project working-memory summaries from other threads.
-
-If two threads edit the same resource at once, their changes can conflict.
-
-## When to start a new thread
-
-Use a new thread when the topic has changed, when a task needs its own history, or when two independent tasks can progress separately. Keep the current thread when the next step depends on the full conversation.
-
-## Next
-
-See [Parent and child threads](/developers/parent-and-child-threads) for delegation rules and [Threads and contexts](/developers/threads-and-contexts) for the complete context map.
+Context isolation now lives in [Threads and contexts](/developers/threads-and-contexts#keep-contexts-isolated).
