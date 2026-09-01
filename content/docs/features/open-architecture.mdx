@@ -13,8 +13,10 @@ Different exports serve different purposes. A project ZIP is a file backup; an A
 
 | Data | Export path | What you receive |
 | --- | --- | --- |
-| **Projects and files** | Open **Projects**, use the project's **••• → Export as zip**, or open a project and select **Export** | A ZIP of the project's regular files, folders, `context.md`, and project metadata |
+| **Projects and files** | Open **Projects**, use the project's **••• → Export as zip**, or open a project and select **Export** | A ZIP of the project's regular files, their folder paths, `context.md`, and project metadata; empty folders are omitted |
 | **Individual files** | Open a project file and select **Download** | The original file in its stored format |
+| **Shared project files** | Open a project file, select **Share**, then create a link | A revocable public link to the selected file |
+| **Generated documents and presentations** | Use the artifact's export menu | Documents as PDF, Word, HTML, or Markdown; presentations as PDF, PowerPoint, or a Google Slides copy |
 | **Agents** | Open an Agent, select its name, then **Export YAML** | A portable `.agent.yaml` definition with the Agent's saved setup and workflow |
 | **Agent review copies** | Open an Agent, select its name, then **Share** | A read-only link that another person can inspect and import as a separate Agent |
 | **Conversation history** | Open a chat and select **Share chat**, or read messages with the Threads API | A revocable public snapshot, or structured persisted messages through the API |
@@ -40,7 +42,7 @@ Agent export and sharing deliberately omit:
 - Knowledge-file contents.
 - Schedules, webhook triggers, evaluations, and version history.
 
-The export names omitted knowledge files so the recipient can add them again. Skills and Apps remain references to review and reconnect in the destination workspace. See [Export, import, and share Agents](/developers/export-import-and-share-agents) for the full handoff flow.
+The export names omitted knowledge files so the recipient can add them again. Named skills remain references to review in the destination workspace; an Agent configured to use every skill imports with none selected. Apps must be reconnected. See [Agent versions](/developers/versions#move-an-agent-between-workspaces) for the full handoff flow.
 
 ## A practical handoff
 
