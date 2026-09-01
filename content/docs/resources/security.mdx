@@ -35,7 +35,7 @@ OAuth tokens are encrypted before persistence and decrypted only by the backend 
 
 **Secret delivery.** Hosted runtime secrets use a one-time bootstrap payload: Docker receives it over stdin, while ECS uses an authenticated one-shot HTTP handoff. The payload is kept out of mounted files and the final process environment.
 
-**Governance audit logging.** Authenticated identity and access changes are stored in the backend governance record and shown in the admin audit view. This log covers the governance actions shown there; account-lifecycle, OAuth, and deletion auditing require their owning server integrations. Governance records do not contain the content of your work.
+**Governance audit logging.** Authenticated identity and access changes are stored in the backend governance record and shown in the [Admin audit log](/admin-panel#audit-log). This log covers the governance actions shown there; account-lifecycle, OAuth, and deletion auditing require their owning server integrations. Governance records do not contain the content of your work.
 
 ## Account security
 

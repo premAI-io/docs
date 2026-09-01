@@ -7,7 +7,7 @@ description: Create Agents, read their current immutable configuration, and publ
 
 An Agent record points at one immutable configuration through `currentConfigId`. Use that ID as `baseConfigId` when you update the Agent.
 
-Agent-owned work runs in [threads](/developers/api-ref/threads-and-messages) and can start from [schedules](/developers/api-ref/schedules).
+Agent-owned work runs in [threads](/developers/api-ref/threads-and-messages) and can start from [schedules](/developers/api-ref/schedules) or [webhooks](/developers/webhooks).
 
 ## List Agents
 
@@ -192,7 +192,7 @@ chats keep the configuration they started with.
 
 <Endpoint method="DELETE" path="/v1/agents/{agentId}" />
 
-Deletes the Agent and removes its owned chats, configurations, knowledge, and schedules.
+Deletes the Agent and removes its owned chats, configurations, knowledge, schedules, and webhook triggers.
 
 ```bash title="Request"
 curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef" \
@@ -206,4 +206,4 @@ HTTP/1.1 204 No Content
 
 ## Next
 
-Start Agent work through [Threads and messages](/developers/api-ref/threads-and-messages), or automate it with [Schedules](/developers/api-ref/schedules).
+Start Agent work through [Threads and messages](/developers/api-ref/threads-and-messages), or automate it with [Schedules](/developers/api-ref/schedules) and [Webhooks](/developers/webhooks).

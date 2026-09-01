@@ -9,6 +9,7 @@
     "project-context",
     "schedules",
     "threads-and-contexts",
-    "user-preferences"
+    "user-preferences",
+    "webhooks"
   ]
 }
