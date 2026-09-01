@@ -1,6 +1,8 @@
 {
   "pages": [
     "index",
+    "---Administration---",
+    "admin-panel",
     "---Agents (Beta)---",
     "...developers",
     "---App setup---",

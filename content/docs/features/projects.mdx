@@ -1,0 +1,61 @@
+---
+title: Projects
+sidebarTitle: Projects
+icon: folder-kanban
+description: Keep related chats, files, instructions, and memory together in one workspace.
+---
+
+Projects give one body of work its own scope. A project keeps its chats, files, instructions, context, and working memory together, so work for one customer or product does not spill into another.
+
+Use **Home** for general work. Create a separate project when a customer, product area, or deliverable needs its own files and history.
+
+## Create a project
+
+Open **Projects** from the left sidebar, then click **New Project**.
+
+| Field | What it does |
+| --- | --- |
+| Name | Identifies the project in the sidebar and project list. |
+| Description | Adds a short summary to the project list and project header. |
+| Instructions | Sets standing guidance for ordinary chats in this project. |
+
+Start with instructions that will still be true next week:
+
+> *"Use the launch brief as the source of truth. Keep decision notes in plain text and call out missing owners."*
+
+## Work with project files
+
+Open a project to see its file explorer. From there, you can:
+
+- Upload files or drag them into a folder.
+- Create folders and search the project workspace.
+- Preview supported files and download results.
+- Export the whole project as a ZIP archive.
+- Start a new chat already scoped to the project.
+
+Files created in project chats stay in the same workspace. That makes the project a useful home for source material, drafts, and finished deliverables.
+
+[Tasks](/features/tasks#tasks-and-projects) can also belong to a project, keeping their follow-up chat in the same scope.
+
+## Keep context in the right place
+
+Project instructions guide ordinary project chats. Durable notes and decisions live in `context.md`, while working memory keeps short summaries of recent work. The file is hidden from the project explorer; say *"add this to project context"* in a project chat when you want Fluso to update it.
+
+<Note>
+  Saved Agent threads use the Agent's own instructions instead of project
+  instructions or `context.md`. They can still use the configured project's
+  files and working-memory summaries. See [Project
+  context](/developers/project-context) for this boundary.
+</Note>
+
+Use one project per scope that should stay separate. For example, keep Acme support work in an Acme project and the Q3 launch in a Q3 Launch project. Start a new chat inside the same project when the topic changes but the files and background should remain available.
+
+## Organize projects
+
+Use the project's sidebar actions menu to pin, archive, label, recolor, or change its icon. Use the menu on the Projects page to export or delete it. **Home** is the default workspace and cannot be deleted.
+
+If you already have useful context in ChatGPT, Claude, or another agent, use [Imports](/features/imports) to create projects and files from an export.
+
+## Next
+
+Read [Memory](/features/memory) for the context carried between chats, or [Files and projects](/developers/api-ref/files-and-projects) for the API.

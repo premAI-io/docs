@@ -1,0 +1,120 @@
+---
+title: Webhooks
+sidebarTitle: Webhooks
+icon: webhook
+description: Send authenticated JSON events into an Agent and inspect the resulting thread and delivery receipt.
+---
+
+An Agent webhook receives JSON from another system and starts a follow-up Agent turn. It is an inbound trigger, not a callback that Fluso sends to another service.
+
+Choose whether events use a dedicated thread or an existing Agent thread. Each accepted event uses the Agent definition and project attached to that thread.
+
+## Create a webhook
+
+<Steps>
+  <Step title="Open Triggers">
+    Open the Agent-name menu and choose **Triggers**.
+  </Step>
+  <Step title="Add the trigger">
+    Click **Add trigger**, give it a clear name, and choose an authentication
+    method. **Header secret** is the safer default. Use a query secret only
+    when the sending service cannot set a custom header.
+  </Step>
+  <Step title="Choose the target thread">
+    Select **New thread on first event** to keep these events together in a
+    dedicated thread, or select an existing non-archived Agent thread.
+  </Step>
+  <Step title="Copy the credentials">
+    Click **Create trigger**, then copy the webhook secret. Fluso shows the
+    clear secret only after creation or rotation. The webhook URL remains
+    available on the trigger row.
+  </Step>
+</Steps>
+
+## Send an event
+
+The public delivery URL uses the webhook secret, not your Fluso bearer token. A header-authenticated request looks like this:
+
+```bash
+export FLUSO_WEBHOOK_URL='<copied-webhook-url>'
+export FLUSO_WEBHOOK_SECRET='<copied-webhook-secret>'
+
+curl "$FLUSO_WEBHOOK_URL" \
+  -X POST \
+  -H 'Content-Type: application/json' \
+  -H "X-Fluso-Webhook-Secret: $FLUSO_WEBHOOK_SECRET" \
+  -H 'Idempotency-Key: release-ready-2026-09-01' \
+  -d '{"event":"release.ready","release":"2026.09.01"}'
+```
+
+If you chose **Query secret**, send the same value through the `secret` query parameter. Query values can appear in browser, proxy, and server logs, so prefer the header when possible.
+
+The request must use `application/json`, contain valid JSON, and stay at or below 25,000 bytes. Fluso accepts any JSON shape; define the fields your Agent instructions expect.
+
+## Read the receipt
+
+A successful request returns `202 Accepted` with a delivery receipt:
+
+```json
+{
+  "id": "<delivery-id>",
+  "receivedAt": "2026-09-01T12:00:00.000Z",
+  "payloadSummary": "JSON event · 54 bytes",
+  "status": "accepted",
+  "responseCode": 202,
+  "requestId": "webhook:<trigger-id>:<delivery-id>",
+  "threadId": "<target-thread-id>",
+  "error": null
+}
+```
+
+`202 Accepted` means the Agent turn was admitted or queued. It does not mean the Agent finished. Open the target thread or the Agent's **Analytics** page to inspect the run.
+
+If the target thread is already running, the event waits as a follow-up instead of interrupting the current turn.
+
+## Test and inspect deliveries
+
+Expand **Test & deliveries** on the trigger row. Edit the sample JSON and click **Send test event**. This is a real Agent turn.
+
+The trigger shows its latest 20 completed receipts. The list shows accepted or failed status, time, a payload-size summary, and a link to an accepted event's thread. The receipt stores a payload digest and size summary instead of the full JSON body. Idempotency records can remain for 24 hours even when they are no longer in that list.
+
+The full payload is added to the Agent message and becomes part of the target thread's context and history. Do not send a secret unless the Agent is intended to receive it.
+
+## Idempotency and retries
+
+Fluso makes one admission attempt for each delivery. It does not retry a failed request automatically.
+
+Send one `Idempotency-Key` header when your sender may retry. For 24 hours on that trigger:
+
+- The same key and payload returns the original receipt without another Agent turn.
+- The same key with a different payload returns `409 Conflict`.
+- Replaying a failed key returns the same failure; use a new key only when you intend to create a new turn.
+
+Without an idempotency key, repeated requests create separate Agent turns.
+
+## Pause, rotate, or delete
+
+- Turn the trigger switch off to pause it. Requests to a paused trigger return `409`.
+- Choose **Rotate secret** if a secret may be exposed. The old secret stops working immediately, and the replacement is shown once.
+- Choose **Delete trigger** to remove its URL and delivery history. Later requests to that URL return `404`.
+
+## Security boundary
+
+Treat every payload as untrusted input. It becomes thread context, so remove credentials and fields the Agent does not need. A webhook does not bypass the Agent's saved capabilities, tool rules, or approval boundaries. Keep external writes behind approval when an event should prepare work rather than publish it.
+
+## Common errors
+
+| Status | Check |
+| --- | --- |
+| `400` | The body is valid JSON. If present, `Idempotency-Key` appears once and contains 1 to 255 characters. |
+| `401` | The header or query secret matches the current secret. |
+| `404` | The trigger, Agent, or target thread still exists. |
+| `409` | The trigger is enabled, the target is available, and the idempotency key is not conflicting or already in progress. |
+| `413` | The raw JSON body is no larger than 25,000 bytes. |
+| `415` | `Content-Type` is `application/json`. |
+| `429` | The sender's IP rate limit or the Agent owner's usage limit has been reached. Honor `Retry-After` when it is present. |
+| `502` or `503` | The Agent service and runtime are available. A repeated failed key returns the recorded failure and does not start another attempt; use a new key only when you intend one. |
+
+## Next
+
+Use [Runs](/developers/api-ref/runs) to inspect accepted turns, [Threads and contexts](/developers/threads-and-contexts) to understand the target thread, and [Schedules](/developers/schedules) for time-based triggers.

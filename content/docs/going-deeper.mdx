@@ -27,11 +27,11 @@ A few patterns worth practising.
 
 ## Use projects, properly
 
-Projects are folders for context. Most people create one and forget. The better habit:
+[Projects](/features/projects) are folders for context. Most people create one and forget. The better habit:
 
 A project per major area of work. Acme Corp, Q3 Launch, Board Reporting, Personal. When you're inside a project, Fluso scopes its memory and search to that project's content. Asking "what's the status?" inside the Acme project gets the Acme answer; same prompt outside any project gets a generic everything-bag.
 
-Drop a `context.md` into the project's workspace if your context is non-obvious. The simplest version:
+Add stable project context when the background is non-obvious. The simplest version:
 
 ```markdown
 # Acme Corp
@@ -43,7 +43,7 @@ Drop a `context.md` into the project's workspace if your context is non-obvious.
 - Sensitive: don't reference our internal pricing model in emails to them
 ```
 
-Fluso reads it before answering anything inside the project. The cost is two minutes; the payoff shows up in every reply for months.
+Paste this into a project chat and say *"add this to project context"*. Fluso stores it in the hidden `context.md` file and reads it before answering ordinary chats inside the project.
 
 If you are bringing work over from ChatGPT, Claude, or another agent, use [Imports](/features/imports) to turn that context into Fluso projects and files.
 
@@ -128,7 +128,7 @@ Team plans add shared context. The patterns that matter:
 
 **Shared knowledge graph** for the team. Decisions made in any team member's meetings are visible to everyone (within the shared project). Useful for executive teams; less useful for projects with strict need-to-know.
 
-**Admin visibility, not content access.** The current browser admin covers local identity and access records. Connected-app inventory, seat controls, and durable audit require a server-side Enterprise integration. The admin UI does not expose messages, files, or knowledge graphs.
+**Admin visibility, not content access.** The current [Admin panel](/admin-panel) covers identity and access records, recorded usage, runtime status, and network policy. Connected-app inventory, seat controls, and a complete organization-wide audit require their owning Enterprise integrations. The admin UI does not expose messages, files, or knowledge graphs.
 
 ## Things people miss
 
