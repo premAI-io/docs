@@ -57,7 +57,7 @@ Once you are signed in and have at least one app connected, ask in plain English
 
 If you ask for something that needs an app you have not connected yet, the bot will say so. Send `/connect <app>` and ask again.
 
-Before Fluso sends anything for you (an email, a Slack message, a new issue), it shows you the draft and waits for your yes. Nothing goes out without your approval.
+Connector writes in Telegram follow the same effective **Allow**, **Ask**, or **Deny** policy as the app. With **Ask**, the bot shows an approval card and waits for your decision. **Allow** or **Don't ask permission** can continue without a per-action prompt; **Deny** blocks the action.
 
 ## Fast mode
 

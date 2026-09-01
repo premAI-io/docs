@@ -1,8 +1,14 @@
 import {
+  Bot,
   Clock3,
+  Database,
   FileText,
   FolderClosed,
   MessageSquareText,
+  Network,
+  PlugZap,
+  Server,
+  ShieldCheck,
   Users,
 } from 'lucide-react';
 
@@ -198,6 +204,319 @@ export function KnowledgeGraphDiagram() {
       >
         Fluso connects people, meetings, decisions, files, and projects as it
         works with them.
+      </figcaption>
+    </figure>
+  );
+}
+
+const architectureServices = [
+  {
+    label: 'Fluso client',
+    detail: 'Desktop or remote',
+    x: 10,
+    icon: MessageSquareText,
+  },
+  {
+    label: 'Edge',
+    detail: 'TLS + routing',
+    x: 162,
+    icon: ShieldCheck,
+  },
+  {
+    label: 'REST API',
+    detail: 'Identity + records',
+    x: 314,
+    icon: Server,
+  },
+  {
+    label: 'Agent gateway',
+    detail: 'Admission + routing',
+    x: 466,
+    icon: Network,
+    emphasis: true,
+  },
+  {
+    label: 'User runtime',
+    detail: 'Thread worker + tools',
+    x: 618,
+    icon: Bot,
+  },
+] as const;
+
+const architectureData = [
+  {
+    label: 'PostgreSQL',
+    detail: 'Platform records',
+    owner: 'REST API',
+    x: 380,
+    icon: Database,
+  },
+  {
+    label: 'Isolated user storage',
+    detail: 'Projects, sessions, Agents',
+    owner: 'Gateway + runtime',
+    x: 532,
+    icon: FolderClosed,
+  },
+] as const;
+
+const ARCHITECTURE_NODE_WIDTH = 132;
+
+function ArchitectureNode({
+  label,
+  detail,
+  x,
+  icon: Icon,
+  emphasis = false,
+}: {
+  label: string;
+  detail: string;
+  x: number;
+  icon: typeof FolderClosed;
+  emphasis?: boolean;
+}) {
+  return (
+    <g transform={`translate(${x} 54)`}>
+      <rect
+        className={
+          emphasis
+            ? 'fill-fd-primary/10 stroke-fd-primary/50'
+            : 'fill-fd-card stroke-fd-border'
+        }
+        width={ARCHITECTURE_NODE_WIDTH}
+        height="76"
+        rx="10"
+        strokeWidth="1.5"
+      />
+      <Icon
+        aria-hidden="true"
+        className={
+          emphasis ? 'text-fd-primary' : 'text-fd-muted-foreground'
+        }
+        x={ARCHITECTURE_NODE_WIDTH / 2 - 8}
+        y="11"
+        width="16"
+        height="16"
+      />
+      <text
+        className="fill-fd-foreground text-[14px] font-semibold"
+        x={ARCHITECTURE_NODE_WIDTH / 2}
+        y="45"
+        textAnchor="middle"
+      >
+        {label}
+      </text>
+      <text
+        className="fill-fd-muted-foreground text-[11px]"
+        x={ARCHITECTURE_NODE_WIDTH / 2}
+        y="63"
+        textAnchor="middle"
+      >
+        {detail}
+      </text>
+    </g>
+  );
+}
+
+export function ArchitectureDiagram() {
+  return (
+    <figure
+      aria-labelledby="architecture-caption"
+      className="not-prose my-6 overflow-hidden rounded-xl border bg-fd-muted/30 p-3 sm:p-5"
+    >
+      <p className="mb-2 text-xs text-fd-muted-foreground sm:hidden">
+        Scroll horizontally to view the full diagram.
+      </p>
+      <div
+        aria-label="Scrollable architecture diagram"
+        className="overflow-x-auto"
+        tabIndex={0}
+      >
+        <svg
+          role="img"
+          aria-labelledby="architecture-title architecture-description"
+          className="h-auto w-full min-w-[760px]"
+          viewBox="0 0 760 386"
+        >
+          <title id="architecture-title">
+            Fluso request and data boundaries
+          </title>
+          <desc id="architecture-description">
+            A Fluso client sends an authenticated request through the edge, REST
+            API, Agent gateway, and a user runtime. The API owns platform
+            records. The gateway and runtime use durable workspace storage. The
+            runtime queries knowledge and calls governed MCP servers.
+          </desc>
+
+          <defs>
+            <marker
+              id="architecture-arrow"
+              markerHeight="8"
+              markerWidth="8"
+              orient="auto"
+              refX="7"
+              refY="4"
+              viewBox="0 0 8 8"
+            >
+              <path className="fill-fd-muted-foreground" d="M0 0 8 4 0 8Z" />
+            </marker>
+          </defs>
+
+          <text
+            className="fill-fd-muted-foreground text-[11px] font-medium"
+            x="20"
+            y="24"
+          >
+            Request path
+          </text>
+
+          <g
+            className="stroke-fd-muted-foreground/70"
+            fill="none"
+            markerEnd="url(#architecture-arrow)"
+            strokeWidth="1.5"
+          >
+            <path d="M142 92H156" />
+            <path d="M294 92H308" />
+            <path d="M446 92H460" />
+            <path d="M598 92H612" />
+            <path d="M380 130V204" />
+            <path d="M532 130V204" />
+            <path d="M684 130V204" />
+          </g>
+
+          {architectureServices.map((node) => (
+            <ArchitectureNode key={node.label} {...node} />
+          ))}
+
+          <rect
+            className="fill-fd-card stroke-fd-border"
+            x="302"
+            y="210"
+            width="448"
+            height="156"
+            rx="12"
+            strokeWidth="1.5"
+          />
+          <text
+            className="fill-fd-muted-foreground text-[11px] font-medium"
+            x="318"
+            y="235"
+          >
+            Data and context
+          </text>
+          <line
+            className="stroke-fd-border"
+            x1="318"
+            x2="734"
+            y1="250"
+            y2="250"
+          />
+          <line
+            className="stroke-fd-border"
+            x1="452"
+            x2="452"
+            y1="264"
+            y2="350"
+          />
+          <line
+            className="stroke-fd-border"
+            x1="602"
+            x2="602"
+            y1="264"
+            y2="350"
+          />
+
+          {architectureData.map(({ label, detail, owner, x, icon: Icon }) => (
+            <g key={label} transform={`translate(${x} 0)`}>
+              <Icon
+                aria-hidden="true"
+                className="text-fd-muted-foreground"
+                x="-8"
+                y="270"
+                width="16"
+                height="16"
+              />
+              <text
+                className="fill-fd-foreground text-[13px] font-semibold"
+                textAnchor="middle"
+                y="307"
+              >
+                {label}
+              </text>
+              <text
+                className="fill-fd-muted-foreground text-[10px]"
+                textAnchor="middle"
+                y="327"
+              >
+                {detail}
+              </text>
+              <text
+                className="fill-fd-muted-foreground text-[10px] font-medium"
+                textAnchor="middle"
+                y="349"
+              >
+                {owner}
+              </text>
+            </g>
+          ))}
+
+          <g transform="translate(684 0)">
+            <Bot
+              aria-hidden="true"
+              className="text-fd-muted-foreground"
+              x="-8"
+              y="267"
+              width="16"
+              height="16"
+            />
+            <text
+              className="fill-fd-foreground text-[13px] font-semibold"
+              textAnchor="middle"
+              y="301"
+            >
+              Runtime context
+            </text>
+            <g transform="translate(-68 314)">
+              <FileText
+                aria-hidden="true"
+                className="text-fd-muted-foreground"
+                width="13"
+                height="13"
+              />
+              <text
+                className="fill-fd-muted-foreground text-[10px]"
+                x="18"
+                y="11"
+              >
+                Knowledge service
+              </text>
+            </g>
+            <g transform="translate(-68 338)">
+              <PlugZap
+                aria-hidden="true"
+                className="text-fd-muted-foreground"
+                width="13"
+                height="13"
+              />
+              <text
+                className="fill-fd-muted-foreground text-[10px]"
+                x="18"
+                y="11"
+              >
+                MCP servers
+              </text>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <figcaption
+        id="architecture-caption"
+        className="mt-1 text-center text-xs leading-relaxed text-fd-muted-foreground"
+      >
+        Compute, platform state, workspace data, knowledge, and external sources
+        meet through explicit service boundaries.
       </figcaption>
     </figure>
   );

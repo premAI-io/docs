@@ -4,7 +4,7 @@ sidebarTitle: GitHub
 description: Connect GitHub. Setup, repository scope, common prompts, and the project-context pattern that makes generated code fit your codebase.
 ---
 
-Connecting GitHub turns Fluso into a development partner. It reads your repos, reviews PRs, scaffolds projects, finds and fixes bugs, and manages issues. Every write — PR, commit, issue close — waits for your explicit approval.
+Connecting GitHub turns Fluso into a development partner. It reads your repos, reviews PRs, scaffolds projects, finds and fixes bugs, and manages issues. GitHub writes follow each tool's effective **Allow**, **Ask**, or **Deny** policy.
 
 If you don't write code, the rest of this page is safely ignorable. If you do, this is the connection that pays back fastest after Gmail.
 
@@ -14,7 +14,7 @@ Open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **G
 
 Choose repository scope on GitHub's screen: specific repositories or all repositories you have access to. Either is fine, and you can change the set later from your GitHub settings without reconnecting.
 
-Read access is what lets Fluso browse code, answer architecture questions, and review PRs. Write access to issues and PRs is what lets it file issues, open PRs, and leave comments — always with your approval.
+Read access is what lets Fluso browse code, answer architecture questions, and review PRs. Write access to issues and PRs is what lets it file issues, open PRs, and leave comments, subject to the effective tool and chat policy.
 
 ## Prompts that work well
 
@@ -57,7 +57,7 @@ Issues:
 > *"What issues are assigned to me this sprint?"*
 
 <Warning>
-  Fluso always asks before opening a PR, committing code, or closing an issue. The diff or comment is shown for review every time.
+  Keep GitHub write tools on **Ask** when you want every diff or comment shown before the action runs. **Allow** or **Don't ask permission** can continue without a per-action prompt; **Deny** blocks the write.
 </Warning>
 
 ## A small thing that makes generated code much better

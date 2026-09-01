@@ -32,7 +32,7 @@ Naming a skill in your prompt is rarely worth it. Describe the result. The right
   <img src="/images/features/skills/skills-page.png" alt="Fluso Skills page with three sections: My Skills (Podcast Production, Sherlock Holmes), Discover (Fli Flight Search), and Included with Fluso, with an Add skill button at the top right." />
 </Frame>
 
-Open **Customization** in the left sidebar, then the **Skills** tab. Three sections.
+Open **Plugins → Skills** in the left sidebar. Three sections.
 
 **My Skills.** Skills this workspace can use right now. Marketplace skills you have added and skills you have built with Fluso live here. Each card has a **Remove** button.
 
@@ -55,6 +55,19 @@ Click any card. A side panel opens with three sections.
 **Skill document.** The underlying `SKILL.md`. The exact instructions Fluso follows when the skill runs.
 
 The skill document is view-only. To change what a skill does, build a new one.
+
+## Private enterprise skills
+
+Private enterprise skills use two pieces:
+
+1. `SKILL.md` contains the routing description and operating instructions.
+2. An authenticated private MCP server keeps sensitive code and credentials, then exposes the operations the skill needs.
+
+The server must expose a publicly reachable HTTPS Streamable HTTP endpoint. "Private" here means access-controlled, not a `localhost` or private-network address. The workspace or organization network-egress policy, plus any provider policy applied to that origin, must allow it.
+
+Access follows the server's authentication and the workspace's MCP tool policy. Each tool's **Allow**, **Ask**, or **Deny** rule controls how calls proceed. Installing the skill does not override server access. See [Apps & MCP](/features/mcp#tool-permissions) to connect the server and set its tool rules.
+
+This is a deployment pattern for teams that operate their own server. It does not make sensitive content inside `SKILL.md` private or provide a self-service secret store.
 
 ## Adding from the marketplace
 

@@ -1,0 +1,109 @@
+---
+title: Runs
+sidebarTitle: Runs
+icon: activity
+description: Inspect Agent runs and stop work that is still active.
+---
+
+Run IDs are request IDs. A run can be `queued`, `running`, `held`, `completed`, `failed`, or `cancelled`.
+
+Runs originate from [messages](/developers/threads-and-messages) and [schedules](/developers/schedules).
+
+## List runs
+
+<Endpoint method="GET" path="/v1/agent-runs" />
+
+Returns recent runs, with optional thread, request, and attention filters.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agent-runs?threadId=thread_agent_release&limit=20" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{
+  "agent_runs": [
+    {
+      "id": "req_review_01",
+      "request_id": "req_review_01",
+      "thread_id": "thread_agent_release",
+      "target_thread_id": "thread_agent_release",
+      "agent_id": "agt_0123456789ab4def8123456789abcdef",
+      "thread_title": "Release review",
+      "status": "running",
+      "origin": "user",
+      "created_at": "2026-08-31T09:00:00Z",
+      "started_at": "2026-08-31T09:00:01Z",
+      "updated_at": "2026-08-31T09:00:02Z",
+      "completed_at": null,
+      "outcome": null,
+      "result_ref": null,
+      "error": null
+    }
+  ],
+  "settlement_cursor": "2026-08-31T09:00:02Z/req_review_01"
+}
+```
+
+Use `attention=true` to include runs that need review and schedule delivery failures.
+
+## Read one run
+
+<Endpoint method="GET" path="/v1/agent-runs/{requestId}" />
+
+Returns one matching run. Include `threadId` when request IDs may repeat across threads.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agent-runs/req_review_01?threadId=thread_agent_release" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{
+  "id": "req_review_01",
+  "request_id": "req_review_01",
+  "thread_id": "thread_agent_release",
+  "target_thread_id": "thread_agent_release",
+  "agent_id": "agt_0123456789ab4def8123456789abcdef",
+  "status": "completed",
+  "origin": "user",
+  "created_at": "2026-08-31T09:00:00Z",
+  "started_at": "2026-08-31T09:00:01Z",
+  "updated_at": "2026-08-31T09:01:10Z",
+  "completed_at": "2026-08-31T09:01:10Z",
+  "outcome": "completed",
+  "result_ref": {
+    "thread_id": "thread_agent_release",
+    "request_id": "req_review_01"
+  },
+  "error": null
+}
+```
+
+## Stop a run
+
+<Endpoint method="POST" path="/v1/agent-runs/{requestId}/stop" />
+
+Requests cancellation without starting a dormant runtime only to stop it.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agent-runs/req_review_01/stop" \
+  -X POST \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"threadId":"thread_agent_release"}'
+```
+
+```json title="Response: 200"
+{
+  "thread_id": "thread_agent_release",
+  "request_id": "req_review_01",
+  "status": "cancelled"
+}
+```
+
+The status can also be `already_terminal` when the run settled before cancellation reached it.
+
+## Next
+
+Inspect token cost in [Usage](/developers/usage), or create recurring and one-time [Schedules](/developers/schedules).

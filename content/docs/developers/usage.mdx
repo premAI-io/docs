@@ -1,0 +1,144 @@
+---
+title: Usage
+sidebarTitle: Usage
+icon: chart-no-axes-combined
+description: Read current-user totals, session summaries, and filtered raw usage entries.
+---
+
+Usage records are user-scoped. Token counts and costs use camelCase fields, and cost values are denominated in US dollars.
+
+Filter entries by the request and thread identifiers returned from [Runs](/developers/runs).
+
+## Read usage totals
+
+<Endpoint method="GET" path="/v1/token-usage" />
+
+Returns totals for the current user plus a map of session summaries.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/token-usage" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200, selected fields"
+{
+  "userId": "22222222-2222-4222-8222-222222222222",
+  "lastUpdated": "2026-08-31T09:05:00Z",
+  "totals": {
+    "tokens": {
+      "input": 120,
+      "output": 40,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 160
+    },
+    "cost": {
+      "input": 0.001,
+      "output": 0.002,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0.003
+    },
+    "entryCount": 1
+  }
+}
+```
+
+## List session summaries
+
+<Endpoint method="GET" path="/v1/token-usage/sessions" />
+
+Returns the session map from the totals response as an array.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/token-usage/sessions" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200, selected fields"
+[
+  {
+    "sessionId": "sess_ddf284f4",
+    "threadId": "thread_agent_release",
+    "firstSeen": "2026-08-31T09:00:00Z",
+    "lastUpdated": "2026-08-31T09:05:00Z",
+    "entryCount": 1,
+    "tokens": {
+      "input": 120,
+      "output": 40,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 160
+    },
+    "cost": {
+      "input": 0.001,
+      "output": 0.002,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0.003
+    }
+  }
+]
+```
+
+## List usage entries
+
+<Endpoint method="GET" path="/v1/token-usage/entries" />
+
+Returns raw usage entries that match the submitted filters.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/token-usage/entries?threadId=thread_agent_release&limit=100" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200, selected fields"
+[
+  {
+    "schemaVersion": 2,
+    "eventId": "use_0123456789abcdef0123456789abcdef",
+    "source": "pi-provider",
+    "ts": "2026-08-31T09:05:00Z",
+    "sessionId": "sess_ddf284f4",
+    "threadId": "thread_agent_release",
+    "component": "chat-agent",
+    "measurement": "actual",
+    "requestId": "req_review_01",
+    "provider": "openrouter",
+    "status": "success",
+    "model": "provider/model-id",
+    "tokens": {
+      "input": 120,
+      "output": 40,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 160
+    },
+    "cost": {
+      "input": 0.001,
+      "output": 0.002,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0.003
+    },
+    "costSource": "provider"
+  }
+]
+```
+
+| Parameter | Matches | Default |
+| --- | --- | --- |
+| `sessionId` | Session ID | - |
+| `threadId` | Thread ID | - |
+| `requestId` | Request ID | - |
+| `component` | Emitting component | - |
+| `provider` | Model provider | - |
+| `providerSessionId` | Provider session ID | - |
+| `providerGenerationId` | Provider generation ID | - |
+| `model` | Model ID | - |
+| `since` | Entries at or after an RFC 3339 instant | - |
+| `limit` | Maximum entries, from 1 through 1000 | `100` |
+
+## Next
+
+Correlate costs with [Runs](/developers/runs), or review the service boundaries in [Architecture](/developers/architecture).

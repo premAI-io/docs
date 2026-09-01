@@ -1,12 +1,12 @@
 ---
 title: Pricing
 sidebarTitle: Pricing
-description: Free, Plus, Pro, and Enterprise. Open-source models, European hosting, your data stays yours.
+description: Compare plan limits, storage, automation, and workspace controls.
 ---
 
-Four plans. Free is enough to try Fluso on real work. Plus is for daily use. Pro adds heavier automation and confidential computing. Enterprise covers SSO, audit logs, and custom deployments.
+Four plans. Free is enough to try Fluso on real work. Plus is for daily use. Pro adds heavier automation and confidential computing. Enterprise is the path for custom deployments, data residency, and server-integrated identity or audit work.
 
-Everything Fluso runs on is open-source models hosted in Europe. No proprietary APIs. Your data never trains shared models. You get roughly 3× the tokens of equivalent closed-source assistants on the same task.
+Model routing depends on the feature. Fluso uses both open-weight models and proprietary model APIs; Agent Studio currently uses Gemini through OpenRouter. Your data never trains shared models. You get roughly 3× the tokens of equivalent closed-source assistants on the same task.
 
 ## Plans
 
@@ -56,26 +56,26 @@ Everything Fluso runs on is open-source models hosted in Europe. No proprietary 
 
     For organisations with custom needs.
     - Everything in Pro
-    - SSO
+    - Server-integrated identity (implementation scoped)
     - Dedicated account executive
     - Dedicated support
     - Custom obligation detection
     - Encrypted sandbox
     - Custom data retention
-    - Audit logs
+    - Server-backed audit logging (implementation scoped)
     - Custom skills
   </Card>
 </CardGroup>
 
 <Note>
-  **Enterprise.** SOC 2 Type II in place. ISO 27001 in progress. [Get in touch.](mailto:sales@premai.io)
+  **Enterprise.** Prem has attained SOC 2 Type I; Type II is underway. [Review the current security posture.](https://www.premai.io/security-at-prem)
 </Note>
 
 ## What's in every plan
 
 A few things hold regardless of plan.
 
-- **Open-source models only.** No proprietary APIs in the pipeline.
+- **Feature-specific model routing.** Some features use open-weight models, while others use proprietary model APIs. Agent Studio currently uses Gemini through OpenRouter.
 - **European hosting.** GDPR-aligned by default.
 - **3× more tokens** than equivalent closed-source assistants on a like-for-like task.
 - **Your data is yours.** Nothing trains shared models.
@@ -96,8 +96,8 @@ A few things hold regardless of plan.
 | Confidential computing | — | — | ✅ | ✅ |
 | Unlimited meeting notes | — | — | ✅ | ✅ |
 | Priority support | — | — | ✅ | Dedicated |
-| SSO | — | — | — | ✅ |
-| Audit logs | — | — | — | ✅ |
+| SSO | — | — | — | Scoped integration |
+| Audit logs | — | — | — | Scoped integration |
 | Custom skills | — | — | — | ✅ |
 | Custom data retention | — | — | — | ✅ |
 
@@ -110,7 +110,7 @@ Obligation detection scans your connected apps for things you have committed to:
     Compared against equivalent closed-source assistants on a like-for-like task. The full methodology lives on the [pricing page](https://fluso.ai/pricing.html).
   </Accordion>
   <Accordion title="What models does Fluso use?">
-    Open-weight models only, hosted on European infrastructure. No closed-source APIs in the pipeline.
+    The model depends on the feature. Fluso uses open-weight models for some workloads and proprietary model APIs for others. Agent Studio currently uses Gemini through OpenRouter.
   </Accordion>
   <Accordion title="Where is my data stored?">
     European hosting on every plan. Your data does not leave EU infrastructure and is never used to train shared models.
@@ -125,7 +125,7 @@ Obligation detection scans your connected apps for things you have committed to:
     On Pro and Enterprise, Fluso runs your workload in a hardware-isolated environment so the model provider cannot read it. Useful when the work itself is sensitive. The technical details are on the [pricing page](https://fluso.ai/pricing.html).
   </Accordion>
   <Accordion title="Enterprise security?">
-    SSO, audit logs, custom data retention, encrypted sandbox. SOC 2 Type II is in place. ISO 27001 is in progress.
+    Custom data retention and encrypted sandboxes are part of the Enterprise scope. Governance records persist the configured identity and access history, but Microsoft Entra metadata does not verify a directory or provide SSO by itself. Prem has attained SOC 2 Type I; Type II is underway. [Review the current security posture.](https://www.premai.io/security-at-prem)
   </Accordion>
   <Accordion title="Custom skills?">
     Custom skills are part of the Enterprise tier and are built with the Fluso team. For workspace-level skill creation on Plus and Pro, see [Skills](/features/skills).

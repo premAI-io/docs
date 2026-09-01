@@ -1,0 +1,57 @@
+---
+title: Architecture
+sidebarTitle: Architecture
+icon: network
+description: How requests, runtime compute, platform state, workspace data, and external sources fit together.
+---
+
+Fluso separates request handling, runtime compute, durable workspace data, platform records, and external tools. Those boundaries keep each responsibility visible when you deploy or integrate the platform.
+
+Client requests enter these boundaries through the [authenticated REST API](/developers/authentication).
+
+<ArchitectureDiagram />
+
+## Request path
+
+1. A Fluso client sends an authenticated request through the edge.
+2. The REST API validates identity and handles platform records.
+3. The gateway admits work, selects the user's runtime, and routes the request.
+4. A thread worker runs the turn with the Agent configuration, tools, and project context attached to that thread.
+
+The runtime can stop and return later because it does not own the only copy of durable user state.
+
+## Data ownership
+
+| Boundary           | What it owns                                                                    |
+| ------------------ | ------------------------------------------------------------------------------- |
+| PostgreSQL         | Users, organizations, access records, schedules, and other platform state       |
+| Isolated user storage | Projects, session history, Agent definitions, skills, and durable runtime files |
+| Knowledge service  | Indexed context and retrieval records under its service contract                |
+| MCP sources        | External data and actions exposed by each connected server                      |
+
+Project working memory belongs to its project. Agent configuration and chat history have separate records, so changing an Agent does not rewrite old conversations.
+
+## Replaceable components
+
+Components can change where the code defines an explicit contract:
+
+- Runtime compute sits behind a `SandboxProvider` contract. Current implementations cover local Docker and AWS ECS.
+- Models resolve through a provider-scoped catalog. Current provider paths cover PCCI and OpenRouter; the catalog does not promise that every model works through every provider.
+- Managed apps and custom servers meet the runtime through MCP and the same tool-policy boundary. A source can change while the protocol stays fixed, though tool names and semantics can still differ.
+- Services can move behind their HTTP contracts when the replacement preserves authentication, response shape, and failure behavior.
+
+## Governed external context
+
+An MCP server advertises tools. User policy decides whether each tool is allowed, denied, or requires approval. Organization policy separately governs network egress. Read-only classification can permit low-risk reads without turning every MCP connection into a read-only connection.
+
+External data stays under the source system's own controls until an approved tool reads it. Fluso may then persist selected outputs in chat history, project files, or knowledge records according to the requested work and platform policy.
+
+<Note>
+  Storage independence here means runtime compute does not own durable state.
+  PostgreSQL, workspace storage, and the knowledge service still have explicit
+  schemas and operational contracts.
+</Note>
+
+## Next
+
+Start with [Authentication](/developers/authentication), then create an Agent through [Agents and versions](/developers/agents-and-versions).
