@@ -1,0 +1,44 @@
+---
+title: Export, import, and share Agents
+sidebarTitle: Export, import & share
+icon: share-2
+description: Move an Agent definition between workspaces or give someone a safe copy to review.
+---
+
+Export, import, and share create portable copies of an Agent's setup. They do not transfer a live Agent, its chat history, or ownership of the original.
+
+Open the Agent and select its name in the top bar to find **Export YAML**, **Import Agent**, and **Share**.
+
+## Export a file
+
+Select **Export YAML** to download an `.agent.yaml` definition. Keep the file in source control when you want a reviewable handoff or a backup outside Fluso.
+
+The file includes the portable Agent fields and its saved workflow. It leaves out workspace identities, secrets, deliveries, project ownership, and knowledge-file contents. The names of omitted knowledge files are included so the recipient knows what must be added again.
+
+## Import a copy
+
+Select **Import Agent** and choose a Fluso Agent YAML, YML, or JSON definition. Fluso opens a new Agent draft; it does not overwrite the Agent whose menu you used.
+
+Before creating the copy:
+
+1. Review the name, instructions, and conversation starters.
+2. Choose the destination project. Imports start in **Home**.
+3. Add the required knowledge files again.
+4. Review every skill and App. These are references, not transferred credentials, and must be available in the destination workspace.
+5. Create the Agent and test it in a new thread.
+
+Agent definition files are limited to 128 KB. Import rejects an incomplete definition or an unsupported format version rather than creating a partial Agent.
+
+## Share a review link
+
+Select **Share**, then **Copy link**. Anyone with the link can review the read-only setup and choose **Import this Agent** to make a separate copy in their own workspace.
+
+A shared link contains the portable definition. Treat it like the exported file: send it only to people who may read the Agent's instructions and configuration. It does not include workspace secrets, identities, chat history, project files, or knowledge-file contents.
+
+The link is a snapshot, not ongoing collaboration. Later edits to the source Agent do not update an imported copy, and changes to the copy do not affect the source. Share a new link when you want someone to review a newer setup.
+
+## Example handoff
+
+For a customer escalation Agent, export the definition or share its link with the support lead. They can review the P0/P1 rules and approval boundary, import a copy, connect their own Gmail and Slack access, add their escalation runbook, and test it without touching your Agent or threads.
+
+For ordinary project and conversation imports, see [Imports](/features/imports). Those imports bring context and files into projects; they are separate from importing an Agent definition.

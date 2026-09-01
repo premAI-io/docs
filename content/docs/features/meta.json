@@ -1,11 +1,12 @@
 {
   "pages": [
     "approvals",
-    "mcp",
     "chat",
     "confidential",
     "imports",
+    "mcp",
     "memory",
+    "open-architecture",
     "projects",
     "skills",
     "tasks",

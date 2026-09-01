@@ -5,11 +5,14 @@
     "api-ref",
     "architecture",
     "context-isolation-in-threads",
+    "evaluations",
+    "export-import-and-share-agents",
     "parent-and-child-threads",
     "project-context",
     "schedules",
     "threads-and-contexts",
     "user-preferences",
+    "versions",
     "webhooks"
   ]
 }

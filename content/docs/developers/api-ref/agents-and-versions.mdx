@@ -7,6 +7,8 @@ description: Create Agents, read their current immutable configuration, and publ
 
 An Agent record points at one immutable configuration through `currentConfigId`. Use that ID as `baseConfigId` when you update the Agent.
 
+For the product flow, including reviewing changes and rolling back safely, see [Versions](/developers/versions).
+
 Agent-owned work runs in [threads](/developers/api-ref/threads-and-messages) and can start from [schedules](/developers/api-ref/schedules) or [webhooks](/developers/webhooks).
 
 ## List Agents
