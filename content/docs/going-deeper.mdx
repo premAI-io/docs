@@ -61,7 +61,7 @@ The first PR Fluso writes after you add this will make the value obvious.
 
 Skills are the prebuilt capabilities Fluso reaches for when a request needs them: PDF generation, deep research, meeting intelligence, image generation, and so on. You can build your own — without writing code or markdown.
 
-A custom skill captures a workflow you repeat with the same shape: a weekly investor update, a standard offer letter, a board-prep checklist. To build one, open **Customization → Skills**, click **Add skill** at the top right, and pick **Build with Fluso**. You land back in chat with a prompt ready to send:
+A custom skill captures a workflow you repeat with the same shape: a weekly investor update, a standard offer letter, a board-prep checklist. To build one, open **Plugins → Skills**, click **Add skill** at the top right, and pick **Build with Fluso**. You land back in chat with a prompt ready to send:
 
 > *"Create a skill using skill-creator. First, ask what workflow it should handle."*
 
@@ -107,7 +107,7 @@ The pattern: name the inputs, name the output, let Fluso connect them.
 
 ## Approval discipline
 
-Reads happen freely. Writes wait for approval. The approval is conversational: when Fluso has a message or change ready to send, it ends its reply with something like *"Shall I send this to sarah@acme.com?"* and waits for your yes or no in chat.
+Approval follows the effective tool and chat policy. With **Ask**, a read or write pauses on an approval card. A tool set to **Allow**, or a chat using **Don't ask permission**, can continue without a per-action prompt; **Deny** always blocks it. Keep external-facing write tools on **Ask** when you want to review each draft.
 
 The instinct on day one is to read every draft carefully. By day twenty, you will be tempted to wave things through. Don't.
 
@@ -127,7 +127,7 @@ Team plans add shared context. The patterns that matter:
 
 **Shared knowledge graph** for the team. Decisions made in any team member's meetings are visible to everyone (within the shared project). Useful for executive teams; less useful for projects with strict need-to-know.
 
-**Admin visibility, not access.** Admins can see which apps team members have connected and how much they're using Fluso. They cannot read messages, files, or knowledge graphs. The audit trail is for managing the seat, not surveilling the work.
+**Admin visibility, not content access.** The current browser admin covers local identity and access records. Connected-app inventory, seat controls, and durable audit require a server-side Enterprise integration. The admin UI does not expose messages, files, or knowledge graphs.
 
 ## Things people miss
 

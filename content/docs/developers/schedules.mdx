@@ -1,0 +1,138 @@
+---
+title: Schedules
+sidebarTitle: Schedules
+description: Create, inspect, pause, and delete Agent schedules.
+---
+
+A schedule belongs to an Agent and one of that Agent's existing threads. Supply exactly one timing field: a five-field `cron` expression or a future `at` timestamp with an offset. `timezone` must be an IANA time zone.
+
+See [Threads and messages](/developers/threads-and-messages) for the target thread and [Runs](/developers/runs) for execution state.
+
+## List schedules
+
+<Endpoint method="GET" path="/v1/agents/{agentId}/schedules" />
+
+Returns schedules for an Agent, optionally filtered by thread.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules?threadId=thread_agent_release&page=1&limit=100" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{
+  "schedules": [
+    {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "agentId": "agt_0123456789ab4def8123456789abcdef",
+      "threadId": "thread_agent_release",
+      "message": "Review the release candidate",
+      "cron": "0 9 * * 1-5",
+      "timezone": "Asia/Kolkata",
+      "status": "active",
+      "pauseReason": null,
+      "nextRunAt": "2026-09-01T03:30:00Z",
+      "attempts": 0,
+      "createdAt": "2026-08-31T09:00:00Z",
+      "updatedAt": "2026-08-31T09:00:00Z",
+      "firedAt": null,
+      "lastRun": null
+    }
+  ],
+  "pagination": { "page": 1, "limit": 100, "total": 1, "pages": 1 }
+}
+```
+
+## Create a schedule
+
+<Endpoint method="POST" path="/v1/agents/{agentId}/schedules" />
+
+Creates a recurring or one-time schedule. The caller supplies a UUID so retries can be idempotent.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules" \
+  -X POST \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "11111111-1111-4111-8111-111111111111",
+    "threadId": "thread_agent_release",
+    "message": "Review the release candidate",
+    "cron": "0 9 * * 1-5",
+    "timezone": "Asia/Kolkata"
+  }'
+```
+
+For a durable one-time schedule, replace `cron` with an offset-bearing `at` value:
+
+```json title="One-time timing fields"
+{
+  "at": "2026-09-01T09:00:00+05:30",
+  "timezone": "Asia/Kolkata"
+}
+```
+
+```json title="Response: 201"
+{
+  "id": "11111111-1111-4111-8111-111111111111",
+  "agentId": "agt_0123456789ab4def8123456789abcdef",
+  "threadId": "thread_agent_release",
+  "message": "Review the release candidate",
+  "cron": "0 9 * * 1-5",
+  "timezone": "Asia/Kolkata",
+  "status": "active",
+  "pauseReason": null,
+  "nextRunAt": "2026-09-01T03:30:00Z",
+  "attempts": 0,
+  "createdAt": "2026-08-31T09:00:00Z",
+  "updatedAt": "2026-08-31T09:00:00Z",
+  "firedAt": null,
+  "lastRun": null
+}
+```
+
+Replaying the same ID and body returns the existing schedule with `200`. Reusing the ID with different fields returns a conflict.
+
+## Pause or edit a schedule
+
+<Endpoint method="PATCH" path="/v1/agents/{agentId}/schedules/{scheduleId}" />
+
+Updates submitted fields. `threadId` is always required to guard the target.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules/11111111-1111-4111-8111-111111111111" \
+  -X PATCH \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"threadId":"thread_agent_release","status":"paused"}'
+```
+
+```json title="Response: 200, selected fields"
+{
+  "id": "11111111-1111-4111-8111-111111111111",
+  "agentId": "agt_0123456789ab4def8123456789abcdef",
+  "threadId": "thread_agent_release",
+  "status": "paused",
+  "nextRunAt": "2026-09-01T03:30:00Z"
+}
+```
+
+## Delete a schedule
+
+<Endpoint method="DELETE" path="/v1/agents/{agentId}/schedules/{scheduleId}" />
+
+Deletes a schedule after matching it to the supplied thread.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules/11111111-1111-4111-8111-111111111111?threadId=thread_agent_release" \
+  -X DELETE \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```http title="Response"
+HTTP/1.1 204 No Content
+```
+
+## Next
+
+Inspect each execution in [Runs](/developers/runs), or manage the target in [Threads and messages](/developers/threads-and-messages).

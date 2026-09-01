@@ -21,7 +21,7 @@ You ask Fluso to summarise your inbox, search for something specific, draft a re
 
 Gmail comes in through the **Google Workspace** app, which also covers Calendar, Drive, Docs, Sheets, Slides, Meet, and Tasks in one sign-in.
 
-Open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **Google Workspace**. Sign in to Google with the account you want Fluso to assist with and approve the permissions on Google's own screen. Reading powers summaries, search, and task extraction; sending is for reply drafts, and Fluso never sends without your approval.
+Open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **Google Workspace**. Sign in to Google with the account you want Fluso to assist with and approve the permissions on Google's own screen. Reading powers summaries, search, and task extraction. Sending follows the Gmail tool's effective **Allow**, **Ask**, or **Deny** policy.
 
 A click and a confirmation screen. You can also just ask in chat — *"connect my Gmail"* — and approve the access card that appears.
 
@@ -61,9 +61,9 @@ Follow-ups:
 
 Reading happens when you ask for it (*"summarise my inbox"*) and continuously in the background for auto-task extraction. Messages are processed for the response and not stored beyond what's referenced in your knowledge graph and tasks.
 
-Sending requires your explicit approval. Drafts are always shown first. There's no batch-send mode that bypasses the review.
+Keep Gmail send tools on **Ask** when you want every draft shown before it sends. **Allow** or **Don't ask permission** can continue without a per-action prompt; **Deny** blocks the send. There is no separate batch-send mode that overrides the effective policy.
 
-Header metadata is used for categorisation only and never shared with third parties.
+Header metadata is used for categorisation and handled under the same subprocessor controls as other requested email content.
 
 ## Disconnecting
 

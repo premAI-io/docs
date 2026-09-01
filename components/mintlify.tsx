@@ -61,6 +61,37 @@ export function Check({ children }: { children: ReactNode }) {
   return <Callout type="success">{children}</Callout>;
 }
 
+const methodStyle = {
+  GET: 'bg-sky-500/10 text-sky-700 dark:text-sky-300',
+  POST: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300',
+  PATCH: 'bg-amber-500/10 text-amber-700 dark:text-amber-300',
+  DELETE: 'bg-red-500/10 text-red-700 dark:text-red-300',
+} as const;
+
+export function Endpoint({
+  method,
+  path,
+}: {
+  method: keyof typeof methodStyle;
+  path: string;
+}) {
+  return (
+    <div className="not-prose my-4 flex min-w-0 items-center gap-3 rounded-lg border bg-fd-card px-3 py-2.5">
+      <span
+        className={cn(
+          'shrink-0 rounded px-2 py-1 font-mono text-[11px] font-semibold',
+          methodStyle[method],
+        )}
+      >
+        {method}
+      </span>
+      <code className="min-w-0 break-all text-sm font-medium text-fd-foreground">
+        {path}
+      </code>
+    </div>
+  );
+}
+
 // --- Cards ---
 
 export function Card({

@@ -10,8 +10,9 @@
 
 ## Information architecture
 
-The IA tracks the user's journey from "just landed" to "pro user". Five sidebar groups:
+The IA tracks the user's journey from "just landed" to "pro user". Beta documentation sits first, followed by the core product journey, Remote access, Reference, and Release notes:
 
+- **Beta** - `/developers/*`. The public REST reference and a source-backed architecture overview.
 - **Get started** — `/introduction`, `/quickstart`, `/going-deeper`. The path from "is this for me?" through "I have it set up" to "I've made it part of my work".
 - **Workflows** — `/workflows/*`. Six concrete stories: morning brief, meetings, research-to-deck, content launch, bug-to-PR, knowledge recall.
 - **Features** — the five primitives: `/features/{chat, mcp, skills, tasks, memory}`. Everything Fluso does is some combination of these five.

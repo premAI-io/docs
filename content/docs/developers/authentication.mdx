@@ -1,0 +1,134 @@
+---
+title: Authentication
+sidebarTitle: Authentication
+description: Authenticate a client and send bearer tokens to the Fluso REST API.
+---
+
+The REST API base URL is `https://api.fluso.ai`. Set it once, then assign the access token returned by the client sign-in flow:
+
+The `/v1` routes in this Beta section are the current client surface and may change during beta. Endpoints used only by the Fluso web app are internal and may change without notice.
+
+```bash
+export FLUSO_API=https://api.fluso.ai
+export FLUSO_TOKEN='<access-token>'
+```
+
+Send that token on every authenticated request:
+
+```http
+Authorization: Bearer $FLUSO_TOKEN
+```
+
+Keep access and refresh tokens out of source control. The examples below use placeholders and environment variables.
+
+Once authenticated, start with [Agents and versions](/developers/agents-and-versions).
+
+## Start client sign-in
+
+<Endpoint method="POST" path="/v1/auth/client/start" />
+
+Creates a short-lived browser sign-in URL for a CLI or another client.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/auth/client/start" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "client": "cli",
+    "client_user_id": "device-123",
+    "metadata": {"return_to": "fluso://auth"}
+  }'
+```
+
+```json title="Response: 200"
+{
+  "url": "https://<portal-host>/auth/client/launch?state=...",
+  "expires_in": 600
+}
+```
+
+Open `url` in the user's browser. The signed-in page completes approval and returns a one-time code to the client.
+
+## Exchange the one-time code
+
+<Endpoint method="GET" path="/v1/auth/client/exchange/{code}" />
+
+Consumes the code once and returns credentials bound to the same client and client user ID.
+
+```bash title="Request"
+export FLUSO_CODE='<one-time-code>'
+
+curl "$FLUSO_API/v1/auth/client/exchange/$FLUSO_CODE?client=cli&client_user_id=device-123"
+```
+
+```json title="Response: 200"
+{
+  "status": "completed",
+  "auth": {
+    "access_token": "<access-token>",
+    "refresh_token": "<refresh-token>",
+    "expires_in": 86400,
+    "aci_api_key": "<api-key>",
+    "user": {
+      "id": "22222222-2222-4222-8222-222222222222",
+      "email": "developer@example.com",
+      "name": "Developer"
+    }
+  }
+}
+```
+
+The code expires and cannot be exchanged twice.
+
+## Refresh a client session
+
+<Endpoint method="POST" path="/v1/auth/client/refresh" />
+
+Exchanges a valid client refresh token for refreshed credentials.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/auth/client/refresh" \
+  -H 'Content-Type: application/json' \
+  -d '{"refresh_token":"<refresh-token>"}'
+```
+
+```json title="Response: 200"
+{
+  "access_token": "<new-access-token>",
+  "refresh_token": "<new-refresh-token>",
+  "expires_in": 86400,
+  "aci_api_key": "<api-key>"
+}
+```
+
+## Read the current user
+
+<Endpoint method="GET" path="/v1/auth/me" />
+
+Returns the user attached to the bearer token and their runtime API key.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/auth/me" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{
+  "user": {
+    "id": "22222222-2222-4222-8222-222222222222",
+    "email": "developer@example.com",
+    "name": "Developer",
+    "picture": null,
+    "created_at": "2026-08-31T09:00:00"
+  },
+  "aci_api_key": "<api-key>"
+}
+```
+
+<Note>
+  Workspace and usage routes also expect the bearer header. An `X-API-Key`
+  header alone does not authenticate those proxy paths.
+</Note>
+
+## Next
+
+Use the token with [Agents and versions](/developers/agents-and-versions), or open a turn through [Threads and messages](/developers/threads-and-messages).

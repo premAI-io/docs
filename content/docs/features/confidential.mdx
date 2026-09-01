@@ -4,7 +4,7 @@ sidebarTitle: Confidential
 description: Run your work through models hosted in a hardware-sealed enclave.
 ---
 
-Confidential mode routes your inference through Prem API's confidential compute, an isolated enclave that infrastructure operators and the cloud provider cannot access. It's available on the Max plan and, once enabled, it stays on. The sections below cover what it adds, how to switch it on from Settings, and what to expect once it's active.
+Confidential mode routes your inference through Prem API's confidential compute, an isolated enclave that infrastructure operators and the cloud provider cannot access. It is available on the Confidential plan. You can turn it off later to return future requests to standard provider routing.
 
 ## What it protects
 
@@ -18,70 +18,42 @@ For the full technical picture, see Prem's [confidential compute documentation](
 
 ## Plans
 
-Confidential mode is a Max plan feature. Every Fluso account starts on a sponsored Pro plan, which covers normal inference at no cost to you. The setting lives in **Settings** under **Confidential APIs**, and on the sponsored Pro plan it reads "Available on the Max plan" with an **Upgrade** button.
+Confidential mode is included with the **Confidential** plan. Accounts granted access by the Fluso team show **Sponsored Confidential** as their effective plan.
 
-Open your profile from the bottom of the left sidebar. The plan you're on shows next to **Manage plan**.
-
-<Frame>
-  <img src="/images/features/confidential/profile-modal.png" alt="Fluso account menu opened from the bottom of the left sidebar, showing Settings, Manage account, and Manage plan with a Sponsored Pro badge." />
-</Frame>
-
-Open **Settings**. The Confidential APIs row reads "End-to-end encrypted inference. Available on the Max plan" with an **Upgrade** button on the right.
-
-<Frame>
-  <img src="/images/features/confidential/settings-page.png" alt="Fluso Settings page. The Confidential APIs row reads 'End-to-end encrypted inference. Available on the Max plan' with an Upgrade button. Billing reads Sponsored Pro plan." />
-</Frame>
+Open **Settings** and find **Encrypted Inference**. Without plan access, the row reads "Available on the Confidential plan" and shows **Upgrade**. With plan access, it shows an **Off** or **On** switch.
 
 ## Turning it on
 
 <Steps>
-  <Step title="Switch to Max">
-    From the Confidential APIs prompt or **Settings → Plans**, pick **Max** and complete checkout. New accounts get a 30-day free trial.
-
-    <Frame>
-      <img src="/images/features/confidential/upgrade-max.png" alt="Plans grid showing Basic, Plus, Pro, and Max. The Max card reads '$119/month — all the advantages of the Pro plan with the most private settings'." />
-    </Frame>
+  <Step title="Get plan access">
+    Open **Settings → Plans** and choose **Confidential**. If your team grants sponsored access, the current plan reads **Sponsored Confidential** instead.
   </Step>
-  <Step title="Enable confidential mode">
-    With Max active, you can flip the toggle. The panel notes that the change is permanent first: "Permanent once enabled. Requests stay on confidential inference; image generation and automated task creation are disabled."
-
-    <Frame>
-      <img src="/images/features/confidential/confidential-available.png" alt="Confidential APIs panel on the Max plan: the toggle is enabled and a note reads 'Permanent once enabled. Requests stay on confidential inference; image generation and automated task creation are disabled.' Billing reads Max plan." />
-    </Frame>
-
-    A dialog confirms the one-way switch and lists what gets disabled in this mode.
-
-    <Frame>
-      <img src="/images/features/confidential/confidential-confirm.png" alt="Turn on confidential mode dialog: 'Every request routes through end-to-end encrypted inference. Permanent — it can't be turned off once enabled.' Disabled in this mode: automated task generation, image generation. Cancel and Enable permanently buttons." />
-    </Frame>
+  <Step title="Enable encrypted inference">
+    Turn on the switch under **Settings → Encrypted Inference**. The confirmation dialog lists the two unavailable capabilities: automated task generation and image generation. It also explains that you can return to standard inference later, but data removed during activation cannot be restored automatically.
   </Step>
   <Step title="Confirm it's active">
-    The panel turns green and the toggle reads **On**. From here on, your inference runs through the enclave.
-
-    <Frame>
-      <img src="/images/features/confidential/confidential-active.png" alt="Confidential APIs panel in the active state: green shield icon, On toggle, green background, and a note that image generation and automated task creation are disabled in this mode. Billing reads Max plan." />
-    </Frame>
+    The panel turns green and the switch reads **On**. New inference requests now run through the enclave.
   </Step>
 </Steps>
 
 <Warning>
-  Enabling confidential mode is permanent. Once your workspace is in confidential mode, you can't switch back to standard inference. Image generation and automated task creation are disabled while it's on.
+  Switching back changes future requests to standard provider routing and makes image generation and automated task creation available again. Existing conversations and context may use standard routing in later requests. Data removed during activation cannot be restored automatically.
 </Warning>
 
 ## FAQ
 
 <AccordionGroup>
   <Accordion title="Can I switch back to normal mode after enabling it?">
-    No. Turning on confidential mode is a one-way change for your workspace. Once you're in confidential mode, there's no path back to standard inference.
+    Yes. Turn the **Encrypted Inference** switch off and confirm **Use standard inference**. Future requests use standard provider routing, and image generation and automated task creation become available again.
   </Accordion>
   <Accordion title="What happens if confidential inference isn't working?">
     Confidential mode never falls back to standard inference, because a silent fallback would route your data through a non-confidential path. If the enclave can't be reached, the request fails and you'll see an error instead. Retry once the enclave is reachable again. If it stays down, [contact support](mailto:support@premai.io).
   </Accordion>
   <Accordion title="What's disabled while confidential mode is on?">
-    Image generation and automated task creation. Both rely on paths that would take your data outside the enclave, so they're turned off in this mode. Everything else keeps working.
+    Image generation and automated task creation. Both rely on paths that would take your data outside the enclave, so they're turned off in this mode.
   </Accordion>
   <Accordion title="Which plan do I need?">
-    The Max plan. Every account starts on a sponsored Pro plan, which runs normal inference. Confidential mode is the reason to move to Max. New accounts can start a 30-day Max trial.
+    The Confidential plan. Team-granted access appears as Sponsored Confidential.
   </Accordion>
   <Accordion title="Can anyone access my data during confidential inference?">
     Inside the enclave, no. At the gateway, your request is encrypted for a hardware-sealed environment that infrastructure operators and the cloud provider cannot access. Before that, traffic passes through Fluso's AWS infrastructure.

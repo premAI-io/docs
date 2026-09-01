@@ -1,0 +1,208 @@
+---
+title: Agents and versions
+sidebarTitle: Agents & versions
+description: Create Agents, read their current immutable configuration, and publish safe updates.
+---
+
+An Agent record points at one immutable configuration through `currentConfigId`. Use that ID as `baseConfigId` when you update the Agent.
+
+Agent-owned work runs in [threads](/developers/threads-and-messages) and can start from [schedules](/developers/schedules).
+
+## List Agents
+
+<Endpoint method="GET" path="/v1/agents" />
+
+Returns paginated Agent summaries, with optional text search through `q`.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents?page=1&limit=20&q=release" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{
+  "agents": [
+    {
+      "agentId": "agt_0123456789ab4def8123456789abcdef",
+      "currentConfigId": "cfg_11111111111141118111111111111111",
+      "name": "Release reviewer",
+      "description": "Reviews release candidates",
+      "projectName": "Release Review",
+      "responseMode": "high",
+      "createdAt": "2026-08-31T09:00:00Z",
+      "updatedAt": "2026-08-31T09:00:00Z",
+      "lastChatAt": null,
+      "chatCount": 0,
+      "activeScheduleCount": 0,
+      "nextRunAt": null
+    }
+  ],
+  "pagination": { "page": 1, "limit": 20, "total": 1, "pages": 1 }
+}
+```
+
+## Create an Agent
+
+<Endpoint method="POST" path="/v1/agents" />
+
+Creates an Agent and its first immutable configuration.
+
+Create `Release Review` through `POST /v1/agent/projects` first. `Home` is available by default.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents" \
+  -X POST \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Release reviewer",
+    "description": "Reviews release candidates",
+    "goal": "Return a go or no-go decision",
+    "instructions": "Cite blockers and name each follow-up owner.",
+    "conversationStarters": ["Review this candidate"],
+    "responseMode": "high",
+    "projectName": "Release Review"
+  }'
+```
+
+```json title="Response: 201, selected fields"
+{
+  "agentId": "agt_0123456789ab4def8123456789abcdef",
+  "currentConfigId": "cfg_11111111111141118111111111111111",
+  "state": "active",
+  "createdAt": "2026-08-31T09:00:00Z",
+  "updatedAt": "2026-08-31T09:00:00Z",
+  "lastChatAt": null,
+  "chatCount": 0,
+  "config": {
+    "schemaVersion": 1,
+    "configId": "cfg_11111111111141118111111111111111",
+    "agentId": "agt_0123456789ab4def8123456789abcdef",
+    "name": "Release reviewer",
+    "normalizedName": "release reviewer",
+    "description": "Reviews release candidates",
+    "goal": "Return a go or no-go decision",
+    "instructions": "Cite blockers and name each follow-up owner.",
+    "conversationStarters": ["Review this candidate"],
+    "responseMode": "high",
+    "threadManagementEnabled": true,
+    "threadCreationMode": "explicit",
+    "projectName": "Release Review",
+    "knowledgeFiles": [],
+    "skills": null,
+    "connectors": null,
+    "createdAt": "2026-08-31T09:00:00Z",
+    "contentDigest": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  }
+}
+```
+
+## Read the current configuration
+
+<Endpoint method="GET" path="/v1/agents/{agentId}" />
+
+Returns the Agent record and the configuration named by `currentConfigId`.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200, selected fields"
+{
+  "agentId": "agt_0123456789ab4def8123456789abcdef",
+  "currentConfigId": "cfg_11111111111141118111111111111111",
+  "state": "active",
+  "config": {
+    "schemaVersion": 1,
+    "configId": "cfg_11111111111141118111111111111111",
+    "name": "Release reviewer",
+    "goal": "Return a go or no-go decision"
+  }
+}
+```
+
+## Publish an update
+
+<Endpoint method="PATCH" path="/v1/agents/{agentId}" />
+
+Creates a new configuration when the submitted fields change the Agent.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef" \
+  -X PATCH \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "baseConfigId": "cfg_11111111111141118111111111111111",
+    "goal": "Return a go or no-go decision with named owners"
+  }'
+```
+
+```json title="Response: 200, selected fields"
+{
+  "agentId": "agt_0123456789ab4def8123456789abcdef",
+  "currentConfigId": "cfg_22222222222242228222222222222222",
+  "state": "active",
+  "config": {
+    "schemaVersion": 1,
+    "configId": "cfg_22222222222242228222222222222222",
+    "goal": "Return a go or no-go decision with named owners"
+  }
+}
+```
+
+An unchanged patch returns the existing config ID. A stale `baseConfigId` returns `409 STALE_AGENT_CONFIG` and includes the current config ID in `error.details.currentConfigId`.
+
+## List available configurations
+
+<Endpoint method="GET" path="/v1/agents/{agentId}/versions" />
+
+Returns up to 100 available immutable configurations, newest first. Older
+configurations that no chat uses may be reclaimed under storage pressure, so
+this endpoint is not a permanent audit ledger.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/versions" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200, selected fields"
+{
+  "versions": [
+    {
+      "schemaVersion": 1,
+      "configId": "cfg_22222222222242228222222222222222",
+      "agentId": "agt_0123456789ab4def8123456789abcdef",
+      "goal": "Return a go or no-go decision with named owners",
+      "createdAt": "2026-08-31T10:00:00Z",
+      "contentDigest": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+    }
+  ]
+}
+```
+
+To restore an available configuration, send its editable fields through the
+normal update endpoint and use the Agent's current `currentConfigId` as
+`baseConfigId`. The update creates a new immutable configuration. Existing
+chats keep the configuration they started with.
+
+## Delete an Agent
+
+<Endpoint method="DELETE" path="/v1/agents/{agentId}" />
+
+Deletes the Agent and removes its owned chats, configurations, knowledge, and schedules.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef" \
+  -X DELETE \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```http title="Response"
+HTTP/1.1 204 No Content
+```
+
+## Next
+
+Start Agent work through [Threads and messages](/developers/threads-and-messages), or automate it with [Schedules](/developers/schedules).
