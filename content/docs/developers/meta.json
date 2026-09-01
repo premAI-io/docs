@@ -1,12 +1,12 @@
 {
   "pages": [
-    "authentication",
     "agents-and-versions",
-    "schedules",
-    "runs",
-    "threads-and-messages",
+    "architecture",
+    "authentication",
     "files-and-projects",
-    "usage",
-    "architecture"
+    "runs",
+    "schedules",
+    "threads-and-messages",
+    "usage"
   ]
 }
