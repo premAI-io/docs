@@ -1,0 +1,40 @@
+---
+title: Agent builder
+sidebarTitle: Agent builder
+icon: workflow
+description: Turn a plain-language request into an Agent draft, then review or refine it before saving.
+---
+
+Open **Control Panel → Create Agent** to start in Agent Studio. Describe the job in plain language. Studio drafts the Agent definition and a small workflow preview before anything is saved.
+
+> *"Create a customer escalation coordinator. Gather the customer, impact, urgency, and open questions. Read relevant Gmail and Google Drive context, classify the case as P0 or P1, prepare the next steps, and require approval before sending anything."*
+
+## Build the first draft
+
+A useful request names four things:
+
+- The input, such as a support request or release candidate.
+- The outcome, such as a severity decision or handoff package.
+- The sources and capabilities the Agent may use.
+- The boundaries that must hold, such as approval before an external action.
+
+Select **Build**. Studio returns the Agent name, description, instructions, and a short graph of the proposed steps. The graph is a design preview. It helps you check the order and decision points, but it is not executable code.
+
+## Refine without starting over
+
+Use the Studio message box to change the draft:
+
+> *"Only use P0 and P1. Run the Gmail and Drive lookups in parallel. Stop for approval before sending a customer reply."*
+
+Studio revises the current draft and replaces the workflow preview. If a request fails, the last valid preview stays in place so you can retry.
+
+## Create or open the editor
+
+- Select **Create Agent** when the draft is ready.
+- Select **Go to editor** when you want to inspect every field, capability, knowledge file, or thread setting first.
+
+Studio only selects capabilities already available to you. Creating the Agent saves the definition. Existing Agent threads keep the definition they started with, so test changes in a new thread.
+
+## Next
+
+See [Agent description](/developers/agent-description) for field boundaries and [Threads and contexts](/developers/threads-and-contexts) for what a new Agent thread receives.

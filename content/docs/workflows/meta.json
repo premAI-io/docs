@@ -1,10 +1,10 @@
 {
   "pages": [
-    "morning-brief",
+    "dev-bug-fix",
+    "content-launch",
     "meetings",
     "research-to-deck",
-    "content-launch",
-    "dev-bug-fix",
+    "morning-brief",
     "knowledge-recall"
   ]
 }

@@ -1,12 +1,14 @@
 {
   "pages": [
-    "agents-and-versions",
+    "agent-builder",
+    "agent-description",
+    "api-ref",
     "architecture",
-    "authentication",
-    "files-and-projects",
-    "runs",
+    "context-isolation-in-threads",
+    "parent-and-child-threads",
+    "project-context",
     "schedules",
-    "threads-and-messages",
-    "usage"
+    "threads-and-contexts",
+    "user-preferences"
   ]
 }
