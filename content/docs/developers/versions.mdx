@@ -1,0 +1,40 @@
+---
+title: Agent versions
+sidebarTitle: Versions
+icon: history
+description: Review saved Agent changes, restore a known-good setup, and verify it in a new thread.
+---
+
+Fluso keeps saved Agent configurations as versions. A version records the Agent fields used by a thread, including its instructions, response mode, knowledge-file list, Apps, project, skills, and thread settings.
+
+Open the Agent, select its name in the top bar, then select **Version history**.
+
+## Review what changed
+
+The newest entry is marked **Current**. Expand **changes** on an entry to compare it with the version saved immediately before it. Each entry also shows when it was saved and a short configuration ID.
+
+Use this history when an edit changes an Agent's behavior unexpectedly. It lets you identify the last setup that produced a good result without guessing which fields changed.
+
+## Roll back safely
+
+1. Find the last known-good saved configuration.
+2. Select **Roll back**.
+3. Review the fields listed in the confirmation dialog.
+4. Select **Promote to current**.
+5. Start a **New thread** and repeat the request or [evaluation](/developers/evaluations) that exposed the problem.
+
+Rollback does not erase history. Fluso creates a new current configuration from the selected version, so the change is visible and can itself be reversed later.
+
+Existing threads keep the configuration they started with. Only new threads use the restored configuration. This prevents a long-running conversation from changing behavior halfway through.
+
+<Warning>
+  Rollback restores saved Agent fields. It does not restore an older Agent Studio workflow preview, recreate deleted project files, or copy back a project that no longer exists.
+</Warning>
+
+If the selected version points to a deleted project, choose a current project in the editor first. If the Agent changed in another browser tab, refresh the history, review the newest version, and retry.
+
+## Example
+
+Suppose a customer escalation Agent begins treating degraded service as P0 after its severity instructions were edited. Open **Version history**, compare the instruction changes, and promote the last version that kept degraded-but-usable service at P1. Then start a new thread with the same case and confirm the severity, next owner, and approval boundary.
+
+For API-based version updates, see [Agents and versions](/developers/api-ref/agents-and-versions).

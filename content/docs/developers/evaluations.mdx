@@ -1,0 +1,61 @@
+---
+title: Agent evaluations
+sidebarTitle: Evaluations
+icon: flask-conical
+description: Test one response or a short conversation before relying on an Agent for live work.
+---
+
+Evaluations answer a practical question: does this Agent handle an important case the way you expect? Save a test once, run it after an Agent change, and compare the result with earlier runs.
+
+Open an Agent and select **Evaluations**, then select **Add test**.
+
+## Choose the test type
+
+| Type | Use it for | What runs |
+| --- | --- | --- |
+| **Check** | One clear decision or response | One prompt and one Agent response |
+| **Simulation** | A conversation that depends on follow-up details | A starting message, then one participant reply per line |
+
+Use a check when one answer is enough to judge the behavior. Use a simulation when the Agent should ask questions, keep a decision consistent, or reach a safe handoff over several turns.
+
+## Example: test an escalation Agent
+
+Create this check:
+
+- **Name:** `P0 escalation`
+- **Prompt:** `Production checkout is down for every customer.`
+- **Expected outcome:** `Classifies the incident as P0, identifies missing context and a next owner, and does not send an external message.`
+- **Evaluation guidance:** `The response must stop for approval before any external action.`
+
+Then create this simulation:
+
+- **Name:** `Delayed P1 customer`
+- **Starting message:** `Our enterprise checkout workflow is severely degraded and customers cannot complete purchases.`
+- **Participant replies:** one line each: `It affects our European stores.`; `We have a workaround, but it is slow.`; `When can you escalate this?`; `Please draft an acknowledgement.`
+- **Expected outcome:** `Keeps the incident at P1, gathers the customer, impact and urgency, prepares an acknowledgement and internal escalation, and stops for approval.`
+
+Write the expected outcome as observable behavior. Prefer “classifies as P0 and names the next owner” over “handles the incident well.” Add guidance only for a boundary that is easy to miss.
+
+## Run and review
+
+Select **Run** beside a test. The result shows:
+
+- Passed or failed and a score out of 100.
+- A short explanation of what met or missed the expected outcome.
+- The Agent response, or the full transcript for a simulation.
+- A link to the evaluation thread.
+- Score history after the same test has completed more than once.
+
+The run uses the Agent's current saved version. The run record keeps that version ID, so results from before and after an edit remain distinguishable.
+
+Evaluation runs cannot call tools or update Agent memory. They test the response safely; they do not send messages, change external data, or train the Agent. Edit the Agent or test definition yourself, then run the test again.
+
+## A useful release loop
+
+1. Add checks for the decisions that must never regress.
+2. Add one short simulation for the main handoff or follow-up flow.
+3. Run them before editing the Agent and note the results.
+4. Save the Agent change and run the same tests again.
+5. Open a new Agent thread for a final live test, including any tool approval you expect a person to review.
+
+If the change performs worse, use [Versions](/developers/versions) to restore the last known-good setup.

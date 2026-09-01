@@ -1,0 +1,59 @@
+---
+title: Open architecture
+sidebarTitle: Open architecture
+icon: blocks
+description: Keep a usable copy of your work and move it through documented files, links, and APIs.
+---
+
+Fluso keeps core work in ordinary formats instead of locking every object behind one interface. You can download project files, move Agent definitions, export operational records, and read conversation history through the API.
+
+Different exports serve different purposes. A project ZIP is a file backup; an Agent YAML is a reusable setup; a shared chat is a reviewable snapshot.
+
+## What you can take out
+
+| Data | Export path | What you receive |
+| --- | --- | --- |
+| **Projects and files** | Open **Projects**, use the project's **••• → Export as zip**, or open a project and select **Export** | A ZIP of the project's regular files, folders, `context.md`, and project metadata |
+| **Individual files** | Open a project file and select **Download** | The original file in its stored format |
+| **Agents** | Open an Agent, select its name, then **Export YAML** | A portable `.agent.yaml` definition with the Agent's saved setup and workflow |
+| **Agent review copies** | Open an Agent, select its name, then **Share** | A read-only link that another person can inspect and import as a separate Agent |
+| **Conversation history** | Open a chat and select **Share chat**, or read messages with the Threads API | A revocable public snapshot, or structured persisted messages through the API |
+| **Audit logs** | In Fluso Admin, filter **Audit log**, then select **Export _N_ rows** | CSV containing the currently filtered rows from the latest 100 recorded identity and access events |
+| **Usage records** | In Fluso Admin, open **Observability → Export CSV** | CSV of the recorded daily gateway cost and token totals shown in the 14-day view |
+
+Project ZIPs skip dotted runtime entries and symbolic links. They do not serve as a complete conversation archive. Use the [Threads and messages API](/developers/api-ref/threads-and-messages#read-message-history) when you need persisted chat records in a system you control.
+
+## Skills stay readable
+
+Open **Plugins → Skills** and select a skill to read its `SKILL.md`. This is the instruction document Fluso follows.
+
+The skill document is view-only, and there is no one-click skill bundle export today. For a custom skill you own, copy its `SKILL.md` and keep its source files in your own version control before removing it from Fluso. Built-in and marketplace skills can be inspected in Fluso but are not exported as workspace-owned packages.
+
+## What an Agent export leaves behind
+
+Agent export and sharing deliberately omit:
+
+- Workspace identities and credentials.
+- App connection secrets.
+- Chat history and deliveries.
+- Project ownership and project files.
+- Knowledge-file contents.
+- Schedules, webhook triggers, evaluations, and version history.
+
+The export names omitted knowledge files so the recipient can add them again. Skills and Apps remain references to review and reconnect in the destination workspace. See [Export, import, and share Agents](/developers/export-import-and-share-agents) for the full handoff flow.
+
+## A practical handoff
+
+To hand a customer-support workflow to another team:
+
+1. Export the support project as ZIP so they receive the runbooks and working files.
+2. Export the Agent as YAML, or send its review link.
+3. Share any example conversation as a snapshot, removing sensitive messages first.
+4. Export the relevant filtered audit rows separately if the reviewer needs access evidence.
+5. In the destination workspace, import the Agent, upload the project files, reconnect Apps, and run its evaluations before live use.
+
+These exports are independent snapshots. Later Fluso changes do not silently rewrite the copies you already saved.
+
+## APIs for continuous access
+
+Use the [API reference](/developers/api-ref/authentication) when a one-time download is not enough. The API exposes Agents and versions, projects and files, threads and messages, schedules, runs, and usage. Authenticate each request with a scoped bearer token and store only the data your integration needs.
