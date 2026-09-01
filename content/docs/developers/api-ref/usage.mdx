@@ -7,7 +7,7 @@ description: Read current-user totals, session summaries, and filtered raw usage
 
 Usage records are user-scoped. Token counts and costs use camelCase fields, and cost values are denominated in US dollars.
 
-Filter entries by the request and thread identifiers returned from [Runs](/developers/runs).
+Filter entries by the request and thread identifiers returned from [Runs](/developers/api-ref/runs).
 
 ## Read usage totals
 
@@ -141,4 +141,4 @@ curl "$FLUSO_API/v1/token-usage/entries?threadId=thread_agent_release&limit=100"
 
 ## Next
 
-Correlate costs with [Runs](/developers/runs), or review the service boundaries in [Architecture](/developers/architecture).
+Correlate costs with [Runs](/developers/api-ref/runs), or review the service boundaries in [Architecture](/developers/architecture).

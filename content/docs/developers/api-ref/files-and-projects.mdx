@@ -7,7 +7,7 @@ description: Work with durable project metadata and files in a user's Agent work
 
 Workspace projects and files use the `/v1/agent/*` routes. They belong to the authenticated user's durable workspace, outside disposable runtime compute.
 
-[Agents](/developers/agents-and-versions) bind new chats to one of these projects by name.
+[Agents](/developers/api-ref/agents-and-versions) bind new chats to one of these projects by name.
 
 ## List projects
 
@@ -228,4 +228,4 @@ curl -G "$FLUSO_API/v1/agent/files" \
 
 ## Next
 
-Attach project context to [Agents and versions](/developers/agents-and-versions), or create project-bound [Threads and messages](/developers/threads-and-messages).
+Attach project context to [Agents and versions](/developers/api-ref/agents-and-versions), or create project-bound [Threads and messages](/developers/api-ref/threads-and-messages).

@@ -1,3 +1,3 @@
 {
-  "pages": ["gmail", "google-calendar", "slack", "github"]
+  "pages": ["github", "gmail", "google-calendar", "slack"]
 }

@@ -1,0 +1,41 @@
+---
+title: Parent and child threads
+sidebarTitle: Parent & child threads
+icon: git-fork
+description: Let a top-level Agent thread coordinate independent work without mixing every conversation together.
+---
+
+A top-level Agent thread can create direct child threads for separate tasks. The parent coordinates the request. Each child receives a bounded task and works in its own conversation.
+
+The hierarchy has one level. A parent can create several children, but a child cannot create another child.
+
+## Choose when children are created
+
+Agent setup offers three choices:
+
+| Setting | Behavior |
+| --- | --- |
+| Off | The Agent cannot manage other threads. |
+| Explicit | The Agent creates a child only when you ask or its standing instructions require one. This is the default. |
+| Proactive | The Agent may create direct children for distinct tasks that can progress independently. |
+
+Proactive mode does not mean every step becomes a child. Use child threads only for distinct tasks. Reuse a child that already owns the task, and keep related changes that must move together in the parent.
+
+## Give a child enough context
+
+A child sees the task message, not the parent conversation. A good task message includes:
+
+- The task and what the child owns.
+- The source material to use.
+- Any constraints and actions that need approval.
+- What counts as done and what the child should return.
+
+The parent can request the child's final result and receive it automatically. It can also send more work to an existing child. Only the parent that created a child can cancel its delegated request or delete that child.
+
+## Safe parallel work
+
+Use separate children for read-only research or changes to different outputs. Keep changes to the same files or shared APIs in one thread, and combine the results there.
+
+## Next
+
+Read [Context isolation in threads](/developers/context-isolation-in-threads) before splitting work, then see [Threads and messages](/developers/api-ref/threads-and-messages) for the public thread API.

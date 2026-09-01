@@ -1,6 +1,7 @@
 ---
 title: Memory
 sidebarTitle: Memory
+icon: brain
 description: How Fluso remembers what's worth remembering across sessions, without turning every chat into part of a permanent transcript.
 ---
 
@@ -29,6 +30,13 @@ With every message, Fluso pulls in three things as background context:
 - The project's recent working memory
 
 Memory is context for the conversation, not a script. Your current message still drives the response.
+
+<Note>
+  Saved Agent threads are the exception. They use the Agent's own definition
+  instead of global preferences, project instructions, or `context.md`. They
+  can still use project files and project working-memory summaries. See
+  [Threads and contexts](/developers/threads-and-contexts).
+</Note>
 
 ## How it updates
 

@@ -1,0 +1,37 @@
+---
+title: Threads and contexts
+sidebarTitle: Threads & contexts
+icon: messages-square
+description: Understand which Agent settings, conversation history, project data, and files reach each thread.
+---
+
+A thread is one conversation with a saved Agent. Its context is assembled from several sources with different lifetimes.
+
+## Context map
+
+| Source | Scope | What happens in a new thread |
+| --- | --- | --- |
+| Agent definition | Saved Agent configuration | Captured when the thread starts |
+| Conversation history | One thread | Starts empty |
+| Agent knowledge files | Agent configuration | The configured list is captured at start |
+| Project files | Configured project | Shared with other threads in that project |
+| Project working memory | Configured project | Recent summaries can be recalled |
+| Child task message | One child thread | Only the sent message is added, not the parent transcript |
+
+The Agent definition includes its name, description, goal, instructions, allowed capabilities, project, and knowledge files. Editing that setup changes new threads. Existing threads keep the configuration they started with.
+
+## Ordinary chat context is different
+
+Ordinary project chats can use global user preferences, project instructions, and `context.md`. Saved Agent threads use the Agent's saved definition instead. They can still use project files and working-memory summaries shared by the project.
+
+## Pick the right scope
+
+- Put stable Agent behavior in **Instructions**.
+- Put read-only reference material in Agent knowledge files.
+- Put finished and working files in the configured project.
+- Start a new thread for a clean conversation.
+- Use a child thread only when the task can progress with the context you send it.
+
+## Next
+
+Read [Context isolation in threads](/developers/context-isolation-in-threads), [Project context](/developers/project-context), and [User preferences](/developers/user-preferences) for each boundary.

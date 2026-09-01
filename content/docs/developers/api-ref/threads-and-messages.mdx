@@ -7,7 +7,7 @@ description: Create threads, manage their metadata, read history, and stream a t
 
 Threads live inside a workspace project. Thread responses use snake_case fields. The chat stream follows the AI SDK UI message stream protocol.
 
-Agent-backed threads use an [Agent configuration](/developers/agents-and-versions), and each accepted turn creates a [run](/developers/runs).
+Agent-backed threads use an [Agent configuration](/developers/api-ref/agents-and-versions), and each accepted turn creates a [run](/developers/api-ref/runs).
 
 ## List threads
 
@@ -171,4 +171,4 @@ curl "$FLUSO_API/v1/threads/thread_release?project_id=Release%20Review" \
 
 ## Next
 
-Bind new threads to [Agents and versions](/developers/agents-and-versions), or follow accepted turns in [Runs](/developers/runs).
+Bind new threads to [Agents and versions](/developers/api-ref/agents-and-versions), or follow accepted turns in [Runs](/developers/api-ref/runs).
