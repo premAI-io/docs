@@ -1,5 +1,6 @@
 ---
 title: "Release notes"
+icon: sparkles
 description: "What's new in Fluso - product updates, improvements, and fixes."
 ---
 
@@ -19,7 +20,7 @@ description: "What's new in Fluso - product updates, improvements, and fixes."
 - Most organisations want agents doing real work, and are wary of letting them loose on company systems.
 - Fluso makes that a setting rather than a leap of faith.
 - Every tool on every connection carries its own [allow, ask or deny](https://docs.fluso.ai/features/approvals).
-- An agent can read your Gmail freely, while sending an email always stops for your approval.
+- Read-only tools can run automatically, while write tools follow their effective **Allow**, **Ask**, or **Deny** rule.
 - The same split works across Slack, Drive, your trackers and anything else you connect.
 - Your decisions are durable, and survive reloads and restarts.
 - Each one shows whether it came from your organisation or from you.
@@ -250,7 +251,7 @@ description: "What's new in Fluso - product updates, improvements, and fixes."
 - Voice notes come back as proper sentences, with punctuation and capitalisation.
 
 **Smarter assistant**
-- Emails the assistant drafts arrive as properly formatted HTML and sign off with "Sent via fluso.ai", which you can turn off or rename. You still approve every message before it sends.
+- Emails the assistant drafts arrive as properly formatted HTML and sign off with "Sent via fluso.ai", which you can turn off or rename. Gmail sends follow the effective tool and chat approval policy.
 
 **Reliability, privacy & trust**
 - On the Max plan, turn on "Confidential APIs" from settings or the chat composer. It's a one-way switch: while it's on, file uploads, image generation, and background syncing pause so nothing leaves the private path.

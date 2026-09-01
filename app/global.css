@@ -66,6 +66,10 @@ html > body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0px !important;
 }
 
+[role='dialog'] button code {
+  overflow-wrap: anywhere;
+}
+
 /* Release notes: each entry uses bold labels as its section headings. They are not
    real headings on purpose - the page holds every release, so real headings would
    put a hundred items in the table of contents. Give the labels the spacing and

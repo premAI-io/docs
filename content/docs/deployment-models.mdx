@@ -1,0 +1,66 @@
+---
+title: Deployment models
+sidebarTitle: Overview
+icon: server-cog
+description: Compare Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
+---
+
+Your deployment model decides who operates Fluso and where its runtime, durable data, and diagnostics can live. It does not by itself control where connected Apps or external model providers process data.
+
+| Model | Availability | Operations |
+| --- | --- | --- |
+| Fluso Cloud | Available | Managed by Fluso |
+| Dedicated AWS VPC | Supported for scoped Enterprise deployments | Responsibilities agreed during deployment design |
+| Azure VNet | Coming soon | Not available today |
+| On-premises | Scoped Enterprise engagement | Responsibilities agreed before implementation |
+
+## Fluso Cloud
+
+Fluso Cloud is the standard managed service. It runs on AWS with European hosting by default. Fluso operates the application services, Agent runtimes, storage, and platform updates; you manage your workspace, users, connected Apps, and approval policies.
+
+Choose it when you want to start without operating infrastructure. See [Privacy](/resources/privacy) for data handling and [Security](/resources/security) for encryption and isolation.
+
+## Dedicated AWS VPC
+
+A dedicated AWS VPC deployment is available for Enterprise customers whose network or residency requirements do not fit the managed service. It is a scoped deployment, not a self-service switch.
+
+Before launch, your team and Fluso agree on AWS account ownership, region, network connectivity, ingress and egress, DNS, secrets, data stores, backups, upgrades, and support access. Where egress governance is enabled, outbound access can use Fluso's Allow, Ask, and Deny policy boundary; review the current scope under [Network egress](/admin-panel#network-egress).
+
+## Azure VNet (coming soon)
+
+Azure VNet support is planned but is not available today. There is no published availability date. Do not make an Azure deployment dependency until Fluso confirms the required region and services are supported.
+
+## On-premises
+
+On-premises deployments are scoped with Enterprise customers against the target infrastructure. Fluso does not currently offer a one-click installer or a generic support promise for every Kubernetes, virtual-machine, or bare-metal environment.
+
+Agree on these boundaries before treating the design as approved:
+
+| Boundary | What to decide |
+| --- | --- |
+| Data residency | Where the database, project files, knowledge data, and backups are stored |
+| Runtime and inference residency | Where Agent runtimes execute and which model endpoints may receive requests |
+| Diagnostic-data residency | What diagnostic data is captured, where it is stored, how long it is retained, and who can access it |
+| Network access | Which inbound paths and outbound destinations are permitted |
+| Connected Apps | Which external systems may be read or changed, and what returned data Fluso may persist |
+
+<Warning>
+  Running Fluso on-premises does not automatically keep model inference or connected-App data on-premises. External providers keep their own processing boundaries. Confirm every provider and route as part of the deployment design; [Privacy](/resources/privacy#sub-processors) lists the current sub-processors.
+</Warning>
+
+## Operational telemetry
+
+AWS deployments send service logs to CloudWatch and define CloudWatch alarms. Fluso's knowledge service emits structured logs and can export traces and metrics through OpenTelemetry (OTLP). The current AWS collector routes traces to X-Ray and metrics to CloudWatch; Prometheus scraping is optional.
+
+Traces can include prompt and response text. For a dedicated or on-premises deployment, agree which signals are captured, where they are stored, how long they are retained, and which customer-owned collectors are supported.
+
+[Fluso Admin](/admin-panel) shows the product records it receives, including runtime health, recorded cost and token usage, and governance events. It does not replace infrastructure monitoring or promise export of every operational signal.
+
+## Choose a model
+
+- Start with Fluso Cloud when managed operations and European hosting meet the requirement.
+- Scope an AWS VPC deployment when you need a dedicated AWS network boundary.
+- Treat Azure VNet as future availability, not a current option.
+- Scope on-premises only after Fluso validates the infrastructure, residency, provider, telemetry, and support requirements.
+
+For a custom deployment, [contact Fluso](mailto:sales@premai.io). For the component boundaries behind these models, read [Architecture](/developers/architecture).

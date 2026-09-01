@@ -1,0 +1,14 @@
+{
+  "title": "API ref",
+  "icon": "code-xml",
+  "defaultOpen": false,
+  "pages": [
+    "agents-and-versions",
+    "authentication",
+    "files-and-projects",
+    "runs",
+    "schedules",
+    "threads-and-messages",
+    "usage"
+  ]
+}

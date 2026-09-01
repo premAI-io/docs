@@ -1,0 +1,41 @@
+---
+title: Schedules
+sidebarTitle: Schedules
+icon: calendar-clock
+description: Wake an existing Agent thread with a saved message once or on a recurring schedule.
+---
+
+A schedule saves a future message for one existing Agent thread. When it becomes due, Fluso sends that message to the same thread as a separate follow-up turn.
+
+A schedule does not create a new Agent or a new conversation. It wakes the thread with its saved Agent definition, history, and project scope.
+
+To create or manage schedules from an Agent chat, enable thread management for that Agent.
+
+## One-time and recurring schedules
+
+Ask the Agent in plain language:
+
+> *"Tomorrow at 9:00 AM Asia/Kolkata, check whether the release blockers are closed and prepare a status update."*
+
+> *"Every weekday at 9:30 AM Europe/London, review new P0 and P1 escalations and prepare the triage list."*
+
+One-time schedules use a future date and time with an offset. Recurring schedules use a standard five-field cron expression and an IANA time zone.
+
+## What to put in the saved message
+
+The message should still make sense when it runs later. Include:
+
+- The condition to check or work to perform.
+- The source the Agent should read.
+- The expected output.
+- Any approval boundary before an external action.
+
+## Manage a schedule
+
+Ask the Agent to list, pause, resume, change, or delete schedules for the current thread. Deleting the target thread also removes its schedules.
+
+If a recurring turn is still queued, running, or waiting for approval, Fluso does not pile up duplicate occurrences. Repeated failures can pause a schedule so it does not keep retrying without attention.
+
+## Next
+
+Use [Schedules](/developers/api-ref/schedules) for the REST endpoints, [Webhooks](/developers/webhooks) for event-driven turns, and [Runs](/developers/api-ref/runs) to inspect each accepted turn.

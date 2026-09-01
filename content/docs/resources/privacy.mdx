@@ -1,6 +1,7 @@
 ---
 title: Privacy
 sidebarTitle: Privacy
+icon: eye-off
 description: What Fluso collects, what it stores, what it doesn't, and your rights to access, delete, and export. The full picture, plainly.
 ---
 
@@ -60,8 +61,10 @@ Fluso uses a small set of vendors to operate the service. Each is bound by contr
 | Vendor | Purpose |
 |---|---|
 | Clerk | Authentication and user management. |
-| Anthropic | Underlying LLM (anonymised; not used for training). |
-| OpenAI | Underlying LLM (anonymised; not used for training). |
+| Anthropic | Underlying LLM processing; not used for training. |
+| OpenAI | Underlying LLM processing; not used for training. |
+| OpenRouter | Model routing for Agent Studio. |
+| Google | Gemini model processing for Agent Studio through OpenRouter. |
 | Stripe | Billing and payments. |
 | AWS | Infrastructure hosting. |
 
@@ -99,11 +102,12 @@ The graph is the thing most worth understanding here, because it's the thing tha
 
 ## On Team plans
 
-Admins can:
+The current [Admin panel](/admin-panel) can:
 
-- See which apps members have connected (for managing access).
-- Set security policies.
-- Manage user access and seat allocation.
+- Store team membership, workspace roles, Agent access policies, access requests, and Microsoft Entra tenant metadata in the authenticated account's backend governance record.
+- Review the identity and access changes recorded there.
+
+Directory verification and import, application inventory, seat controls, SSO, and runtime authorization enforcement require their owning Enterprise integrations.
 
 Admins cannot:
 
@@ -111,11 +115,11 @@ Admins cannot:
 - Access members' personal knowledge graphs.
 - See content of a member's private projects.
 
-Audit logs record administrative actions (seats added, policies changed) but not the content of any user's work.
+The governance audit view records persisted identity and access changes, not the content of any user's work. It is scoped to the selected account and is not a complete organization-wide security log.
 
 ## Compliance
 
-Fluso is built by Prem AI. For Enterprise customers we offer a Data Processing Agreement, custom data residency, audit logging, SSO (SAML/OIDC), and SOC 2 (in progress).
+Fluso is built by Prem AI. Enterprise engagements can scope a Data Processing Agreement, custom data residency, broader server-backed audit logging, and SSO (SAML/OIDC). The current governance record is durable, but its Microsoft Entra metadata does not verify a directory or provide SSO by itself. Prem has attained SOC 2 Type I; Type II is underway. See the [current security posture](https://www.premai.io/security-at-prem).
 
 GDPR (EU/UK) and CCPA (California) data subject rights are honoured for all customers. Requests go to [privacy@premai.io](mailto:privacy@premai.io).
 

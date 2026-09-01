@@ -1,0 +1,32 @@
+---
+title: Project context
+sidebarTitle: Project context
+icon: folder-open
+description: See how an Agent's configured project affects files, working memory, and new threads.
+---
+
+Every Agent is assigned to one project. New Agent threads start in that project and use its files and project working-memory summaries.
+
+Changing the Agent's project affects new threads. Existing threads stay with the project and Agent definition they started with.
+
+## Three project layers
+
+Fluso keeps three project concepts separate:
+
+| Layer | What it contains | Saved Agent threads |
+| --- | --- | --- |
+| Project instructions | Standing behavior for ordinary project chats | Not applied |
+| `context.md` | Durable project notes, conventions, and decisions | Not applied as Agent instructions |
+| Project working memory | Short summaries of recent work across project threads | Available |
+
+Saved Agent threads skip project instructions and `context.md` so those files cannot silently override the Agent's own definition. Put Agent-specific rules in **Instructions**. Add stable reference material as Agent knowledge files.
+
+The project still matters. Its files are available to the Agent, and short summaries from other project threads can provide useful background. Those summaries are context, not a command to continue old work.
+
+## Choosing a project
+
+Use a dedicated project when the Agent should work with one customer's files, one product area, or one set of deliverables. Use **Home** when no narrower file or memory scope is needed.
+
+## Next
+
+See [Projects](/features/projects) for the product workflow, [User preferences](/developers/user-preferences) for the other ordinary-chat layer that saved Agents skip, or [Files and projects](/developers/api-ref/files-and-projects) for project APIs.

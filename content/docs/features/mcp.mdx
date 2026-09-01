@@ -1,6 +1,7 @@
 ---
 title: Apps and MCP servers
 sidebarTitle: Apps & MCP
+icon: plug-zap
 description: Every connection in Fluso is an MCP connection. One-click managed apps, custom servers by URL, and per-tool permissions.
 ---
 
@@ -9,7 +10,7 @@ Fluso reaches other software through MCP. There is no separate connector system 
 Two ways in, one list:
 
 - **Apps.** A catalog of about a hundred managed apps — Google Workspace, GitHub, Slack, Linear, Notion, Jira, HubSpot, Stripe, and so on. One click, sign in on the app's own page, done. Fluso runs the MCP server for you.
-- **Custom server.** Any MCP-compatible endpoint, by URL. Your team's private server, a smaller SaaS that shipped an MCP endpoint, a tool a developer stood up over the weekend.
+- **Custom server.** A publicly reachable HTTPS endpoint that implements MCP over Streamable HTTP. This can be a server your team operates or a SaaS endpoint outside the managed catalog.
 
 ## Where to find them
 
@@ -40,6 +41,14 @@ The catalog runs from the everyday — Outlook, Teams, Notion, Dropbox, Zoom —
 ## Connecting a custom server
 
 Switch to the **Custom server** tab and paste the endpoint URL.
+
+<Note>
+  Use the exact Streamable HTTP endpoint. It must be reachable from Fluso over
+  public HTTPS; `localhost`, private network addresses, and `stdio` commands
+  are not connection URLs. The workspace or organization
+  [network-egress policy](/admin-panel#network-egress), plus any provider
+  policy applied to that origin, must allow it.
+</Note>
 
 <Frame>
   <img src="/images/features/mcp/custom-server.png" alt="The Add MCP dialog on the Custom server tab, with a single URL field showing the placeholder https://mcp.linear.app." />
@@ -82,7 +91,7 @@ A static token sent as `Authorization: Bearer <token>` — the GitHub-PAT style.
 </Frame>
 
 <Note>
-  Whatever you paste goes to the backend over HTTPS and is stored encrypted at rest, the same way OAuth tokens are. It never sits in the browser and doesn't appear in logs.
+  Whatever you paste goes to the backend over HTTPS and is stored encrypted at rest, the same way OAuth tokens are. The UI does not persist or redisplay it after save, and it does not appear in logs.
 </Note>
 
 ## Connecting from chat
@@ -127,7 +136,7 @@ Each row shows the connection's status. The three-dot menu holds the two actions
 
 - **Connections are per account, not per chat.** Sign in once; every new chat can use the connection, and it survives runtime restarts in the background.
 - **The runtime never stores tokens.** Tools fetch a short-lived token from the backend per request, use it, and drop it. Sign-in happens on the app's own page — Fluso never sees your password.
-- **Any MCP server works.** OAuth with or without auto-registration, API keys, bearer tokens. Nothing is blocked because of how the server handles sign-in.
+- **Custom servers have prerequisites.** Fluso supports public HTTPS Streamable HTTP endpoints with OAuth, API-key, or bearer-token access. A successful sign-in does not override network-egress or provider policy.
 - **Rules set by your organization take precedence** over anything you allow yourself.
 
 <Warning>

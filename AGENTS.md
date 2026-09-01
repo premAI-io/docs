@@ -10,13 +10,18 @@
 
 ## Information architecture
 
-The IA tracks the user's journey from "just landed" to "pro user". Five sidebar groups:
+The navigation keeps Home first, then sorts the top-level sections and the pages inside each section alphabetically:
 
-- **Get started** — `/introduction`, `/quickstart`, `/going-deeper`. The path from "is this for me?" through "I have it set up" to "I've made it part of my work".
-- **Workflows** — `/workflows/*`. Six concrete stories: morning brief, meetings, research-to-deck, content launch, bug-to-PR, knowledge recall.
-- **Features** — the five primitives: `/features/{chat, mcp, skills, tasks, memory}`. Everything Fluso does is some combination of these five.
-- **App setup** — `/integrations/{gmail, google-calendar, slack, github}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
-- **Reference** — `/resources/{pricing, security, privacy, faq}`. Security covers infrastructure; Privacy covers data handling; they're distinct pages.
+- **Administration** - `/admin-panel`. Browser-admin access, dashboards, governance records, runtime controls, and network policy.
+- **Agents (Beta)** - `/developers/*`. Guides cover Agent setup, threads, context, projects, schedules, preferences, and webhooks. Architecture and the REST API reference live here too, with API pages under `/developers/api-ref/*`.
+- **App setup** - `/integrations/{github, gmail, google-calendar, slack}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
+- **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
+- **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.
+- **Get started** - `/going-deeper`, `/introduction`, `/quickstart`. These pages explain the path from first setup to daily use.
+- **Reference** - `/resources/{faq, pricing, privacy, security}`. Security covers infrastructure; Privacy covers data handling; they're distinct pages.
+- **Release notes** - `/release-notes`. Customer-facing changes, newest first.
+- **Remote access** - `/remote/*`. Ways to use Fluso away from the desktop app.
+- **Workflows** - `/workflows/*`. Six concrete stories: bug-to-PR, content launch, knowledge recall, meetings, morning brief, and research-to-deck.
 
 The home page (`/`) is a router into the journey, with three sections: just landed, already set up, daily user.
 

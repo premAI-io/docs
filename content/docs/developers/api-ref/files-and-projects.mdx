@@ -1,0 +1,231 @@
+---
+title: Files and projects
+sidebarTitle: Files & projects
+icon: folder-kanban
+description: Work with durable project metadata and files in a user's Agent workspace.
+---
+
+Workspace projects and files use the `/v1/agent/*` routes. They belong to the authenticated user's durable workspace, outside disposable runtime compute.
+
+[Agents](/developers/api-ref/agents-and-versions) bind new chats to one of these projects by name.
+
+## List projects
+
+<Endpoint method="GET" path="/v1/agent/projects" />
+
+Returns workspace projects and their thread summaries.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agent/projects?includeArchived=false" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{
+  "projects": [
+    {
+      "name": "Release Review",
+      "goal": "Decide launch readiness",
+      "createdAt": "2026-08-31T09:00:00Z",
+      "updatedAt": "2026-08-31T09:00:00Z",
+      "threads": []
+    }
+  ]
+}
+```
+
+## Create a project
+
+<Endpoint method="POST" path="/v1/agent/projects" />
+
+Creates a workspace project and its context file.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agent/projects" \
+  -X POST \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Release Review",
+    "goal": "Decide launch readiness",
+    "instructions": "Keep evidence and decisions in this project."
+  }'
+```
+
+```json title="Response: 201"
+{
+  "name": "Release Review",
+  "goal": "Decide launch readiness",
+  "instructions": "Keep evidence and decisions in this project.",
+  "createdAt": "2026-08-31T09:00:00Z",
+  "updatedAt": "2026-08-31T09:00:00Z",
+  "threads": []
+}
+```
+
+## Update a project
+
+<Endpoint method="PATCH" path="/v1/agent/projects" />
+
+Updates the project named in the request body.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agent/projects" \
+  -X PATCH \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Release Review",
+    "goal": "Decide launch readiness and record follow-up owners"
+  }'
+```
+
+```json title="Response: 200, selected fields"
+{
+  "name": "Release Review",
+  "goal": "Decide launch readiness and record follow-up owners",
+  "updatedAt": "2026-08-31T09:05:00Z",
+  "threads": []
+}
+```
+
+## Export a project
+
+<Endpoint method="GET" path="/v1/agent/projects/export" />
+
+Streams the named project as a ZIP archive.
+
+```bash title="Request"
+curl -G "$FLUSO_API/v1/agent/projects/export" \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  --data-urlencode 'name=Release Review' \
+  -o release-review.zip
+```
+
+```http title="Response"
+HTTP/1.1 200 OK
+Content-Type: application/zip
+Content-Disposition: attachment; filename="Release Review.zip"; filename*=UTF-8''Release%20Review.zip
+```
+
+## List files
+
+<Endpoint method="GET" path="/v1/agent/files" />
+
+Lists files or directories under a workspace path.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agent/files?path=/files&recursive=false&includeStats=true" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{
+  "path": "/files",
+  "recursive": false,
+  "entries": [
+    {
+      "path": "/files/release-brief.md",
+      "name": "release-brief.md",
+      "type": "file",
+      "size": 1240,
+      "modifiedAt": "2026-08-31T09:00:00Z",
+      "mimeType": "text/markdown"
+    }
+  ]
+}
+```
+
+## Read a text file
+
+<Endpoint method="GET" path="/v1/agent/files/read" />
+
+Returns a UTF-8 text file as JSON.
+
+```bash title="Request"
+curl -G "$FLUSO_API/v1/agent/files/read" \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  --data-urlencode 'path=/files/release-brief.md'
+```
+
+```json title="Response: 200"
+{
+  "path": "/files/release-brief.md",
+  "content": "# Release candidate\n\nKnown issue: ...\n",
+  "encoding": "utf-8"
+}
+```
+
+## Upload a file
+
+<Endpoint method="POST" path="/v1/agent/files/upload" />
+
+Uploads one file with an optional destination and conflict policy.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/agent/files/upload" \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -F 'file=@release-brief.md' \
+  -F 'path=/files/release-brief.md' \
+  -F 'onConflict=overwrite'
+```
+
+```json title="Response: 200"
+{
+  "success": true,
+  "path": "/files/release-brief.md",
+  "size": 1240,
+  "mimeType": "text/markdown"
+}
+```
+
+`onConflict` accepts `error`, `overwrite`, or `uuid`. The default is `error`.
+
+## Download a file
+
+<Endpoint method="GET" path="/v1/agent/files/download" />
+
+Streams a file with attachment headers.
+
+```bash title="Request"
+curl -G "$FLUSO_API/v1/agent/files/download" \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  --data-urlencode 'path=/files/release-report.pdf' \
+  -o release-report.pdf
+```
+
+```http title="Response"
+HTTP/1.1 200 OK
+Content-Type: application/pdf
+Content-Disposition: attachment; filename="release-report.pdf"; filename*=UTF-8''release-report.pdf
+```
+
+## Delete a file
+
+<Endpoint method="DELETE" path="/v1/agent/files" />
+
+Deletes one file, or a directory when `recursive=true`.
+
+```bash title="Request"
+curl -G "$FLUSO_API/v1/agent/files" \
+  -X DELETE \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  --data-urlencode 'path=/files/release-brief.md' \
+  --data 'recursive=false'
+```
+
+```json title="Response: 200"
+{
+  "success": true,
+  "path": "/files/release-brief.md"
+}
+```
+
+<Warning>
+  A recursive directory delete removes every child path. List the target first
+  when its contents are not already known.
+</Warning>
+
+## Next
+
+Read [Projects](/features/projects) for the product workflow, attach project context to [Agents and versions](/developers/api-ref/agents-and-versions), or create project-bound [Threads and messages](/developers/api-ref/threads-and-messages).

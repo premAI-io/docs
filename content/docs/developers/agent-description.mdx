@@ -1,0 +1,35 @@
+---
+title: Agent description
+sidebarTitle: Agent description
+icon: file-text
+description: Write a clear Agent summary and keep it separate from the goal and standing instructions.
+---
+
+The description is the short answer to "What does this Agent do?" It appears in Agent lists and search, and it becomes part of the saved Agent definition when a thread starts.
+
+Keep it to one sentence. Name the responsibility, input, and output when they fit.
+
+> *"Triages customer escalations and prepares an approval-ready response plan."*
+
+## Description, goal, and instructions
+
+These fields have different jobs:
+
+| Field | Use it for | Example |
+| --- | --- | --- |
+| Name | A short label you can find quickly | Customer escalation coordinator |
+| Description | What the Agent is responsible for | Triages customer escalations and prepares a response plan. |
+| Goal | The result that marks success | Return a severity, owner, and next-step package. |
+| Instructions | Rules, sources, order, and approval boundaries | Check Gmail and Drive. Require approval before any external send. |
+
+Do not put the full workflow in the description. Long rules are harder to scan there and belong in **Instructions**.
+
+## Changes apply to new threads
+
+An Agent thread keeps the saved definition it started with. Changing the description, goal, instructions, project, capabilities, or knowledge files creates a new definition for future threads. It does not rewrite an existing conversation.
+
+Start a new thread after an edit when you need to verify the new behavior.
+
+## Next
+
+Build the first draft in [Agent builder](/developers/agent-builder), or update these fields through [Agents and versions](/developers/api-ref/agents-and-versions).

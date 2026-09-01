@@ -1,0 +1,68 @@
+---
+title: Agent versions
+sidebarTitle: Agent versions
+icon: git-compare-arrows
+description: Review, restore, export, import, and share an Agent's saved setup.
+---
+
+Fluso keeps saved Agent configurations as versions. A version records the Agent fields used by a thread, including its instructions, response mode, knowledge-file list, Apps, project, skills, and thread settings.
+
+Open the Agent, select its name in the top bar, then select **Version history**.
+
+## Review what changed
+
+The newest entry is marked **Current**. Expand **changes** on an entry to compare it with the version saved immediately before it. Each entry also shows when it was saved and a short configuration ID.
+
+Use this history when an edit changes an Agent's behavior unexpectedly. It lets you identify the last setup that produced a good result without guessing which fields changed.
+
+## Roll back safely
+
+1. Find the last known-good saved configuration.
+2. Select **Roll back**.
+3. Review the fields listed in the confirmation dialog.
+4. Select **Promote to current**.
+5. Start a **New thread** and repeat the request or [evaluation](/developers/evaluations) that exposed the problem.
+
+Rollback does not erase history. Fluso creates a new current configuration from the selected version, so the change is visible and can itself be reversed later.
+
+Existing threads keep the configuration they started with. Only new threads use the restored configuration. This prevents a long-running conversation from changing behavior halfway through.
+
+<Warning>
+  Rollback restores saved Agent fields. It does not restore an older Agent Studio workflow preview, recreate deleted project files, or copy back a project that no longer exists.
+</Warning>
+
+If the selected version points to a deleted project, recreate the settings you need in the editor, choose a current project, and save them as a new version. If the Agent changed in another browser tab, refresh the history, review the newest version, and retry.
+
+### Example: restore severity rules
+
+Suppose a customer escalation Agent begins treating degraded service as P0 after its severity instructions were edited. Open **Version history**, compare the instruction changes, and promote the last version that kept degraded-but-usable service at P1. Then start a new thread with the same case and confirm the severity, next owner, and approval boundary.
+
+## Move an Agent between workspaces
+
+Export, import, and share create portable copies of an Agent's setup. They do not transfer a live Agent, its chat history, or ownership of the original. Open the Agent and select its name in the top bar to find **Export YAML**, **Import Agent**, and **Share**.
+
+### Export a file
+
+Select **Export YAML** to download an `.agent.yaml` definition. The file contains the portable Agent fields and saved workflow, but leaves out workspace identities, secrets, deliveries, project ownership, and knowledge-file contents. It lists omitted knowledge files so the recipient knows what to add again.
+
+If the Agent relies on a project, [export that project as a ZIP](/features/projects#export-a-project) separately to carry its files, `context.md`, and metadata.
+
+### Import a copy
+
+Select **Import Agent** and choose a Fluso Agent YAML, YML, or JSON definition. Fluso opens a new draft in **Home**; it does not overwrite the Agent whose menu you used.
+
+Before creating the copy, review its instructions, select the destination project, add its knowledge files, and reconnect its Apps. Named skills remain references and must exist in the destination workspace. If the source Agent could use every skill, the imported copy starts with no skills selected; choose the skills it should use.
+
+Agent definition files are limited to 128 KB. Fluso rejects an incomplete definition or unsupported format version instead of creating a partial Agent.
+
+### Share a review link
+
+Select **Share**, then **Copy link**. Anyone with the link can review the read-only definition and import a separate copy.
+
+The definition is stored in the link itself, so the link cannot be revoked. Anyone who keeps it can reopen that snapshot. Share it only with people who may read the Agent's instructions and setup. Later edits do not update the link or an imported copy; create a new link for a newer snapshot.
+
+For a customer escalation Agent, send the support lead a review link or exported definition. They can inspect the P0/P1 rules, import a copy, connect their own Gmail and Slack access, add their runbook, and test it without changing your Agent or threads.
+
+For project and conversation imports, see [Imports](/features/imports). Those imports bring context and files into projects; they are separate from importing an Agent definition.
+
+For API-based version updates, see [Agents and versions](/developers/api-ref/agents-and-versions).

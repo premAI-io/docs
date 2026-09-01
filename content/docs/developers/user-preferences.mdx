@@ -1,0 +1,35 @@
+---
+title: User preferences
+sidebarTitle: User preferences
+icon: sliders-horizontal
+description: Understand where global preferences are stored and why saved Agent threads use their own instructions instead.
+---
+
+Global user preferences live in `/preferences.md` in your Fluso workspace. Ordinary chats use that file as background for choices such as response style, preferred sources, or a standing sign-off.
+
+> *"Remember that I prefer concise status updates."*
+
+After a turn ends, Fluso may save a preference that you stated clearly. A passing remark may not change future behavior.
+
+## Saved Agents are separate
+
+Saved Agent threads do not load global preferences as instructions. This keeps an Agent's standing rules from changing because an unrelated chat wrote a different preference.
+
+Use these scopes instead:
+
+| Need | Put it here |
+| --- | --- |
+| A rule for every new thread of one Agent | Agent **Instructions** |
+| A correction for the current request only | Your message in that thread |
+| A preference for ordinary chats | `/preferences.md` |
+| Reference material for an Agent | Agent knowledge files |
+
+A direct request in an Agent thread can change the current response, but it does not rewrite the saved Agent definition. Edit the Agent and start a new thread when the change should persist for that Agent.
+
+## Read or edit the file
+
+Ask Fluso what it remembers about your preferences, or open `/preferences.md` through the workspace file tools. Do not store passwords, tokens, or other secrets there.
+
+## Next
+
+See [Agent description](/developers/agent-description) for the saved definition or [Files and projects](/developers/api-ref/files-and-projects) for the file API.

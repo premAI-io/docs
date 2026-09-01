@@ -15,6 +15,19 @@ import { cn } from '@/lib/cn';
  */
 
 function LucideIcon({ name, className }: { name: string; className?: string }) {
+  if (name === 'github') {
+    return (
+      <svg
+        aria-hidden="true"
+        className={className}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z" />
+      </svg>
+    );
+  }
+
   const pascal = name
     .split('-')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
@@ -46,6 +59,37 @@ export function Info({ children }: { children: ReactNode }) {
 
 export function Check({ children }: { children: ReactNode }) {
   return <Callout type="success">{children}</Callout>;
+}
+
+const methodStyle = {
+  GET: 'bg-sky-500/10 text-sky-700 dark:text-sky-300',
+  POST: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300',
+  PATCH: 'bg-amber-500/10 text-amber-700 dark:text-amber-300',
+  DELETE: 'bg-red-500/10 text-red-700 dark:text-red-300',
+} as const;
+
+export function Endpoint({
+  method,
+  path,
+}: {
+  method: keyof typeof methodStyle;
+  path: string;
+}) {
+  return (
+    <div className="not-prose my-4 flex min-w-0 items-center gap-3 rounded-lg border bg-fd-card px-3 py-2.5">
+      <span
+        className={cn(
+          'shrink-0 rounded px-2 py-1 font-mono text-[11px] font-semibold',
+          methodStyle[method],
+        )}
+      >
+        {method}
+      </span>
+      <code className="min-w-0 break-all text-sm font-medium text-fd-foreground">
+        {path}
+      </code>
+    </div>
+  );
 }
 
 // --- Cards ---

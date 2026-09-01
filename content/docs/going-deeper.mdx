@@ -1,6 +1,7 @@
 ---
 title: Going deeper
 sidebarTitle: Going deeper
+icon: layers
 description: Patterns, projects, custom skills, and the prompt habits that separate daily users from pros.
 ---
 
@@ -26,11 +27,11 @@ A few patterns worth practising.
 
 ## Use projects, properly
 
-Projects are folders for context. Most people create one and forget. The better habit:
+[Projects](/features/projects) are folders for context. Most people create one and forget. The better habit:
 
 A project per major area of work. Acme Corp, Q3 Launch, Board Reporting, Personal. When you're inside a project, Fluso scopes its memory and search to that project's content. Asking "what's the status?" inside the Acme project gets the Acme answer; same prompt outside any project gets a generic everything-bag.
 
-Drop a `context.md` into the project's workspace if your context is non-obvious. The simplest version:
+Add stable project context when the background is non-obvious. The simplest version:
 
 ```markdown
 # Acme Corp
@@ -42,7 +43,7 @@ Drop a `context.md` into the project's workspace if your context is non-obvious.
 - Sensitive: don't reference our internal pricing model in emails to them
 ```
 
-Fluso reads it before answering anything inside the project. The cost is two minutes; the payoff shows up in every reply for months.
+Paste this into a project chat and say *"add this to project context"*. Fluso stores it in the hidden `context.md` file and reads it before answering ordinary chats inside the project.
 
 If you are bringing work over from ChatGPT, Claude, or another agent, use [Imports](/features/imports) to turn that context into Fluso projects and files.
 
@@ -61,7 +62,7 @@ The first PR Fluso writes after you add this will make the value obvious.
 
 Skills are the prebuilt capabilities Fluso reaches for when a request needs them: PDF generation, deep research, meeting intelligence, image generation, and so on. You can build your own — without writing code or markdown.
 
-A custom skill captures a workflow you repeat with the same shape: a weekly investor update, a standard offer letter, a board-prep checklist. To build one, open **Customization → Skills**, click **Add skill** at the top right, and pick **Build with Fluso**. You land back in chat with a prompt ready to send:
+A custom skill captures a workflow you repeat with the same shape: a weekly investor update, a standard offer letter, a board-prep checklist. To build one, open **Plugins → Skills**, click **Add skill** at the top right, and pick **Build with Fluso**. You land back in chat with a prompt ready to send:
 
 > *"Create a skill using skill-creator. First, ask what workflow it should handle."*
 
@@ -72,6 +73,8 @@ The full mechanics are in [Skills](/features/skills). The bar for building one i
 ## Memory hygiene
 
 Memory builds itself in the background. You do not have to maintain it. A few habits keep it useful and on-scope. The mechanics are in [Memory](/features/memory) — this is what to do with them.
+
+<KnowledgeGraphDiagram />
 
 **Be explicit when something is durable.** *"Remember that I prefer drafts in plain text"*, *"add to project context: the Q3 launch ships on August 14"*. Background learning is conservative on purpose; explicit asks are the fast path.
 
@@ -105,7 +108,7 @@ The pattern: name the inputs, name the output, let Fluso connect them.
 
 ## Approval discipline
 
-Reads happen freely. Writes wait for approval. The approval is conversational: when Fluso has a message or change ready to send, it ends its reply with something like *"Shall I send this to sarah@acme.com?"* and waits for your yes or no in chat.
+Approval follows the effective tool and chat policy. With **Ask**, a read or write pauses on an approval card. A tool set to **Allow**, or a chat using **Don't ask permission**, can continue without a per-action prompt; **Deny** always blocks it. Keep external-facing write tools on **Ask** when you want to review each draft.
 
 The instinct on day one is to read every draft carefully. By day twenty, you will be tempted to wave things through. Don't.
 
@@ -125,7 +128,7 @@ Team plans add shared context. The patterns that matter:
 
 **Shared knowledge graph** for the team. Decisions made in any team member's meetings are visible to everyone (within the shared project). Useful for executive teams; less useful for projects with strict need-to-know.
 
-**Admin visibility, not access.** Admins can see which apps team members have connected and how much they're using Fluso. They cannot read messages, files, or knowledge graphs. The audit trail is for managing the seat, not surveilling the work.
+**Admin visibility, not content access.** The current [Admin panel](/admin-panel) covers identity and access records, recorded usage, runtime status, and network policy. Connected-app inventory, seat controls, and a complete organization-wide audit require their owning Enterprise integrations. The admin UI does not expose messages, files, or knowledge graphs.
 
 ## Things people miss
 

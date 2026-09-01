@@ -1,0 +1,174 @@
+---
+title: Threads and messages
+sidebarTitle: Threads & messages
+icon: messages-square
+description: Create threads, manage their metadata, read history, and stream a turn.
+---
+
+Threads live inside a workspace project. Thread responses use snake_case fields. The chat stream follows the AI SDK UI message stream protocol.
+
+Agent-backed threads use an [Agent configuration](/developers/api-ref/agents-and-versions), and each accepted turn creates a [run](/developers/api-ref/runs).
+
+## List threads
+
+<Endpoint method="GET" path="/v1/threads" />
+
+Returns ordinary threads ordered by recent activity.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/threads?page=1&limit=20" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200, selected fields"
+{
+  "threads": [
+    {
+      "thread_id": "thread_release",
+      "project_id": "Release Review",
+      "name": "Release review",
+      "title": "Release review",
+      "created_at": "2026-08-31T09:00:00Z",
+      "updated_at": "2026-08-31T09:02:00Z",
+      "last_active_at": "2026-08-31T09:02:00Z",
+      "status": "ready"
+    }
+  ],
+  "pagination": { "page": 1, "limit": 20, "total": 1, "pages": 1 }
+}
+```
+
+Agent-owned chats are omitted from this general list and remain attached to their Agent.
+
+## Create a thread
+
+<Endpoint method="POST" path="/v1/threads" />
+
+Creates a thread in the named project, creating the project when needed.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/threads" \
+  -X POST \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"project_id":"Release Review","title":"Release review"}'
+```
+
+```json title="Response: 200"
+{
+  "thread_id": "thread_release",
+  "project_id": "Release Review"
+}
+```
+
+You can supply your own `thread_id` for an idempotent integration boundary.
+
+## Update a thread
+
+<Endpoint method="PATCH" path="/v1/threads/{threadId}" />
+
+Updates the title, metadata, pin, archive state, or label membership.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/threads/thread_release?project_id=Release%20Review" \
+  -X PATCH \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"title":"RC decision","pinned":true}'
+```
+
+```json title="Response: 200, selected fields"
+{
+  "thread_id": "thread_release",
+  "project_id": "Release Review",
+  "name": "RC decision",
+  "title": "RC decision",
+  "pinned_at": "2026-08-31T09:03:00Z",
+  "status": "ready"
+}
+```
+
+## Read message history
+
+<Endpoint method="GET" path="/v1/threads/{threadId}/messages" />
+
+Returns the thread's persisted messages and projected tool-status records.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/threads/thread_release/messages?project_id=Release%20Review" \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{
+  "messages": [
+    {
+      "message_id": "user-1",
+      "thread_id": "thread_release",
+      "type": "user",
+      "is_llm_message": false,
+      "content": "{\"content\":\"Review this release candidate\"}",
+      "metadata": "{\"request_id\":\"req_review_01\"}",
+      "created_at": "2026-08-31T09:00:00Z",
+      "updated_at": "2026-08-31T09:00:00Z"
+    }
+  ]
+}
+```
+
+## Send a message
+
+<Endpoint method="POST" path="/v1/chat" />
+
+Starts or queues a turn and streams UI message events until the request settles.
+
+Use a new thread ID for the first Agent-backed turn. The accepted send creates and binds that thread; an ordinary thread cannot later be converted.
+
+```bash title="Request"
+curl -N "$FLUSO_API/v1/chat" \
+  -H "Authorization: Bearer $FLUSO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "threadId": "thread_agent_release",
+    "projectName": "Release Review",
+    "agentId": "agt_0123456789ab4def8123456789abcdef",
+    "requestId": "req_review_01",
+    "message": "Review this release candidate"
+  }'
+```
+
+```text title="Response: 200 text/event-stream, shortened"
+data: {"type":"start","messageId":"assistant-req_review_01"}
+
+data: {"type":"text-start","id":"final-text-req_review_01"}
+
+data: {"type":"text-delta","id":"final-text-req_review_01","delta":"Go, with one follow-up."}
+
+data: {"type":"text-end","id":"final-text-req_review_01"}
+
+data: {"type":"finish"}
+
+data: [DONE]
+```
+
+Use one unique `requestId` per intended turn. Retrying the same accepted request does not create a second turn.
+
+## Delete a thread
+
+<Endpoint method="DELETE" path="/v1/threads/{threadId}" />
+
+Deletes the thread and removes schedules that target it.
+
+```bash title="Request"
+curl "$FLUSO_API/v1/threads/thread_release?project_id=Release%20Review" \
+  -X DELETE \
+  -H "Authorization: Bearer $FLUSO_TOKEN"
+```
+
+```json title="Response: 200"
+{ "deleted": true }
+```
+
+## Next
+
+Bind new threads to [Agents and versions](/developers/api-ref/agents-and-versions), or follow accepted turns in [Runs](/developers/api-ref/runs).
