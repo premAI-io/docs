@@ -68,7 +68,7 @@ A top-level Agent thread can create direct child threads for separate tasks. Eac
 
 ### Give a child enough context
 
-A child sees the task message, not the parent's transcript. Include the task, source material, constraints, approval boundaries, and expected result. The parent can receive the result, send follow-up work to that child, or cancel its delegated request.
+A child sees the task message, not the parent's transcript. Include the task, source material, constraints, approval boundaries, and expected result. Its final result returns to the parent automatically; only the parent that created it can send follow-up work, cancel it, or delete it.
 
 ### Work in parallel safely
 

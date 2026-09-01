@@ -41,7 +41,7 @@ Files created in project chats stay in the same workspace. That makes the projec
 
 On **Projects**, open the project's **•••** menu and select **Export as zip**. You can also open the project and select **Export**.
 
-The ZIP contains the project's regular files and folders, `context.md`, and project metadata. It skips dotted runtime entries and symbolic links. Conversation history is separate; use **Share chat** for a reviewable snapshot or the [Threads API](/developers/api-ref/threads-and-messages#read-message-history) for persisted messages.
+The ZIP contains the project's regular files, their folder paths, `context.md`, and project metadata. It omits empty folders, dotted runtime entries, and symbolic links. Conversation history is separate; use **Share chat** for a reviewable snapshot or the [Threads API](/developers/api-ref/threads-and-messages#read-message-history) for persisted messages.
 
 ## Keep context in the right place
 
