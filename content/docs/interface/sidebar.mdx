@@ -1,0 +1,256 @@
+---
+title: Sidebar
+sidebarTitle: Sidebar
+description: Where your chats live. Projects, labels, pins, search that reads inside messages, and the drag-and-drop and keyboard shortcuts that move it all around.
+---
+
+The sidebar is the list of everything you have ever asked Fluso. After a few weeks that list is long, so it is built to be organised rather than scrolled.
+
+Three tools do most of the work: projects for what belongs together, labels for what cuts across, pins for what you need today.
+
+## Projects
+
+A project is a folder with a memory. Chats inside it share files and context, and each project keeps its own notes about how you work there, separate from every other project. See [Memory](/features/memory) for what it remembers.
+
+Give one an icon and a colour and it stops being another grey row. There are 20 icons and 9 colours.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="A project's actions menu opens from the sidebar. Customize expands into a grid of colours and icons, and choosing one recolours the folder row on the spot."
+    src="/images/interface/sidebar/projects.mp4"
+  ></video>
+</Frame>
+
+## Labels
+
+Labels are the cross-cutting layer. A chat lives in exactly one project, but it can carry as many labels as you like.
+
+Make one from any chat's `⋯` menu: **Add to label → New label**, give it a name and a colour, and it exists from then on. It shows as a coloured badge beside the chat name, and the same submenu ticks it on and off afterwards.
+
+**Projects take labels too.** Label a folder and the whole folder turns up under that label, its chats with it, which is how a label ends up meaning "everything to do with this" rather than a list of chats you remembered to tag.
+
+Switch the sidebar to **By Label** and the list regroups entirely: one section per label, with a chat appearing under each label it carries.
+
+Deleting a label deletes the label. The chats and projects that carried it stay exactly where they were, minus one badge.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="A label is created from a chat's actions menu, named and given a colour, and appears as a badge beside the chat. A second label is ticked on and a second badge joins it. Switching the grouping to By Label regroups the sidebar into one section per label, with that chat under both, and a project labelled the same way brings its own chats into the section."
+    src="/images/interface/sidebar/labels.mp4"
+  ></video>
+</Frame>
+
+## Pins
+
+Pin what you are on this week and it moves to a **Pinned** section at the top. It is in the `⋯` menu, or `P` while that menu is open. Projects pin the same way, and a pinned folder keeps its chats under it.
+
+Unpinning has three routes, which is one more than most people find: the same `⋯` menu now reads **Unpin**, a crossed-star button appears on the pinned row itself when you hover it, and dragging the row out of the section drops the pin where it lands.
+
+Drag pinned rows against each other to set their order.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="A chat is pinned from its actions menu and moves to the Pinned section at the top, and a project is pinned the same way. Hovering a pinned row reveals a crossed-star unpin button beside it, and the actions menu now offers Unpin in place of Pin."
+    src="/images/interface/sidebar/pins.mp4"
+  ></video>
+</Frame>
+
+## Drag and drop
+
+Project folders drag too. Pull one above or below another to set the order of the tree, or drag it up into **Pinned** and drop it there to pin the whole folder.
+
+**Archived** is a drop target the same way. Drag a chat or a folder down onto it to file the thing away, and drag it back out to bring it in again.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="A project folder is dragged up into the Pinned section, where a Release to pin pill appears, and dropping it pins the folder with its chats. In the By Label view a chat is then dragged onto a label section and joins it, keeping the label it already had."
+    src="/images/interface/sidebar/drag-and-drop.mp4"
+  ></video>
+</Frame>
+
+In the **By Label** view the label sections are drop targets as well: a chat dropped on a label picks it up, and one dragged out of a label section loses it. The Projects tree shows no label sections, so reach for the `⋯` menu there instead.
+
+<Note>
+  A chat cannot be dragged from one project into another. Projects keep separate memory, and a chat contributes notes to the project it was started in; moving it would leave those notes behind and mix them into somewhere they do not belong. Start the chat where it belongs, and use labels for anything that cuts across.
+</Note>
+
+## Making things from the sidebar
+
+The **Projects** header carries a `+` for a new project, and every folder row has one for a new chat inside it. Right-click any empty space in the list for the same two, whichever is nearer your pointer.
+
+## Grouping, filtering, sorting
+
+The filter button above the list controls how the whole sidebar is arranged.
+
+| Control | Options |
+| --- | --- |
+| Group by | Projects, Recents, Date, By Label |
+| Status | All, Active, Error |
+| Active within | 24h, 3d, 7d, 30d |
+| Sort | last activity newest or oldest, A to Z, Z to A |
+
+**Projects** is the tree you know. **Recents** drops the folders and gives you a flat list of what you touched last. **Date** buckets by day. **By Label** is the reference view described above.
+
+## Search that reads the messages
+
+The search box looks inside the conversations, not only at their titles. Search for a phrase you remember saying and you get the chats that contain it, each with the matching line underneath and the words picked out in it. Results stay grouped by project, so you can see which piece of work a hit belongs to before opening anything.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="A phrase is typed into the sidebar search and the list narrows to the chats whose messages contain it, grouped under their projects, each showing the matching line with the words picked out. Opening a result lands on the same words in the conversation."
+    src="/images/interface/sidebar/search.mp4"
+  ></video>
+</Frame>
+
+It searches the archive as well, so something you filed away months ago still answers.
+
+`⌘K` puts the cursor there from anywhere. `Enter` opens the first result, `Esc` clears the box.
+
+## Reading a chat without opening it
+
+Rest the pointer on a row for a moment and a card appears with the project it belongs to, how long ago it was touched, the date, and the last of the conversation. Useful when three chats have similar names and you would rather not open all three. Project folders peek the same way, showing what is inside.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Resting on a chat row opens a floating card naming the project it sits in, how long ago it was active and the date, above an excerpt of the conversation. Moving to another row swaps the card for that chat, fetching its text as it opens."
+    src="/images/interface/sidebar/hover-preview.mp4"
+  ></video>
+</Frame>
+
+## Working on several chats at once
+
+Press and hold a row, or `⌘`-click and `⇧`-click, to start a selection. Every row grows a checkbox and a bar appears at the foot of the sidebar, counting what you have picked and offering the actions that apply to all of it: move, pin, archive, label, delete.
+
+A selection is not confined to one folder. Tick chats in three different projects and the bar treats them as one set, which is the fastest way to clear out a week's worth of scattered one-off chats.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Chat rows grow checkboxes and several are ticked across three different projects. A bar at the foot of the sidebar counts the selection and carries the actions that apply to all of it, and the count changes as rows are ticked and unticked."
+    src="/images/interface/sidebar/multi-select.mp4"
+  ></video>
+</Frame>
+
+## Renaming, archiving, deleting
+
+Double-click a chat name to rename it in place. Right-click, or click the `⋯`, for everything else.
+
+With that menu open, one key does the job:
+
+| Menu | Keys |
+| --- | --- |
+| Chat | `P` pin, `R` rename, `S` select, `A` archive, `D` delete |
+| Project | `P` pin, `A` archive or restore, `D` delete |
+| Label | `R` edit, `D` delete |
+
+Clicking **Delete** opens a confirmation. Holding **Delete** skips it, which is the difference between clearing one chat and clearing twelve.
+
+Archived chats move to their own section at the bottom and stay searchable.
+
+**Share** is in the same `⋯` menu, and beside the chat title at the top of the conversation. Either one gives you a link to hand to someone, and the icon in the header tells you at a glance whether a chat is already shared.
+
+## Getting back to a project
+
+The breadcrumb above a conversation names the project it belongs to. Click that name and the sidebar goes and finds it: it opens if you had it collapsed, expands that folder and closes the others, scrolls it into view, and flashes it once so your eye lands on the right row.
+
+Clicking the chat title beside it renames the chat in place.
+
+## Status at a glance
+
+A mark at the end of a row tells you where that chat stands without opening it: a turning ring while Fluso is still working, a red dot where a run stopped on an error, and a blue one where an answer finished while you were looking somewhere else.
+
+The marks survive a reload, and clear when you open the chat.
+
+<Frame>
+  <video
+    className="w-full rounded-xl"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Three pinned chats carry different marks at the end of their rows: a turning ring on the one still running, a red dot on the one that stopped on an error, and a blue dot on the one whose answer arrived while the user was elsewhere."
+    src="/images/interface/sidebar/status.mp4"
+  ></video>
+</Frame>
+
+## Keyboard
+
+The sidebar takes focus without the mouse. `Esc` from the composer lands you here.
+
+| Key | Does |
+| --- | --- |
+| `⌘1` to `⌘9` | jump straight to one of your first nine chats |
+| `↑` / `↓` | move between rows |
+| `←` / `→` | cycle the controls inside the focused row |
+| `←` | collapse the folder you are inside, and land on its header |
+| `Enter` | open the focused chat |
+| `Tab` | step onto the list from outside it |
+| `⌘K` | search chats |
+| `⌘N` | new chat |
+| `⌘B` | hide or show the sidebar |
+| `Esc` | back to the sidebar from the composer |
+
+`⌘1` to `⌘9` work while you are typing, so you can leave a half-written message and come back to it.
+
+The arrows only answer while the sidebar actually holds focus, so they never take over the page you are reading. From the search box, `↓` steps down into the first row, which makes `⌘K` a complete route into the list without touching the mouse.
+
+### Width
+
+Tab to the sidebar's inner edge and it becomes a keyboard control.
+
+| Key | Does |
+| --- | --- |
+| `←` / `→` | narrower or wider |
+| `⇧ ←` / `⇧ →` | in bigger steps |
+| `Home` / `End` | narrowest or widest |
+| `Enter` | back to the default width |
+
+Hidden with `⌘B`, the sidebar leaves a narrow rail behind rather than nothing at all: **New chat**, **Tasks**, **Plugins** and **Projects** stay one click away, and a dot on the rail keeps showing you that something is running or waiting unread.
+
+The full list still answers a hover at the edge: it slides out, you click what you need, and it goes away again. The width you drag it to is remembered, and so is whether you left it open.
+
+## Next
+
+[Composer](/interface/composer) covers the other half of the window: attachments, the `@` menu, prompt history, and reasoning modes.

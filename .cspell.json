@@ -57,6 +57,7 @@
     "Premai",
     "Reauth",
     "Reauthorize",
+    "Recents",
     "Reconnect",
     "Roobert",
     "Salesforce",
@@ -79,6 +80,7 @@
     "reauth",
     "reauthorize",
     "Supabase",
+    "timecode",
     "uvx",
     "webhook"
   ]
