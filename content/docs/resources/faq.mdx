@@ -65,6 +65,16 @@ description: The questions that come up most often. What Fluso is, how it works,
 ## Privacy and security
 
 <AccordionGroup>
+  <Accordion title="When we connect our email and Slack to Fluso, what data can Prem AI access? What changes if we don't use the secure enclave?">
+    Fluso accesses your email and Slack content within the permissions you grant. With encrypted inference, model processing happens inside a secure enclave on Prem's infrastructure, without sending your prompts or content to an external model provider.
+
+    The Fluso runtime is separate from encrypted inference. Its data is protected by strict internal access policies and procedures under our SOC 2 Type II compliance program; the runtime itself does not run inside an enclave.
+
+    For greater control, Fluso can run in your own VPC or cloud while using Prem's encrypted inference. Your workspace stays in your infrastructure, and inference content is protected inside the enclave. See [deployment options](/deployment-models).
+  </Accordion>
+  <Accordion title="What happens to our data when we leave Fluso? What do you retain after we delete our account?">
+    Deleting your account deletes your dedicated sandbox and all associated data, including your files, conversations, connected-account credentials, and other records held by Fluso. We do not retain your data after account deletion.
+  </Accordion>
   <Accordion title="Can it see all my emails?">
     It reads emails when you ask it to (e.g., *"summarise my inbox"*) and as part of auto-task extraction. It does not keep a separate mailbox copy; requested content is processed under the controls described in [Privacy](/resources/privacy).
   </Accordion>
