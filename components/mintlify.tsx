@@ -98,11 +98,13 @@ export function Card({
   title,
   icon,
   href,
+  newTab = false,
   children,
 }: {
   title: string;
   icon?: string;
   href?: string;
+  newTab?: boolean;
   children?: ReactNode;
 }) {
   const inner = (
@@ -127,7 +129,12 @@ export function Card({
 
   if (href) {
     return (
-      <Link href={href} className={cn(className, 'hover:bg-fd-accent/80')}>
+      <Link
+        href={href}
+        target={newTab ? '_blank' : undefined}
+        rel={newTab ? 'noopener noreferrer' : undefined}
+        className={cn(className, 'hover:bg-fd-accent/80')}
+      >
         {inner}
       </Link>
     );
