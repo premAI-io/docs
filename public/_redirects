@@ -1,0 +1,6 @@
+/resources/privacy /resources/legal 301
+/resources/privacy/ /resources/legal 301
+/resources/security /resources/legal 301
+/resources/security/ /resources/legal 301
+/llms.mdx/docs/resources/privacy/content.md /llms.mdx/docs/resources/legal/content.md 301
+/llms.mdx/docs/resources/security/content.md /llms.mdx/docs/resources/legal/content.md 301
