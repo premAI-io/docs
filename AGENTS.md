@@ -18,7 +18,7 @@ The navigation keeps Home first, then sorts the top-level sections and the pages
 - **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
 - **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.
 - **Get started** - `/going-deeper`, `/introduction`, `/quickstart`. These pages explain the path from first setup to daily use.
-- **Reference** - `/resources/{faq, legal, pricing}`. Legal links to the privacy policy on `https://fluso.ai/privacy`; do not duplicate the policy in the docs.
+- **Reference** - `/resources/{faq, legal, pricing}`. Legal links to the terms of service at `https://fluso.ai/terms` and privacy policy at `https://fluso.ai/privacy`; do not duplicate the policies in the docs.
 - **Release notes** - `/release-notes`. Customer-facing changes, newest first.
 - **Remote access** - `/remote/*`. Ways to use Fluso away from the desktop app.
 - **Workflows** - `/workflows/*`. Six concrete stories: bug-to-PR, content launch, knowledge recall, meetings, morning brief, and research-to-deck.
