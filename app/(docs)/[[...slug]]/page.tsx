@@ -27,11 +27,7 @@ export default async function Page(props: PageParams) {
   const isAgentGuide = page.slugs[0] === 'developers' && page.slugs[1] !== 'api-ref';
 
   return (
-    <DocsPage
-      toc={page.data.toc}
-      full={page.data.full}
-      breadcrumb={{ includeRoot: page.slugs[0] === 'developers' && page.slugs.length > 1 }}
-    >
+    <DocsPage toc={page.data.toc} full={page.data.full} breadcrumb={{ enabled: page.url !== '/developers' }}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className={isAgentGuide ? undefined : 'mb-0'}>
         {page.data.description}
