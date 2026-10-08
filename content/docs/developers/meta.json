@@ -1,6 +1,4 @@
 {
-  "title": "Agents",
-  "icon": "bot",
   "pages": [
     "!index",
     "[bot][Overview](/developers)",
