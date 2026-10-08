@@ -1,211 +1,89 @@
 ---
-title: Agents and versions
-sidebarTitle: Agents & versions
+title: Agents
+sidebarTitle: Agents
 icon: bot
-description: Create Agents, read their current immutable configuration, and publish safe updates.
+description: Create an Agent, update its current setup safely, and attach reference files.
 ---
 
-An Agent record points at one immutable configuration through `currentConfigId`. Use that ID as `baseConfigId` when you update the Agent.
+These are authenticated beta client routes. Agent fields use camelCase and configurations use `schemaVersion: 2`. The current model has instructions, skills, app policies, and knowledge files; it has no separate description, goal, or thread-management mode.
 
-For the product flow, including reviewing changes and rolling back safely, see [Versions](/developers/versions).
+For the user workflow, see [Create and refine](/developers/agent-builder).
 
-Agent-owned work runs in [threads](/developers/api-ref/threads-and-messages) and can start from [schedules](/developers/api-ref/schedules) or [webhooks](/developers/webhooks).
-
-## List Agents
-
-<Endpoint method="GET" path="/v1/agents" />
-
-Returns paginated Agent summaries, with optional text search through `q`.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agents?page=1&limit=20&q=release" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```json title="Response: 200"
-{
-  "agents": [
-    {
-      "agentId": "agt_0123456789ab4def8123456789abcdef",
-      "currentConfigId": "cfg_11111111111141118111111111111111",
-      "name": "Release reviewer",
-      "description": "Reviews release candidates",
-      "projectName": "Release Review",
-      "responseMode": "high",
-      "createdAt": "2026-08-31T09:00:00Z",
-      "updatedAt": "2026-08-31T09:00:00Z",
-      "lastChatAt": null,
-      "chatCount": 0,
-      "activeScheduleCount": 0,
-      "nextRunAt": null
-    }
-  ],
-  "pagination": { "page": 1, "limit": 20, "total": 1, "pages": 1 }
-}
-```
-
-## Create an Agent
+## Create and read
 
 <Endpoint method="POST" path="/v1/agents" />
 
-Creates an Agent and its first immutable configuration.
+Creating a definition does not create or run a conversation. The project must already exist; `Home` is the default.
 
-Create `Release Review` through `POST /v1/agent/projects` first. `Home` is available by default.
-
-```bash title="Request"
+```bash
 curl "$FLUSO_API/v1/agents" \
-  -X POST \
   -H "Authorization: Bearer $FLUSO_TOKEN" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Release reviewer",
-    "description": "Reviews release candidates",
-    "goal": "Return a go or no-go decision",
-    "instructions": "Cite blockers and name each follow-up owner.",
-    "conversationStarters": ["Review this candidate"],
+    "instructions": "Review supplied evidence. Separate blockers from missing information. Do not publish or contact anyone.",
+    "conversationStarters": ["Review this release candidate"],
     "responseMode": "high",
-    "projectName": "Release Review"
+    "projectName": "Home",
+    "skills": ["pdf", "docx"],
+    "connectors": {}
   }'
 ```
 
-```json title="Response: 201, selected fields"
-{
-  "agentId": "agt_0123456789ab4def8123456789abcdef",
-  "currentConfigId": "cfg_11111111111141118111111111111111",
-  "state": "active",
-  "createdAt": "2026-08-31T09:00:00Z",
-  "updatedAt": "2026-08-31T09:00:00Z",
-  "lastChatAt": null,
-  "chatCount": 0,
-  "config": {
-    "schemaVersion": 1,
-    "configId": "cfg_11111111111141118111111111111111",
-    "agentId": "agt_0123456789ab4def8123456789abcdef",
-    "name": "Release reviewer",
-    "normalizedName": "release reviewer",
-    "description": "Reviews release candidates",
-    "goal": "Return a go or no-go decision",
-    "instructions": "Cite blockers and name each follow-up owner.",
-    "conversationStarters": ["Review this candidate"],
-    "responseMode": "high",
-    "threadManagementEnabled": true,
-    "threadCreationMode": "explicit",
-    "projectName": "Release Review",
-    "knowledgeFiles": [],
-    "skills": null,
-    "connectors": null,
-    "createdAt": "2026-08-31T09:00:00Z",
-    "contentDigest": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
-  }
-}
-```
+The `201` response contains `agentId`, `currentConfigId`, and `config`. Save the returned IDs. An optional UUID `creationId` supports retrying the same creation.
 
-## Read the current configuration
+| Method and path | Result |
+| --- | --- |
+| `GET /v1/agents?page=1&limit=50&q=release` | Agent summaries and pagination; `purpose` is derived from instructions |
+| `GET /v1/agents?all=true` | The complete bounded library in one response |
+| `GET /v1/agents/{agentId}` | Current Agent record and configuration |
+| `GET /v1/agents/{agentId}/chats` | Main conversation, delegated sessions, and Manager, including role and earlier-setup markers |
 
-<Endpoint method="GET" path="/v1/agents/{agentId}" />
-
-Returns the Agent record and the configuration named by `currentConfigId`.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```json title="Response: 200, selected fields"
-{
-  "agentId": "agt_0123456789ab4def8123456789abcdef",
-  "currentConfigId": "cfg_11111111111141118111111111111111",
-  "state": "active",
-  "config": {
-    "schemaVersion": 1,
-    "configId": "cfg_11111111111141118111111111111111",
-    "name": "Release reviewer",
-    "goal": "Return a go or no-go decision"
-  }
-}
-```
-
-## Publish an update
+## Update without overwriting someone else's edit
 
 <Endpoint method="PATCH" path="/v1/agents/{agentId}" />
 
-Creates a new configuration when the submitted fields change the Agent.
+Read the Agent first. Send its `currentConfigId` as `baseConfigId`, with only the fields you intend to change.
 
-```bash title="Request"
-curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef" \
-  -X PATCH \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "baseConfigId": "cfg_11111111111141118111111111111111",
-    "goal": "Return a go or no-go decision with named owners"
-  }'
-```
-
-```json title="Response: 200, selected fields"
+```json
 {
-  "agentId": "agt_0123456789ab4def8123456789abcdef",
-  "currentConfigId": "cfg_22222222222242228222222222222222",
-  "state": "active",
-  "config": {
-    "schemaVersion": 1,
-    "configId": "cfg_22222222222242228222222222222222",
-    "goal": "Return a go or no-go decision with named owners"
-  }
+  "baseConfigId": "<currentConfigId from GET>",
+  "instructions": "Review supplied evidence. Missing evidence remains unresolved. Do not publish or contact anyone."
 }
 ```
 
-An unchanged patch returns the existing config ID. A stale `baseConfigId` returns `409 STALE_AGENT_CONFIG` and includes the current config ID in `error.details.currentConfigId`.
+A stale revision returns `409 STALE_AGENT_CONFIG`. Read again and reapply the intended change; do not blindly resend all fields from an old form.
 
-## List available configurations
+Omitted fields stay unchanged. Submitted lists and connector maps replace the whole field.
 
-<Endpoint method="GET" path="/v1/agents/{agentId}/versions" />
+| Field | Meaning |
+| --- | --- |
+| `skills: null` | All skills available to an ordinary chat, including later additions |
+| `skills: []` | No selected skills |
+| `connectors: null` or `{}` | No app grants |
+| `connectors: {"<serverId>": "allow"}` | Selected connection permitted, subject to account and approval policies |
+| `read_only` / `deny` | Restrict that connection to classified read-only tools, or block it |
 
-Returns up to 100 available immutable configurations, newest first. Older
-configurations that no chat uses may be reclaimed under storage pressure, so
-this endpoint is not a permanent audit ledger.
+The main conversation follows the current setup on its next accepted turn. Running turns and existing delegated sessions retain their accepted configuration. Changing `projectName` does not move existing conversations.
 
-```bash title="Request"
-curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/versions" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
+Configurations are stored internally, but there is no current public version-list or rollback endpoint.
 
-```json title="Response: 200, selected fields"
-{
-  "versions": [
-    {
-      "schemaVersion": 1,
-      "configId": "cfg_22222222222242228222222222222222",
-      "agentId": "agt_0123456789ab4def8123456789abcdef",
-      "goal": "Return a go or no-go decision with named owners",
-      "createdAt": "2026-08-31T10:00:00Z",
-      "contentDigest": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
-    }
-  ]
-}
-```
+## Attach knowledge
 
-To restore an available configuration, send its editable fields through the
-normal update endpoint and use the Agent's current `currentConfigId` as
-`baseConfigId`. The update creates a new immutable configuration. Existing
-chats keep the configuration they started with.
+<Endpoint method="POST" path="/v1/agents/{agentId}/knowledge-files" />
 
-## Delete an Agent
+Upload one multipart `file`, or use `POST /v1/agents/{agentId}/knowledge-files/from-workspace` with `{"path": "/projects/Home/files/rubric.md"}`.
 
-<Endpoint method="DELETE" path="/v1/agents/{agentId}" />
+The response is a knowledge reference with `fileId`, `name`, `fileName`, and `bytes`. Attaching stores a copy; it does not add that reference to the active setup. PATCH `knowledgeFiles` with the full desired list and the latest `baseConfigId` to save it. Preserve entries you still want.
 
-Deletes the Agent and removes its owned chats, configurations, knowledge, schedules, and webhook triggers.
+Limits: 25 knowledge entries, 20 MiB per file, 4,000 instruction characters, three starters of 200 characters each, and 100 Agents per user. Workspace storage limits also apply.
 
-```bash title="Request"
-curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef" \
-  -X DELETE \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
+## Copy, share, or delete
 
-```http title="Response"
-HTTP/1.1 204 No Content
-```
+| Method and path | Behavior |
+| --- | --- |
+| `POST /v1/agents/{agentId}/duplicate` with `{}` | Independent setup and knowledge copy; no conversations or routines |
+| `POST /v1/agents/{agentId}/star` with `{"starred": true}` | Set the library star |
+| `DELETE /v1/agents/{agentId}` | Delete the Agent and its conversations, remove schedules, and revoke its public link |
 
-## Next
-
-Start Agent work through [Threads and messages](/developers/api-ref/threads-and-messages), or automate it with [Schedules](/developers/api-ref/schedules) and [Webhooks](/developers/webhooks).
+Sharing uses [separate snapshot routes](/developers/api-ref/sharing). To do work, [open the main conversation and send a message](/developers/api-ref/threads-and-messages).

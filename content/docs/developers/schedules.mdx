@@ -1,41 +1,68 @@
 ---
-title: Schedules
-sidebarTitle: Schedules
+title: Routines
+sidebarTitle: Routines
 icon: calendar-clock
-description: Wake an existing Agent thread with a saved message once or on a recurring schedule.
+description: Run an Agent once or repeatedly, manage its timing, and recover when a scheduled run needs attention.
 ---
 
-A schedule saves a future message for one existing Agent thread. When it becomes due, Fluso sends that message to the same thread as a separate follow-up turn.
+A routine saves a message to send to an existing Agent conversation at a future time. It can run once or repeat. You do not need to leave the app open.
 
-A schedule does not create a new Agent or a new conversation. It wakes the thread with its saved Agent definition, history, and project scope.
+The routine reuses its target conversation and history. It does not create another Agent or start a blank chat each time.
 
-To create or manage schedules from an Agent chat, enable thread management for that Agent.
+The current Agent UI supports timed routines. The older Agent webhook editor is no longer available.
 
-## One-time and recurring schedules
+## Create a routine
 
-Ask the Agent in plain language:
+Ask in the Agent's main conversation:
 
-> *"Tomorrow at 9:00 AM Asia/Kolkata, check whether the release blockers are closed and prepare a status update."*
+> *"Every weekday at 9:00 AM Europe/Zurich, review the release tracker for new blockers. Return a short update with sources and owners. If nothing changed, say so. Do not send messages to anyone."*
 
-> *"Every weekday at 9:30 AM Europe/London, review new P0 and P1 escalations and prepare the triage list."*
+You can also open **Routines** in the Agents sidebar, use the chat's routine control, or select **Routines → Manage** on the setup page. Choose a starting idea or write your own message, select the Agent, set the timing and timezone, and save.
 
-One-time schedules use a future date and time with an offset. Recurring schedules use a standard five-field cron expression and an IANA time zone.
+The editor supports one-time, daily, weekday, weekly, and interval presets. Existing custom cron timing is preserved unless you change its frequency. Timing labels are shown in readable language.
 
-## What to put in the saved message
+Include the source, expected result, and what to do when there is nothing to report. For external communications, ask for drafts to review and configure [approvals](/features/approvals).
 
-The message should still make sense when it runs later. Include:
+<Note>
+  A routine requested in **Manager** runs a setup review by the Manager. Request the Agent's actual work in its main conversation, or create that routine through the routine editor. Saving instructions alone does not schedule work.
+</Note>
 
-- The condition to check or work to perform.
-- The source the Agent should read.
-- The expected output.
-- Any approval boundary before an external action.
+## Apply the same routine to several Agents
 
-## Manage a schedule
+The Routines page can apply one instruction and timing to selected Agents. Each gets an independent schedule in its own main conversation.
 
-Ask the Agent to list, pause, resume, change, or delete schedules for the current thread. Deleting the target thread also removes its schedules.
+**Select all** covers the Agents currently offered by the picker; it does not include Agents created later. Agents already using those instructions at another timing need an explicit selection to add another timing.
 
-If a recurring turn is still queued, running, or waiting for approval, Fluso does not pile up duplicate occurrences. Repeated failures can pause a schedule so it does not keep retrying without attention.
+Matching instructions, timing, and timezone are grouped for display. Editing one assignment can split it from its group. Removing one Agent's assignment does not remove the others.
 
-## Next
+## What happens when it is due
 
-Use [Schedules](/developers/api-ref/schedules) for the REST endpoints, [Webhooks](/developers/webhooks) for event-driven turns, and [Runs](/developers/api-ref/runs) to inspect each accepted turn.
+The message enters its target conversation as a separate follow-up. If that conversation is busy, it waits. If an earlier occurrence of the same routine is still queued, running, or awaiting approval, the scheduler waits rather than stacking duplicate work.
+
+In chat, the routine appears as a compact row on the right with a violet clock and scheduled time. Expand it for the instructions, routine ID, and any attachments. The Agent receives the full message even while the row is collapsed.
+
+The main conversation uses the setup selected for the new turn. A routine in an existing delegated session uses that session's earlier setup. Results remain in the target conversation; top-level routine results can also appear in [Inbox](/developers/inbox).
+
+## Pause, edit, or remove it
+
+Use the routine's pause control to stop future occurrences, edit its instructions or timing, or delete it. Changes do not retract work already admitted into the conversation. Stop that run or cancel its queued message separately if needed.
+
+One-time checks stop scheduling after their message is accepted. **Last run dispatched · outcome unavailable** does not mean the work completed successfully: inspect the result or run status.
+
+Deleting a target session removes its routines. Deleting an Agent removes all of its routines. Archiving a session is not a substitute for pausing its routines.
+
+## When a routine does not finish
+
+| What you see | What to do |
+| --- | --- |
+| Queued | Check the target conversation for ongoing work or a paused queue |
+| Waiting for approval | Review the requested action; a routine cannot approve itself |
+| Delivery failed or paused with a reason | Fix the connection, unavailable target, or other reported problem, then resume or recreate the routine as appropriate |
+| A run failed after starting | Inspect the conversation and partial outputs before continuing |
+| Usage allowance reached | Wait for the allowance to reset; scheduling is deferred rather than treated as a successful run |
+
+Temporary delivery problems are retried with delays. Repeated delivery failures can pause the routine. Recurring runs do not replay every missed clock tick after a delay.
+
+Choose a future local time for a one-time check. The editor rejects times that do not exist during a daylight-saving clock change; review the timezone and next-run time before saving.
+
+For integrations, these records are called [Schedules in the API](/developers/api-ref/schedules).

@@ -58,7 +58,7 @@ Once you are signed in and have at least one app connected, ask in plain English
 
 If you ask for something that needs an app you have not connected yet, the bot will say so. Send `/connect <app>` and ask again.
 
-Connector writes in Telegram follow the same effective **Allow**, **Ask**, or **Deny** policy as the app. With **Ask**, the bot shows an approval card and waits for your decision. **Allow** or **Don't ask permission** can continue without a per-action prompt; **Deny** blocks the action.
+Connector writes in Telegram follow the same effective **Allow**, **Ask**, or **Deny** policy as the app. With **Ask**, the bot shows an approval card and waits for your decision. **Allow** or **Allow everything** can continue without a per-action prompt; **Deny** blocks the action.
 
 ## Fast mode
 
@@ -68,7 +68,7 @@ Send `/fast` again in the same Telegram conversation to switch back to High mode
 
 This is conversation-specific, not an account setting. `/newchat` starts a fresh Telegram conversation back in High mode.
 
-Telegram mode and app mode are separate. Using `/fast` in Telegram does not change any chat in the app, and changing the app's High/Fast dropdown does not change Telegram.
+Telegram mode and app mode are separate. Using `/fast` in Telegram does not change any chat in the app, and changing the app's response mode does not change Telegram.
 
 ## Files, images, voice
 

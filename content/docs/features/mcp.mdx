@@ -28,7 +28,7 @@ Click **Add MCP**. The dialog opens on the **Apps** tab.
   <img src="/images/features/mcp/marketplace-apps.png" alt="The Add MCP dialog on the Apps tab: a search field and a catalog listing Google Workspace, GitHub, Slack, Slackbot, Linear, Web Search (connected), Airtable, Asana, and more, each with a Connect button." />
 </Frame>
 
-Search for the app, click **Connect**, and sign in on the app's own login screen. You approve the permissions there, the window closes itself, and the row appears in your list. Fluso can use the app from the next message on.
+Search for the app, click **Connect**, and sign in on the app's own login screen. You approve the permissions there, the window closes itself, and the row appears in your list. Ordinary chats can use it from the next message. For a saved Agent, also select it under [Connectors](/developers/agent-description#grant-app-access).
 
 A few rows worth knowing about:
 
@@ -115,7 +115,7 @@ Expand any connection row to see its tools and set rules per tool.
 </Frame>
 
 - **Auto-approve read-only tools** allows operations classified as GET, list, search, and fetch to run without asking. Explicit Ask or Deny rules still win.
-- Each tool has its own **Allow**, **Ask**, or **Deny**. Allow runs without asking, Ask pauses for your approval in chat, Deny blocks the tool outright.
+- Each tool has its own **Allow**, **Ask**, or **Deny**. Allow runs without asking, Ask pauses for approval when the chat uses **Ask me first**, and Deny blocks the tool. **Allow everything** can bypass Ask, but not Deny.
 - Tools are grouped read-only versus everything else, so you can see at a glance what can only look and what can act.
 
 These rules work together with your chat-level approval mode. See [Approvals and permissions](/features/approvals) for how the modes and rules interact.
@@ -134,7 +134,7 @@ Each row shows the connection's status. The three-dot menu holds the two actions
 
 ## Things to know
 
-- **Connections are per account, not per chat.** Sign in once; every new chat can use the connection, and it survives runtime restarts in the background.
+- **Connections are per account, not per chat.** Sign in once and reuse the connection across chats. Saved Agents can use only their selected connections. Sign-ins survive runtime restarts.
 - **The runtime never stores tokens.** Tools fetch a short-lived token from the backend per request, use it, and drop it. Sign-in happens on the app's own page — Fluso never sees your password.
 - **Custom servers have prerequisites.** Fluso supports public HTTPS Streamable HTTP endpoints with OAuth, API-key, or bearer-token access. A successful sign-in does not override network-egress or provider policy.
 - **Rules set by your organization take precedence** over anything you allow yourself.
@@ -155,7 +155,7 @@ Each row shows the connection's status. The three-dot menu holds the two actions
   The server advertises Dynamic Client Registration but rejected the registration. Switch to **OAuth (BYO)** and register an app in the server's developer console yourself.
 </Accordion>
 <Accordion title="A tool keeps asking for approval">
-  Its rule is set to **Ask**, or your chat's approval mode is **Ask for everything**. Set the tool to **Allow** in the row's tool permissions, or change the mode — see [Approvals](/features/approvals).
+  Its rule is set to **Ask**, or your chat's approval mode is **Ask me first**. Set the tool to **Allow** in the row's tool permissions, or change the mode — see [Approvals](/features/approvals).
 </Accordion>
 
 ## Next

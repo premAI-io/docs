@@ -1,35 +1,69 @@
 ---
-title: Agent description
-sidebarTitle: Agent description
-icon: file-text
-description: Write a clear Agent summary and keep it separate from the goal and standing instructions.
+title: Setup and capabilities
+sidebarTitle: Setup and capabilities
+icon: sliders-horizontal
+description: Set instructions, skills, app access, reference files, and response defaults for an Agent.
 ---
 
-The description is the short answer to "What does this Agent do?" It appears in Agent lists and search, and it becomes part of the saved Agent definition when a thread starts.
+Open an Agent's setup from the **Edit agent** pencil in its chat. **Manager** lets you refine it in conversation; **Edit** opens the form. Both change the same saved setup.
 
-Keep it to one sentence. Name the responsibility, input, and output when they fit.
+## Write instructions that describe the job
 
-> *"Triages customer escalations and prepares an approval-ready response plan."*
+The first line is the short purpose shown in Agent lists. There are no separate description or goal fields.
 
-## Description, goal, and instructions
+Include the outcome, useful inputs, how to handle uncertainty, and any boundary that matters for the job. Markdown headings and lists render in the setup page; expand **Instructions** to read the full text.
 
-These fields have different jobs:
+> *"Review release readiness using the supplied notes, test results, and issue links. Separate confirmed blockers from missing evidence. Give a recommendation with sources and owners. Ask me to resolve conflicting priorities. Prepare communications as drafts for my review."*
 
-| Field | Use it for | Example |
-| --- | --- | --- |
-| Name | A short label you can find quickly | Customer escalation coordinator |
-| Description | What the Agent is responsible for | Triages customer escalations and prepares a response plan. |
-| Goal | The result that marks success | Return a severity, owner, and next-step package. |
-| Instructions | Rules, sources, order, and approval boundaries | Check Gmail and Drive. Require approval before any external send. |
+| Setting | What it controls |
+| --- | --- |
+| Name | The label in the sidebar and chat |
+| Purpose and instructions | Standing behavior and the expected result |
+| Conversation starters | Up to three suggested first messages; they do not run automatically |
+| Knowledge files | Saved reference copies for this Agent |
+| Skills | Guides and tools the Agent can use |
+| Connectors | Which connected apps or MCP servers the Agent may use |
+| Responses | **High** for deeper reasoning, or **Fast** for quicker responses |
+| Project | Where the main conversation is placed when first created |
 
-Do not put the full workflow in the description. Long rules are harder to scan there and belong in **Instructions**.
+The Agent's response mode is controlled here, rather than changed independently in its main chat composer.
 
-## Changes apply to new threads
+Names are limited to 64 characters and must be unique in your library. Instructions allow 4,000 characters. Each starter allows 200 characters. Use knowledge files for longer reference material.
 
-An Agent thread keeps the saved definition it started with. Changing the description, goal, instructions, project, capabilities, or knowledge files creates a new definition for future threads. It does not rewrite an existing conversation.
+## Select skills
 
-Start a new thread after an edit when you need to verify the new behavior.
+A form-created Agent starts with all available skills. You can narrow that selection, including turning every skill off. An unrestricted selection also includes skills installed later.
 
-## Next
+The Manager and Fluso starting points choose skills for the job. Check the resulting selection rather than assuming every Agent has the same capabilities.
 
-Build the first draft in [Agent builder](/developers/agent-builder), or update these fields through [Agents and versions](/developers/api-ref/agents-and-versions).
+A custom skill is a shared workspace file. Editing it can affect other chats or Agents that use it. Ask the Manager for a separate skill when a change should apply only to this Agent.
+
+## Grant app access
+
+Connections are managed under **Plugins → MCP**. The Agent editor calls its selection **Connectors**.
+
+| Agent setting | Behavior |
+| --- | --- |
+| Allowed | The Agent may use that connection, subject to account access and tool approvals |
+| Read only | The Agent may use tools classified as read-only |
+| Not selected | The Agent cannot use that connection through its app tools |
+
+Adding a connection to an Agent defaults it to **Allowed**, including when the Manager creates the Agent. Existing read-only restrictions stay until you change them. An empty selection does not grant every connection.
+
+Three separate things must be in place: the app must be selected for the Agent, your account must be connected, and the requested tool action must pass the chat's approval and organization policies. **Allowed** does not mean connected, and it does not bypass those policies.
+
+To prepare an email or another external action for review, ask for a draft and use **Ask me first**. If a tool is unavailable, check [Apps & MCP](/features/mcp) and [Approvals and permissions](/features/approvals) before rewriting the Agent.
+
+## Understand when changes apply
+
+| Change | Effect |
+| --- | --- |
+| Save instructions, capabilities, or knowledge selection | The next turn in the main conversation uses the saved setup |
+| Save while a turn is running | That turn continues with its accepted setup |
+| Change setup after a session was delegated | That existing session keeps its earlier setup |
+| Edit a shared skill file | Existing conversations can read the changed file |
+| Change the project setting | Existing conversations and files stay where they are |
+
+A conflicting save from another tab asks you to review the latest setup. Do not overwrite it without checking the other changes.
+
+The Manager's role is to refine this Agent. That separation is not a private filesystem for each Agent: workspace files remain shared within your account. See [Files and context](/developers/project-context).

@@ -2,56 +2,50 @@
 title: Architecture
 sidebarTitle: Architecture
 icon: network
-description: How requests, runtime compute, platform state, workspace data, and external sources fit together.
+description: Follow a message through the platform and understand what survives a runtime restart.
 ---
 
-Fluso separates request handling, runtime compute, durable workspace data, platform records, and external tools. Those boundaries keep each responsibility visible when you deploy or integrate the platform.
-
-Client requests enter these boundaries through the [authenticated REST API](/developers/api-ref/authentication).
+Fluso separates the client, platform records, runtime compute, and durable user files. This explains why you can leave a chat, return to queued work, and reuse an Agent without rebuilding its setup.
 
 <ArchitectureDiagram />
 
-## Request path
+## From a message to a result
 
-1. A Fluso client sends an authenticated request through the edge.
-2. The REST API validates identity and handles platform records.
-3. The gateway admits work, selects the user's runtime, and routes the request.
-4. A thread worker runs the turn with the Agent configuration, tools, and project context attached to that thread.
+1. The client sends an authenticated message with its conversation and request IDs.
+2. The backend checks identity and usage, then forwards work through the gateway to the user's runtime.
+3. The runtime admits the request into the conversation's durable queue. A session worker runs the turn with its accepted Agent setup.
+4. Tools read or change workspace files and call connected apps through MCP, subject to access and approval rules.
+5. Progress streams to the client. History and request state let it recover after a connection drops.
 
-The runtime can stop and return later because it does not own the only copy of durable user state.
+A main Agent conversation and its Manager have separate histories. The Manager edits one Agent's setup; the main conversation performs its work and coordinates delegated sessions.
 
-## Data ownership
+## What is stored where
 
-| Boundary           | What it owns                                                                    |
-| ------------------ | ------------------------------------------------------------------------------- |
-| PostgreSQL         | Users, organizations, access records, schedules, and other platform state       |
-| Isolated user storage | Projects, session history, Agent definitions, skills, and durable runtime files |
-| Knowledge service  | Indexed context and retrieval records under its service contract                |
-| MCP sources        | External data and actions exposed by each connected server                      |
+| Boundary | Durable state |
+| --- | --- |
+| Platform database | User and access records, app connections, routine schedules, public share records |
+| User storage | Agent definitions, knowledge files, projects, skills, conversations, request ledgers, and queues |
+| Project working memory | Bounded summaries and evidence-backed observations within that project |
+| External apps | Their own data and actions; selected results may be copied into Fluso by the requested work |
 
-Project working memory belongs to its project. Agent configuration and chat history have separate records, so changing an Agent does not rewrite old conversations.
+Runtime compute can be suspended or replaced without deliberately deleting those stored records. Current deployment paths include local Docker, AWS ECS, and MicroVM runtimes with ZeroFS storage. Availability depends on the deployment.
 
-## Replaceable components
+## Configuration and context are different
 
-Components can change where the code defines an explicit contract:
+A saved Agent edit creates a new configuration. The main conversation uses it on its next turn; active turns and existing delegated sessions keep the setup they accepted. Skill files and project files remain live shared resources.
 
-- Runtime compute sits behind a `SandboxProvider` contract. Current implementations cover local Docker and AWS ECS.
-- Models resolve through a provider-scoped catalog. Current provider paths cover PCCI and OpenRouter; the catalog does not promise that every model works through every provider.
-- Managed apps and custom servers meet the runtime through MCP and the same tool-policy boundary. A source can change while the protocol stays fixed, though tool names and semantics can still differ.
-- Services can move behind their HTTP contracts when the replacement preserves authentication, response shape, and failure behavior.
+Separate conversations do not imply separate private filesystems. Agents within one user's workspace can use its shared files. Project context and knowledge selection guide the model; they are not a filesystem security boundary.
 
-## Governed external context
+## Routine and result delivery
 
-An MCP server advertises tools. User policy decides whether each tool is allowed, denied, or requires approval. Organization policy separately governs network egress. Read-only classification can permit low-risk reads without turning every MCP connection into a read-only connection.
+The scheduler sends a due routine through normal request admission using a stable ID for that occurrence. A busy conversation queues it. The scheduler avoids another overlapping occurrence of the same routine, retries temporary delivery failures, and records problems for Inbox.
 
-External data stays under the source system's own controls until an approved tool reads it. Fluso may then persist selected outputs in chat history, project files, or knowledge records according to the requested work and platform policy.
+Delegated sessions return requested results to their parent. The main conversation must still reconcile those results with the user's latest direction and actual files. A returned report does not grant approval for a new action.
 
-<Note>
-  Storage independence here means runtime compute does not own durable state.
-  PostgreSQL, workspace storage, and the knowledge service still have explicit
-  schemas and operational contracts.
-</Note>
+## Recovery is not rollback
 
-## Next
+A dropped stream does not prove a run failed. The client reconciles with saved history and status. Runtime recovery can resume interrupted work, but an external action that already succeeded is not automatically undone.
 
-Start with [Authentication](/developers/api-ref/authentication), then create an Agent through [Agents and versions](/developers/api-ref/agents-and-versions).
+Use conversation history, routine state, and [run status](/developers/api-ref/runs) to distinguish queued work, approval waits, failures, and completed output. Avoid resubmitting an uncertain operation under a new ID without checking it.
+
+See [Authentication](/developers/api-ref/authentication) for the current beta API boundary.

@@ -1,87 +1,63 @@
 ---
-title: Threads and contexts
-sidebarTitle: Threads & contexts
+title: Conversations and sessions
+sidebarTitle: Conversations and sessions
 icon: messages-square
-description: Understand which Agent settings, conversation history, project data, and files reach each thread.
+description: Keep the main conversation, steer ongoing work, and understand delegated sessions.
 ---
 
-A thread is one conversation with a saved Agent. Its context is assembled from several sources with different lifetimes.
+Select an Agent in the sidebar to return to its main conversation. The header shows the Agent's name without an extra chat title. Its separate setup conversation is labelled **Manager**.
 
-## Start a new chat with an Agent
+Keep talking to the Agent as the work develops. You do not need to create a new conversation after each task or saved setup change.
 
-In the Agents workspace, find the Agent in the left sidebar and select the **+** beside its name. You can also open the Agent and select **New thread** in the top right.
+## Give follow-ups while it works
 
-The new chat opens with that Agent's saved name, instructions, knowledge, Apps, and project. Send the first request as you would in an ordinary chat. For example:
+Sending a message during a run adds it to the queue above the composer. Each queued message waits for its own turn. **Edit** changes it; **Cancel** removes it.
 
-> *"A customer says checkout is unavailable for their whole company. Classify the incident, list the missing details, and prepare the internal escalation. Do not contact anyone yet."*
+Use **Send now** to bring a queued correction into the work already running. If that work has finished, the message starts a new turn instead.
 
-Use one thread for one case or outcome. Start another thread for a different customer, incident, or piece of work. This keeps the conversations separate while both can still use files and working memory from the Agent's configured project.
+> *"Use the revised launch date in this attachment. Keep the investigation so far, but recheck every deadline against Friday."*
 
-If you edit the Agent, start a new thread to test the change. A thread keeps the Agent setup it started with; it does not switch versions midway through a conversation.
+A queued message using a different saved Agent setup shows **Saved setup applies next turn** instead of **Send now** while the older turn is running.
 
-## Context map
+**Stop** stops the current run and pauses queued follow-ups. A failed run also pauses them. Use **Send now** on a paused message when you are ready to continue. Reloading or changing devices does not discard the server's queue.
 
-| Source | Scope | What happens in a new thread |
-| --- | --- | --- |
-| Agent definition | Saved Agent configuration | Captured when the thread starts |
-| Conversation history | One thread | Starts empty |
-| Agent knowledge files | Agent configuration | The configured list is captured at start |
-| Project files | Configured project | Shared with other threads in that project |
-| Project working memory | Configured project | Recent summaries can be recalled |
-| Child task message | One child thread | Only the sent message is added, not the parent transcript |
+See [Chat](/features/chat#while-fluso-is-working) for the queue controls.
 
-The Agent definition includes its name, description, goal, instructions, allowed capabilities, project, and knowledge files. Editing that setup changes new threads. Existing threads keep the configuration they started with.
+## Let the Agent organize independent work
 
-## Ordinary chat context is different
+For a complex request, the main conversation can delegate complementary tasks to sessions while continuing its own work. It should keep the central decisions and combine the results into your deliverable.
 
-Ordinary project chats can use global user preferences, project instructions, and `context.md`. Saved Agent threads use the Agent's saved definition instead. They can still use project files and working-memory summaries shared by the project.
+For a release review, separate sessions might inspect test evidence and customer-impact notes while the main conversation evaluates release criteria. Small tasks or edits to the same file may be better kept together.
 
-## Keep contexts isolated
-
-### What stays in one thread
-
-- Its messages and attached-file references.
-- In-progress turn state and temporary session data.
-- The Agent definition captured when the thread started.
-
-A new thread does not receive another thread's conversation history.
-
-### What threads can share
-
-Threads started from the same Agent can use the same knowledge files and capabilities. Threads in the same project can also use its files and short working-memory summaries. If two threads edit the same resource at once, their changes can conflict.
-
-### When to start a new thread
-
-Start one when the topic or customer changes, when a task needs its own history, or when independent work can progress separately. Keep the current thread when the next step depends on its full conversation.
-
-## Use parent and child threads
-
-A top-level Agent thread can create direct child threads for separate tasks. Each child receives a bounded task and works in its own conversation. The hierarchy has one level: a parent can create several children, but a child cannot create another child.
-
-### Choose when children are created
-
-| Setting | Behavior |
+| Session type | Starting context |
 | --- | --- |
-| Off | The Agent cannot manage other threads. |
-| Explicit | The Agent creates a child only when you ask or its instructions require one. This is the default. |
-| Proactive | The Agent may create direct children for distinct tasks that can progress independently. |
+| Fresh | Its assignment and the necessary inputs, without the main conversation's transcript |
+| Forked | Completed conversation context at the point of the fork, followed by its assignment |
 
-### Give a child enough context
+Both use the Agent setup selected when they are created and can use shared files and project memory. A fork does not copy running work or routines. Later messages and setup changes do not automatically propagate to an existing session.
 
-A child sees the task message, not the parent's transcript. Include the task, source material, constraints, approval boundaries, and expected result. Its final result returns to the parent automatically; only the parent that created it can send follow-up work, cancel it, or delete it.
+The main conversation can reuse a session, send corrections, cancel obsolete work, and request a result. Requested results return automatically. A delegated session cannot create more sessions.
 
-### Work in parallel safely
+## Inspect sessions when useful
 
-Use separate children for read-only research or changes to different outputs. Keep changes to the same files or shared APIs in one thread, then combine the work there.
+When sessions exist, **Sessions** appears above the composer. It shows work that is queued, working, waiting for approval, idle, or needs attention. A fork icon marks inherited conversation context; **Uses an earlier setup** identifies a session created before a setup change.
 
-## Pick the right scope
+Open a session to inspect its conversation. **Main conversation** takes you back. You can rename, archive, restore, or delete delegated sessions from their menus.
 
-- Put stable Agent behavior in **Instructions**.
-- Put read-only reference material in Agent knowledge files.
-- Put finished and working files in the configured project.
-- Start a new thread for a clean conversation.
-- Use a child thread only when the task can progress with the context you send it.
+- **Idle** means it has no active work. It may be reused or woken by a routine.
+- **Archive** organizes the list; use the routine controls to pause future work.
+- **Delete** removes the session and its routines. Preserve any results you still need first.
 
-## Related guides
+The main conversation remains for the Agent's lifetime. The Manager is separate from this Sessions list.
 
-Read [Project context](/developers/project-context) and [User preferences](/developers/user-preferences) for the remaining context boundaries. See [Threads and messages](/developers/api-ref/threads-and-messages) for the public thread API.
+## Approval and recovery
+
+A session waiting for approval is waiting for your decision. Its approval can appear above the main composer's controls, in the session itself, or in [Inbox](/developers/inbox). A session's report cannot approve an action on your behalf.
+
+Switching away from a chat does not itself stop server work. Long conversations may be compacted into a summary, so reopening a chat does not mean every old message is loaded verbatim into the model.
+
+If a run fails, inspect the error and any files or app changes already made before retrying. Retrying is not a rollback of completed actions. For incomplete work, give a concrete continuation request:
+
+> *"Check the saved findings and source files. Continue from the unfinished checks without repeating completed external actions, and tell me what remains unresolved."*
+
+Use the Manager when the repeated problem is the Agent's instructions. Use connection, approval, or routine controls when the problem is access or scheduling.

@@ -1,40 +1,73 @@
 ---
-title: Agent builder
-sidebarTitle: Agent builder
-icon: workflow
-description: Turn a plain-language request into an Agent draft, then review or refine it before saving.
+title: Create and refine an Agent
+sidebarTitle: Create and refine
+icon: bot
+description: Describe a recurring job, try it with real input, and improve the same Agent over time.
 ---
 
-Open **Control Panel → Create Agent** to start in Agent Studio. Describe the job in plain language. Studio drafts the Agent definition and a small workflow preview before anything is saved.
+An Agent is a saved assistant for a particular job. It keeps its instructions, capabilities, reference files, and one main conversation. Use ordinary [chat](/features/chat) for a one-off request; use an Agent when you want to return to the same responsibility.
 
-> *"Create a customer escalation coordinator. Gather the customer, impact, urgency, and open questions. Read relevant Gmail and Google Drive context, classify the case as P0 or P1, prepare the next steps, and require approval before sending anything."*
+<Note>
+  These guides describe the current development build. Agents is available in Fluso Dev and in builds where it has been enabled. If **Agents** is missing from your sidebar, your build has not enabled it.
+</Note>
 
-## Build the first draft
+## Create from a conversation
 
-A useful request names four things:
+1. Switch to **Agents** in the sidebar and select **New Agent**.
+2. Choose a project if its files belong somewhere other than **Home**.
+3. Describe the job in the message box and send it.
 
-- The input, such as a support request or release candidate.
-- The outcome, such as a severity decision or handoff package.
-- The sources and capabilities the Agent may use.
-- The boundaries that must hold, such as approval before an external action.
+> *"Create a release reviewer. Compare the release notes, test results, and open blockers I provide. Return a go/no-go recommendation with evidence, unresolved risks, and owners. Ask when the evidence conflicts. Do not publish or contact anyone."*
 
-Select **Build**. Studio returns the Agent name, description, instructions, and a short graph of the proposed steps. The graph is a design preview. It helps you check the order and decision points, but it is not executable code.
+That first message starts the Agent's **Manager** conversation. The Manager names the Agent and saves its setup. As it is created, its name appears in the sidebar and its setup appears beside the conversation. You can keep refining it there.
 
-## Refine without starting over
+Check the saved instructions and capabilities, then select **Launch agent** to open its main conversation. Creation does not run the job or create a routine.
 
-Use the Studio message box to change the draft:
+If you prefer direct controls, **Fill in a form instead** on New Agent opens the same setup fields without a creation conversation.
 
-> *"Only use P0 and P1. Run the Gmail and Drive lookups in parallel. Stop for approval before sending a customer reply."*
+If you leave before creation finishes, return to **New Agent → Continue setup**. An unfinished setup stays there until you resume or delete it.
 
-Studio revises the current draft and replaces the workflow preview. If a request fails, the last valid preview stays in place so you can retry.
+## Start from a Fluso example
 
-## Create or open the editor
+**My Agents** and **New Agent** also offer starting points:
 
-- Select **Create Agent** when the draft is ready.
-- Select **Go to editor** when you want to inspect every field, capability, knowledge file, or thread setting first.
+| Starting point | First useful input |
+| --- | --- |
+| Research brief | A question, options, constraints, and any sources you already have |
+| Project follow-through | Meeting notes, project updates, or a task export |
+| Inbox triage | Your connected Google Workspace account and the inbox and date range to review |
+| Document review | A document, its audience, and the outcome you need |
 
-Studio only selects capabilities already available to you. Creating the Agent saves the definition. Existing Agent threads keep the definition they started with, so test changes in a new thread.
+Preview the setup and create your own copy. If a required app is missing or disconnected, the Manager helps finish setup. Otherwise, the copy opens its main conversation. Changes to the Fluso example do not overwrite your copy.
 
-## Next
+## Try the first real task
 
-See [Agent description](/developers/agent-description) for field boundaries and [Threads and contexts](/developers/threads-and-contexts) for what a new Agent thread receives.
+Give the Agent the input it needs, not another request to create itself.
+
+> *"Review these release notes and the attached test report. The release is Thursday. Identify blockers and give me a recommendation. Do not assume a missing test passed."*
+
+Read the answer and open any delivered files. Check sources, missing information, and the requested output. Try a follow-up that changes an assumption, then a case with incomplete evidence.
+
+For work that could send a message or change another app, ask for a draft and review it first. Choose **Ask me first** when you want tool approval; see [Approvals and permissions](/features/approvals).
+
+## Refine the same Agent
+
+The main conversation does the work. The **Manager** changes how that Agent is set up and can review its conversations to diagnose a problem.
+
+From a chat, select the **Edit agent** pencil to open the setup page. Choose **Manager** to explain a change, or **Edit** to change the fields yourself. The Agent's actions menu also offers **Modify**, which opens its Manager.
+
+> *"The last review treated missing evidence as a pass. Change the instructions so missing evidence is listed as unresolved, while preserving the rest of the review format."*
+
+Saved changes apply to the main conversation on its **next turn**. Keep using that conversation. A turn already running and delegated sessions already created retain their earlier setup.
+
+If you queue a message with changed setup while an older turn runs, it shows **Saved setup applies next turn**. It waits rather than changing the active turn. You can still edit or cancel it.
+
+To undo a change, tell the Manager exactly what to restore or edit the saved fields. There is no version-history or rollback screen in the current UI.
+
+## Keep or remove it
+
+Star an Agent to find it quickly. **Change appearance** changes its avatar without changing its instructions. **Duplicate** copies its setup and knowledge files; conversations and routines start fresh.
+
+**Delete** permanently removes the Agent, its conversations, routines, and public share link. Copies other people already imported remain independent. Project files are separate; deleting an Agent is not a project cleanup.
+
+Next: [Setup and capabilities](/developers/agent-description), [Conversations and sessions](/developers/threads-and-contexts), or [Routines](/developers/schedules).

@@ -173,23 +173,22 @@ The mode button on the composer toolbar sets reasoning effort for the current ch
 
 | Mode | Use it for |
 | --- | --- |
-| **Quick** | straightforward questions and small edits |
-| **Deep** | complex tasks, reviews, planning |
-| **Max** | the hardest problems, when you would rather wait |
+| **Fast** | straightforward questions and small edits |
+| **Medium** | everyday work with a balance of speed and reasoning |
+| **High** | difficult tasks, reviews, and planning |
 
-The choice belongs to the chat, not the app, so a quick lookup and a long refactor can sit side by side in your sidebar at different settings. In [confidential mode](/features/confidential) the reasoning level is fixed, so Max is not offered there.
+The choice belongs to the chat, not the app, so a quick lookup and a long refactor can sit side by side in your sidebar at different settings. Ordinary chats default to Medium. Saved Agents take High or Fast from their [setup](/developers/agent-description), so change it there. In [confidential mode](/features/confidential), the underlying reasoning level is fixed and the extra High option is not offered for ordinary chats.
 
 ## What Fluso may do on its own
 
-Beside the mode button, one control sets how much Fluso does before checking with you. `⌘⇧\` steps through the three levels.
+Beside the mode button, one control sets how much Fluso does before checking with you. `⌘⇧\` switches between the two modes.
 
 | Level | Behaviour |
 | --- | --- |
-| **Ask me first** | asks before reaching the web and before any connected app |
-| **Allow web** | searches the web on its own, still asks before connected apps |
-| **Allow everything** | acts without asking |
+| **Ask me first** | asks when a tool is not already allowed; read-only tools follow connection settings |
+| **Allow everything** | uses connected app tools automatically; denied tools remain blocked |
 
-Your choice sticks as the default for new chats. [Approvals and permissions](/features/approvals) covers the approval cards, saved tool rules, and what an organization policy can override.
+A choice here applies to this chat. Settings controls the default for chats without their own choice. [Approvals and permissions](/features/approvals) covers the approval cards, saved tool rules, and what an organization policy can override.
 
 ## Dictating
 
@@ -245,7 +244,7 @@ Hold `⌘` and each toolbar control labels itself with its own shortcut. Hold it
 | `⇧ Enter` | new line |
 | `↑` / `↓` | walk prompt history, then back to your draft |
 | `@` | open the context menu |
-| `⌘\` | cycle Quick, Deep, Max |
+| `⌘\` | cycle Fast, Medium, High where available |
 | `⌘⇧\` | cycle what Fluso may do alone |
 | `⌘D` | start or stop dictation |
 | `⌘⇧2` | screenshot into the composer (desktop app) |

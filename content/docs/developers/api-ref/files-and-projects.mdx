@@ -7,7 +7,7 @@ description: Work with durable project metadata and files in a user's Agent work
 
 Workspace projects and files use the `/v1/agent/*` routes. They belong to the authenticated user's durable workspace, outside disposable runtime compute.
 
-[Agents](/developers/api-ref/agents-and-versions) bind new chats to one of these projects by name.
+An [Agent](/developers/api-ref/agents-and-versions) places its main conversation in the configured project when that conversation is first created. Changing its setup later does not move existing conversations.
 
 ## List projects
 
@@ -158,28 +158,28 @@ curl -G "$FLUSO_API/v1/agent/files/read" \
 
 ## Upload a file
 
-<Endpoint method="POST" path="/v1/agent/files/upload" />
+The current client uploads to temporary object storage, then confirms an import into the workspace. The older multipart `/v1/agent/files/upload` route is deprecated.
 
-Uploads one file with an optional destination and conflict policy.
+1. `POST /v1/files/upload/presigned-url/get` with the file name, MIME type, size in bytes, and optional destination.
+2. POST the returned `upload_fields` and file bytes as multipart form data to `upload_url`. The file is the last field. Do not send your Fluso bearer token to that storage URL.
+3. `POST /v1/files/upload/presigned-url/confirm` with `{"id": "<returned upload id>"}`.
+4. Poll `GET /v1/files` for upload tracking and verify the destination file after the import finishes.
 
-```bash title="Request"
-curl "$FLUSO_API/v1/agent/files/upload" \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -F 'file=@release-brief.md' \
-  -F 'path=/files/release-brief.md' \
-  -F 'onConflict=overwrite'
-```
-
-```json title="Response: 200"
+```json title="Presign body"
 {
-  "success": true,
-  "path": "/files/release-brief.md",
-  "size": 1240,
-  "mimeType": "text/markdown"
+  "file_name": "release-brief.md",
+  "mime_type": "text/markdown",
+  "file_size": 1240,
+  "target_path": "/projects/Home/files/release-brief.md",
+  "expected_revision": "missing"
 }
 ```
 
-`onConflict` accepts `error`, `overwrite`, or `uuid`. The default is `error`.
+Use the actual byte count. `expected_revision: "missing"` requires that no file exists at the destination when the import commits. To edit an existing file, supply its current revision hash; omitting the field allows ordinary replacement in import order.
+
+Confirmation queues the import; it does not mean the file is already saved. Tracking rows remain for in-progress uploads, failures, and undismissed history warnings. Successful imports without warnings leave that tracking list.
+
+If the destination changed, reread it before saving again. If prior file history cannot be preserved, inspect the reported failure or warning rather than treating the operation as a normal versioned save. Agent knowledge uses its [separate attach-and-save flow](/developers/api-ref/agents-and-versions#attach-knowledge).
 
 ## Download a file
 
@@ -228,4 +228,4 @@ curl -G "$FLUSO_API/v1/agent/files" \
 
 ## Next
 
-Read [Projects](/features/projects) for the product workflow, attach project context to [Agents and versions](/developers/api-ref/agents-and-versions), or create project-bound [Threads and messages](/developers/api-ref/threads-and-messages).
+Read [Projects](/features/projects) for the product workflow, choose a project for [Agents](/developers/api-ref/agents-and-versions), or create project-bound [Threads and messages](/developers/api-ref/threads-and-messages).

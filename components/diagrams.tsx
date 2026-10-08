@@ -49,7 +49,7 @@ function ProjectMemory({ name }: { name: string }) {
         <FolderClosed aria-hidden="true" className="size-4 text-fd-primary" />
         {name}
         <span className="ms-auto rounded-full bg-fd-muted px-2 py-0.5 text-[11px] font-normal text-fd-muted-foreground">
-          private scope
+          context scope
         </span>
       </div>
       <div className="space-y-2">
@@ -76,7 +76,7 @@ export function MemoryScopeDiagram() {
     >
       <Layer
         label="Global preferences"
-        detail="Your timezone, response style, and standing instructions apply in every project"
+        detail="Response style and standing instructions for ordinary chats across projects"
         icon={Users}
         emphasis
       />
@@ -91,8 +91,8 @@ export function MemoryScopeDiagram() {
         id="memory-scope-caption"
         className="mt-4 text-center text-xs leading-relaxed text-fd-muted-foreground"
       >
-        Global preferences apply everywhere. Project context and working memory
-        stay inside their project.
+        Ordinary chats load global preferences. Saved Agents use their own
+        instructions. Project working memory is recalled within its project.
       </figcaption>
     </figure>
   );

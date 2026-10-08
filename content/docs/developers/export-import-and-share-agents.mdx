@@ -1,8 +1,53 @@
 ---
-title: Export, import, and share Agents
-sidebarTitle: Export, import & share
+title: Sharing and copies
+sidebarTitle: Sharing and copies
 icon: share-2
-description: Find the combined guide to Agent versions, export, import, and sharing.
+description: Share an Agent's saved setup, choose what becomes public, and import an independent copy.
 ---
 
-Export, import, and sharing now live in [Agent versions](/developers/versions#move-an-agent-between-workspaces).
+Use **Duplicate** for another copy in your own workspace. Use **Share** when someone else should review or import the setup. Neither transfers a live conversation or assigns your connected accounts to another person.
+
+## Share a saved setup
+
+1. Open the Agent's actions menu and select **Share**.
+2. Review its instructions and settings, which are included in the public snapshot.
+3. Choose any knowledge files, custom skill folders, or custom connection URLs to include.
+4. Select **Create public link**, then copy or open the link.
+
+Anyone with the link can read the published setup and import a copy.
+
+| Content | Shared behavior |
+| --- | --- |
+| Instructions and settings | Included |
+| Selected knowledge files | File contents included |
+| Selected custom skills | Entire skill folders included |
+| Built-in skills | Listed by name; recipients use their installed defaults |
+| Unselected knowledge files | Names listed so recipients know what is missing |
+| Selected custom connections | Connection definitions and URLs included, without saved credentials |
+| Conversations, routines, account credentials, and project files | Not included |
+
+Files and skill contents share a 20 MiB bundle limit. Review the complete selected folders and URLs before publishing: they may contain private material, and a URL can itself contain an access key. Authentication stored separately is not shared.
+
+## Update or stop sharing
+
+Later private edits do not change the public snapshot. Select **Update shared version** to publish the current setup at the same link.
+
+Select **Stop sharing** to disable the link. Deleting the Agent also stops sharing. Neither action removes copies another person already imported or saved.
+
+This is a server-stored, revocable link. There is no YAML export or YAML import flow in the current Agent UI.
+
+## Import someone else's Agent
+
+Open a share link, review the setup, and import it with a name and destination project. You can also select **New Agent → Import from a shared link** and paste the link.
+
+The import creates a separate Agent. Included knowledge is copied, and included custom skills get distinct names so they do not overwrite existing skills. Missing reference files and unavailable skills still need attention.
+
+The Manager helps finish setup with your own accounts. A saved **Allowed** app policy does not connect that account. Some public connections that need no authentication can be registered during import; authenticated connections still need your authorization.
+
+If the publisher changes the snapshot while you are reviewing it, Fluso asks you to review the new version before importing. A removed link cannot be imported; an older incompatible link may need its owner to republish it.
+
+## Hand off useful work
+
+For a release-review Agent, share the setup and the agreed review rubric. Export project working files separately if the recipient needs them. They should connect their own apps and try a real release case before scheduling recurring work.
+
+Use [Projects](/features/projects) for project exports and [Open architecture](/features/open-architecture) for other ways to keep a copy of your work.

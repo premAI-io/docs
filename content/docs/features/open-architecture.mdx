@@ -7,7 +7,7 @@ description: Keep a usable copy of your work and move it through documented file
 
 Fluso keeps core work in ordinary formats instead of locking every object behind one interface. You can download project files, move Agent definitions, export operational records, and read conversation history through the API.
 
-Different exports serve different purposes. A project ZIP is a file backup; an Agent YAML is a reusable setup; a shared chat is a reviewable snapshot.
+Different exports serve different purposes. A project ZIP is a file backup; a shared Agent is a reusable setup; a shared chat is a reviewable snapshot.
 
 ## What you can take out
 
@@ -17,8 +17,7 @@ Different exports serve different purposes. A project ZIP is a file backup; an A
 | **Individual files** | Open a project file and select **Download** | The original file in its stored format |
 | **Shared project files** | Open a project file, select **Share**, then create a link | A revocable public link to the selected file |
 | **Generated documents and presentations** | Use the artifact's export menu | Documents as PDF, Word, HTML, or Markdown; presentations as PDF, PowerPoint, or a Google Slides copy |
-| **Agents** | Open an Agent, select its name, then **Export YAML** | A portable `.agent.yaml` definition with the Agent's saved setup and workflow |
-| **Agent review copies** | Open an Agent, select its name, then **Share** | A read-only link that another person can inspect and import as a separate Agent |
+| **Agent copies** | Open the Agent's actions menu, then **Share** | A revocable snapshot of the setup and selected resources that another person can import |
 | **Conversation history** | Open a chat and select **Share chat**, or read messages with the Threads API | A revocable public snapshot, or structured persisted messages through the API |
 | **Audit logs** | In Fluso Admin, filter **Audit log**, then select **Export _N_ rows** | CSV containing the currently filtered rows from the latest 100 recorded identity and access events |
 | **Usage records** | In Fluso Admin, open **Observability → Export CSV** | CSV of the recorded daily gateway cost and token totals shown in the 14-day view |
@@ -29,33 +28,28 @@ Project ZIPs skip dotted runtime entries and symbolic links. They do not serve a
 
 Open **Plugins → Skills** and select a skill to read its `SKILL.md`. This is the instruction document Fluso follows.
 
-The skill document is view-only, and there is no one-click skill bundle export today. For a custom skill you own, copy its `SKILL.md` and keep its source files in your own version control before removing it from Fluso. Built-in and marketplace skills can be inspected in Fluso but are not exported as workspace-owned packages.
+The skill document is view-only. For a custom skill you own, keep its `SKILL.md` and source files before removing it from Fluso. An Agent share can include selected custom skill folders; built-in skills remain references to the recipient's installed versions.
 
-## What an Agent export leaves behind
+## What an Agent share includes
 
-Agent export and sharing deliberately omit:
+Instructions and settings are included. You choose whether to include knowledge files, complete custom skill folders, and custom connection URLs. Built-in skills and missing reference files are listed by name.
 
-- Workspace identities and credentials.
-- App connection secrets.
-- Chat history and deliveries.
-- Project ownership and project files.
-- Knowledge-file contents.
-- Schedules, webhook triggers, evaluations, and version history.
+Stored account credentials, conversations, routines, and project files stay private. The recipient connects their own apps. Publish later changes explicitly with **Update shared version**, or revoke the link with **Stop sharing**. Imported copies remain independent.
 
-The export names omitted knowledge files so the recipient can add them again. Named skills remain references to review in the destination workspace; an Agent configured to use every skill imports with none selected. Apps must be reconnected. See [Agent versions](/developers/versions#move-an-agent-between-workspaces) for the full handoff flow.
+See [Sharing and copies](/developers/export-import-and-share-agents) for the full flow and resource limits.
 
 ## A practical handoff
 
 To hand a customer-support workflow to another team:
 
 1. Export the support project as ZIP so they receive the runbooks and working files.
-2. Export the Agent as YAML, or send its review link.
+2. Share the Agent's saved setup and any reference files the recipient needs.
 3. Share any example conversation as a snapshot, removing sensitive messages first.
 4. Export the relevant filtered audit rows separately if the reviewer needs access evidence.
-5. In the destination workspace, import the Agent, upload the project files, reconnect Apps, and run its evaluations before live use.
+5. In the destination workspace, import the Agent, upload the project files, connect Apps, and try a real task before scheduling work.
 
 These exports are independent snapshots. Later Fluso changes do not silently rewrite the copies you already saved.
 
 ## APIs for continuous access
 
-Use the [API reference](/developers/api-ref/authentication) when a one-time download is not enough. The API exposes Agents and versions, projects and files, threads and messages, schedules, runs, and usage. Authenticate each request with a scoped bearer token and store only the data your integration needs.
+Use the [API reference](/developers/api-ref/authentication) when a one-time download is not enough. The beta client API exposes Agent setup, sharing, projects and files, conversations, schedules, runs, and usage. Authenticate each request with a user bearer token and store only the data your integration needs.

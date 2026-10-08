@@ -13,7 +13,7 @@
 The navigation keeps Home first, then sorts the top-level sections and the pages inside each section alphabetically:
 
 - **Administration** - `/admin-panel`. Browser-admin access, dashboards, governance records, runtime controls, and network policy.
-- **Agents (Beta)** - `/developers/*`. Guides cover Agent setup, threads, context, projects, schedules, preferences, and webhooks. Architecture and the REST API reference live here too, with API pages under `/developers/api-ref/*`.
+- **Agents (Beta)** - `/developers/*`. Guides cover creation and refinement, capabilities, the main conversation and delegated sessions, files and context, routines, Inbox, and sharing. Architecture and the beta client API reference live here too, with API pages under `/developers/api-ref/*`.
 - **App setup** - `/integrations/{github, gmail, google-calendar, slack}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
 - **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
 - **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.
@@ -42,7 +42,8 @@ Email, calendar, code, content, research are skills, not separate features. The 
 ## Terminology
 
 - **Fluso** — the product.
-- **Apps** / **MCP connections** — the connections to third-party apps. There is no separate connector system; "Plugins" is the sidebar item, and connections live under **Plugins → MCP**. Don't introduce "connector" in new copy except where the app itself still says "connector tools" (the approvals settings).
+- **Apps** / **MCP connections** — the connections to third-party apps. There is no separate connector system; connections live under **Plugins → MCP**. Use **Connectors** when referring to the Agent editor's capability picker.
+- **Agent** — saved setup and a continuing main conversation. **Manager** refines that one Agent; **sessions** are delegated conversations; **routines** are scheduled messages. Main conversations take saved setup changes on their next turn; existing delegated sessions retain their setup.
 - **Knowledge graph** — Fluso's persistent memory. Lowercase.
 - **Skills** — specialised capabilities that activate automatically. Built-in or custom (`SKILL.md`).
 - **Projects** — workspaces that scope context, files, and tasks.
@@ -83,7 +84,8 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 ## Content boundaries
 
 - Never invent feature behaviour. If a capability isn't documented in source materials, leave it out.
-- Always pair "Fluso can send X" with the approval safety note: drafts are shown for review.
+- When describing external sends, explain how to request and review a draft and choose **Ask me first**. Do not claim every write requires approval: saved tool rules, connection settings, and the chat's mode determine that behavior.
+- Verify Agent behavior against both current frontend and backend code. Do not restore removed Studio graphs, evaluations, version rollback, YAML transfer, webhook triggers, or thread-management toggles from historical release notes.
 - For product actions, point users to the macOS download at `https://fluso.ai/` and to support at `support@premai.io`. Don't link to `app.fluso.ai`. Fluso is a desktop app.
 
 ## Publishing release notes

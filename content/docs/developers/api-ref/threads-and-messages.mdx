@@ -1,174 +1,73 @@
 ---
 title: Threads and messages
-sidebarTitle: Threads & messages
+sidebarTitle: Threads and messages
 icon: messages-square
-description: Create threads, manage their metadata, read history, and stream a turn.
+description: Open an Agent's main conversation, send a turn, and read durable history.
 ---
 
-Threads live inside a workspace project. Thread responses use snake_case fields. The chat stream follows the AI SDK UI message stream protocol.
+A thread is a conversation stored in a project. Agent-owned conversations have a saved Agent binding; an ordinary chat cannot be converted by adding an Agent ID to a later message.
 
-Agent-backed threads use an [Agent configuration](/developers/api-ref/agents-and-versions), and each accepted turn creates a [run](/developers/api-ref/runs).
+Each Agent has one main conversation and a separate Manager. Delegated sessions are created by the Agent's session tools. Do not create a new top-level thread for every message.
 
-## List threads
-
-<Endpoint method="GET" path="/v1/threads" />
-
-Returns ordinary threads ordered by recent activity.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/threads?page=1&limit=20" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```json title="Response: 200, selected fields"
-{
-  "threads": [
-    {
-      "thread_id": "thread_release",
-      "project_id": "Release Review",
-      "name": "Release review",
-      "title": "Release review",
-      "created_at": "2026-08-31T09:00:00Z",
-      "updated_at": "2026-08-31T09:02:00Z",
-      "last_active_at": "2026-08-31T09:02:00Z",
-      "status": "ready"
-    }
-  ],
-  "pagination": { "page": 1, "limit": 20, "total": 1, "pages": 1 }
-}
-```
-
-Agent-owned chats are omitted from this general list and remain attached to their Agent.
-
-## Create a thread
+## Open the main conversation
 
 <Endpoint method="POST" path="/v1/threads" />
 
-Creates a thread in the named project, creating the project when needed.
+Use the Agent's configured project and its ID in `metadata`. Omit `thread_id` to let repeated opens resolve to the existing main conversation.
 
-```bash title="Request"
+```bash
 curl "$FLUSO_API/v1/threads" \
-  -X POST \
   -H "Authorization: Bearer $FLUSO_TOKEN" \
   -H 'Content-Type: application/json' \
-  -d '{"project_id":"Release Review","title":"Release review"}'
+  -d '{
+    "project_id": "Home",
+    "metadata": {"agentId": "<agentId from GET /v1/agents>"}
+  }'
 ```
 
-```json title="Response: 200"
-{
-  "thread_id": "thread_release",
-  "project_id": "Release Review"
-}
-```
-
-You can supply your own `thread_id` for an idempotent integration boundary.
-
-## Update a thread
-
-<Endpoint method="PATCH" path="/v1/threads/{threadId}" />
-
-Updates the title, metadata, pin, archive state, or label membership.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/threads/thread_release?project_id=Release%20Review" \
-  -X PATCH \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{"title":"RC decision","pinned":true}'
-```
-
-```json title="Response: 200, selected fields"
-{
-  "thread_id": "thread_release",
-  "project_id": "Release Review",
-  "name": "RC decision",
-  "title": "RC decision",
-  "pinned_at": "2026-08-31T09:03:00Z",
-  "status": "ready"
-}
-```
-
-## Read message history
-
-<Endpoint method="GET" path="/v1/threads/{threadId}/messages" />
-
-Returns the thread's persisted messages and projected tool-status records.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/threads/thread_release/messages?project_id=Release%20Review" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```json title="Response: 200"
-{
-  "messages": [
-    {
-      "message_id": "user-1",
-      "thread_id": "thread_release",
-      "type": "user",
-      "is_llm_message": false,
-      "content": "{\"content\":\"Review this release candidate\"}",
-      "metadata": "{\"request_id\":\"req_review_01\"}",
-      "created_at": "2026-08-31T09:00:00Z",
-      "updated_at": "2026-08-31T09:00:00Z"
-    }
-  ]
-}
-```
+Use the returned `thread_id` and `project_id`, including when they refer to an existing conversation. Adding `"role": "manager"` to the creation metadata opens that Agent's Manager instead. Ordinary thread creation omits the Agent metadata.
 
 ## Send a message
 
 <Endpoint method="POST" path="/v1/chat" />
 
-Starts or queues a turn and streams UI message events until the request settles.
-
-Use a new thread ID for the first Agent-backed turn. The accepted send creates and binds that thread; an ordinary thread cannot later be converted.
-
-```bash title="Request"
+```bash
 curl -N "$FLUSO_API/v1/chat" \
   -H "Authorization: Bearer $FLUSO_TOKEN" \
   -H 'Content-Type: application/json' \
   -d '{
-    "threadId": "thread_agent_release",
-    "projectName": "Release Review",
-    "agentId": "agt_0123456789ab4def8123456789abcdef",
-    "requestId": "req_review_01",
-    "message": "Review this release candidate"
+    "threadId": "<returned thread_id>",
+    "projectName": "<returned project_id>",
+    "agentId": "<agentId>",
+    "requestId": "<unique ID for this intended turn>",
+    "message": "Review the release evidence already in this project.",
+    "streamingBehavior": "followUp"
   }'
 ```
 
-```text title="Response: 200 text/event-stream, shortened"
-data: {"type":"start","messageId":"assistant-req_review_01"}
+The response uses the AI SDK UI message stream over SSE. A request can be queued, running, or held for approval before it settles. Stream acceptance is not completion; use [Runs](/developers/api-ref/runs) and persisted history to recover after a disconnect.
 
-data: {"type":"text-start","id":"final-text-req_review_01"}
+Use the same `requestId` when checking or retrying an ambiguous submission, with the same request content. Use a new ID for a genuinely new turn.
 
-data: {"type":"text-delta","id":"final-text-req_review_01","delta":"Go, with one follow-up."}
+`followUp` queues a separate turn if work is active. `steer` brings new input into the active turn where compatible, or starts it when idle. Input with a different saved Agent configuration must wait for its own turn; do not assume every queued message can be steered.
 
-data: {"type":"text-end","id":"final-text-req_review_01"}
+## Read and organize conversations
 
-data: {"type":"finish"}
+| Method and path | Behavior |
+| --- | --- |
+| `GET /v1/threads?page=1&limit=20` | General chat list; excludes Agent-owned conversations |
+| `GET /v1/agents/{agentId}/chats` | Agent conversations, including `isOrchestrator`, `createdByThreadId`, `previousConfig`, `forked`, and `role` |
+| `GET /v1/threads/{threadId}?project_id=Home` | Thread metadata |
+| `GET /v1/threads/{threadId}/messages?project_id=Home` | Persisted messages and tool-status projections |
+| `PATCH /v1/threads/{threadId}?project_id=Home` | Title, supported metadata, pin, archive state, or labels |
+| `DELETE /v1/threads/{threadId}?project_id=Home` | Delete an eligible thread and its schedules |
 
-data: [DONE]
-```
+Thread and message responses use snake_case. Message `content` and `metadata` can contain serialized JSON; parse them before reading their fields.
 
-Use one unique `requestId` per intended turn. Retrying the same accepted request does not create a second turn.
+## Read message history
 
-## Delete a thread
+Use the messages endpoint above when reconnecting or keeping a copy of a conversation. Routine metadata identifies its scheduled origin; collapsing it in the UI does not remove its full instructions from history.
 
-<Endpoint method="DELETE" path="/v1/threads/{threadId}" />
+Agent and role bindings are fixed at creation. The main conversation uses the current Agent setup on a later turn; delegated sessions keep their creation setup. The main conversation cannot be archived or deleted independently of the Agent.
 
-Deletes the thread and removes schedules that target it.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/threads/thread_release?project_id=Release%20Review" \
-  -X DELETE \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```json title="Response: 200"
-{ "deleted": true }
-```
-
-## Next
-
-Bind new threads to [Agents and versions](/developers/api-ref/agents-and-versions), or follow accepted turns in [Runs](/developers/api-ref/runs).
+For user-facing behavior, see [Conversations and sessions](/developers/threads-and-contexts).
