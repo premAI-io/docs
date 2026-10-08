@@ -3,7 +3,6 @@
   "icon": "bot",
   "root": true,
   "pages": [
-    "[arrow-left][All Fluso docs](/)",
     "index",
     "agent-builder",
     "improve",
