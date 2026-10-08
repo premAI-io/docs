@@ -16,6 +16,12 @@ Create a reviewer through [New Agent](/developers/agent-builder). Explain what i
 
 Then attach the actual material. Explain when you need the decision and what must be true before launch.
 
+<Frame caption="The review request brings the launch brief, validation notes, and draft guides together.">
+  <a href="/images/agents/review-request.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
+    <img src="/images/agents/review-request.png" alt="A launch-review request with five attached documents from this documentation project." loading="lazy" width="1440" height="386" />
+  </a>
+</Frame>
+
 ## Give different checks room to run
 
 For a larger review, you can ask:
@@ -24,11 +30,7 @@ For a larger review, you can ask:
 
 The Agent can use separate [sessions](/developers/guides/conversations) while it works on the overall review.
 
-<Frame caption="In a real local run, two sessions checked different parts of a documentation release.">
-  <img src="/images/agents/delegated-reviews.png" alt="An Agent reviewing five documents with two separate sessions working." />
-</Frame>
-
-In that run, the Agent recommended waiting because checks and approval were still pending. It returned a report with both sessions' findings.
+In our local run, two sessions checked different parts of this documentation release. The Agent recommended waiting because checks and approval were still pending. It returned a report with both sessions' findings.
 
 It also misread one progress note as a contradiction. We clarified it in the conversation, and it corrected the saved report.
 
@@ -48,7 +50,9 @@ You can schedule a later check with a [one-time routine](/developers/schedules).
   The routine reread the saved report and validation notes. It found no new evidence, so it kept the unresolved checks open.
 
   <Frame caption="The routine returned to the same conversation and kept the pending decisions visible.">
-    <img src="/images/agents/routine-result.png" alt="A compact routine message and its completed follow-up in the Agent conversation." />
+    <a href="/images/agents/routine-result.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
+      <img src="/images/agents/routine-result.png" alt="A compact routine message and its completed follow-up in the Agent conversation." width="1760" height="1016" />
+    </a>
   </Frame>
 
   Its result appeared in Inbox. The routine did not approve or publish the release.
