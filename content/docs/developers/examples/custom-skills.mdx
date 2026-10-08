@@ -1,77 +1,57 @@
 ---
-title: Teach a custom workflow
-sidebarTitle: Custom skills and services
-icon: blocks
-description: Give an Agent reusable instructions for a connected wiki or a service that needs its own setup.
+title: Help with the team wiki
+icon: book-open
+description: Find the right page and improve it without losing what the team still needs.
 ---
 
-A custom skill saves a method the Agent can reuse.
-It can contain instructions, references, and scripts. It does not connect an account or grant access by itself.
+A team wiki is useful only if people can find the right information. An Agent can help answer questions and keep pages clear.
 
-## Start from the connected tools
+This example uses Confluence through an MCP connection, which lets Fluso use another app's tools. The available actions depend on that connection and your account.
 
-Suppose your company wiki uses a custom Confluence MCP connection.
-Add the connection under **Plugins → MCP**, then select it for the Agent.
+## Start with a question
 
-Ask the Manager to inspect the available tools and define the job:
+Add the connection under **Plugins → MCP**. Select it for the Agent.
 
-> *"Create a wiki assistant for this connection. Check the spaces it can access. Help people find pages and prepare updates with source links."*
+> *"Help our team find answers in Confluence. Read the relevant pages and link to the source. If pages disagree, point that out instead of choosing an answer for us."*
 
-Keep the instructions clear about writes:
+Try a question with an answer you can check:
 
-> *"Make the exact edits I request. Show proposed changes before unrelated edits. Ask before deleting pages or changing access."*
+> *"Where should a new colleague put customer meeting notes? Show me the page that explains it."*
 
-The available operations depend on that MCP server and your account permissions.
-A tool listed in a catalog does not prove that every target is accessible.
+## Improve a page
 
-## Save a reusable method
+Once it can find the right material, give it a specific edit:
 
-> *"Create a skill for this wiki connection. Explain how to find the correct page, read its current content, and check an update. Use the actual tool schemas."*
+> *"Make this team's home page easier for a new colleague to use. Explain where documents belong and keep the existing links and activity sections."*
 
-The skill should describe how to preserve content that the task does not replace.
-For a wiki home page, this can include navigation, attachments, and existing search or activity widgets.
+Read the proposed changes before you expand the work to other pages. Page edits need write access and follow your [approval settings](/features/approvals).
 
-The Manager can create skills while refining an Agent. Agents with the needed workspace access can also create them during work.
-Check that the Agent's skill selection includes the new skill.
+## Teach it the team's method
 
-<Accordion title="Keep a skill's scope clear">
-  Skills are workspace files. Other chats and Agents can use the same skill when their selection permits it.
-  Create a separate skill when a change should apply only to one workflow.
+If you repeat the same guidance, ask **Manager** to save it as a **skill**. A skill is a reusable set of instructions, with supporting files when needed.
 
-  Keep credentials out of skill text and examples. Use the connection's authentication flow or the service's supported credential setup.
-  A skill can describe a tool that the Agent still lacks permission to call.
+> *"Save our approach to wiki updates as a skill. Read the page first, preserve useful sections, and check the links after editing. Use it for this Agent."*
+
+Check that the Agent's selected skills include it. A skill does not grant access to an app.
+
+<Accordion title="When several Agents use the same skill">
+  Custom skills are shared files in your workspace. Editing one can affect other Agents that use it.
+
+  Ask for a separate skill if the change should apply only to this Agent. Keep account credentials out of the skill's instructions and files.
+
+  You can include a custom skill when you [share an Agent](/developers/guides/sharing). Review the whole folder before sharing.
 </Accordion>
 
-## Apply the method to a real page
+<Accordion title="What about a job such as making phone calls?">
+  An Agent can use other services when you provide a working integration and account access. Calling is not built into every Agent.
 
-> *"Update this team's home page for new colleagues. Explain where their documents belong. Preserve the existing activity widgets. Give me the updated page link."*
+  For example, a phone briefing needs a calling provider, a connected account, and your permission to call the chosen number.
 
-Check the page after the update. Expand to other spaces only after you approve the structure.
-Give each space its own purpose and examples rather than copying an identical introduction everywhere.
+  After you confirm that setup works:
 
-The Agent can package a custom skill for others to use. Review its full contents before you [share the Agent](/developers/export-import-and-share-agents).
+  > *"Prepare a brief for each confirmed meeting tomorrow. Call my number ten minutes before it starts and keep the briefing under two minutes."*
 
-## Extend an Agent with another service
+  Agree what information it may say aloud and whether it may leave voicemail. A request accepted by the provider does not prove you heard the call.
 
-The same approach can support a service outside your current connections.
-For example, an outbound calling workflow needs a calling provider, account access, and a usable integration.
-Phone calling is not a built-in promise of every Agent.
-
-<Accordion title="Example: a pre-meeting phone briefing">
-  First verify the calling setup with a number and purpose you authorize.
-  Check whether the call connected, reached voicemail, or failed. A provider accepting a request does not prove a person heard it.
-
-  With that setup in place, ask for a bounded workflow:
-
-  > *"Each morning, review today's calendar. Prepare briefs for confirmed meetings. Call my verified number ten minutes before each meeting. Retry an unanswered call once."*
-
-  Specify the timezone and the information the caller may disclose.
-  Recheck the event before each call. Cancel or change its planned briefing when the meeting moves.
-
-  This can combine a daily routine with one-time routines. It is not a live calendar subscription.
-  Busy conversations, approvals, and service failures can delay execution.
-
-  Review pending routines when your plans change. Keep a written brief available if the call does not reach you.
+  Check scheduled calls when meetings move. Routines check at set times, so approvals, other work, and service failures can delay them. Keep a written brief available too.
 </Accordion>
-
-See [Skills](/features/skills) for skill files and [Routines](/developers/schedules) for schedule controls.

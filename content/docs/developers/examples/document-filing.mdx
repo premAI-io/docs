@@ -1,64 +1,57 @@
 ---
-title: File customer documents
-sidebarTitle: Document filing
+title: Organize customer documents
 icon: folders
-description: Organize sent attachments, track completed work, and keep ambiguous documents visible without stopping the whole job.
+description: Make proposals and attachments easier to find after you send them.
 ---
 
-An Agent can copy proposals and project documents from sent email into customer folders in Google Drive.
-Use a named destination and a record of completed work so repeat runs can avoid duplicate files.
+Customer documents often stay buried in sent email. An Agent can copy them into the right Google Drive folders and keep track of what it already filed.
 
-## Define the responsibility
+This job needs a [Google Workspace connection](/integrations/gmail) with **Allowed** access, because it writes files to Drive.
 
-Connect Google Workspace. Select it in the Agent's capabilities with **Allowed** access.
-The Agent needs mailbox reads and Drive writes. **Read only** would block the Drive writes too.
+## Start with one week
 
-> *"Copy project documents from my sent email into Customer Documents in Drive. Keep the original filenames. Never change email. Do not touch other Drive folders."*
+Give the Agent a destination and a rule for uncertainty:
 
-Add a rule for uncertain documents:
+> *"Help me organize customer documents. Copy proposals and project documents from my sent email into the Customer Documents folder in Drive. Keep the original filenames. If you can't tell which customer a file belongs to, ask me. Don't change my email."*
 
-> *"Use recipient and document evidence to identify the customer. Put ambiguous documents in Needs Review. Record blocked items. Continue with the rest."*
+For its first task:
 
-Choose [approval settings](/features/approvals) for the permitted writes. Instructions describe the workflow, while connection and tool policies control access.
+> *"Start with last week's sent mail. Leave out signature images and internal messages. Show me where you put each document."*
 
-## Test a small filing run
+Open a few saved files. Check both the content and the customer folder.
 
-> *"Process last week's sent mail first. Skip signature images and internal-only messages. Report the destination of every copied document."*
+## Resolve the awkward cases
 
-Open a few destination files. Check that they contain the expected document and belong to the correct customer.
-Check the items set aside for review as well.
+Two customers may have similarly named files. Some documents may not identify a customer at all.
 
-Ask the Agent to maintain a manifest, a file that records each document's source, destination, and status.
-Record each attachment separately because one email can contain several documents.
+You can give it a place to keep those questions:
 
-<Accordion title="Handle duplicates and filename conflicts">
-  Distinguish an attachment already copied from a different attachment with the same filename.
+> *"Put anything uncertain in a Needs Review folder and tell me why. Keep going with the documents you can identify."*
 
-  > *"Skip attachments already recorded as filed. If a different document has the same name, keep both with a clear date or version."*
+Answer a question in the same conversation:
 
-  Preserve source message and attachment identifiers in the manifest.
-  A later retry should check the destination before it repeats a write with an uncertain result.
+> *"Those two proposals belong to North Studio. Move them into that customer's folder."*
+
+Ask **Manager** to save a filing rule when it should apply next time.
+
+## Make repeat work safe
+
+Ask it to keep a record of each document's source and destination:
+
+> *"Keep track of what you've filed so we don't get duplicates. If a different document has the same filename, keep both with a clear date."*
+
+A file it cannot download should stay on the unfinished list. You can provide another copy or upload it yourself.
+
+Once the first run looks right:
+
+> *"Do this every night at 3 AM Chicago time. Check new sent mail since the last completed review. Tell me about anything that still needs my help."*
+
+Check the saved timezone in **Routines**. A night with no new documents is a valid result.
+
+<Accordion title="If a run stops halfway through">
+  Ask the Agent to check its record and the destination folders before it copies anything again.
+
+  It should track individual attachments, since one email can contain several files. An empty review period still counts as checked.
+
+  Keep unresolved documents on the list even when later mail has been processed.
 </Accordion>
-
-## Resolve exceptions without restarting
-
-Answer an ambiguity in the main conversation:
-
-> *"The two documents in Needs Review belong to Customer North. File them there and update their manifest entries."*
-
-A blocked download is different from an unknown customer. Record both reasons if both apply.
-For an attachment the connection cannot retrieve, upload it yourself or provide another accessible copy.
-
-Do not treat a completed run as proof that every item succeeded. Check the counts for filed, unresolved, and failed items.
-
-## Schedule the repeat run
-
-After the first run works, request the timing in the main conversation:
-
-> *"Run daily at 3 AM America/Chicago. Process new sent attachments since the last completed scan. Recheck unresolved items only when there is a useful next step."*
-
-Record the completed scan range separately from the newest document filed. A scan with no new documents still covers a period.
-Keep unresolved items visible when the date range advances.
-
-Review the routine in **Routines**. A day with no new files is a valid result.
-Use [Inbox](/developers/inbox) to find failures and approval requests.

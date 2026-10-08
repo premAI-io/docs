@@ -1,72 +1,65 @@
 ---
-title: Email triage and hiring
-sidebarTitle: Email and hiring
+title: Stay on top of email
 icon: mail
-description: Move from a useful inbox review to saved draft rules and a bounded reply-check routine.
+description: Find what needs your attention, then prepare replies you can review.
 ---
 
-An email Agent can separate messages that need your decision from messages that need no reply.
-Connect [Google Workspace](/integrations/gmail), then select that connection in the Agent's capabilities.
+After a busy day, the hard part is often deciding which messages still need you.
 
-## Start with a review
+An inbox Agent can read the recent conversation, identify an unanswered request, and help you write a reply.
 
-Create an Agent with this responsibility:
+Connect [Google Workspace](/integrations/gmail) and select it in the Agent's [app access](/developers/guides/settings#grant-app-access).
 
-> *"Find mail that needs my attention. Read the latest thread before you recommend a reply. Keep the list short. Do not change my mailbox."*
+## Give it a clear job
 
-Give its main conversation a bounded first task:
+In **New Agent**, describe the help you want:
 
-> *"Review the last 24 hours. Show each unresolved request, its source, and the smallest next step. Draft replies here."*
+> *"Help me stay on top of email. Find messages that need a decision or reply from me. Explain why each one matters and suggest a response. Don't change my mailbox."*
 
-Check whether a later reply already resolved each request. Check recipients, deadlines, and factual claims in the drafts.
-An empty attention list can be the correct result.
+Start its working conversation with a small request:
 
-## Refine the draft workflow
+> *"Look at yesterday's mail. What still needs me? Leave out anything that was resolved later in the conversation."*
 
-When the replies are useful, you can ask for drafts inside Gmail:
+The result should help you choose what to do next. Check a few source conversations, including one the Agent says needs no action.
 
-> *"Save these as replies in their original Gmail threads. Keep the reply-all recipients. Label them 'Review draft'. Do not send them."*
+## Shape the replies
 
-Creating drafts and changing labels are writes. The connection needs **Allowed** access for those actions.
-Review [tool approvals](/features/approvals) before you expand access.
+Ask for a draft in the same conversation:
 
-For a repeated behavior, open **Edit agent → Manager**:
+> *"Draft a reply to this one. Thank them for the proposal and ask whether the price includes setup. Keep it warm and brief."*
 
-> *"Save the draft workflow we agreed in the main conversation. Preserve the no-send rule. Never invent a commitment or work status."*
+Then correct anything that sounds unlike you:
 
-The Manager can inspect the conversation and update the saved setup. Review the resulting instructions.
-The main conversation uses them on its next turn.
+> *"That's too formal. Make it sound like a quick reply to someone I already work with."*
 
-<Accordion title="A useful correction is specific">
-  "Be more accurate" gives little direction. Point to the mistake and the rule it should change.
+When you like the approach, ask **Manager** to save it:
 
-  > *"The draft promised a delivery date I never approved. Remove that promise. Ask me when a reply needs an unconfirmed date."*
+> *"Use the reply style we settled on in my main conversation. Keep drafts short and natural. Ask me before promising a date I haven't confirmed."*
 
-  Ask the Manager to preserve this rule if it should apply to future drafts.
-  A one-time instruction to send a reviewed message should not silently become permission to send every future reply.
+## Keep drafts where you need them
+
+When you want drafts in Gmail:
+
+> *"Save these replies as drafts in the original Gmail conversations. Keep everyone who needs the reply. Don't send them."*
+
+Saving drafts changes Gmail, so the connection needs **Allowed** access. Review [approval settings](/features/approvals) before you expand what the Agent can do.
+
+After a useful first review, you might ask:
+
+> *"Every weekday at 9 AM, review mail since your last check. Bring me new decisions and unfinished replies. Don't make another draft for something you've already handled."*
+
+Check the time and timezone in **Routines**.
+
+<Accordion title="Use the same approach for hiring">
+  Give a Hiring Agent the role, candidate, interview length, and calendars it may check.
+
+  > *"Draft a note asking Maya when she's free for a 30-minute interview next week. Offer Monday or Wednesday afternoon. I'll review it before sending."*
+
+  After you send it:
+
+  > *"Check for her reply every 30 minutes until Friday. When she replies, check both interviewers' calendars and draft a confirmation. Stop checking after that."*
+
+  Review the routine's timing and stopping point. If a calendar is unavailable, the Agent should ask rather than assume a free slot.
+
+  Checking a calendar does not book the interview. Decide who will send the confirmation and create the invitation.
 </Accordion>
-
-## Repeat the review
-
-After one successful review, request a routine in the main conversation:
-
-> *"Every weekday at 9 AM Europe/Zurich, review mail since the last completed check. Avoid duplicate drafts. Report only new decisions and unresolved important requests."*
-
-Check its saved timing in **Routines**. Review the routine's message when you change the workflow.
-Saving new Agent instructions does not rewrite an existing routine's message.
-
-## Adapt it for hiring
-
-A Hiring Agent can use the same draft workflow with a narrower responsibility.
-Give it the role, candidate, interview duration, permitted dates, and calendars it may check.
-
-> *"Ask this candidate for interview slots next Monday. Prepare a draft. After I send it, check for a reply every 30 minutes until Friday."*
-
-Then define what should happen when a reply arrives:
-
-> *"Check both interviewers' calendars. Draft a confirmation for a free slot. Flag any missing calendar access. Stop checking after the draft or deadline."*
-
-A reply-check routine is a timed check, not an email webhook. A free calendar slot does not create a calendar event.
-Confirm who will send the reply and create the invitation.
-
-For other stopping conditions and approval waits, see [Routines](/developers/schedules) and [Inbox](/developers/inbox).

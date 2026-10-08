@@ -1,75 +1,57 @@
 ---
-title: Review a release with evidence
-sidebarTitle: Release review
+title: Review a launch
 icon: clipboard-check
-description: Follow a real review from Agent creation to independent checks, saved refinements, and a scheduled follow-up.
+description: See how an Agent handles a larger job with separate checks and follow-ups.
 ---
 
-A release decision often depends on several documents that change at different times.
-An Agent can compare them, preserve unresolved questions, and review new evidence in the same conversation.
+A launch decision can depend on several documents: what is changing, what was checked, and what is still unresolved.
 
-This walkthrough uses the actual draft guides and validation report for this documentation release.
-The screenshots show the development app with real model responses. No customer data is included.
-Use your own release criteria and evidence when you repeat the workflow.
+An Agent can compare them and keep the open questions together as the evidence changes.
 
-## Give the reviewer a job
+## Give it the decision to help with
 
-Follow [Create and refine](/developers/agent-builder) to create the Release Reviewer from its example prompt.
-Check the saved instructions before you select **Launch agent**.
+Create a reviewer through [New Agent](/developers/agent-builder). Explain what it should check and which decisions remain yours.
 
-For the first review, attach the release brief, validation report, and the material you plan to publish.
-The brief should state the decision, required checks, owners, and actions the Agent must avoid.
-The report should identify the revision each check covered.
+> *"Help me decide whether we're ready to launch. Compare the notes, test results, and open issues I share. Tell me what still blocks us and what information is missing. Don't publish anything or contact anyone."*
 
-> *"Review this release packet. Use separate sessions to check the reader journey and validation evidence while you assess the release criteria. Combine the findings into a decision with blockers, missing evidence, and owners. Save a release-review.md report and return it here. Do not publish, merge, or contact anyone."*
+Then attach the actual material. Explain when you need the decision and what must be true before launch.
 
-## Inspect the evidence
+## Give different checks room to run
 
-The reader review and validation review answer different questions. Their sessions can work independently while the main conversation combines the release criteria.
-Open **Sessions** if you need to inspect an assignment or result.
-See [Conversations and sessions](/developers/threads-and-contexts) for fresh and forked context.
+For a larger review, you can ask:
 
-<Frame caption="Two sessions check different parts of the packet while the main conversation assesses the release criteria.">
-  <img src="/images/agents/delegated-reviews.png" alt="Release Reviewer working on five attached documents, with two active sessions in the Sessions panel." />
+> *"Have one session check what customers will experience and another check the test results. Compare their findings with our launch requirements and bring me one recommendation."*
+
+The Agent can use separate [sessions](/developers/guides/conversations) while it works on the overall review.
+
+<Frame caption="In a real local run, two sessions checked different parts of a documentation release.">
+  <img src="/images/agents/delegated-reviews.png" alt="An Agent reviewing five documents with two separate sessions working." />
 </Frame>
 
-In this run, the Agent returned a NO-GO recommendation because current checks and independent approval were still pending.
-It delivered a report that combined both session results. It kept post-deployment checks separate from release readiness.
+In that run, the Agent recommended waiting because checks and approval were still pending. It returned a report with both sessions' findings.
 
-Check the delivered report against the source files. A previous revision's successful build does not validate later edits.
-An optional check that was skipped is different from a required check that failed.
-Missing approval remains unresolved until the reviewer approves it.
+It also misread one progress note as a contradiction. We clarified it in the conversation, and it corrected the saved report.
 
-The first review misread the screenshot progress wording as a contradiction. We clarified it in the same conversation.
-The Agent updated its report and evidence record. Review the reasoning as well as the verdict.
+Read the reasoning, not only the recommendation. An earlier successful check may cover an older version of the work.
 
-## Save a useful refinement
+## Keep the review useful as things change
 
-Use the main conversation to correct this review. Use **Edit agent → Manager** when the rule should apply to future releases.
+Give it the new evidence in the same conversation:
 
-> *"Distinguish release readiness from post-deployment verification. Do not treat a skipped optional service as a failed required check. Keep missing evidence unresolved. Preserve the no-publish rule."*
+> *"The updated test report is attached. Revise the recommendation, but keep anything we still haven't checked on the open list."*
 
-Read the saved instructions. Return to the same main conversation for the next review.
-Existing sessions retain their earlier setup, so give them any correction they need.
+If the lesson should apply to future reviews, ask [Manager](/developers/improve) to save it.
 
-<Frame caption="The Manager saves the review rules. The main conversation uses the revised setup on its next turn.">
-  <img src="/images/agents/saved-refinement.png" alt="Manager confirms saved rules for missing evidence, unassigned owners, optional checks, and post-deployment verification." />
-</Frame>
+You can schedule a later check with a [one-time routine](/developers/schedules). That brings the review back at a useful time without creating another conversation.
 
-## Return when new evidence is ready
+<Accordion title="What happened in the scheduled follow-up?">
+  The routine reread the saved report and validation notes. It found no new evidence, so it kept the unresolved checks open.
 
-Provide new evidence in the main conversation. Ask the Agent to update its report while preserving unresolved checks.
-Then open the chat's routine control and select **New**. Choose **One time** and a future time in your timezone.
-State which files to compare and what to report if nothing changed.
+  <Frame caption="The routine returned to the same conversation and kept the pending decisions visible.">
+    <img src="/images/agents/routine-result.png" alt="A compact routine message and its completed follow-up in the Agent conversation." />
+  </Frame>
 
-> *"Review this release packet again. Check for new evidence and report only changes to the decision. Preserve unresolved owners and approvals. If nothing changed, say so. Do not publish or contact anyone."*
+  Its result appeared in Inbox. The routine did not approve or publish the release.
+</Accordion>
 
-Check the saved time in **Routines**. When it runs, open the result from **Inbox**.
-A scheduled review does not prove the release is ready or publish anything by itself.
-Read the result and any updated report before you make the decision.
-
-<Frame caption="The one-time routine ran in the same conversation. It reported no new evidence and kept the unresolved checks visible.">
-  <img src="/images/agents/routine-result.png" alt="Compact routine row above a completed recheck that preserves the pending validation, approval, and publishing owner." />
-</Frame>
-
-The result also appeared in [Inbox](/developers/inbox). Opening Inbox cleared its unread count without changing the release decision.
+The screenshots show real responses to this documentation project's files. The example requests above are wording you can adapt to your own launch.

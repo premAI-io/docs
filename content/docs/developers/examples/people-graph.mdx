@@ -1,72 +1,65 @@
 ---
-title: Build a living people graph
-sidebarTitle: People graph
-icon: network
-description: Turn email evidence into a contact map, then improve and refresh it without losing earlier work.
+title: Find people you know
+icon: users
+description: Build a contact map you can search, correct, and keep up to date.
 ---
 
-Use an Agent when a research result should grow over several conversations.
-A people graph combines a working dataset with an HTML view you can search and filter.
+You remember talking to someone at a company, but cannot remember who. A contact map can help you find that connection.
 
-This graph is a project deliverable. It is separate from Fluso's built-in [memory](/features/memory).
+An Agent can build one from your email and give you a page to search. This is a file it creates for you, separate from Fluso's own memory.
 
-## Define the first version
+## Build a useful first version
 
-Choose a project before the main conversation starts. Give the Agent access to Google Workspace and the skills needed for its output.
-Select **Read only** for Google Workspace if the job needs no mailbox changes.
+Connect [Google Workspace](/integrations/gmail). Give the Agent **Read only** access if you only want it to read mail.
 
-> *"Build a contact map from my email. Keep one record per email address. Group people by organization. Record sources and leave unknown facts empty."*
+Describe the job:
 
-Start with a useful slice:
+> *"Help me find people I've spoken with. Build a searchable contact map from my email, grouped by company. Show where each detail came from. Leave anything you don't know blank."*
 
-> *"Use the last month first. Save the data and deliver a searchable HTML view. State the actual coverage and the unfinished work."*
+Start with recent mail:
 
-Keep changing data in a project file. For example, `files/people.json` can hold the records and `files/people.html` can show them.
-The Agent should preserve earlier records when it adds new evidence.
+> *"Use the last month first. Give me a page where I can search by name or company. Tell me what you've covered so far."*
 
-## Check the data and the view
+Open the page it returns. Search for someone you know and check their details against the source email.
 
-Open the delivered HTML file. Search for a known person and select both a large and a small organization.
-Check that filtering shows the matching people, including people outside any default display limit.
+## Ask a question that matters to you
 
-Inspect a few records against their sources. Similar names do not prove two records describe the same person.
-A company's location does not prove where every employee lives.
+> *"Who do I know at this company? Show our recent conversations so I can decide who to contact."*
 
-Ask for a focused follow-up:
+Or:
 
-> *"Which contacts have evidence of being in Berlin? Separate confirmed locations from uncertain matches. Show the source for each result."*
+> *"Which of these people are based in Berlin? Keep confirmed locations separate from guesses."*
 
-Improve the result in the main conversation. Use the Manager when the correction should change the Agent's standing rules.
+A person's employer does not prove where they live. Similar names do not prove two records are the same person.
 
-<Accordion title="Add public profile research without guessing">
-  Public profile research can be a separate session while the main conversation continues other work.
+Correct the map in the same conversation. Ask **Manager** to save rules that should guide future research.
 
-  > *"Find public profiles for contacts at the company I selected. Match the name and employer. Save uncertain matches separately. Return the results here."*
+## Add to it over time
 
-  This requires a suitable web-search connection. Names and search terms will go to that service.
-  Keep the task limited to the contacts you want researched.
+A large mailbox can take more than one run:
 
-  The main conversation must check the returned evidence before it merges results into the dataset.
-  See [Conversations and sessions](/developers/threads-and-contexts).
+> *"Add the previous month's mail next. Keep the contacts you've already found. Save your progress and tell me what's still left."*
+
+Ask for the underlying data as well as the page, so the Agent can improve the same map later.
+
+When the initial review is useful:
+
+> *"Every morning at 8 AM, add anything new since your last completed check. Keep the earlier contacts and give me a short note about what changed."*
+
+Check that the routine exists and uses the right timezone. A refresh mentioned in the instructions is not yet a scheduled task.
+
+<Accordion title="Add information from public profiles">
+  With a web-search connection, you can ask for a focused check:
+
+  > *"Look for public profiles for these five contacts. Match the name and company. If a match is uncertain, leave it for me to review."*
+
+  Names and search terms go to that service. Choose which contacts you want researched.
+
+  The Agent may use a separate session for this work. It still needs to check the findings before adding them to your map.
 </Accordion>
 
-## Extend the coverage
+<Accordion title="Recover after an incomplete run">
+  Ask it to read the saved progress before continuing. Open the latest files to see what they contain.
 
-A full mailbox review can exceed one run. Ask for saved progress and incremental results:
-
-> *"Continue with older mail in bounded passes. Preserve the current graph. Record the processed range and remaining work. Deliver an updated file after each useful pass."*
-
-If the run fails, inspect saved progress before you restart it.
-Ask it to continue from completed records instead of fetching everything again.
-Repeated requests cannot fix missing access or a fixed request limit.
-
-<Accordion title="Separate a continuation from a daily refresh">
-  A one-time continuation handles unfinished historical work. A recurring refresh checks for new evidence after that work.
-
-  > *"Every day at 8 AM Europe/Zurich, add mail since the last completed refresh. Preserve earlier records. Deliver the updated graph with a short change list."*
-
-  Check that the routine exists in **Routines**. A refresh instruction in the Agent's setup does not itself create a schedule.
-  A task can also finish without needing any routine.
+  A failed request may still have saved useful work. Repeated attempts will not fix missing access or a fixed limit on that run.
 </Accordion>
-
-See [Files and context](/developers/project-context) for working data, reference copies, and shared workspace access.

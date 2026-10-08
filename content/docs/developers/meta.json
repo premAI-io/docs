@@ -1,15 +1,15 @@
 {
+  "title": "Agents",
+  "icon": "bot",
+  "root": true,
   "pages": [
+    "[arrow-left][All Fluso docs](/)",
     "index",
     "agent-builder",
-    "examples",
-    "threads-and-contexts",
-    "agent-description",
-    "project-context",
+    "improve",
     "schedules",
-    "inbox",
-    "export-import-and-share-agents",
-    "architecture",
+    "examples",
+    "guides",
     "api-ref"
   ]
 }

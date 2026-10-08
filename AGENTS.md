@@ -13,7 +13,7 @@
 The navigation keeps Home first and sorts the top-level sections alphabetically. Agents follows the user journey. Other sections keep their existing order:
 
 - **Administration** - `/admin-panel`. Browser-admin access, dashboards, governance records, runtime controls, and network policy.
-- **Agents (Beta)** - `/developers/*`. Guides cover creation and refinement, capabilities, the main conversation and delegated sessions, files and context, routines, Inbox, and sharing. Architecture and the beta client API reference live here too, with API pages under `/developers/api-ref/*`.
+- **Agents (Beta)** - `/developers/*`. Start with a familiar task, then improvement and scheduling. Keep Examples, More about Agents (`/developers/guides/*`), and For developers (`/developers/api-ref/*`) collapsed by default. Introduce features when they help the reader's current task. Keep prompts natural and explain terms before using them.
 - **App setup** - `/integrations/{github, gmail, google-calendar, slack}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
 - **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
 - **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.

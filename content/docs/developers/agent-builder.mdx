@@ -1,93 +1,63 @@
 ---
-title: Create and refine an Agent
-sidebarTitle: Create and refine
+title: Your first Agent
 icon: bot
-description: Describe a recurring job, try it with real input, and improve the same Agent over time.
+description: Turn a few meeting notes into a brief you can use.
 ---
 
-An Agent is a saved assistant for a particular job. It keeps its instructions, capabilities, reference files, and one main conversation. Use ordinary [chat](/features/chat) for a one-off request. Use an Agent when you want to return to the same responsibility.
+Let's make an assistant for meeting preparation. You supply the notes. It helps you see what matters and what you need to decide.
 
-<Note>
-  These guides describe the current development build. Agents is available in Fluso Dev and in builds where it has been enabled. If **Agents** is missing from your sidebar, your build has not enabled it.
-</Note>
+You can try this with pasted text, so there is no account to connect first.
 
-## Create from a conversation
+## 1. Describe the help you want
 
-1. Switch to **Agents** in the sidebar and select **New Agent**.
-2. Choose a project for its files. **Home** is the default project.
-3. Describe the job in the message box and send it.
+Select **Agents → New Agent**. Leave the project as **Home** for this walkthrough.
 
-> *"Create a release reviewer. Compare the release notes, test results, and open blockers I provide. Return a go/no-go recommendation with evidence, unresolved risks, and owners. Ask when the evidence conflicts. Do not publish or contact anyone."*
+Write this in the message box:
 
-<Frame caption="Start with the job, its inputs, and the actions the Agent must avoid.">
-  <img src="/images/agents/create-from-chat.png" alt="New Agent page with a release reviewer request in the message box." />
+> *"Help me prepare for meetings. I'll share notes, agendas, and documents. Give me a short brief with what matters, what we need to decide, and a few questions worth asking. If something important is missing, tell me. Keep everything here. Don't contact anyone."*
+
+Send the message.
+
+<Frame caption="Describe the job in your own words. You can change it later.">
+  <img src="/images/agents/meeting-create.png" alt="New Agent message box with a request for help preparing for meetings." />
 </Frame>
 
-That first message starts the Agent's **Manager** conversation. The Manager names the Agent and saves its setup. As it is created, its name appears in the sidebar and its setup appears beside the conversation. You can keep refining it there.
+Fluso opens a setup conversation called **Manager**. It gives the Agent a name and saves instructions for how it should help.
 
-Check the saved instructions and capabilities, then select **Launch agent** to open its main conversation. Creation does not run the job or create a routine.
+Read the setup beside the conversation. Ask for a change there if needed. Select **Launch agent** when you are ready.
 
-<Frame caption="The Manager saved the reviewer with document skills and no connected apps. Launch agent opens its main conversation.">
-  <img src="/images/agents/manager-setup.png" alt="Release Reviewer Manager conversation beside saved instructions, document skills, project, response mode, and Launch agent." />
+## 2. Give it something to work on
+
+You are now in the Agent's working conversation. Paste your meeting notes, or try these sample notes:
+
+> *"Help me get ready for tomorrow's planning meeting.*
+>
+> *We're organizing a half-day workshop for 18 new colleagues next month. We have €1,200. The office room is free but seats 12. A nearby venue seats 24 and costs €450. We want a welcome session and a practical exercise. Lunch and the facilitator are undecided.*
+>
+> *What do we need to settle in the meeting? Keep the brief short enough to read in two minutes."*
+
+Read the brief against your notes. It should notice the seating problem and leave undecided plans open.
+
+## 3. Keep the conversation going
+
+In our run, the Agent estimated costs we had not supplied. We corrected that and gave it a change to work with:
+
+> *"We can use the larger office room after all. It seats 20 and is free. We don't have prices for lunch or a facilitator yet. Keep those as open questions and update the brief."*
+
+We also asked for a shorter version: three decisions, the missing costs, and one question to ask first.
+
+<Frame caption="The shorter brief keeps the decisions and unknown costs clear. This is a real run with sample notes.">
+  <img src="/images/agents/meeting-brief.png" alt="Meeting Prep updates the workshop brief after a room change and a correction about unknown costs." />
 </Frame>
 
-If you prefer direct controls, **Fill in a form instead** on New Agent opens the same setup fields without a creation conversation.
+You can correct details, attach another document, or ask for a shorter answer in the same conversation. Select the Agent in the sidebar to return later.
 
-If you leave before creation finishes, return to **New Agent → Continue setup**. An unfinished setup stays there until you resume or delete it.
+When you find a way of working you want to keep, [teach it your preferences](/developers/improve).
 
-## Start from a Fluso example
+<Accordion title="Other ways to start">
+  **My Agents** and **New Agent** offer Fluso starting points for research, project follow-through, inbox triage, and document review. Preview one to create your own copy. Manager helps with missing app connections.
 
-**My Agents** and **New Agent** also offer starting points:
+  **Fill in a form instead** lets you enter the setup directly. **Continue setup** lets you return to an unfinished creation.
 
-| Starting point | First useful input |
-| --- | --- |
-| Research brief | A question, options, constraints, and any sources you already have |
-| Project follow-through | Meeting notes, project updates, or a task export |
-| Inbox triage | Your connected Google Workspace account and the inbox and date range to review |
-| Document review | A document, its audience, and the outcome you need |
-
-Preview the setup and create your own copy. If a required app is missing or disconnected, the Manager helps finish setup. Otherwise, the copy opens its main conversation. Changes to the Fluso example do not overwrite your copy.
-
-## Try the first real task
-
-Give the Agent the input it needs, not another request to create itself.
-
-> *"Review these release notes and the attached test report. The release is Thursday. Identify blockers and give me a recommendation. Do not assume a missing test passed."*
-
-Read the answer and open any delivered files. Check sources, missing information, and the requested output. Try a follow-up that changes an assumption, then a case with incomplete evidence.
-
-Follow the [release review walkthrough](/developers/examples/release-review) for a complete example with actual results.
-
-For work that could send a message or change another app, ask for a draft and review it first. Choose **Ask me first** when you want tool approval. See [Approvals and permissions](/features/approvals).
-
-## Refine the same Agent
-
-The main conversation does the work. The **Manager** changes how that Agent is set up and can review its conversations to diagnose a problem.
-
-From a chat, select the **Edit agent** pencil to open the setup page. Choose **Manager** to explain a change, or **Edit** to change the fields yourself. The Agent's actions menu also offers **Modify**, which opens its Manager.
-
-> *"The last review treated missing evidence as a pass. Change the instructions so missing evidence is listed as unresolved, while preserving the rest of the review format."*
-
-Saved changes apply to the main conversation on its **next turn**. Keep using that conversation. A turn already running and delegated sessions already created retain their earlier setup.
-
-If you queue a message with changed setup while an older turn runs, it shows **Saved setup applies next turn**. It waits rather than changing the active turn. You can still edit or cancel it.
-
-To undo a change, tell the Manager exactly what to restore or edit the saved fields. There is no version-history or rollback screen in the current UI.
-
-<Accordion title="Make a chat correction permanent">
-  A successful follow-up can reveal a rule worth saving. For example, you might refine reply recipients or a document filing rule over several turns.
-
-  > *"Review the corrections in our main conversation. Save the agreed workflow in this Agent. Keep temporary exceptions out of its standing instructions."*
-
-  Review the saved changes. Check existing routines for old instructions that conflict with the new workflow.
-  Use a custom skill for a reusable method that needs longer references or scripts.
-  See [Custom skills and services](/developers/examples/custom-skills).
+  For work with its own files, choose a project before starting. See [Files and memory](/developers/guides/files).
 </Accordion>
-
-## Keep or remove it
-
-Star an Agent to find it quickly. **Change appearance** changes its avatar without changing its instructions. **Duplicate** copies its setup and knowledge files. Conversations and routines start fresh.
-
-**Delete** permanently removes the Agent, its conversations, routines, and [public share link](/developers/export-import-and-share-agents). Copies other people already imported remain independent. Project files are separate. Deleting an Agent is not a project cleanup.
-
-Next: [Setup and capabilities](/developers/agent-description), [Conversations and sessions](/developers/threads-and-contexts), or [Routines](/developers/schedules).
