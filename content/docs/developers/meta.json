@@ -1,13 +1,15 @@
 {
   "pages": [
-    "api-ref",
-    "architecture",
-    "threads-and-contexts",
+    "index",
     "agent-builder",
-    "project-context",
-    "inbox",
-    "schedules",
+    "examples",
+    "threads-and-contexts",
     "agent-description",
-    "export-import-and-share-agents"
+    "project-context",
+    "schedules",
+    "inbox",
+    "export-import-and-share-agents",
+    "architecture",
+    "api-ref"
   ]
 }

@@ -17,7 +17,7 @@ Fluso separates the client, platform records, runtime compute, and durable user 
 4. Tools read or change workspace files and call connected apps through MCP, subject to access and approval rules.
 5. Progress streams to the client. History and request state let it recover after a connection drops.
 
-A main Agent conversation and its Manager have separate histories. The Manager edits one Agent's setup; the main conversation performs its work and coordinates delegated sessions.
+A main Agent conversation and its Manager have separate histories. The Manager edits one Agent's setup. The main conversation performs its work and coordinates delegated sessions.
 
 ## What is stored where
 
@@ -26,15 +26,15 @@ A main Agent conversation and its Manager have separate histories. The Manager e
 | Platform database | User and access records, app connections, routine schedules, public share records |
 | User storage | Agent definitions, knowledge files, projects, skills, conversations, request ledgers, and queues |
 | Project working memory | Bounded summaries and evidence-backed observations within that project |
-| External apps | Their own data and actions; selected results may be copied into Fluso by the requested work |
+| External apps | Their own data and actions. Selected results may be copied into Fluso by the requested work |
 
 Runtime compute can be suspended or replaced without deliberately deleting those stored records. Current deployment paths include local Docker, AWS ECS, and MicroVM runtimes with ZeroFS storage. Availability depends on the deployment.
 
 ## Configuration and context are different
 
-A saved Agent edit creates a new configuration. The main conversation uses it on its next turn; active turns and existing delegated sessions keep the setup they accepted. Skill files and project files remain live shared resources.
+A saved Agent edit creates a new configuration. The main conversation uses it on its next turn. Active turns and existing delegated sessions keep the setup they accepted. Skill files and project files remain live shared resources.
 
-Separate conversations do not imply separate private filesystems. Agents within one user's workspace can use its shared files. Project context and knowledge selection guide the model; they are not a filesystem security boundary.
+Separate conversations do not imply separate private filesystems. Agents within one user's workspace can use its shared files. Project context and knowledge selection guide the model. They are not a filesystem security boundary.
 
 ## Routine and result delivery
 

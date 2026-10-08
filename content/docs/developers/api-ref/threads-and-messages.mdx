@@ -5,7 +5,7 @@ icon: messages-square
 description: Open an Agent's main conversation, send a turn, and read durable history.
 ---
 
-A thread is a conversation stored in a project. Agent-owned conversations have a saved Agent binding; an ordinary chat cannot be converted by adding an Agent ID to a later message.
+A thread is a conversation stored in a project. Agent-owned conversations have a saved Agent binding. An ordinary chat cannot be converted by adding an Agent ID to a later message.
 
 Each Agent has one main conversation and a separate Manager. Delegated sessions are created by the Agent's session tools. Do not create a new top-level thread for every message.
 
@@ -45,29 +45,29 @@ curl -N "$FLUSO_API/v1/chat" \
   }'
 ```
 
-The response uses the AI SDK UI message stream over SSE. A request can be queued, running, or held for approval before it settles. Stream acceptance is not completion; use [Runs](/developers/api-ref/runs) and persisted history to recover after a disconnect.
+The response uses the AI SDK UI message stream over SSE. A request can be queued, running, or held for approval before it settles. Stream acceptance is not completion. Use [Runs](/developers/api-ref/runs) and persisted history to recover after a disconnect.
 
 Use the same `requestId` when checking or retrying an ambiguous submission, with the same request content. Use a new ID for a genuinely new turn.
 
-`followUp` queues a separate turn if work is active. `steer` brings new input into the active turn where compatible, or starts it when idle. Input with a different saved Agent configuration must wait for its own turn; do not assume every queued message can be steered.
+`followUp` queues a separate turn if work is active. `steer` brings new input into the active turn where compatible, or starts it when idle. Input with a different saved Agent configuration must wait for its own turn. Do not assume every queued message can be steered.
 
 ## Read and organize conversations
 
 | Method and path | Behavior |
 | --- | --- |
-| `GET /v1/threads?page=1&limit=20` | General chat list; excludes Agent-owned conversations |
+| `GET /v1/threads?page=1&limit=20` | General chat list. Excludes Agent-owned conversations |
 | `GET /v1/agents/{agentId}/chats` | Agent conversations, including `isOrchestrator`, `createdByThreadId`, `previousConfig`, `forked`, and `role` |
 | `GET /v1/threads/{threadId}?project_id=Home` | Thread metadata |
 | `GET /v1/threads/{threadId}/messages?project_id=Home` | Persisted messages and tool-status projections |
 | `PATCH /v1/threads/{threadId}?project_id=Home` | Title, supported metadata, pin, archive state, or labels |
 | `DELETE /v1/threads/{threadId}?project_id=Home` | Delete an eligible thread and its schedules |
 
-Thread and message responses use snake_case. Message `content` and `metadata` can contain serialized JSON; parse them before reading their fields.
+Thread and message responses use snake_case. Message `content` and `metadata` can contain serialized JSON. Parse them before reading their fields.
 
 ## Read message history
 
-Use the messages endpoint above when reconnecting or keeping a copy of a conversation. Routine metadata identifies its scheduled origin; collapsing it in the UI does not remove its full instructions from history.
+Use the messages endpoint above when reconnecting or keeping a copy of a conversation. Routine metadata identifies its scheduled origin. Collapsing it in the UI does not remove its full instructions from history.
 
-Agent and role bindings are fixed at creation. The main conversation uses the current Agent setup on a later turn; delegated sessions keep their creation setup. The main conversation cannot be archived or deleted independently of the Agent.
+Agent and role bindings are fixed at creation. The main conversation uses the current Agent setup on a later turn. Delegated sessions keep their creation setup. The main conversation cannot be archived or deleted independently of the Agent.
 
 For user-facing behavior, see [Conversations and sessions](/developers/threads-and-contexts).

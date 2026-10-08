@@ -21,12 +21,14 @@ Anyone with the link can read the published setup and import a copy.
 | Instructions and settings | Included |
 | Selected knowledge files | File contents included |
 | Selected custom skills | Entire skill folders included |
-| Built-in skills | Listed by name; recipients use their installed defaults |
+| Built-in skills | Listed by name. Recipients use their installed defaults |
 | Unselected knowledge files | Names listed so recipients know what is missing |
 | Selected custom connections | Connection definitions and URLs included, without saved credentials |
 | Conversations, routines, account credentials, and project files | Not included |
 
-Files and skill contents share a 20 MiB bundle limit. Review the complete selected folders and URLs before publishing: they may contain private material, and a URL can itself contain an access key. Authentication stored separately is not shared.
+Files and skill contents share limits of 20 MiB and 512 files. Symbolic links are rejected. Custom connection URLs with query parameters are excluded from sharing.
+
+Review the complete selected folders and URLs before publishing: they may contain private material, and a URL path can itself contain an access key. Authentication stored separately is not shared.
 
 ## Update or stop sharing
 
@@ -42,9 +44,9 @@ Open a share link, review the setup, and import it with a name and destination p
 
 The import creates a separate Agent. Included knowledge is copied, and included custom skills get distinct names so they do not overwrite existing skills. Missing reference files and unavailable skills still need attention.
 
-The Manager helps finish setup with your own accounts. A saved **Allowed** app policy does not connect that account. Some public connections that need no authentication can be registered during import; authenticated connections still need your authorization.
+The Manager helps finish setup with your own accounts. A saved **Allowed** app policy does not connect that account. Some public connections that need no authentication can be registered during import. Authenticated connections still need your authorization.
 
-If the publisher changes the snapshot while you are reviewing it, Fluso asks you to review the new version before importing. A removed link cannot be imported; an older incompatible link may need its owner to republish it.
+If the publisher changes the snapshot while you are reviewing it, Fluso asks you to review the new version before importing. A removed link cannot be imported. An older incompatible link may need its owner to republish it.
 
 ## Hand off useful work
 

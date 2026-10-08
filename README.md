@@ -36,6 +36,8 @@ Check both sides when updating the guides:
 | Availability and approvals | `backend/aci/common/db/crud/mcp_permission_modes.py`, `backend/aci/server/routes/mcp/permissions.py` | `lib/config.ts`, `features/mcp/lib/permission-mode.ts` |
 | API contracts | `backend/aci/server/routes/`, `backend/aci/common/schemas/` | `features/agents/api/`, `lib/api/`, `app/auth/client/page.tsx` |
 
+The examples use generalized patterns from a read-only review of development conversations, tool results, and saved files. They contain no account transcripts, customer data, or credentials. Custom service examples describe prerequisites rather than built-in capabilities.
+
 Use source behavior over old release notes. Remove retired pages from navigation and add their replacements to `public/_redirects`, including markdown export URLs. Cloudflare Pages serves these redirects; Next's local dev server does not.
 
 ## Deployment

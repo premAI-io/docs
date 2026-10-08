@@ -1,0 +1,64 @@
+---
+title: File customer documents
+sidebarTitle: Document filing
+icon: folders
+description: Organize sent attachments, track completed work, and keep ambiguous documents visible without stopping the whole job.
+---
+
+An Agent can copy proposals and project documents from sent email into customer folders in Google Drive.
+Use a named destination and a record of completed work so repeat runs can avoid duplicate files.
+
+## Define the responsibility
+
+Connect Google Workspace. Select it in the Agent's capabilities with **Allowed** access.
+The Agent needs mailbox reads and Drive writes. **Read only** would block the Drive writes too.
+
+> *"Copy project documents from my sent email into Customer Documents in Drive. Keep the original filenames. Never change email. Do not touch other Drive folders."*
+
+Add a rule for uncertain documents:
+
+> *"Use recipient and document evidence to identify the customer. Put ambiguous documents in Needs Review. Record blocked items. Continue with the rest."*
+
+Choose [approval settings](/features/approvals) for the permitted writes. Instructions describe the workflow, while connection and tool policies control access.
+
+## Test a small filing run
+
+> *"Process last week's sent mail first. Skip signature images and internal-only messages. Report the destination of every copied document."*
+
+Open a few destination files. Check that they contain the expected document and belong to the correct customer.
+Check the items set aside for review as well.
+
+Ask the Agent to maintain a manifest, a file that records each document's source, destination, and status.
+Record each attachment separately because one email can contain several documents.
+
+<Accordion title="Handle duplicates and filename conflicts">
+  Distinguish an attachment already copied from a different attachment with the same filename.
+
+  > *"Skip attachments already recorded as filed. If a different document has the same name, keep both with a clear date or version."*
+
+  Preserve source message and attachment identifiers in the manifest.
+  A later retry should check the destination before it repeats a write with an uncertain result.
+</Accordion>
+
+## Resolve exceptions without restarting
+
+Answer an ambiguity in the main conversation:
+
+> *"The two documents in Needs Review belong to Customer North. File them there and update their manifest entries."*
+
+A blocked download is different from an unknown customer. Record both reasons if both apply.
+For an attachment the connection cannot retrieve, upload it yourself or provide another accessible copy.
+
+Do not treat a completed run as proof that every item succeeded. Check the counts for filed, unresolved, and failed items.
+
+## Schedule the repeat run
+
+After the first run works, request the timing in the main conversation:
+
+> *"Run daily at 3 AM America/Chicago. Process new sent attachments since the last completed scan. Recheck unresolved items only when there is a useful next step."*
+
+Record the completed scan range separately from the newest document filed. A scan with no new documents still covers a period.
+Keep unresolved items visible when the date range advances.
+
+Review the routine in **Routines**. A day with no new files is a valid result.
+Use [Inbox](/developers/inbox) to find failures and approval requests.

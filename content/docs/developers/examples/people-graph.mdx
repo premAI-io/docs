@@ -1,0 +1,72 @@
+---
+title: Build a living people graph
+sidebarTitle: People graph
+icon: network
+description: Turn email evidence into a contact map, then improve and refresh it without losing earlier work.
+---
+
+Use an Agent when a research result should grow over several conversations.
+A people graph combines a working dataset with an HTML view you can search and filter.
+
+This graph is a project deliverable. It is separate from Fluso's built-in [memory](/features/memory).
+
+## Define the first version
+
+Choose a project before the main conversation starts. Give the Agent access to Google Workspace and the skills needed for its output.
+Select **Read only** for Google Workspace if the job needs no mailbox changes.
+
+> *"Build a contact map from my email. Keep one record per email address. Group people by organization. Record sources and leave unknown facts empty."*
+
+Start with a useful slice:
+
+> *"Use the last month first. Save the data and deliver a searchable HTML view. State the actual coverage and the unfinished work."*
+
+Keep changing data in a project file. For example, `files/people.json` can hold the records and `files/people.html` can show them.
+The Agent should preserve earlier records when it adds new evidence.
+
+## Check the data and the view
+
+Open the delivered HTML file. Search for a known person and select both a large and a small organization.
+Check that filtering shows the matching people, including people outside any default display limit.
+
+Inspect a few records against their sources. Similar names do not prove two records describe the same person.
+A company's location does not prove where every employee lives.
+
+Ask for a focused follow-up:
+
+> *"Which contacts have evidence of being in Berlin? Separate confirmed locations from uncertain matches. Show the source for each result."*
+
+Improve the result in the main conversation. Use the Manager when the correction should change the Agent's standing rules.
+
+<Accordion title="Add public profile research without guessing">
+  Public profile research can be a separate session while the main conversation continues other work.
+
+  > *"Find public profiles for contacts at the company I selected. Match the name and employer. Save uncertain matches separately. Return the results here."*
+
+  This requires a suitable web-search connection. Names and search terms will go to that service.
+  Keep the task limited to the contacts you want researched.
+
+  The main conversation must check the returned evidence before it merges results into the dataset.
+  See [Conversations and sessions](/developers/threads-and-contexts).
+</Accordion>
+
+## Extend the coverage
+
+A full mailbox review can exceed one run. Ask for saved progress and incremental results:
+
+> *"Continue with older mail in bounded passes. Preserve the current graph. Record the processed range and remaining work. Deliver an updated file after each useful pass."*
+
+If the run fails, inspect saved progress before you restart it.
+Ask it to continue from completed records instead of fetching everything again.
+Repeated requests cannot fix missing access or a fixed request limit.
+
+<Accordion title="Separate a continuation from a daily refresh">
+  A one-time continuation handles unfinished historical work. A recurring refresh checks for new evidence after that work.
+
+  > *"Every day at 8 AM Europe/Zurich, add mail since the last completed refresh. Preserve earlier records. Deliver the updated graph with a short change list."*
+
+  Check that the routine exists in **Routines**. A refresh instruction in the Agent's setup does not itself create a schedule.
+  A task can also finish without needing any routine.
+</Accordion>
+
+See [Files and context](/developers/project-context) for working data, reference copies, and shared workspace access.

@@ -10,7 +10,7 @@
 
 ## Information architecture
 
-The navigation keeps Home first, then sorts the top-level sections and the pages inside each section alphabetically:
+The navigation keeps Home first and sorts the top-level sections alphabetically. Agents follows the user journey. Other sections keep their existing order:
 
 - **Administration** - `/admin-panel`. Browser-admin access, dashboards, governance records, runtime controls, and network policy.
 - **Agents (Beta)** - `/developers/*`. Guides cover creation and refinement, capabilities, the main conversation and delegated sessions, files and context, routines, Inbox, and sharing. Architecture and the beta client API reference live here too, with API pages under `/developers/api-ref/*`.
@@ -69,6 +69,8 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 **Specifics over abstractions.** Numbers, file paths, commands, real prompts. Cut "very", "really", "simply".
 
 **Have opinions, vary rhythm.** Mix short and long sentences. Don't just describe; the writer's actual take should come through.
+
+Use the [ASD-STE100 writing skill](https://github.com/danyuchn/asd-ste100-skill/blob/master/SKILL.md) for Agents guides. Keep procedures to one action per sentence. Use short sentences, active voice, consistent terms, and explicit conditions. Preserve uncertainty and UI labels. These guidelines do not certify compliance with the official dictionary.
 
 ## Style preferences
 

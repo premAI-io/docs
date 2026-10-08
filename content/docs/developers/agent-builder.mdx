@@ -5,7 +5,7 @@ icon: bot
 description: Describe a recurring job, try it with real input, and improve the same Agent over time.
 ---
 
-An Agent is a saved assistant for a particular job. It keeps its instructions, capabilities, reference files, and one main conversation. Use ordinary [chat](/features/chat) for a one-off request; use an Agent when you want to return to the same responsibility.
+An Agent is a saved assistant for a particular job. It keeps its instructions, capabilities, reference files, and one main conversation. Use ordinary [chat](/features/chat) for a one-off request. Use an Agent when you want to return to the same responsibility.
 
 <Note>
   These guides describe the current development build. Agents is available in Fluso Dev and in builds where it has been enabled. If **Agents** is missing from your sidebar, your build has not enabled it.
@@ -48,7 +48,7 @@ Give the Agent the input it needs, not another request to create itself.
 
 Read the answer and open any delivered files. Check sources, missing information, and the requested output. Try a follow-up that changes an assumption, then a case with incomplete evidence.
 
-For work that could send a message or change another app, ask for a draft and review it first. Choose **Ask me first** when you want tool approval; see [Approvals and permissions](/features/approvals).
+For work that could send a message or change another app, ask for a draft and review it first. Choose **Ask me first** when you want tool approval. See [Approvals and permissions](/features/approvals).
 
 ## Refine the same Agent
 
@@ -64,10 +64,20 @@ If you queue a message with changed setup while an older turn runs, it shows **S
 
 To undo a change, tell the Manager exactly what to restore or edit the saved fields. There is no version-history or rollback screen in the current UI.
 
+<Accordion title="Make a chat correction permanent">
+  A successful follow-up can reveal a rule worth saving. For example, you might refine reply recipients or a document filing rule over several turns.
+
+  > *"Review the corrections in our main conversation. Save the agreed workflow in this Agent. Keep temporary exceptions out of its standing instructions."*
+
+  Review the saved changes. Check existing routines for old instructions that conflict with the new workflow.
+  Use a custom skill for a reusable method that needs longer references or scripts.
+  See [Custom skills and services](/developers/examples/custom-skills).
+</Accordion>
+
 ## Keep or remove it
 
-Star an Agent to find it quickly. **Change appearance** changes its avatar without changing its instructions. **Duplicate** copies its setup and knowledge files; conversations and routines start fresh.
+Star an Agent to find it quickly. **Change appearance** changes its avatar without changing its instructions. **Duplicate** copies its setup and knowledge files. Conversations and routines start fresh.
 
-**Delete** permanently removes the Agent, its conversations, routines, and public share link. Copies other people already imported remain independent. Project files are separate; deleting an Agent is not a project cleanup.
+**Delete** permanently removes the Agent, its conversations, routines, and public share link. Copies other people already imported remain independent. Project files are separate. Deleting an Agent is not a project cleanup.
 
 Next: [Setup and capabilities](/developers/agent-description), [Conversations and sessions](/developers/threads-and-contexts), or [Routines](/developers/schedules).

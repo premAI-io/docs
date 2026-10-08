@@ -5,13 +5,13 @@ icon: sliders-horizontal
 description: Set instructions, skills, app access, reference files, and response defaults for an Agent.
 ---
 
-Open an Agent's setup from the **Edit agent** pencil in its chat. **Manager** lets you refine it in conversation; **Edit** opens the form. Both change the same saved setup.
+Open an Agent's setup from the **Edit agent** pencil in its chat. **Manager** lets you refine it in conversation. **Edit** opens the form. Both change the same saved setup.
 
 ## Write instructions that describe the job
 
 The first line is the short purpose shown in Agent lists. There are no separate description or goal fields.
 
-Include the outcome, useful inputs, how to handle uncertainty, and any boundary that matters for the job. Markdown headings and lists render in the setup page; expand **Instructions** to read the full text.
+Include the outcome, useful inputs, how to handle uncertainty, and any boundary that matters for the job. Markdown headings and lists render in the setup page. Expand **Instructions** to read the full text.
 
 > *"Review release readiness using the supplied notes, test results, and issue links. Separate confirmed blockers from missing evidence. Give a recommendation with sources and owners. Ask me to resolve conflicting priorities. Prepare communications as drafts for my review."*
 
@@ -19,7 +19,7 @@ Include the outcome, useful inputs, how to handle uncertainty, and any boundary 
 | --- | --- |
 | Name | The label in the sidebar and chat |
 | Purpose and instructions | Standing behavior and the expected result |
-| Conversation starters | Up to three suggested first messages; they do not run automatically |
+| Conversation starters | Up to three suggested first messages. They do not run automatically |
 | Knowledge files | Saved reference copies for this Agent |
 | Skills | Guides and tools the Agent can use |
 | Connectors | Which connected apps or MCP servers the Agent may use |
@@ -50,7 +50,13 @@ Connections are managed under **Plugins → MCP**. The Agent editor calls its se
 
 Adding a connection to an Agent defaults it to **Allowed**, including when the Manager creates the Agent. Existing read-only restrictions stay until you change them. An empty selection does not grant every connection.
 
-Three separate things must be in place: the app must be selected for the Agent, your account must be connected, and the requested tool action must pass the chat's approval and organization policies. **Allowed** does not mean connected, and it does not bypass those policies.
+Three separate conditions control app use:
+
+1. The Agent's capabilities include the connection.
+2. Your account has access to the app.
+3. The requested action passes the chat's approval rules and organization policies.
+
+**Allowed** does not mean connected, and it does not bypass those policies.
 
 To prepare an email or another external action for review, ask for a draft and use **Ask me first**. If a tool is unavailable, check [Apps & MCP](/features/mcp) and [Approvals and permissions](/features/approvals) before rewriting the Agent.
 

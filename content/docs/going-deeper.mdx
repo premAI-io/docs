@@ -80,7 +80,7 @@ Memory builds itself in the background. You do not have to maintain it. A few ha
 
 **Tell Fluso to forget when you need to.** *"Forget my old timezone"*, *"don't track anything about this vendor"*. The same explicit channel works in reverse.
 
-**Scope by project when working on something specific.** Switching into a project before asking a question keeps the project's context in scope and stops one client's notes from surfacing in another client's chat.
+**Scope by project when working on something specific.** Automatic context follows the current project. Tools can still access other files in your workspace. A project is not a private filesystem boundary.
 
 **Process meeting transcripts.** Decisions and action items from the transcript become durable project context. Without processing, the meeting effectively did not happen for memory.
 
@@ -122,11 +122,7 @@ The instinct on day one is to read every draft carefully. By day twenty, you wil
 
 ## For teams
 
-Team plans add shared context. The patterns that matter:
-
-**Shared projects** for cross-team work. Both you and your colleague see the same memory, the same files, the same task list, scoped to that project. The Acme project becomes a real shared brain instead of two separate ones.
-
-**Shared knowledge graph** for the team. Decisions made in any team member's meetings are visible to everyone (within the shared project). Useful for executive teams; less useful for projects with strict need-to-know.
+Share a finished file or an [Agent's setup](/developers/export-import-and-share-agents) when a colleague needs your work. An imported Agent is an independent copy. It does not share your live conversations, routines, project files, or account connections.
 
 **Admin visibility, not content access.** The current [Admin panel](/admin-panel) covers identity and access records, recorded usage, runtime status, and network policy. Connected-app inventory, seat controls, and a complete organization-wide audit require their owning Enterprise integrations. The admin UI does not expose messages, files, or knowledge graphs.
 

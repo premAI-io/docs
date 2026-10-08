@@ -7,7 +7,7 @@ description: Understand bearer authentication and the limits of the current beta
 
 This reference documents the routes used by Fluso clients on the current development branch. It is not a promise that every feature is enabled in every deployed build. These beta contracts may change.
 
-Use the API host and authenticated session for the same environment. Production uses `https://api.fluso.ai`; development clients must use their development API and identity environment.
+Use the API host and authenticated session for the same environment. Production uses `https://api.fluso.ai`. Development clients must use their development API and identity environment.
 
 ```bash
 export FLUSO_API='https://<your-environment-api-host>'
@@ -17,7 +17,7 @@ curl "$FLUSO_API/v1/auth/me" \
   -H "Authorization: Bearer $FLUSO_TOKEN"
 ```
 
-Keep tokens out of logs and source control. A token acts for its authenticated user; supplying another user's IDs does not grant access. An `X-API-Key` header alone is not a replacement for the bearer session on these workspace proxy routes.
+Keep tokens out of logs and source control. A token acts for its authenticated user. Supplying another user's IDs does not grant access. An `X-API-Key` header alone is not a replacement for the bearer session on these workspace proxy routes.
 
 ## Read the authenticated identity
 
@@ -51,11 +51,11 @@ A supported client exchanges a short-lived, single-use code for an access token 
 | Response | Meaning |
 | --- | --- |
 | `401` | Missing, invalid, or expired authentication |
-| `403` | The authenticated user is not allowed to perform the operation |
+| `403` | The authenticated user is not allowed to complete the request |
 | `404` | The requested resource is unavailable to this user |
 | `409` | A state conflict requires inspection, such as a stale Agent revision |
-| `429` | A rate or usage limit was reached; respect retry guidance |
-| `502` / `503` | A service or runtime is unavailable; an interrupted write may still need verification |
+| `429` | A rate or usage limit was reached. Respect retry guidance |
+| `502` / `503` | A service or runtime is unavailable. An interrupted write may still need verification |
 
 Do not treat a network failure as proof that a write did not happen. Use operation-specific IDs and reread state before repeating work.
 

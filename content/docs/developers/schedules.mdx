@@ -21,19 +21,35 @@ You can also open **Routines** in the Agents sidebar, use the chat's routine con
 
 The editor supports one-time, daily, weekday, weekly, and interval presets. Existing custom cron timing is preserved unless you change its frequency. Timing labels are shown in readable language.
 
-Include the source, expected result, and what to do when there is nothing to report. For external communications, ask for drafts to review and configure [approvals](/features/approvals).
+Include the source, expected result, and what to do when there is nothing to report.
+For a temporary watch, specify an end date or a result that should stop the checks. For external communications, ask for drafts to review and configure [approvals](/features/approvals).
 
 <Note>
   A routine requested in **Manager** runs a setup review by the Manager. Request the Agent's actual work in its main conversation, or create that routine through the routine editor. Saving instructions alone does not schedule work.
 </Note>
 
+## Choose the right repeat pattern
+
+| Job | Useful timing | Completion rule |
+| --- | --- | --- |
+| Review new email | Recurring review | Report only actionable changes. Avoid duplicate drafts. |
+| Finish a large import | One-time continuation | Resume from saved progress. Stop when the remaining work finishes. |
+| Check for an interview reply | Recurring check with a deadline | Stop after the requested result or deadline. |
+| Prepare a meeting brief | One-time run before the meeting | Check that the meeting still exists at that time. |
+
+These are workflow instructions for the Agent. Check the resulting schedules in **Routines**. Creating a routine does not subscribe to live app events.
+
+For a concrete sequence, see [Email and hiring](/developers/examples/email) or [Document filing](/developers/examples/document-filing).
+
 ## Apply the same routine to several Agents
 
 The Routines page can apply one instruction and timing to selected Agents. Each gets an independent schedule in its own main conversation.
 
-**Select all** covers the Agents currently offered by the picker; it does not include Agents created later. Agents already using those instructions at another timing need an explicit selection to add another timing.
+**Select all** covers the Agents currently offered by the picker. It does not include Agents created later. Agents already using those instructions at another timing need an explicit selection to add another timing.
 
 Matching instructions, timing, and timezone are grouped for display. Editing one assignment can split it from its group. Removing one Agent's assignment does not remove the others.
+
+Saving across several Agents can partly succeed. Successful assignments stay saved. The editor lists the failures. Retry the remaining assignments there instead of creating the whole group again.
 
 ## What happens when it is due
 
@@ -41,11 +57,13 @@ The message enters its target conversation as a separate follow-up. If that conv
 
 In chat, the routine appears as a compact row on the right with a violet clock and scheduled time. Expand it for the instructions, routine ID, and any attachments. The Agent receives the full message even while the row is collapsed.
 
-The main conversation uses the setup selected for the new turn. A routine in an existing delegated session uses that session's earlier setup. Results remain in the target conversation; top-level routine results can also appear in [Inbox](/developers/inbox).
+The main conversation uses the setup selected for the new turn. A routine in an existing delegated session uses that session's earlier setup. Results remain in the target conversation. Top-level routine results can also appear in [Inbox](/developers/inbox).
 
 ## Pause, edit, or remove it
 
-Use the routine's pause control to stop future occurrences, edit its instructions or timing, or delete it. Changes do not retract work already admitted into the conversation. Stop that run or cancel its queued message separately if needed.
+Use the routine's pause control to stop future occurrences, edit its instructions or timing, or delete it. Changing Agent instructions does not rewrite a routine's saved message. Review that message after a major workflow change.
+
+Changes do not retract work already admitted into the conversation. Stop that run or cancel its queued message separately if needed.
 
 One-time checks stop scheduling after their message is accepted. **Last run dispatched · outcome unavailable** does not mean the work completed successfully: inspect the result or run status.
 
@@ -56,13 +74,13 @@ Deleting a target session removes its routines. Deleting an Agent removes all of
 | What you see | What to do |
 | --- | --- |
 | Queued | Check the target conversation for ongoing work or a paused queue |
-| Waiting for approval | Review the requested action; a routine cannot approve itself |
+| Waiting for approval | Review the requested action. A routine cannot approve itself |
 | Delivery failed or paused with a reason | Fix the connection, unavailable target, or other reported problem, then resume or recreate the routine as appropriate |
 | A run failed after starting | Inspect the conversation and partial outputs before continuing |
-| Usage allowance reached | Wait for the allowance to reset; scheduling is deferred rather than treated as a successful run |
+| Usage allowance reached | Wait for the allowance to reset. Scheduling is deferred rather than treated as a successful run |
 
 Temporary delivery problems are retried with delays. Repeated delivery failures can pause the routine. Recurring runs do not replay every missed clock tick after a delay.
 
-Choose a future local time for a one-time check. The editor rejects times that do not exist during a daylight-saving clock change; review the timezone and next-run time before saving.
+Choose a future local time for a one-time check. The editor rejects times that do not exist during a daylight-saving clock change. Review the timezone and next-run time before saving.
 
 For integrations, these records are called [Schedules in the API](/developers/api-ref/schedules).

@@ -5,7 +5,7 @@ icon: bot
 description: Create an Agent, update its current setup safely, and attach reference files.
 ---
 
-These are authenticated beta client routes. Agent fields use camelCase and configurations use `schemaVersion: 2`. The current model has instructions, skills, app policies, and knowledge files; it has no separate description, goal, or thread-management mode.
+These are authenticated beta client routes. Agent fields use camelCase and configurations use `schemaVersion: 2`. The current model has instructions, skills, app policies, and knowledge files. It has no separate description, goal, or thread-management mode.
 
 For the user workflow, see [Create and refine](/developers/agent-builder).
 
@@ -13,7 +13,7 @@ For the user workflow, see [Create and refine](/developers/agent-builder).
 
 <Endpoint method="POST" path="/v1/agents" />
 
-Creating a definition does not create or run a conversation. The project must already exist; `Home` is the default.
+Creating a definition does not create or run a conversation. The project must already exist. `Home` is the default.
 
 ```bash
 curl "$FLUSO_API/v1/agents" \
@@ -34,7 +34,7 @@ The `201` response contains `agentId`, `currentConfigId`, and `config`. Save the
 
 | Method and path | Result |
 | --- | --- |
-| `GET /v1/agents?page=1&limit=50&q=release` | Agent summaries and pagination; `purpose` is derived from instructions |
+| `GET /v1/agents?page=1&limit=50&q=release` | Agent summaries and pagination. `purpose` is derived from instructions |
 | `GET /v1/agents?all=true` | The complete bounded library in one response |
 | `GET /v1/agents/{agentId}` | Current Agent record and configuration |
 | `GET /v1/agents/{agentId}/chats` | Main conversation, delegated sessions, and Manager, including role and earlier-setup markers |
@@ -52,7 +52,7 @@ Read the Agent first. Send its `currentConfigId` as `baseConfigId`, with only th
 }
 ```
 
-A stale revision returns `409 STALE_AGENT_CONFIG`. Read again and reapply the intended change; do not blindly resend all fields from an old form.
+A stale revision returns `409 STALE_AGENT_CONFIG`. Read again and reapply the intended change. Do not blindly resend all fields from an old form.
 
 Omitted fields stay unchanged. Submitted lists and connector maps replace the whole field.
 
@@ -74,7 +74,7 @@ Configurations are stored internally, but there is no current public version-lis
 
 Upload one multipart `file`, or use `POST /v1/agents/{agentId}/knowledge-files/from-workspace` with `{"path": "/projects/Home/files/rubric.md"}`.
 
-The response is a knowledge reference with `fileId`, `name`, `fileName`, and `bytes`. Attaching stores a copy; it does not add that reference to the active setup. PATCH `knowledgeFiles` with the full desired list and the latest `baseConfigId` to save it. Preserve entries you still want.
+The response is a knowledge reference with `fileId`, `name`, `fileName`, and `bytes`. Attaching stores a copy. It does not add that reference to the active setup. PATCH `knowledgeFiles` with the full desired list and the latest `baseConfigId` to save it. Preserve entries you still want.
 
 Limits: 25 knowledge entries, 20 MiB per file, 4,000 instruction characters, three starters of 200 characters each, and 100 Agents per user. Workspace storage limits also apply.
 
@@ -82,7 +82,7 @@ Limits: 25 knowledge entries, 20 MiB per file, 4,000 instruction characters, thr
 
 | Method and path | Behavior |
 | --- | --- |
-| `POST /v1/agents/{agentId}/duplicate` with `{}` | Independent setup and knowledge copy; no conversations or routines |
+| `POST /v1/agents/{agentId}/duplicate` with `{}` | Independent setup and knowledge copy. No conversations or routines |
 | `POST /v1/agents/{agentId}/star` with `{"starred": true}` | Set the library star |
 | `DELETE /v1/agents/{agentId}` | Delete the Agent and its conversations, remove schedules, and revoke its public link |
 

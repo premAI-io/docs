@@ -175,9 +175,9 @@ The current client uploads to temporary object storage, then confirms an import 
 }
 ```
 
-Use the actual byte count. `expected_revision: "missing"` requires that no file exists at the destination when the import commits. To edit an existing file, supply its current revision hash; omitting the field allows ordinary replacement in import order.
+Use the actual byte count. `expected_revision: "missing"` requires that no file exists at the destination when the import commits. To edit an existing file, supply its current revision hash. Omitting the field allows ordinary replacement in import order.
 
-Confirmation queues the import; it does not mean the file is already saved. Tracking rows remain for in-progress uploads, failures, and undismissed history warnings. Successful imports without warnings leave that tracking list.
+Confirmation queues the import. It does not mean the file is already saved. Tracking rows remain for in-progress uploads, failures, and undismissed history warnings. Successful imports without warnings leave that tracking list.
 
 If the destination changed, reread it before saving again. If prior file history cannot be preserved, inspect the reported failure or warning rather than treating the operation as a normal versioned save. Agent knowledge uses its [separate attach-and-save flow](/developers/api-ref/agents-and-versions#attach-knowledge).
 

@@ -2,6 +2,11 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
+/* Quote marks, when needed, are part of the Markdown text. */
+.prose blockquote {
+  quotes: none;
+}
+
 /* Fluso brand (ported from Mintlify docs.json colors) */
 :root {
   --color-fd-primary: #5b21b6;

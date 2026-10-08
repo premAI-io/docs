@@ -138,7 +138,7 @@ HTTP/1.1 204 No Content
 
 Each occurrence has a stable request ID and enters the target as `followUp`. Acceptance means queued or admitted, not completed. Another occurrence of the same recurring schedule waits while the prior request is queued, running, or held for approval.
 
-Temporary delivery failures retry with delays; 24 failed delivery attempts pause the schedule. Refused requests and invariant conflicts can pause it immediately. Usage limits defer delivery. Editing or pausing a schedule does not cancel a request already admitted.
+Temporary delivery failures retry with delays. 24 failed delivery attempts pause the schedule. Refused requests and invariant conflicts can pause it immediately. Usage limits defer delivery. Editing or pausing a schedule does not cancel a request already admitted.
 
 One-time schedules retire when accepted, even if the later Agent run fails. Deleting the target thread or Agent removes its schedules. See [Routines](/developers/schedules) for the user workflow and timezone controls.
 

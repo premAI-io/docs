@@ -45,7 +45,7 @@ curl "$FLUSO_API/v1/agent-runs?threadId=thread_agent_release&limit=20" \
 }
 ```
 
-Use `attention=true` for owned approvals and current failures, with approval requests first. It also adds `schedule_failures` for routine delivery problems that did not produce a run. `agentId`, `threadId`, `status`, repeated `requestId`, and `limit` can filter the result. Add `includeRoutineResults=true` to include completed top-level routine runs; delegated completions remain in their conversations.
+Use `attention=true` for owned approvals and current failures, with approval requests first. It also adds `schedule_failures` for routine delivery problems that did not produce a run. `agentId`, `threadId`, `status`, repeated `requestId`, and `limit` can filter the result. Add `includeRoutineResults=true` to include completed top-level routine runs. Delegated completions remain in their conversations.
 
 The feed is filtered before limiting. It is a recent status view, not a complete audit archive. A failed request superseded by newer work is omitted from attention.
 
@@ -104,7 +104,7 @@ curl "$FLUSO_API/v1/agent-runs/req_review_01/stop" \
 }
 ```
 
-The status can also be `already_terminal` when the run settled before cancellation reached it. Stopping does not undo completed tool actions or pause future routine occurrences; manage the routine separately.
+The status can also be `already_terminal` when the run settled before cancellation reached it. Stopping does not undo completed tool actions or pause future routine occurrences. Manage the routine separately.
 
 ## Read a durable settlement status
 

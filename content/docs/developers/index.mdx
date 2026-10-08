@@ -1,0 +1,80 @@
+---
+title: Agents
+sidebarTitle: Overview
+icon: bot
+description: Create an assistant for a continuing job, improve its instructions, and schedule repeat work.
+---
+
+An Agent combines saved instructions, selected capabilities, reference files, and a continuing conversation. Use it for work you return to regularly.
+
+You can start with a small task, inspect the result, then expand the responsibility. You do not need to design the entire workflow first.
+
+<Note>
+  These guides describe the development build. Agents is available in Fluso Dev and in builds where it is enabled.
+  If **Agents** is missing from your sidebar, your build has not enabled it.
+</Note>
+
+## Start with one useful result
+
+1. Select **Agents → New Agent**.
+2. Describe the job in the message box.
+3. Review the setup that the **Manager** creates.
+4. Select **Launch agent**.
+5. Give the Agent its first real task.
+
+> *"Create an assistant that finds email conversations that need my attention. Prepare reply drafts here. Do not change my mailbox."*
+
+Start with a specific input, such as yesterday's mail. Check the result before you ask for a larger review or a daily routine.
+
+[Create your first Agent](/developers/agent-builder) explains each step, starting points, and unfinished setups.
+Explore [practical examples](/developers/examples) for email, research, document filing, and custom workflows.
+
+## Know where to ask
+
+| Your intention | Where to go | Example |
+| --- | --- | --- |
+| Do the work | The Agent's main conversation | "Review yesterday's mail and draft the three replies I need." |
+| Change its standing behavior | **Edit agent → Manager**, or **Edit** | "Treat receipts as low priority unless a payment failed." |
+| Repeat work at a time | The main conversation or **Routines** | "Run this review every weekday at 9 AM Europe/Zurich." |
+| Review an approval or failure | **Inbox** | Open the update to inspect the action or error. |
+
+The Manager refines one Agent. The main conversation performs its work. Both keep their own conversation history.
+
+A correction in chat helps with the current task. Ask the Manager to save it when it should become a standing instruction.
+
+## Build on the first result
+
+Keep the main conversation as the work develops. Add evidence, correct assumptions, and ask for revisions there.
+
+For a larger job, the Agent can delegate independent work to sessions. It combines their results in the main conversation.
+You can inspect those sessions when needed. You do not need to create them for each request.
+
+Save changing data and deliverables in project files. Attach stable reference material as **Knowledge files**.
+When the workflow works as intended, create a routine to repeat it.
+
+<CardGroup cols={2}>
+  <Card title="Conversations and sessions" icon="messages-square" href="/developers/threads-and-contexts">
+    Send corrections, continue long work, and inspect delegated results.
+  </Card>
+  <Card title="Setup and capabilities" icon="sliders-horizontal" href="/developers/agent-description">
+    Set instructions, skills, app access, and response mode.
+  </Card>
+  <Card title="Files and context" icon="folder-open" href="/developers/project-context">
+    Choose where references, working data, and deliverables belong.
+  </Card>
+  <Card title="Routines and Inbox" icon="calendar-clock" href="/developers/schedules">
+    Schedule useful work and review results that need attention.
+  </Card>
+</CardGroup>
+
+## Check the result before expanding the job
+
+Open delivered files. Check the sources and the period the Agent actually reviewed.
+For incomplete work, ask what remains and where it saved progress.
+
+For actions in connected apps, choose the Agent's access and your [approval settings](/features/approvals).
+Ask for drafts when you want to review messages before anyone receives them.
+
+An Agent's files share your workspace. Separate Agents and projects do not create private filesystem boundaries within your account.
+
+For technical details, see [Architecture](/developers/architecture) and the [beta API reference](/developers/api-ref/authentication).

@@ -9,7 +9,7 @@ An Agent's conversation, saved instructions, reference files, and project memory
 
 | Information | Where it belongs | How it is used |
 | --- | --- | --- |
-| Standing rules for the Agent | **Purpose and instructions** | Main conversation on its next turn; existing delegated sessions retain their setup |
+| Standing rules for the Agent | **Purpose and instructions** | Main conversation on its next turn. Existing delegated sessions retain their setup |
 | A correction for the current task | Your chat message | That conversation or the active turn you steer |
 | Stable reference material | **Knowledge files** | Saved copies listed in the Agent's setup |
 | Working files and deliverables | The project | Shared files that can change as work proceeds |
@@ -18,9 +18,9 @@ An Agent's conversation, saved instructions, reference files, and project memory
 
 ## Choose the project before starting
 
-The project setting places the main conversation when it is first created. **Home** is the default. Changing the setting later does not move an existing conversation or its files; delegated sessions keep their parent's project.
+The project setting places the main conversation when it is first created. **Home** is the default. Changing the setting later does not move an existing conversation or its files. Delegated sessions keep their parent's project.
 
-Choose a dedicated project to organize a continuing job's files and memory. A project scopes context; it is not an access-control boundary between Agents in your account. Tools still work in your shared workspace.
+Choose a dedicated project to organize a continuing job's files and memory. A project scopes context. It is not an access-control boundary between Agents in your account. Tools still work in your shared workspace.
 
 ## Add reference files
 
@@ -34,7 +34,7 @@ Use project files for a live tracker or an output that must evolve. Use knowledg
 
 Saved Agent conversations use their own instructions instead of automatically applying ordinary-chat preferences, project instructions, or `context.md`. Put a rule in the Agent's saved instructions when it should govern that Agent.
 
-They still receive saved facts from `user_profile.md` and can use project files and project working-memory summaries. Those summaries are background evidence, not new user requests. A fresh session does not automatically receive another conversation's full history; a fork inherits completed context at its creation.
+They still receive saved facts from `user_profile.md` and can use project files and project working-memory summaries. Those summaries are background evidence, not new user requests. A fresh session does not automatically receive another conversation's full history. A fork inherits completed context at its creation.
 
 Skill files are also live workspace files. If several Agents use a custom skill, changing that file can affect all of them.
 
@@ -42,6 +42,6 @@ Skill files are also live workspace files. If several Agents use a custom skill,
 
 Open the delivered file and check it against your request. A reference in a reply is not proof that the final artifact contains the right data. Ask the Agent to identify unfinished sections, source coverage, and where the result was saved.
 
-Deleting an Agent removes its own knowledge and conversations, not the separate project files. Deleting a project affects the conversations stored there; review Agent dependencies in the deletion dialog first.
+Deleting an Agent removes its own knowledge and conversations, not the separate project files. Deleting a project removes its files, conversations, and their routines, but keeps the Agent setup. If the Agent still points to that deleted project, select another **Project** in its setup before opening a new main conversation. This does not restore deleted history.
 
 For file browsing, editing, download, and project export, see [Projects](/features/projects). For sharing an Agent's reference material, see [Sharing and copies](/developers/export-import-and-share-agents).

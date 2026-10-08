@@ -11,7 +11,7 @@ Keep talking to the Agent as the work develops. You do not need to create a new 
 
 ## Give follow-ups while it works
 
-Sending a message during a run adds it to the queue above the composer. Each queued message waits for its own turn. **Edit** changes it; **Cancel** removes it.
+Sending a message during a run adds it to the queue above the composer. Each queued message waits for its own turn. **Edit** changes it. **Cancel** removes it.
 
 Use **Send now** to bring a queued correction into the work already running. If that work has finished, the message starts a new turn instead.
 
@@ -21,7 +21,20 @@ A queued message using a different saved Agent setup shows **Saved setup applies
 
 **Stop** stops the current run and pauses queued follow-ups. A failed run also pauses them. Use **Send now** on a paused message when you are ready to continue. Reloading or changing devices does not discard the server's queue.
 
+Stopping the main run does not stop delegated sessions or pause future routines. Stop those sessions and pause those routines separately when you want all related work to stop.
+
 See [Chat](/features/chat#while-fluso-is-working) for the queue controls.
+
+## Continue a large task
+
+Ask for a useful first result before a full historical review. Keep progress in project files when the task spans many turns.
+
+> *"Deliver the first useful version. Save the source coverage, completed items, and remaining work. Continue from that record on the next pass."*
+
+For a changing dataset, ask the Agent to preserve existing records and check new ones before it merges them.
+A summary of progress does not prove the deliverable contains that progress. Open the file and check it.
+
+See [People graph](/developers/examples/people-graph) for a task that grows from a first version into an updated research tool.
 
 ## Let the Agent organize independent work
 
@@ -40,15 +53,15 @@ The main conversation can reuse a session, send corrections, cancel obsolete wor
 
 ## Inspect sessions when useful
 
-When sessions exist, **Sessions** appears above the composer. It shows work that is queued, working, waiting for approval, idle, or needs attention. A fork icon marks inherited conversation context; **Uses an earlier setup** identifies a session created before a setup change.
+When sessions exist, **Sessions** appears above the composer. It shows work that is queued, working, waiting for approval, idle, or needs attention. A fork icon marks inherited conversation context. **Uses an earlier setup** identifies a session created before a setup change.
 
 Open a session to inspect its conversation. **Main conversation** takes you back. You can rename, archive, restore, or delete delegated sessions from their menus.
 
 - **Idle** means it has no active work. It may be reused or woken by a routine.
-- **Archive** organizes the list; use the routine controls to pause future work.
+- **Archive** organizes the list. Use the routine controls to pause future work.
 - **Delete** removes the session and its routines. Preserve any results you still need first.
 
-The main conversation remains for the Agent's lifetime. The Manager is separate from this Sessions list.
+The main conversation cannot be archived or deleted on its own. Deleting its project also removes the conversation. See [Files and context](/developers/project-context). The Manager is separate from this Sessions list.
 
 ## Approval and recovery
 

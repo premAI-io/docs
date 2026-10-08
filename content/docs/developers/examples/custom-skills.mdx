@@ -1,0 +1,77 @@
+---
+title: Teach a custom workflow
+sidebarTitle: Custom skills and services
+icon: blocks
+description: Give an Agent reusable instructions for a connected wiki or a service that needs its own setup.
+---
+
+A custom skill saves a method the Agent can reuse.
+It can contain instructions, references, and scripts. It does not connect an account or grant access by itself.
+
+## Start from the connected tools
+
+Suppose your company wiki uses a custom Confluence MCP connection.
+Add the connection under **Plugins → MCP**, then select it for the Agent.
+
+Ask the Manager to inspect the available tools and define the job:
+
+> *"Create a wiki assistant for this connection. Check the spaces it can access. Help people find pages and prepare updates with source links."*
+
+Keep the instructions clear about writes:
+
+> *"Make the exact edits I request. Show proposed changes before unrelated edits. Ask before deleting pages or changing access."*
+
+The available operations depend on that MCP server and your account permissions.
+A tool listed in a catalog does not prove that every target is accessible.
+
+## Save a reusable method
+
+> *"Create a skill for this wiki connection. Explain how to find the correct page, read its current content, and check an update. Use the actual tool schemas."*
+
+The skill should describe how to preserve content that the task does not replace.
+For a wiki home page, this can include navigation, attachments, and existing search or activity widgets.
+
+The Manager can create skills while refining an Agent. Agents with the needed workspace access can also create them during work.
+Check that the Agent's skill selection includes the new skill.
+
+<Accordion title="Keep a skill's scope clear">
+  Skills are workspace files. Other chats and Agents can use the same skill when their selection permits it.
+  Create a separate skill when a change should apply only to one workflow.
+
+  Keep credentials out of skill text and examples. Use the connection's authentication flow or the service's supported credential setup.
+  A skill can describe a tool that the Agent still lacks permission to call.
+</Accordion>
+
+## Apply the method to a real page
+
+> *"Update this team's home page for new colleagues. Explain where their documents belong. Preserve the existing activity widgets. Give me the updated page link."*
+
+Check the page after the update. Expand to other spaces only after you approve the structure.
+Give each space its own purpose and examples rather than copying an identical introduction everywhere.
+
+The Agent can package a custom skill for others to use. Review its full contents before you [share the Agent](/developers/export-import-and-share-agents).
+
+## Extend an Agent with another service
+
+The same approach can support a service outside your current connections.
+For example, an outbound calling workflow needs a calling provider, account access, and a usable integration.
+Phone calling is not a built-in promise of every Agent.
+
+<Accordion title="Example: a pre-meeting phone briefing">
+  First verify the calling setup with a number and purpose you authorize.
+  Check whether the call connected, reached voicemail, or failed. A provider accepting a request does not prove a person heard it.
+
+  With that setup in place, ask for a bounded workflow:
+
+  > *"Each morning, review today's calendar. Prepare briefs for confirmed meetings. Call my verified number ten minutes before each meeting. Retry an unanswered call once."*
+
+  Specify the timezone and the information the caller may disclose.
+  Recheck the event before each call. Cancel or change its planned briefing when the meeting moves.
+
+  This can combine a daily routine with one-time routines. It is not a live calendar subscription.
+  Busy conversations, approvals, and service failures can delay execution.
+
+  Review pending routines when your plans change. Keep a written brief available if the call does not reach you.
+</Accordion>
+
+See [Skills](/features/skills) for skill files and [Routines](/developers/schedules) for schedule controls.
