@@ -19,7 +19,7 @@ For the full technical picture, see Prem's [confidential compute documentation](
 
 ## Plans
 
-Confidential mode is included with the **Confidential** plan. Accounts granted access by the Fluso team show **Sponsored Confidential** as their effective plan.
+Confidential mode is included with the **Confidential** plan. **Pro does not include confidential mode.** Accounts with an active grant from the Fluso team show **Sponsored Confidential** as their effective plan. That access lasts until the grant expires; a Pro subscription alone does not keep it active afterward.
 
 Open **Settings** and find **Encrypted Inference**. Without plan access, the row reads "Available on the Confidential plan" and shows **Upgrade**. With plan access, it shows an **Off** or **On** switch.
 
@@ -54,7 +54,7 @@ Open **Settings** and find **Encrypted Inference**. Without plan access, the row
     Image generation and automated task creation. Both rely on paths that would take your data outside the enclave, so they're turned off in this mode.
   </Accordion>
   <Accordion title="Which plan do I need?">
-    The Confidential plan. Team-granted access appears as Sponsored Confidential.
+    The Confidential plan or an active Sponsored Confidential grant. Pro alone does not include confidential mode.
   </Accordion>
   <Accordion title="Can anyone access my data during confidential inference?">
     Inside the enclave, no. At the gateway, your request is encrypted for a hardware-sealed environment that infrastructure operators and the cloud provider cannot access. Before that, traffic passes through Fluso's AWS infrastructure.

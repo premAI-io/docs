@@ -2,91 +2,64 @@
 title: Admin panel
 sidebarTitle: Admin panel
 icon: shield-user
-description: Review users, runtimes, recorded model usage, identity and access changes, and network policy from Fluso Admin.
+description: Inspect accounts, runtimes, recorded usage, sponsorship, and network policy in Fluso Admin.
 ---
 
-Fluso Admin is a separate browser interface for authorized operators. It shows account, runtime, usage, and governance records without exposing the content of members' work.
+Fluso Admin is a separate browser interface for authorized operators. A personal Pro or Confidential subscription does not grant administrator access.
 
-<Note>
-  Your organization provides its Fluso Admin address and assigns the panel
-  role. This is separate from the organization role recorded under **Teams &
-  access**.
-</Note>
+Your deployment operator provides the address and assigns a **Read-only** or **Read & write admin** role. The backend checks that role on each admin request.
 
 ## Access roles
 
-The backend checks the administrator role on every request.
-
 | Role | Access |
-| --- | --- |
-| Read-only | View dashboards, users, runtimes, usage, access records, and network policy. Export available reports. |
-| Read and write | All read-only access, plus runtime controls, plan sponsorship, team and Agent access changes, and network policy changes. |
+|---|---|
+| Read-only | Inspect dashboards, users, runtimes, recorded usage, sponsorship, and network policy |
+| Read and write | The same views, plus runtime controls, sponsorship changes, and network-policy changes |
 
-The **Admin** organization role does not grant access to Fluso Admin. Panel access uses the separate read-only or read-and-write role assigned by the operator of your deployment.
+## Current views
 
-## View scope
+| View | What it shows |
+|---|---|
+| **Overview** | Identity activity, runtime health, plan distribution, recorded usage, and highest-cost users |
+| **Users** | Searchable accounts with plan, sponsorship, runtime state, storage, and recorded usage |
+| **Runtime fleet** | Runtime status and mapped or unmapped instances; **Refresh fleet** reconciles the snapshot |
+| **LLM costs** | Recorded gateway cost and token totals for 30, 90, 180, or 365 days |
+| **Network egress** | Origin and provider rules for egress-governed runtimes |
 
-**Overview** and **Users** cover the configured sign-in instance. **Teams & access** and **Audit log** show one target account and default to the signed-in administrator. To inspect another account, open it from **Users**, then choose **Manage access** or **Audit trail**.
-
-## Admin views
-
-| View | What it shows or controls |
-| --- | --- |
-| **Overview** | Instance-wide identity activity, runtime health, recorded model usage, plan distribution, and users with the highest recorded cost. |
-| **Users** | An instance-wide, searchable user list. Open a user to review their plan, runtime state, usage, and aggregate storage. Read-and-write administrators can control the runtime and grant or extend Sponsored Confidential. |
-| **Runtime fleet** | A cached or refreshed snapshot of running, starting, stopped, failed, unknown, mapped, and unmapped runtimes. Click **Refresh fleet** to reconcile the snapshot before investigating availability. |
-| **LLM costs** | Global cost and token totals from the gateway usage ledger for 30, 90, 180, or 365 days. It does not show prompts, sessions, or model-level detail. |
-| **Observability** | SLA and SLO configuration state, current runtime status coverage and failures, runtime distribution, and recorded cost and token usage for the last 14 days. **Refresh health** updates the fleet snapshot. Run completion, response latency, evaluation, and policy metrics remain unavailable until those sources are recorded. |
-| **Audit log** | The latest 100 identity and access events for the target account. Filter by user, action type, or date, then export the current rows as CSV. |
-| **Teams & access** | Microsoft Entra tenant metadata, members, organization roles, teams, access requests, and Agent access records for the target account. The metadata record does not verify or import a directory by itself. |
-| **Network egress** | Platform-wide origin and provider bundles for egress-governed sandboxes. These controls do not currently have a per-organization boundary. |
-
-## Audit log
-
-Each governance event records the actor, action, target, detail, and time. Current action types cover Microsoft Entra metadata, tenant configuration, teams, roles, access requests, and Agent access records.
-
-This is not an Agent activity trace or a complete record of Admin mutations. It does not show tool calls, logins, prompts, document edits, messages, files, knowledge graphs, runtime controls, Sponsored Confidential changes, or network-policy changes. Use an Agent's **Analytics** page for its recorded runs.
+These views do not expose users' messages, project files, or knowledge content. Usage totals describe recorded entries; unavailable data is not evidence of zero usage.
 
 ## Runtime and user controls
 
-Open **Users**, select a person, then review the runtime card. A read-and-write administrator can start, stop, or restart the runtime. Stop and restart are blocked during active work, warm-up, active schedules, or an unhealthy state; there is no force-stop control.
+Open **Users** and select an account. A read-and-write administrator can start, stop, or restart its runtime when the control is available. Active work, warm-up, schedules, or an unhealthy state can block a control. There is no force-stop action.
 
-The same user page shows aggregate storage. It does not open or delete the user's stored content.
+The storage card reports aggregate usage and limits. It does not open or delete the user's files.
 
-Sponsored Confidential changes entitlement for up to 24 months. They do not change the person's Clerk billing subscription.
+The sponsorship form can grant or extend **Sponsored Confidential**, with an expiry up to 24 months away. Sponsorship changes access, not the person's Clerk subscription or billing schedule.
 
 ## Network egress
 
-Use **Network egress** to review the origins available to egress-governed sandboxes. A read-and-write administrator can create, edit, or delete provider bundles and delete existing Shared rules. The current panel does not add or edit a standalone Shared rule.
+A read-and-write administrator can create, edit, or delete provider bundles and delete existing Shared rules. The current panel does not add or edit standalone Shared rules.
 
 <Warning>
-  A change here applies to every egress-governed user. **Ask** requests user
-  approval and saves the user's Allow or Deny choice. A global **Deny** gives no
-  prompt and cannot be overridden. Disabling or deleting a bundle removes only
-  rules created by that bundle; other global rules and user grants remain.
+  These controls apply across egress-governed users, rather than to one organization. A global Deny blocks the origin without an approval prompt. Disabling or deleting a bundle removes its own rules; other global rules and user grants remain.
 </Warning>
+
+## Enterprise administration
+
+The current panel does not provide the previously described **Teams & access**, **Audit log**, or **Observability** pages, Microsoft Entra setup, or their CSV export controls. Scope identity integrations, organization-wide audit requirements, and monitoring exports with the deployment team. See [Deployment models](/deployment-models).
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="The Admin panel role is missing">
-    Sign in with the account your deployment operator authorized. An
-    organization role does not grant panel access. Ask the deployment operator
-    or [contact Fluso support](mailto:support@premai.io) if the panel role is
-    missing.
+  <Accordion title="I cannot open Fluso Admin">
+    Use the address and account authorized by your deployment operator. A personal subscription or ordinary organization membership does not grant panel access.
   </Accordion>
-  <Accordion title="A dashboard says data is unavailable">
-    The panel distinguishes recorded data from missing telemetry. Retry the
-    view. If it remains unavailable, check the source service rather than
-    treating the empty value as zero.
+  <Accordion title="A dashboard cannot load data">
+    Retry the view. If it stays unavailable, contact the deployment operator with the failing page and time. Do not interpret a failed request as an empty account or zero usage.
   </Accordion>
   <Accordion title="A runtime control is unavailable">
-    Check whether the runtime is busy, warming, unhealthy, already stopped, or
-    has active schedules or other durable work. Retry after the blocking state
-    clears. Fluso does not force-stop a runtime from this panel.
+    Check its current state and ongoing work. Retry after the blocking condition clears; the panel does not force-stop active work.
   </Accordion>
 </AccordionGroup>
 
-## Next
-
-See [Legal](/resources/legal) for Fluso's privacy policy.
+See [Legal](/resources/legal) for Fluso's terms and privacy policy.

@@ -2,86 +2,56 @@
 title: Threads and contexts
 sidebarTitle: Threads & contexts
 icon: messages-square
-description: Understand which Agent settings, conversation history, project data, and files reach each thread.
+description: Understand the main Agent conversation, delegated sessions, and their shared project context.
 ---
 
-A thread is one conversation with a saved Agent. Its context is assembled from several sources with different lifetimes.
+Each saved Agent has one main conversation. Open the Agent in the workspace to continue it. The Agent can delegate bounded tasks into separate sessions when work needs its own conversation.
 
-## Start a new chat with an Agent
-
-In the Agents workspace, find the Agent in the left sidebar and select the **+** beside its name. You can also open the Agent and select **New thread** in the top right.
-
-The new chat opens with that Agent's saved name, instructions, knowledge, Apps, and project. Send the first request as you would in an ordinary chat. For example:
-
-> *"A customer says checkout is unavailable for their whole company. Classify the incident, list the missing details, and prepare the internal escalation. Do not contact anyone yet."*
-
-Use one thread for one case or outcome. Start another thread for a different customer, incident, or piece of work. This keeps the conversations separate while both can still use files and working memory from the Agent's configured project.
-
-If you edit the Agent, start a new thread to test the change. A thread keeps the Agent setup it started with; it does not switch versions midway through a conversation.
+> *"Review this customer incident. Gather the impact and missing details, then prepare an internal escalation. Do not contact anyone yet."*
 
 ## Context map
 
-| Source | Scope | What happens in a new thread |
+| Source | Main conversation | Delegated session |
 | --- | --- | --- |
-| Agent definition | Saved Agent configuration | Captured when the thread starts |
-| Conversation history | One thread | Starts empty |
-| Agent knowledge files | Agent configuration | The configured list is captured at start |
-| Project files | Configured project | Shared with other threads in that project |
-| Project working memory | Configured project | Recent summaries can be recalled |
-| Child task message | One child thread | Only the sent message is added, not the parent transcript |
+| Agent instructions, capabilities, and knowledge-file selection | Current saved configuration on the next turn | Configuration captured when the session was created |
+| Conversation history | Continues across turns | Its own history; a fork also starts with completed parent context |
+| Project files | Conversation's project | Parent's project |
+| Project working memory | Recent project summaries can be recalled | Recent project summaries can be recalled |
+| Delegated task | Your request and follow-ups | The task message sent by the parent |
 
-The Agent definition includes its name, description, goal, instructions, allowed capabilities, project, and knowledge files. Editing that setup changes new threads. Existing threads keep the configuration they started with.
+Editing an Agent does not change work already running. The main conversation picks up the new configuration on its next turn; an existing delegated session keeps its saved configuration.
 
-## Ordinary chat context is different
-
-Ordinary project chats can use global user preferences, project instructions, and `context.md`. Saved Agent threads use the Agent's saved definition instead. They can still use project files and working-memory summaries shared by the project.
+Ordinary chats can use global preferences, project instructions, and `context.md`. Saved Agent conversations use their own instructions instead, while retaining access to project files and working-memory summaries.
 
 ## Keep contexts isolated
 
-### What stays in one thread
+Each conversation keeps its messages and turn state. Project files and working memory can still be shared, so separate conversations are not separate file sandboxes.
 
-- Its messages and attached-file references.
-- In-progress turn state and temporary session data.
-- The Agent definition captured when the thread started.
+The current Agent interface does not create several independent top-level chats for one Agent. Duplicate the Agent when you need a separate setup and main conversation. Choose a different project as well if its files and working memory should be separate.
 
-A new thread does not receive another thread's conversation history.
-
-### What threads can share
-
-Threads started from the same Agent can use the same knowledge files and capabilities. Threads in the same project can also use its files and short working-memory summaries. If two threads edit the same resource at once, their changes can conflict.
-
-### When to start a new thread
-
-Start one when the topic or customer changes, when a task needs its own history, or when independent work can progress separately. Keep the current thread when the next step depends on its full conversation.
+Changing an Agent's configured project does not move an existing conversation or its files. See [Project context](/developers/project-context).
 
 ## Use parent and child threads
 
-A top-level Agent thread can create direct child threads for separate tasks. Each child receives a bounded task and works in its own conversation. The hierarchy has one level: a parent can create several children, but a child cannot create another child.
+A main Agent conversation can create direct child sessions for bounded work. A child cannot create another child. The parent can follow up with its children and receive their results.
 
-### Choose when children are created
+The Agent's session tool supports two ways to start a child:
 
-| Setting | Behavior |
-| --- | --- |
-| Off | The Agent cannot manage other threads. |
-| Explicit | The Agent creates a child only when you ask or its instructions require one. This is the default. |
-| Proactive | The Agent may create direct children for distinct tasks that can progress independently. |
+- A fresh session receives the task message and the Agent/project context, without the parent's transcript.
+- A fork also receives the parent's completed context at the fork point. It does not inherit unfinished work from the current turn.
 
-### Give a child enough context
+Give each task an expected result, necessary sources, and approval boundaries. Use independent sessions for read-only research or different outputs; coordinate changes to shared files in one conversation.
 
-A child sees the task message, not the parent's transcript. Include the task, source material, constraints, approval boundaries, and expected result. Its final result returns to the parent automatically; only the parent that created it can send follow-up work, cancel it, or delete it.
-
-### Work in parallel safely
-
-Use separate children for read-only research or changes to different outputs. Keep changes to the same files or shared APIs in one thread, then combine the work there.
+Thread creation is guided by the task and Agent instructions. The current editor has no Off, Explicit, or Proactive thread-management selector.
 
 ## Pick the right scope
 
-- Put stable Agent behavior in **Instructions**.
-- Put read-only reference material in Agent knowledge files.
-- Put finished and working files in the configured project.
-- Start a new thread for a clean conversation.
-- Use a child thread only when the task can progress with the context you send it.
+- Put stable Agent behavior in **Purpose and instructions**.
+- Add reference material as knowledge files.
+- Keep working files in the conversation's project.
+- Delegate a bounded task when it needs a separate conversation.
+- Duplicate an Agent for an independent main conversation.
 
 ## Related guides
 
-Read [Project context](/developers/project-context) and [User preferences](/developers/user-preferences) for the remaining context boundaries. See [Threads and messages](/developers/api-ref/threads-and-messages) for the public thread API.
+Read [Project context](/developers/project-context) and [User preferences](/developers/user-preferences) for the remaining boundaries. See [Threads and messages](/developers/api-ref/threads-and-messages) for the API.

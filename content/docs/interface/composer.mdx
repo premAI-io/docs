@@ -177,19 +177,18 @@ The mode button on the composer toolbar sets reasoning effort for the current ch
 | **Deep** | complex tasks, reviews, planning |
 | **Max** | the hardest problems, when you would rather wait |
 
-The choice belongs to the chat, not the app, so a quick lookup and a long refactor can sit side by side in your sidebar at different settings. In [confidential mode](/features/confidential) the reasoning level is fixed, so Max is not offered there.
+The choice belongs to the chat, not the app, so a quick lookup and a long refactor can sit side by side in your sidebar at different settings. In [confidential mode](/features/confidential) the reasoning level is fixed, so Max is not offered there. Quick still turns reasoning off.
 
 ## What Fluso may do on its own
 
-Beside the mode button, one control sets how much Fluso does before checking with you. `⌘⇧\` steps through the three levels.
+Beside the mode button, one control sets how much Fluso does before checking with you. `⌘⇧\` switches between the two modes.
 
 | Level | Behaviour |
 | --- | --- |
-| **Ask me first** | asks before reaching the web and before any connected app |
-| **Allow web** | searches the web on its own, still asks before connected apps |
-| **Allow everything** | acts without asking |
+| **Ask me first** | asks for connected-app tools that do not already have an effective Allow rule |
+| **Allow everything** | permits connected-app tools automatically, including Ask rules; Deny rules still block |
 
-Your choice sticks as the default for new chats. [Approvals and permissions](/features/approvals) covers the approval cards, saved tool rules, and what an organization policy can override.
+In an existing chat, your choice sets that chat's override. On a new-chat screen it changes the account default, which also applies to chats without an override. Read-only tools follow each connection's settings. [Approvals and permissions](/features/approvals) covers the approval cards, saved tool rules, and network-access boundaries.
 
 ## Dictating
 

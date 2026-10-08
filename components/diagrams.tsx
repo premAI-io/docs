@@ -76,7 +76,7 @@ export function MemoryScopeDiagram() {
     >
       <Layer
         label="Global preferences"
-        detail="Your timezone, response style, and standing instructions apply in every project"
+        detail="Your response style and standing instructions apply across ordinary project chats"
         icon={Users}
         emphasis
       />
@@ -91,7 +91,7 @@ export function MemoryScopeDiagram() {
         id="memory-scope-caption"
         className="mt-4 text-center text-xs leading-relaxed text-fd-muted-foreground"
       >
-        Global preferences apply everywhere. Project context and working memory
+        Ordinary chats use global preferences. Project context and working memory
         stay inside their project.
       </figcaption>
     </figure>

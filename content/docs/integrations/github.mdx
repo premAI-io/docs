@@ -13,7 +13,7 @@ If you don't write code, the rest of this page is safely ignorable. If you do, t
 
 Open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **GitHub**. GitHub's OAuth flow opens.
 
-Choose repository scope on GitHub's screen: specific repositories or all repositories you have access to. Either is fine, and you can change the set later from your GitHub settings without reconnecting.
+Review the permissions GitHub requests. Repository visibility depends on that authorization, your own repository access, and organization restrictions. The available controls depend on the authorization flow; do not assume it offers a per-repository selector.
 
 Read access is what lets Fluso browse code, answer architecture questions, and review PRs. Write access to issues and PRs is what lets it file issues, open PRs, and leave comments, subject to the effective tool and chat policy.
 
@@ -58,7 +58,7 @@ Issues:
 > *"What issues are assigned to me this sprint?"*
 
 <Warning>
-  Keep GitHub write tools on **Ask** when you want every diff or comment shown before the action runs. **Allow** or **Don't ask permission** can continue without a per-action prompt; **Deny** blocks the write.
+  Use **Ask me first** and keep GitHub write tools on **Ask** when you want every diff or comment shown before the action runs. **Allow** or **Allow everything** can continue without a per-action prompt; **Deny** blocks the write.
 </Warning>
 
 ## A small thing that makes generated code much better
@@ -86,7 +86,7 @@ You can also revoke from [GitHub → Settings → Applications](https://github.c
 ## Troubleshooting
 
   <Accordion title="A private repo isn't visible">
-    Rerun authorisation and add the repo to the allowlist, or grant access to all repositories.
+    Check that your GitHub account can access it, that the authorization covers private repositories, and that the organization permits the app. Reconnect if the required permissions changed.
   </Accordion>
   <Accordion title="Organisation repos aren't showing">
     Your organisation may require an admin to approve the OAuth app. Check **Org → Settings → Third-party access**.
@@ -102,6 +102,6 @@ You can also revoke from [GitHub → Settings → Applications](https://github.c
     The code skills (Q&A, PR review, scaffolding, bug fixes) and others.
   </Card>
   <Card title="Bug-to-PR workflow" icon="bug" href="/workflows/dev-bug-fix">
-    Bug report to merged PR in fifteen minutes.
+    Bug report to a pull request you can review.
   </Card>
 </CardGroup>

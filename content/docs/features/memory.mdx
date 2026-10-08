@@ -13,7 +13,7 @@ Durable memory follows a stricter rule than you might expect: it saves stable th
 
 <MemoryScopeDiagram />
 
-**Global preferences.** User-level things that should apply everywhere. Your timezone, the response style you have asked for, workflow choices, standing instructions like *"always show me drafts in plain text"*. These live in `preferences.md` in your workspace, where you can read them.
+**Global preferences.** User-level things that apply across ordinary project chats. Your timezone, the response style you have asked for, workflow choices, standing instructions like *"always show me drafts in plain text"*. These live in `preferences.md` in your workspace, where you can read them.
 
 **Project context.** Facts, decisions, conventions, and preferences that belong only to the project you are in. The Q3 roadmap decision. The naming convention you agreed with the team. The pricing approach for this client. Each project keeps its own `context.md`.
 
@@ -23,7 +23,7 @@ The split matters because Fluso is careful about scope. Project material stays i
 
 ## How it loads
 
-With every message, Fluso pulls in three things as background context:
+For ordinary chats, Fluso loads these layers as background context:
 
 - Your global preferences
 - The current project's context
@@ -44,7 +44,7 @@ Two paths. Both are conservative on purpose.
 
 **You ask explicitly.** Say *"remember this"*, *"forget this"*, *"add this to project context"*, or *"update my preference"* and Fluso edits `preferences.md` or the project's `context.md` directly. Clear intent only. A passing line like *"I like detailed answers"* is not treated as a memory write; that kind of inference goes through the other path.
 
-**Background learning.** After each reply, a background pass updates the project's working memory. When something durable shows up — a stated preference, a clear correction, a convention you keep repeating, a decision — it also adds that to your preferences or the project's context, marked as auto-saved and deduplicated against what is already there. Anything that looks like a secret or credential is dropped rather than saved. If nothing durable came up, it writes nothing durable.
+**Background learning.** After each reply, a background pass updates the project's working memory. When something durable shows up — a stated preference, a clear correction, a convention you keep repeating, a decision — it also adds that to your preferences or the project's context, marked as auto-saved and deduplicated against what is already there. This pass is instructed to exclude secrets and credentials; avoid putting them in chat or memory files. If nothing durable came up, it writes nothing durable.
 
 The guardrail on explicit updates exists for a reason. Vague or accidental wording should not mutate the layer that follows you across every chat.
 
@@ -55,7 +55,7 @@ The guardrail on explicit updates exists for a reason. Vague or accidental wordi
 - Decisions, conventions, and patterns inside a project.
 - The recent state of each project's work, in working memory.
 
-## What does not get saved
+## What memory is designed to omit
 
 - Greetings and small talk.
 - Temporary instructions for a single chat.

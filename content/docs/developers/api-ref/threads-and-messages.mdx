@@ -122,7 +122,9 @@ curl "$FLUSO_API/v1/threads/thread_release/messages?project_id=Release%20Review"
 
 Starts or queues a turn and streams UI message events until the request settles.
 
-Use a new thread ID for the first Agent-backed turn. The accepted send creates and binds that thread; an ordinary thread cannot later be converted.
+First read `GET /v1/agents/{agentId}/chats`. Reuse the main conversation's `threadId` and `projectName` when one exists. Only use a new thread ID if the Agent has no main conversation: the first accepted send creates and binds it. A second top-level conversation for the same Agent is rejected, and an ordinary thread cannot later be converted into an Agent conversation.
+
+The example below assumes this Agent has no main conversation yet.
 
 ```bash title="Request"
 curl -N "$FLUSO_API/v1/chat" \

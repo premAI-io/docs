@@ -2,108 +2,75 @@
 title: Approvals and permissions
 sidebarTitle: Approvals
 icon: shield-check
-description: Choose when Fluso asks before connector and MCP tool actions, review approval cards, and manage saved tool rules.
+description: Set the account default, override it in a chat, and manage individual MCP tool rules.
 ---
 
-Approvals let you decide how much Fluso can do without stopping for confirmation. You can keep every connector and MCP tool action behind a prompt, or let Fluso run them automatically.
-
-Your choice belongs to a chat. Existing chats keep their current mode. A choice made before a new chat starts is pending until you send the first message and the chat is created.
-
-<Note>
-  Organization rules and your saved **Deny** rules always apply. An automatic mode cannot override them.
-</Note>
+Fluso uses two approval modes for connected-app and MCP tools: **Ask me first** and **Allow everything**. Saved tool rules and network-access restrictions also apply.
 
 ## Choose an approval mode
 
-| Mode | Connector and MCP tools |
+| Mode | Behavior |
 |---|---|
-| **Ask for everything** | Ask before a tool runs |
-| **Don't ask permission** | Approve tools automatically |
+| **Ask me first** | Ask for tools that do not already have an effective Allow rule |
+| **Allow everything** | Approve tools automatically, including Ask rules; Deny rules still block |
 
-Use **Ask for everything** when you want to review each action before a tool can read or change data. **Don't ask permission** is best for work you trust Fluso to finish without waiting for you.
+Read-only tools follow each connection's settings. **Ask me first** does not force an approval for a tool that already has permission to run.
 
-### Set the mode from the composer
+Use the hand or open-lock control beside the reasoning mode in the composer. `⌘⇧\` switches between the two modes.
 
-<Steps>
-  <Step title="Open the permission menu">
-    Start a new chat and click the shield control beside the model mode in the composer.
-  </Step>
-  <Step title="Choose a mode">
-    Pick **Ask for everything** or **Don't ask permission**. The menu explains which requests will still pause.
-  </Step>
-  <Step title="Send the first message">
-    Before a thread exists, the composer labels the choice as **Pending**. Sending your first message creates the chat and confirms its mode.
-  </Step>
-</Steps>
+- In an existing chat, changing the control sets an override for that chat.
+- On a new-chat screen, it changes your saved account default immediately.
+- Chats without their own override follow the account default, including existing chats.
+- Chats with an override keep it when you change the default.
 
-You can change the mode between messages. The updated choice applies to later actions in that chat. It does not change other existing chats.
+## Manage the account default
 
-## Connector tool approval cards
+Open your account menu, choose **Settings**, then **Approvals & permissions**. **Auto-approval** changes the default across web, desktop, and Telegram for chats without an override.
 
-Connector and MCP tools can read or change data in another service. When a tool needs approval, the card shows the connector or server, tool name, a short argument summary, and an expandable view of the exact arguments.
+On Telegram, `/permissions` exposes the conversation mode and account default. Changing one chat does not rewrite every other chat's override.
 
-You can choose:
+## Approval cards
 
-- **Allow once** to run this tool only with the arguments shown on the card.
-- **Always allow** to save an allow rule for this tool.
-- **Deny** to reject this request without creating a permanent tool deny.
+When a connected-app tool needs approval, the card shows the app or server, tool name, a short argument summary, and the exact arguments.
 
-If the required app is not connected, the card asks you to **Connect** first. Complete sign-in and Fluso resumes the waiting action. If the request changes while you are deciding, it fails closed instead of applying your decision to different arguments.
+- **Allow once** permits the displayed request once.
+- **Always allow** saves an allow rule for that tool.
+- **Deny** rejects the request without creating a permanent tool deny.
 
-If the card expires or the run is canceled before you decide, ask Fluso to try the action again. An organization-managed deny is locked and cannot be approved from chat.
+If an app is missing, use **Connect** and complete sign-in. If the request changes, expires, or is canceled while you are deciding, the old card cannot approve a new action. Ask Fluso to retry it.
 
-<Tip>
-  Use **Allow once** for a sensitive write or an unusual set of arguments. Use **Always allow** for a tool you expect this chat to call repeatedly.
-</Tip>
+<Note>
+  Use **Ask me first** and set external write tools to **Ask** when you want to review each message, invitation, or change before it is sent. **Allow everything** bypasses Ask prompts, including explicit Ask rules.
+</Note>
 
-## Manage approvals in Settings
+## Saved tool rules
 
-Open your account menu, choose **Settings**, then open **Approvals & permissions**. This panel controls the mode for your next new chat.
+Open **Plugins → MCP**, expand a connection, and review **Tool permissions**.
 
-### Set the default for the next chat
+- **Allow** permits the tool without asking, unless a higher-priority policy blocks it.
+- **Ask** requires approval in **Ask me first** mode. **Allow everything** automatically approves it.
+- **Deny** blocks it.
+- **Auto-approve read-only tools** permits tools classified as read-only. Explicit Ask and Deny rules take precedence over read-only auto-approval, but **Allow everything** still bypasses Ask.
 
-The **Auto-approval** section has the same modes as the composer. A Settings change is staged for your next new chat. It does not rewrite the mode of chats that already exist.
-
-## Which rule wins
-
-Fluso applies the most restrictive relevant rule. In practical terms:
-
-1. An organization **Deny** always blocks the tool.
-2. Your **Deny** can block something the organization allows.
-3. An organization **Allow** can make an action available, unless you denied it.
-4. Your **Allow** can approve an action when the organization has not blocked it.
-5. With no saved rule, the current chat mode decides whether Fluso asks or continues automatically.
-
-This is why switching to **Don't ask permission** does not open something that your organization or you explicitly blocked.
-
-## Manage MCP tool rules
-
-Open **Plugins**, select an MCP server, and open its tool permissions. Each tool can be set to **Allow**, **Ask**, or **Deny**.
-
-You can also enable automatic approval for tools classified as read-only, such as list, search, fetch, and GET operations. An explicit **Ask** or **Deny** on a tool takes precedence over that read-only setting.
-
-See [MCP servers](/features/mcp) for connection setup and credential handling.
+Network policy can block a connection independently of its tool permissions. Installing a skill or enabling **Allow everything** does not remove network restrictions or tool Deny rules.
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="I changed the mode in Settings, but this chat still asks">
-    Settings changes apply to the next new chat. Existing chats keep their current mode. Change the shield control in this chat, or start a new one.
+  <Accordion title="I changed Settings, but this chat behaves differently">
+    Check the control in this chat. A chat-specific override takes precedence over the account default.
   </Accordion>
-  <Accordion title="The composer says Pending">
-    The chat has not been created yet. Send the first message to commit that mode to the new chat.
+  <Accordion title="A tool set to Ask runs without prompting">
+    Check the current chat mode. **Allow everything** approves Ask rules automatically. Switch to **Ask me first** to require the prompt.
   </Accordion>
-  <Accordion title="An approval card expired">
-    Ask Fluso to retry the action. Approval cards are bound to one pending request and cannot approve a later or changed request.
+  <Accordion title="A tool runs in Ask me first without prompting">
+    Check for an existing Allow rule or enabled read-only auto-approval. The chat mode is the fallback for tools without an applicable saved rule.
   </Accordion>
-  <Accordion title="I chose Always allow, but a different connector tool still asks">
-    Tool rules apply to the specific tool, not every tool on the connector or MCP server. Review that server's tool permissions under **Plugins**.
-  </Accordion>
-  <Accordion title="A tool is blocked and no approval card appears">
-    Check that server's tool permissions under **Plugins** for a saved **Deny**. If the rule is locked or marked as managed by your organization, only an organization administrator can change it.
+  <Accordion title="A tool is blocked without a card">
+    Check for a Deny rule. For a separate network-policy block, contact the deployment operator.
   </Accordion>
 </AccordionGroup>
 
 ## Next
 
-See [Chat](/features/chat) for thread and composer behavior, and [Apps and MCP servers](/features/mcp) for app access and third-party tools.
+See [Apps and MCP servers](/features/mcp) for connection setup and [Chat](/features/chat) for the composer and follow-up queue.

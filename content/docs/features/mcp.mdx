@@ -114,8 +114,8 @@ Expand any connection row to see its tools and set rules per tool.
   <img src="/images/features/mcp/tool-permissions.png" alt="The Web Search row expanded: a Tool permissions section with an 'Auto-approve read-only tools' toggle, and three read-only tools (Exa Search, Exa Get Contents Action, Exa Answer), each with Allow, Ask, and Deny buttons." />
 </Frame>
 
-- **Auto-approve read-only tools** allows operations classified as GET, list, search, and fetch to run without asking. Explicit Ask or Deny rules still win.
-- Each tool has its own **Allow**, **Ask**, or **Deny**. Allow runs without asking, Ask pauses for your approval in chat, Deny blocks the tool outright.
+- **Auto-approve read-only tools** allows operations classified as GET, list, search, and fetch to run without asking. Explicit Ask or Deny rules take precedence over this toggle. The chat mode **Allow everything** still automatically approves Ask rules.
+- Each tool has its own **Allow**, **Ask**, or **Deny**. Allow runs without asking, Ask pauses for approval when the chat uses **Ask me first**, and Deny blocks the tool outright. **Allow everything** bypasses Ask rules but keeps Deny blocks.
 - Tools are grouped read-only versus everything else, so you can see at a glance what can only look and what can act.
 
 These rules work together with your chat-level approval mode. See [Approvals and permissions](/features/approvals) for how the modes and rules interact.
@@ -155,7 +155,7 @@ Each row shows the connection's status. The three-dot menu holds the two actions
   The server advertises Dynamic Client Registration but rejected the registration. Switch to **OAuth (BYO)** and register an app in the server's developer console yourself.
 </Accordion>
 <Accordion title="A tool keeps asking for approval">
-  Its rule is set to **Ask**, or your chat's approval mode is **Ask for everything**. Set the tool to **Allow** in the row's tool permissions, or change the mode — see [Approvals](/features/approvals).
+  Its rule is set to **Ask**, or your chat's approval mode is **Ask me first**. Set the tool to **Allow** in the row's tool permissions, or change the mode — see [Approvals](/features/approvals).
 </Accordion>
 
 ## Next

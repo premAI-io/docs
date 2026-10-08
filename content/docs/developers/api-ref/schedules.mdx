@@ -64,7 +64,7 @@ curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules" \
   }'
 ```
 
-For a durable one-time schedule, replace `cron` with an offset-bearing `at` value:
+For a durable one-time schedule, replace `cron` with an offset-bearing `at` value. Choose a future timestamp; this example date is illustrative:
 
 ```json title="One-time timing fields"
 {

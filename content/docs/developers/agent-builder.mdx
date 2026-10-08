@@ -2,39 +2,45 @@
 title: Agent builder
 sidebarTitle: Agent builder
 icon: workflow
-description: Turn a plain-language request into an Agent draft, then review or refine it before saving.
+description: Create and refine a saved Agent through a conversation or a form.
 ---
 
-Open **Control Panel → Create Agent** to start in Agent Studio. Describe the job in plain language. Studio drafts the Agent definition and a small workflow preview before anything is saved.
+<Note>
+  Agents is a beta workspace. Availability depends on the app's release and beta configuration. Buying Pro does not by itself enable Agents or add a Control Panel.
+</Note>
 
-> *"Create a customer escalation coordinator. Gather the customer, impact, urgency, and open questions. Read relevant Gmail and Google Drive context, classify the case as P0 or P1, prepare the next steps, and require approval before sending anything."*
+Open **Agents → New Agent**. Describe the job to the Agent manager:
 
-## Build the first draft
+> *"Create a customer escalation coordinator. Gather the customer, impact, urgency, and open questions. Read the connected support sources, classify the case as P0 or P1, and prepare the next steps. Ask for approval before sending anything."*
 
-A useful request names four things:
+The manager can create and modify saved Agents during the conversation. Review what it creates before using it for live work.
 
-- The input, such as a support request or release candidate.
-- The outcome, such as a severity decision or handoff package.
-- The sources and capabilities the Agent may use.
-- The boundaries that must hold, such as approval before an external action.
+## Describe the job
 
-Select **Build**. Studio returns the Agent name, description, instructions, and a short graph of the proposed steps. The graph is a design preview. It helps you check the order and decision points, but it is not executable code.
+Name the input and expected result, the sources the Agent may use, and the boundaries it must respect. Keep credentials out of the instructions; connect Apps through **Plugins → MCP**.
 
-## Refine without starting over
+For example, refine the Agent with:
 
-Use the Studio message box to change the draft:
+> *"Use P0 for a complete outage and P1 for degraded service with a workaround. Prepare customer replies as drafts for review."*
 
-> *"Only use P0 and P1. Run the Gmail and Drive lookups in parallel. Stop for approval before sending a customer reply."*
+## Use the form
 
-Studio revises the current draft and replaces the workflow preview. If a request fails, the last valid preview stays in place so you can retry.
+Choose **Fill in a form instead** when creating an Agent, or open **Edit** from an existing Agent's details.
 
-## Create or open the editor
+- **Name** is the label shown in the workspace.
+- **Purpose and instructions** describe the result, sources, and standing rules.
+- Choose the project, response mode, skills, and Apps the Agent can use.
+- Add knowledge files for stable reference material.
+- Select **Create Agent** or **Save changes**.
 
-- Select **Create Agent** when the draft is ready.
-- Select **Go to editor** when you want to inspect every field, capability, knowledge file, or thread setting first.
+The form accepts up to 25 knowledge files, with a 20 MiB limit per file. Review the selected capabilities and [approval settings](/features/approvals) before allowing external changes.
 
-Studio only selects capabilities already available to you. Creating the Agent saves the definition. Existing Agent threads keep the definition they started with, so test changes in a new thread.
+## Refine an existing Agent
+
+Choose **Modify** in the Agent menu to return to the manager. Use **Edit** to change the fields directly.
+
+The main conversation uses the updated configuration on its next turn. A running turn finishes with its accepted configuration, and existing delegated sessions keep theirs. See [Threads and contexts](/developers/threads-and-contexts).
 
 ## Next
 
-See [Agent description](/developers/agent-description) for field boundaries and [Threads and contexts](/developers/threads-and-contexts) for what a new Agent thread receives.
+See [Agent description](/developers/agent-description) for writing instructions and [Testing Agents](/developers/evaluations) for a manual review loop.

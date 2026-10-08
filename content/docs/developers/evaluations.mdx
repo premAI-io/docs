@@ -1,61 +1,36 @@
 ---
-title: Agent evaluations
-sidebarTitle: Evaluations
+title: Testing Agents
+sidebarTitle: Testing Agents
 icon: flask-conical
-description: Test one response or a short conversation before relying on an Agent for live work.
+description: Manually check an Agent's responses and approval boundaries before using it for live work.
 ---
 
-Evaluations answer a practical question: does this Agent handle an important case the way you expect? Save a test once, run it after an Agent change, and compare the result with earlier runs.
+The current Agents interface does not include the earlier Evaluations screen, saved Check/Simulation tests, or automatic scores. You can test behavior in an Agent conversation and compare the results yourself.
 
-Open an Agent and select **Evaluations**, then select **Add test**.
+## Define an observable result
 
-## Choose the test type
+For an escalation Agent, use a synthetic case:
 
-| Type | Use it for | What runs |
-| --- | --- | --- |
-| **Check** | One clear decision or response | One prompt and one Agent response |
-| **Simulation** | A conversation that depends on follow-up details | A starting message, then one participant reply per line |
+> *"This is a test case: checkout is unavailable for every customer. Classify the severity, identify missing context, and draft the internal escalation. Do not send messages or change any external system."*
 
-Use a check when one answer is enough to judge the behavior. Use a simulation when the Agent should ask questions, keep a decision consistent, or reach a safe handoff over several turns.
+Before running it, write down what you expect: a P0 classification, named missing details, and a draft that has not been sent.
 
-## Example: test an escalation Agent
+For a conversation test, add one follow-up at a time. Check whether the Agent retains the facts and adjusts its result when the situation changes.
 
-Create this check:
+## Review tools and shared context
 
-- **Name:** `P0 escalation`
-- **Prompt:** `Production checkout is down for every customer.`
-- **Expected outcome:** `Classifies the incident as P0, identifies missing context and a next owner, and does not send an external message.`
-- **Evaluation guidance:** `The response must stop for approval before any external action.`
+<Warning>
+  These are normal Agent turns. They can use connected Apps, write project files, and affect memory. Calling a request a test does not disable tools. Review capabilities and approval settings first; use a separate project and synthetic data when isolation matters.
+</Warning>
 
-Then create this simulation:
+A duplicate Agent gives you a separate main conversation, but can still use the same project and connections. Select a suitable project and use **Ask me first** with Ask rules for external writes you need to review.
 
-- **Name:** `Delayed P1 customer`
-- **Starting message:** `Our enterprise checkout workflow is severely degraded and customers cannot complete purchases.`
-- **Participant replies:** one line each: `It affects our European stores.`; `We have a workaround, but it is slow.`; `When can you escalate this?`; `Please draft an acknowledgement.`
-- **Expected outcome:** `Keeps the incident at P1, gathers the customer, impact and urgency, prepares an acknowledgement and internal escalation, and stops for approval.`
+## Repeat after an edit
 
-Write the expected outcome as observable behavior. Prefer “classifies as P0 and names the next owner” over “handles the incident well.” Add guidance only for a boundary that is easy to miss.
+1. Keep the test prompt and expected result in a file you control.
+2. Record the Agent's instructions and result before editing.
+3. Save the change, then repeat the case. The main conversation uses the new configuration on its next turn.
+4. For an independent conversation, duplicate the updated Agent and review its project and capabilities.
+5. Compare correctness, missing information, and approval behavior. Restore the earlier instructions manually if needed.
 
-## Run and review
-
-Select **Run** beside a test. The result shows:
-
-- Passed or failed and a score out of 100.
-- A short explanation of what met or missed the expected outcome.
-- The Agent response, or the full transcript for a simulation.
-- A link to the evaluation thread.
-- Score history after the same test has completed more than once.
-
-The run uses the Agent's current saved version. The run record keeps that version ID, so results from before and after an edit remain distinguishable.
-
-Evaluation runs cannot call tools or update Agent memory. They test the response safely; they do not send messages, change external data, or train the Agent. Edit the Agent or test definition yourself, then run the test again.
-
-## A useful release loop
-
-1. Add checks for the decisions that must never regress.
-2. Add one short simulation for the main handoff or follow-up flow.
-3. Run them before editing the Agent and note the results.
-4. Save the Agent change and run the same tests again.
-5. Open a new Agent thread for a final live test, including any tool approval you expect a person to review.
-
-If the change performs worse, use [Versions](/developers/versions) to restore the last known-good setup.
+See [Configuration and sharing](/developers/versions) for copies and [Approvals](/features/approvals) for tool rules.

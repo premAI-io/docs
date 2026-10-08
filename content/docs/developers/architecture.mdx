@@ -35,14 +35,14 @@ Project working memory belongs to its project. Agent configuration and chat hist
 
 Components can change where the code defines an explicit contract:
 
-- Runtime compute sits behind a `SandboxProvider` contract. Current implementations cover local Docker and AWS ECS.
+- Runtime compute sits behind a `SandboxProvider` contract. The managed runtime uses AWS Lambda MicroVMs. The provider contract also has local Docker and AWS ECS implementations.
 - Models resolve through a provider-scoped catalog. Current provider paths cover PCCI and OpenRouter; the catalog does not promise that every model works through every provider.
 - Managed apps and custom servers meet the runtime through MCP and the same tool-policy boundary. A source can change while the protocol stays fixed, though tool names and semantics can still differ.
 - Services can move behind their HTTP contracts when the replacement preserves authentication, response shape, and failure behavior.
 
 ## Governed external context
 
-An MCP server advertises tools. User policy decides whether each tool is allowed, denied, or requires approval. Organization policy separately governs network egress. Read-only classification can permit low-risk reads without turning every MCP connection into a read-only connection.
+An MCP server advertises tools. User policy decides whether each tool is allowed, denied, or requires approval. Network policy separately governs outbound access. Read-only classification can permit low-risk reads without turning every MCP connection into a read-only connection.
 
 External data stays under the source system's own controls until an approved tool reads it. Fluso may then persist selected outputs in chat history, project files, or knowledge records according to the requested work and platform policy.
 

@@ -48,7 +48,7 @@ Posting:
 > *"Post a status update in #partnerships about Acme."*
 
 <Warning>
-  Keep Slack write tools on **Ask** when you want every draft shown before it posts. **Allow** or **Don't ask permission** can continue without a per-action prompt; **Deny** blocks the post.
+  Use **Ask me first** and keep Slack write tools on **Ask** when you want every draft shown before it posts. **Allow** or **Allow everything** can continue without a per-action prompt; **Deny** blocks the post.
 </Warning>
 
 ## Cross-app workflows
@@ -72,7 +72,7 @@ You can also revoke from your Slack workspace at **Settings → Integrations →
 ## Troubleshooting
 
   <Accordion title="Fluso can't see a private channel">
-    Add the Fluso bot to the private channel, or rerun the authorisation and select the channel.
+    With **Slack**, check that the connected user belongs to the private channel and the authorization permits reading it. With **Slackbot**, invite the bot to the channel. Workspace policy can restrict either connection.
   </Accordion>
   <Accordion title="Multiple workspaces">
     Connect each separately. Fluso treats them as independent. Disambiguate in the prompt: *"What did I miss in [workspace] #channel?"*
