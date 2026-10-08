@@ -179,6 +179,8 @@ Use the actual byte count. `expected_revision: "missing"` requires that no file 
 
 Confirmation queues the import. It does not mean the file is already saved. Tracking rows remain for in-progress uploads, failures, and undismissed history warnings. Successful imports without warnings leave that tracking list.
 
+An account can have at most four pending uploads. A fifth presign request returns `429`. Confirm active uploads before requesting more. For an abandoned upload, use `DELETE /v1/files/upload/presigned-url/cancel/{id}` to cancel its pending record. Removing an attachment from the composer is not proof that the upload record was cancelled.
+
 If the destination changed, reread it before saving again. If prior file history cannot be preserved, inspect the reported failure or warning rather than treating the operation as a normal versioned save. Agent knowledge uses its [separate attach-and-save flow](/developers/api-ref/agents-and-versions#attach-knowledge).
 
 ## Download a file

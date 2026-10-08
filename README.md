@@ -38,6 +38,8 @@ Check both sides when updating the guides:
 
 The examples use generalized patterns from a read-only review of development conversations, tool results, and saved files. They contain no account transcripts, customer data, or credentials. Custom service examples describe prerequisites rather than built-in capabilities.
 
+The release-review walkthrough and six product screenshots come from the same `dev` revisions running locally with a Clerk test account and real model calls. The workflow covered chat-based creation, file uploads, two delegated reviews, a saved Manager refinement, a corrected report, a one-time routine, and its Inbox result. Its inputs were this documentation draft and its validation report. The cookie-consent dependency was built from its genuine `v1.0.0` source because private-registry access was unavailable. No responses or product states were mocked.
+
 Use source behavior over old release notes. Remove retired pages from navigation and add their replacements to `public/_redirects`, including markdown export URLs. Cloudflare Pages serves these redirects; Next's local dev server does not.
 
 ## Deployment

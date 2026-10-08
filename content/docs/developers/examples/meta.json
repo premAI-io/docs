@@ -2,5 +2,5 @@
   "title": "Examples",
   "icon": "lightbulb",
   "defaultOpen": false,
-  "pages": ["index", "email", "people-graph", "document-filing", "custom-skills"]
+  "pages": ["index", "release-review", "email", "people-graph", "document-filing", "custom-skills"]
 }

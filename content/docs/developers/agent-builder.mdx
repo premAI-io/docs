@@ -14,14 +14,22 @@ An Agent is a saved assistant for a particular job. It keeps its instructions, c
 ## Create from a conversation
 
 1. Switch to **Agents** in the sidebar and select **New Agent**.
-2. Choose a project if its files belong somewhere other than **Home**.
+2. Choose a project for its files. **Home** is the default project.
 3. Describe the job in the message box and send it.
 
 > *"Create a release reviewer. Compare the release notes, test results, and open blockers I provide. Return a go/no-go recommendation with evidence, unresolved risks, and owners. Ask when the evidence conflicts. Do not publish or contact anyone."*
 
+<Frame caption="Start with the job, its inputs, and the actions the Agent must avoid.">
+  <img src="/images/agents/create-from-chat.png" alt="New Agent page with a release reviewer request in the message box." />
+</Frame>
+
 That first message starts the Agent's **Manager** conversation. The Manager names the Agent and saves its setup. As it is created, its name appears in the sidebar and its setup appears beside the conversation. You can keep refining it there.
 
 Check the saved instructions and capabilities, then select **Launch agent** to open its main conversation. Creation does not run the job or create a routine.
+
+<Frame caption="The Manager saved the reviewer with document skills and no connected apps. Launch agent opens its main conversation.">
+  <img src="/images/agents/manager-setup.png" alt="Release Reviewer Manager conversation beside saved instructions, document skills, project, response mode, and Launch agent." />
+</Frame>
 
 If you prefer direct controls, **Fill in a form instead** on New Agent opens the same setup fields without a creation conversation.
 
@@ -47,6 +55,8 @@ Give the Agent the input it needs, not another request to create itself.
 > *"Review these release notes and the attached test report. The release is Thursday. Identify blockers and give me a recommendation. Do not assume a missing test passed."*
 
 Read the answer and open any delivered files. Check sources, missing information, and the requested output. Try a follow-up that changes an assumption, then a case with incomplete evidence.
+
+Follow the [release review walkthrough](/developers/examples/release-review) for a complete example with actual results.
 
 For work that could send a message or change another app, ask for a draft and review it first. Choose **Ask me first** when you want tool approval. See [Approvals and permissions](/features/approvals).
 
@@ -78,6 +88,6 @@ To undo a change, tell the Manager exactly what to restore or edit the saved fie
 
 Star an Agent to find it quickly. **Change appearance** changes its avatar without changing its instructions. **Duplicate** copies its setup and knowledge files. Conversations and routines start fresh.
 
-**Delete** permanently removes the Agent, its conversations, routines, and public share link. Copies other people already imported remain independent. Project files are separate. Deleting an Agent is not a project cleanup.
+**Delete** permanently removes the Agent, its conversations, routines, and [public share link](/developers/export-import-and-share-agents). Copies other people already imported remain independent. Project files are separate. Deleting an Agent is not a project cleanup.
 
 Next: [Setup and capabilities](/developers/agent-description), [Conversations and sessions](/developers/threads-and-contexts), or [Routines](/developers/schedules).

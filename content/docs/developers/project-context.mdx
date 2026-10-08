@@ -5,16 +5,7 @@ icon: folder-open
 description: Understand what an Agent remembers, what stays shared, and how reference files change.
 ---
 
-An Agent's conversation, saved instructions, reference files, and project memory have different lifetimes. Keeping those differences clear helps you choose where information belongs.
-
-| Information | Where it belongs | How it is used |
-| --- | --- | --- |
-| Standing rules for the Agent | **Purpose and instructions** | Main conversation on its next turn. Existing delegated sessions retain their setup |
-| A correction for the current task | Your chat message | That conversation or the active turn you steer |
-| Stable reference material | **Knowledge files** | Saved copies listed in the Agent's setup |
-| Working files and deliverables | The project | Shared files that can change as work proceeds |
-| Recent project work | Project working memory | Relevant summaries can be recalled across conversations |
-| Preferences for ordinary chats | Workspace preferences and project context | Not automatically loaded as saved Agent instructions |
+Use **Knowledge files** for stable references. Use project files for working data and deliverables. Keep discussing the work in the main conversation.
 
 ## Choose the project before starting
 
@@ -29,6 +20,17 @@ Attach knowledge through the Agent editor, or ask the Manager to attach a file a
 Knowledge is a **copy**. Editing the original project file does not update the attached copy. Attach and save a replacement when the reference changes. Removing a knowledge entry from the current setup does not remove the older copy from an existing delegated session's setup.
 
 Use project files for a live tracker or an output that must evolve. Use knowledge for a reference edition, such as an agreed review rubric.
+
+<Accordion title="Where each kind of information belongs">
+  | Information | Where it belongs | How it is used |
+  | --- | --- | --- |
+  | Standing rules for the Agent | **Purpose and instructions** | Main conversation on its next turn. Existing delegated sessions retain their setup |
+  | A correction for the current task | Your chat message | That conversation or the active turn you steer |
+  | Stable reference material | **Knowledge files** | Saved copies listed in the Agent's setup |
+  | Working files and deliverables | The project | Shared files that can change as work proceeds |
+  | Recent project work | Project working memory | Relevant summaries can be recalled across conversations |
+  | Preferences for ordinary chats | Workspace preferences and project context | Not automatically loaded as saved Agent instructions |
+</Accordion>
 
 ## Know what is shared
 

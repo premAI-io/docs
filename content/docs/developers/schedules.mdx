@@ -19,7 +19,7 @@ Ask in the Agent's main conversation:
 
 You can also open **Routines** in the Agents sidebar, use the chat's routine control, or select **Routines → Manage** on the setup page. Choose a starting idea or write your own message, select the Agent, set the timing and timezone, and save.
 
-The editor supports one-time, daily, weekday, weekly, and interval presets. Existing custom cron timing is preserved unless you change its frequency. Timing labels are shown in readable language.
+The editor supports one-time, daily, weekday, weekly, and interval presets. Existing custom timing is preserved unless you change its frequency. Timing labels are shown in readable language.
 
 Include the source, expected result, and what to do when there is nothing to report.
 For a temporary watch, specify an end date or a result that should stop the checks. For external communications, ask for drafts to review and configure [approvals](/features/approvals).
@@ -37,25 +37,17 @@ For a temporary watch, specify an end date or a result that should stop the chec
 | Check for an interview reply | Recurring check with a deadline | Stop after the requested result or deadline. |
 | Prepare a meeting brief | One-time run before the meeting | Check that the meeting still exists at that time. |
 
-These are workflow instructions for the Agent. Check the resulting schedules in **Routines**. Creating a routine does not subscribe to live app events.
+Stopping conditions are instructions for the Agent, not automatic expiry settings. Check that it pauses or removes the routine when the condition is met. Creating a routine does not subscribe to live app events.
 
 For a concrete sequence, see [Email and hiring](/developers/examples/email) or [Document filing](/developers/examples/document-filing).
-
-## Apply the same routine to several Agents
-
-The Routines page can apply one instruction and timing to selected Agents. Each gets an independent schedule in its own main conversation.
-
-**Select all** covers the Agents currently offered by the picker. It does not include Agents created later. Agents already using those instructions at another timing need an explicit selection to add another timing.
-
-Matching instructions, timing, and timezone are grouped for display. Editing one assignment can split it from its group. Removing one Agent's assignment does not remove the others.
-
-Saving across several Agents can partly succeed. Successful assignments stay saved. The editor lists the failures. Retry the remaining assignments there instead of creating the whole group again.
 
 ## What happens when it is due
 
 The message enters its target conversation as a separate follow-up. If that conversation is busy, it waits. If an earlier occurrence of the same routine is still queued, running, or awaiting approval, the scheduler waits rather than stacking duplicate work.
 
 In chat, the routine appears as a compact row on the right with a violet clock and scheduled time. Expand it for the instructions, routine ID, and any attachments. The Agent receives the full message even while the row is collapsed.
+
+See the [release review walkthrough](/developers/examples/release-review#return-when-new-evidence-is-ready) for an actual scheduled result.
 
 The main conversation uses the setup selected for the new turn. A routine in an existing delegated session uses that session's earlier setup. Results remain in the target conversation. Top-level routine results can also appear in [Inbox](/developers/inbox).
 
@@ -69,6 +61,22 @@ One-time checks stop scheduling after their message is accepted. **Last run disp
 
 Deleting a target session removes its routines. Deleting an Agent removes all of its routines. Archiving a session is not a substitute for pausing its routines.
 
+## More routine controls
+
+<Accordion title="Schedule work in a delegated session">
+  Open the session and use its routine control. The sidebar routine editor targets main conversations.
+</Accordion>
+
+<Accordion title="Apply the same routine to several Agents">
+  The Routines page can apply one instruction and timing to selected Agents. Each gets an independent schedule in its own main conversation.
+
+  **Select all** covers the Agents currently offered by the picker. It does not include Agents created later. Agents already using those instructions at another timing need an explicit selection to add another timing.
+
+  Matching instructions, timing, and timezone are grouped for display. Editing one assignment can split it from its group. Removing one Agent's assignment does not remove the others.
+
+  Saving across several Agents can partly succeed. Successful assignments stay saved. The editor lists the failures. Retry the remaining assignments there instead of creating the whole group again.
+</Accordion>
+
 ## When a routine does not finish
 
 | What you see | What to do |
@@ -79,8 +87,10 @@ Deleting a target session removes its routines. Deleting an Agent removes all of
 | A run failed after starting | Inspect the conversation and partial outputs before continuing |
 | Usage allowance reached | Wait for the allowance to reset. Scheduling is deferred rather than treated as a successful run |
 
-Temporary delivery problems are retried with delays. Repeated delivery failures can pause the routine. Recurring runs do not replay every missed clock tick after a delay.
+<Accordion title="Retries, delays, and clock changes">
+  Temporary delivery problems are retried with delays. Repeated delivery failures can pause the routine. Recurring runs do not replay every missed clock tick after a delay.
 
-Choose a future local time for a one-time check. The editor rejects times that do not exist during a daylight-saving clock change. Review the timezone and next-run time before saving.
+  Choose a future local time for a one-time check. The editor rejects times that do not exist during a daylight-saving clock change. Review the timezone and next-run time before saving.
+</Accordion>
 
 For integrations, these records are called [Schedules in the API](/developers/api-ref/schedules).

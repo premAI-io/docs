@@ -68,6 +68,6 @@ Thread and message responses use snake_case. Message `content` and `metadata` ca
 
 Use the messages endpoint above when reconnecting or keeping a copy of a conversation. Routine metadata identifies its scheduled origin. Collapsing it in the UI does not remove its full instructions from history.
 
-Agent and role bindings are fixed at creation. The main conversation uses the current Agent setup on a later turn. Delegated sessions keep their creation setup. The main conversation cannot be archived or deleted independently of the Agent.
+Agent and role bindings are fixed at creation. The main conversation uses the current Agent setup on a later turn. Delegated sessions keep their creation setup. The thread endpoints cannot archive or delete the main conversation. Deleting its project also removes it, as explained in [Files and context](/developers/project-context).
 
 For user-facing behavior, see [Conversations and sessions](/developers/threads-and-contexts).

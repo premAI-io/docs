@@ -19,9 +19,11 @@ Use **Send now** to bring a queued correction into the work already running. If 
 
 A queued message using a different saved Agent setup shows **Saved setup applies next turn** instead of **Send now** while the older turn is running.
 
-**Stop** stops the current run and pauses queued follow-ups. A failed run also pauses them. Use **Send now** on a paused message when you are ready to continue. Reloading or changing devices does not discard the server's queue.
+**Stop** stops the current run and pauses messages you queued. A failed run also pauses those messages. Use **Send now** on a paused message when you are ready to continue. Reloading or changing devices does not discard the server's queue.
 
 Stopping the main run does not stop delegated sessions or pause future routines. Stop those sessions and pause those routines separately when you want all related work to stop.
+
+Queued routine messages and returned session results can still start work. Stopping one run does not clear those deliveries.
 
 See [Chat](/features/chat#while-fluso-is-working) for the queue controls.
 
@@ -42,18 +44,20 @@ For a complex request, the main conversation can delegate complementary tasks to
 
 For a release review, separate sessions might inspect test evidence and customer-impact notes while the main conversation evaluates release criteria. Small tasks or edits to the same file may be better kept together.
 
-| Session type | Starting context |
-| --- | --- |
-| Fresh | Its assignment and the necessary inputs, without the main conversation's transcript |
-| Forked | Completed conversation context at the point of the fork, followed by its assignment |
-
-Both use the Agent setup selected when they are created and can use shared files and project memory. A fork does not copy running work or routines. Later messages and setup changes do not automatically propagate to an existing session.
-
 The main conversation can reuse a session, send corrections, cancel obsolete work, and request a result. Requested results return automatically. A delegated session cannot create more sessions.
+
+<Accordion title="What context does a session receive?">
+  | Session type | Starting context |
+  | --- | --- |
+  | Fresh | Its assignment and the necessary inputs, without the main conversation's transcript |
+  | Forked | Completed conversation context at the point of the fork, followed by its assignment |
+
+  Both use the Agent setup selected when they are created and can use shared files and project memory. A fork does not copy running work or routines. Later messages and setup changes do not automatically propagate to an existing session.
+</Accordion>
 
 ## Inspect sessions when useful
 
-When sessions exist, **Sessions** appears above the composer. It shows work that is queued, working, waiting for approval, idle, or needs attention. A fork icon marks inherited conversation context. **Uses an earlier setup** identifies a session created before a setup change.
+When sessions exist, **Sessions** appears above the composer. It shows work that is queued, working, waiting for approval, idle, or needs attention. **New result** marks an unread session result. A fork icon marks inherited conversation context. **Uses an earlier setup** identifies a session created before a setup change.
 
 Open a session to inspect its conversation. **Main conversation** takes you back. You can rename, archive, restore, or delete delegated sessions from their menus.
 
