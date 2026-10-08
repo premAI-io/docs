@@ -2,8 +2,8 @@
   "title": "Agents",
   "icon": "bot",
   "root": true,
+  "pagesIndex": "index",
   "pages": [
-    "index",
     "agent-builder",
     "improve",
     "schedules",
