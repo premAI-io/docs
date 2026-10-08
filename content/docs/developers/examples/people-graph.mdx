@@ -1,0 +1,65 @@
+---
+title: Find people you know
+icon: users
+description: Build a contact map you can search, correct, and keep up to date.
+---
+
+You remember talking to someone at a company, but cannot remember who. A contact map can help you find that connection.
+
+An Agent can build one from your email and give you a page to search. This is a file it creates for you, separate from Fluso's own memory.
+
+## Build a useful first version
+
+Connect [Google Workspace](/integrations/gmail). Give the Agent **Read only** access if you only want it to read mail.
+
+Describe the job:
+
+> *"Help me find people I've spoken with. Build a searchable contact map from my email, grouped by company. Show where each detail came from. Leave anything you don't know blank."*
+
+Start with recent mail:
+
+> *"Use the last month first. Give me a page where I can search by name or company. Tell me what you've covered so far."*
+
+Open the page it returns. Search for someone you know and check their details against the source email.
+
+## Ask a question that matters to you
+
+> *"Who do I know at this company? Show our recent conversations so I can decide who to contact."*
+
+Or:
+
+> *"Which of these people are based in Berlin? Keep confirmed locations separate from guesses."*
+
+A person's employer does not prove where they live. Similar names do not prove two records are the same person.
+
+Correct the map in the same conversation. Ask **Manager** to save rules that should guide future research.
+
+## Add to it over time
+
+A large mailbox can take more than one run:
+
+> *"Add the previous month's mail next. Keep the contacts you've already found. Save your progress and tell me what's still left."*
+
+Ask for the underlying data as well as the page, so the Agent can improve the same map later.
+
+When the initial review is useful:
+
+> *"Every morning at 8 AM, add anything new since your last completed check. Keep the earlier contacts and give me a short note about what changed."*
+
+Check that the routine exists and uses the right timezone. A refresh mentioned in the instructions is not yet a scheduled task.
+
+<Accordion title="Add information from public profiles">
+  With a web-search connection, you can ask for a focused check:
+
+  > *"Look for public profiles for these five contacts. Match the name and company. If a match is uncertain, leave it for me to review."*
+
+  Names and search terms go to that service. Choose which contacts you want researched.
+
+  The Agent may use a separate session for this work. It still needs to check the findings before adding them to your map.
+</Accordion>
+
+<Accordion title="Recover after an incomplete run">
+  Ask it to read the saved progress before continuing. Open the latest files to see what they contain.
+
+  A failed request may still have saved useful work. Repeated attempts will not fix missing access or a fixed limit on that run.
+</Accordion>

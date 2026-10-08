@@ -1,0 +1,55 @@
+---
+title: Sharing
+sidebarTitle: Sharing
+icon: share-2
+description: Publish a revocable Agent snapshot and import an independent copy.
+---
+
+Sharing stores a public snapshot. It does not expose a live view of the owner's workspace. Owner routes require [authentication](/developers/api-ref/authentication). A public snapshot read does not.
+
+## Publish and revoke
+
+| Method and path | Behavior |
+| --- | --- |
+| `GET /v1/agents/{agentId}/share-options` | Available custom skills, knowledge, and custom connections |
+| `GET /v1/agents/{agentId}/share` | Current link record or `null` |
+| `POST /v1/agents/{agentId}/share` | Publish a snapshot |
+| `POST /v1/agent-shares/{shareId}/refresh` | Replace the snapshot at the same link |
+| `DELETE /v1/agent-shares/{shareId}` | Revoke the link |
+
+Publishing and refreshing accept a selection:
+
+```json
+{
+  "skills": [],
+  "knowledgeFiles": [],
+  "connectors": []
+}
+```
+
+Use IDs from share options for skills, knowledge names for `knowledgeFiles`, and server IDs for `connectors`. Instructions and portable settings are included even with empty selections. Selected skill folders and knowledge contents share limits of 20 MiB and 512 regular files. Symbolic links are rejected. Custom connection URLs with query parameters are excluded from share options.
+
+Review all selected contents and connection URLs before publishing. Stored authentication, conversations, routines, and project files are not bundled. See [Sharing and copies](/developers/guides/sharing) for the recipient experience.
+
+## Preview and import
+
+| Method and path | Behavior |
+| --- | --- |
+| `GET /v1/agent-templates` | Fluso starting-point snapshots |
+| `GET /v1/shared/agents/{shareId}` | Public setup, resource manifest, required filenames, and `publishedAt` |
+| `POST /v1/shared/agents/{shareId}/import` | Authenticated import into the recipient's workspace |
+
+```json
+{
+  "name": "My release reviewer",
+  "projectName": "Home",
+  "creationId": "11111111-1111-4111-8111-111111111111",
+  "publishedAt": "<exact value from the preview>"
+}
+```
+
+Reuse `creationId` to recover an uncertain import without creating another copy. A changed snapshot returns a conflict rather than silently importing something different from the preview.
+
+The recipient gets independent setup and selected resource copies. Imported custom skills receive distinct names. App credentials are never inherited. Connection setup may remain unfinished.
+
+A revoked link becomes unavailable. Unsupported older snapshots may require republication by their owner. Revocation does not delete copies already imported.

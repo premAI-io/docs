@@ -5,7 +5,7 @@ icon: folder-kanban
 description: Keep related chats, files, instructions, and memory together in one workspace.
 ---
 
-Projects give one body of work its own scope. A project keeps its chats, files, instructions, context, and working memory together, so work for one customer or product does not spill into another.
+Projects keep related chats, files, instructions, and working memory together. Automatic context follows the current project; tools can still access shared files elsewhere in your account.
 
 Use **Home** for general work. Create a separate project when a customer, product area, or deliverable needs its own files and history.
 
@@ -49,9 +49,9 @@ Project instructions guide ordinary project chats. Durable notes and decisions l
 
 <Note>
   Saved Agent threads use the Agent's own instructions instead of project
-  instructions or `context.md`. They can still use the configured project's
-  files and working-memory summaries. See [Project
-  context](/developers/project-context) for this boundary.
+  instructions or `context.md`. They can still use their conversation's project
+  files and working-memory summaries. See [Files and
+  context](/developers/guides/files) for this boundary.
 </Note>
 
 Use one project per scope that should stay separate. For example, keep Acme support work in an Acme project and the Q3 launch in a Q3 Launch project. Start a new chat inside the same project when the topic changes but the files and background should remain available.
@@ -59,6 +59,8 @@ Use one project per scope that should stay separate. For example, keep Acme supp
 ## Organize projects
 
 Use the project's sidebar actions menu to pin, archive, label, recolor, or change its icon. Use the menu on the Projects page to export or delete it. **Home** is the default workspace and cannot be deleted.
+
+Deleting a project removes its files, conversations, and attached routines. Saved Agents remain. If an Agent uses that deleted project, select another project in its setup to start a new main conversation; deleted history is not restored.
 
 If you already have useful context in ChatGPT, Claude, or another agent, use [Imports](/features/imports) to create projects and files from an export.
 

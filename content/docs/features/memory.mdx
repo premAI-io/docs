@@ -13,17 +13,17 @@ Durable memory follows a stricter rule than you might expect: it saves stable th
 
 <MemoryScopeDiagram />
 
-**Global preferences.** User-level things that should apply everywhere. Your timezone, the response style you have asked for, workflow choices, standing instructions like *"always show me drafts in plain text"*. These live in `preferences.md` in your workspace, where you can read them.
+**Global preferences.** User-level rules for ordinary chats across projects: response style, workflow choices, and standing instructions like *"always show me drafts in plain text"*. These live in `preferences.md` in your workspace, where you can read them. Saved Agents use their own instructions instead.
 
 **Project context.** Facts, decisions, conventions, and preferences that belong only to the project you are in. The Q3 roadmap decision. The naming convention you agreed with the team. The pricing approach for this client. Each project keeps its own `context.md`.
 
 **Project working memory.** An automatic, short-lived record of what the conversations in a project have been doing: the current state of each, open items, files touched. Fluso keeps it up to date on its own, so asking *"where did we leave off?"* in a new chat gets a real answer.
 
-The split matters because Fluso is careful about scope. Project material stays in the project. One client's notes do not surface inside another client's chat.
+Automatic recall uses the current project's material. This scopes context, not file access: tools can still work with shared files elsewhere in your account.
 
 ## How it loads
 
-With every message, Fluso pulls in three things as background context:
+Ordinary chats use three sources of background context:
 
 - Your global preferences
 - The current project's context
@@ -35,18 +35,18 @@ Memory is context for the conversation, not a script. Your current message still
   Saved Agent threads are the exception. They use the Agent's own definition
   instead of global preferences, project instructions, or `context.md`. They
   can still use project files and project working-memory summaries. See
-  [Threads and contexts](/developers/threads-and-contexts).
+  [Files and context](/developers/guides/files).
 </Note>
 
 ## How it updates
 
 Two paths. Both are conservative on purpose.
 
-**You ask explicitly.** Say *"remember this"*, *"forget this"*, *"add this to project context"*, or *"update my preference"* and Fluso edits `preferences.md` or the project's `context.md` directly. Clear intent only. A passing line like *"I like detailed answers"* is not treated as a memory write; that kind of inference goes through the other path.
+**You ask explicitly.** Say *"remember this"*, *"forget this"*, *"add this to project context"*, or *"update my preference"* and Fluso edits `preferences.md` or the project's `context.md` directly. A clearly stated preference or future-facing rule can also be saved without the words "remember this". One-off task details should stay with the task.
 
-**Background learning.** After each reply, a background pass updates the project's working memory. When something durable shows up — a stated preference, a clear correction, a convention you keep repeating, a decision — it also adds that to your preferences or the project's context, marked as auto-saved and deduplicated against what is already there. Anything that looks like a secret or credential is dropped rather than saved. If nothing durable came up, it writes nothing durable.
+**Background learning.** After each reply, a background pass updates the project's working memory. When something durable shows up — a stated preference, a clear correction, a convention you keep repeating, a decision — it also adds that to your preferences or the project's context, marked as auto-saved and deduplicated against what is already there. Common credential patterns are filtered, but this is not a guarantee that sensitive text can never be saved. Keep secrets out of memory files. If nothing durable came up, it writes nothing durable.
 
-The guardrail on explicit updates exists for a reason. Vague or accidental wording should not mutate the layer that follows you across every chat.
+Saved Agents use their own standing instructions. Refine that setup through the Manager or editor when a rule should persist for one Agent.
 
 ## What gets saved
 
@@ -60,7 +60,7 @@ The guardrail on explicit updates exists for a reason. Vague or accidental wordi
 - Greetings and small talk.
 - Temporary instructions for a single chat.
 - Guesses Fluso is not confident about.
-- Secrets, credentials, or anything that looks like one.
+- Text rejected by the credential filter. Do not rely on it as a complete secret detector.
 
 One-off task details stay out of the durable files too. They live in working memory while the work is fresh, then fall away instead of following you forever.
 

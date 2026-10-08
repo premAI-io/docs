@@ -1,14 +1,16 @@
 {
-  "title": "API ref",
+  "title": "For developers",
   "icon": "code-xml",
   "defaultOpen": false,
   "pages": [
-    "agents-and-versions",
+    "architecture",
     "authentication",
-    "files-and-projects",
-    "runs",
-    "schedules",
+    "agents-and-versions",
     "threads-and-messages",
+    "schedules",
+    "runs",
+    "files-and-projects",
+    "sharing",
     "usage"
   ]
 }

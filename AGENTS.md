@@ -10,10 +10,10 @@
 
 ## Information architecture
 
-The navigation keeps Home first, then sorts the top-level sections and the pages inside each section alphabetically:
+The navigation keeps Home first and sorts the top-level sections alphabetically. Agents follows the user journey. Other sections keep their existing order:
 
 - **Administration** - `/admin-panel`. Browser-admin access, dashboards, governance records, runtime controls, and network policy.
-- **Agents (Beta)** - `/developers/*`. Guides cover Agent setup, threads, context, projects, schedules, preferences, and webhooks. Architecture and the REST API reference live here too, with API pages under `/developers/api-ref/*`.
+- **Agents (Beta)** - `/developers/*`. Start with a familiar task, then improvement and scheduling. Keep Examples, More about Agents (`/developers/guides/*`), and For developers (`/developers/api-ref/*`) collapsed by default. Introduce features when they help the reader's current task. Keep prompts natural and explain terms before using them.
 - **App setup** - `/integrations/{github, gmail, google-calendar, slack}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
 - **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
 - **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.
@@ -42,7 +42,8 @@ Email, calendar, code, content, research are skills, not separate features. The 
 ## Terminology
 
 - **Fluso** — the product.
-- **Apps** / **MCP connections** — the connections to third-party apps. There is no separate connector system; "Plugins" is the sidebar item, and connections live under **Plugins → MCP**. Don't introduce "connector" in new copy except where the app itself still says "connector tools" (the approvals settings).
+- **Apps** / **MCP connections** — the connections to third-party apps. There is no separate connector system; connections live under **Plugins → MCP**. Use **Connectors** when referring to the Agent editor's capability picker.
+- **Agent** — saved setup and a continuing main conversation. **Manager** refines that one Agent; **sessions** are delegated conversations; **routines** are scheduled messages. Main conversations take saved setup changes on their next turn; existing delegated sessions retain their setup.
 - **Knowledge graph** — Fluso's persistent memory. Lowercase.
 - **Skills** — specialised capabilities that activate automatically. Built-in or custom (`SKILL.md`).
 - **Projects** — workspaces that scope context, files, and tasks.
@@ -69,6 +70,8 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 
 **Have opinions, vary rhythm.** Mix short and long sentences. Don't just describe; the writer's actual take should come through.
 
+Use the [ASD-STE100 writing skill](https://github.com/danyuchn/asd-ste100-skill/blob/master/SKILL.md) for Agents guides. Keep procedures to one action per sentence. Use short sentences, active voice, consistent terms, and explicit conditions. Preserve uncertainty and UI labels. These guidelines do not certify compliance with the official dictionary.
+
 ## Style preferences
 
 - Active voice, second person ("you").
@@ -83,7 +86,8 @@ The docs follow Wikipedia's "Signs of AI writing" guide. The bans below aren't s
 ## Content boundaries
 
 - Never invent feature behaviour. If a capability isn't documented in source materials, leave it out.
-- Always pair "Fluso can send X" with the approval safety note: drafts are shown for review.
+- When describing external sends, explain how to request and review a draft and choose **Ask me first**. Do not claim every write requires approval: saved tool rules, connection settings, and the chat's mode determine that behavior.
+- Verify Agent behavior against both current frontend and backend code. Do not restore removed Studio graphs, evaluations, version rollback, YAML transfer, webhook triggers, or thread-management toggles from historical release notes.
 - For product actions, point users to the macOS download at `https://fluso.ai/` and to support at `support@premai.io`. Don't link to `app.fluso.ai`. Fluso is a desktop app.
 
 ## Publishing release notes

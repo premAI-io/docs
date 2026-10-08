@@ -5,7 +5,7 @@ icon: calendar-clock
 description: Create, inspect, pause, and delete Agent schedules.
 ---
 
-A schedule belongs to an Agent and one of that Agent's existing threads. Supply exactly one timing field: a five-field `cron` expression or a future `at` timestamp with an offset. `timezone` must be an IANA time zone.
+The UI calls these records **routines**. A schedule belongs to an Agent and one of that Agent's existing threads. Supply exactly one timing field: a five-field `cron` expression or a future `at` timestamp with an offset. `timezone` must be an IANA time zone.
 
 See [Threads and messages](/developers/api-ref/threads-and-messages) for the target thread and [Runs](/developers/api-ref/runs) for execution state.
 
@@ -68,7 +68,7 @@ For a durable one-time schedule, replace `cron` with an offset-bearing `at` valu
 
 ```json title="One-time timing fields"
 {
-  "at": "2026-09-01T09:00:00+05:30",
+  "at": "2030-01-15T09:00:00+05:30",
   "timezone": "Asia/Kolkata"
 }
 ```
@@ -92,7 +92,7 @@ For a durable one-time schedule, replace `cron` with an offset-bearing `at` valu
 }
 ```
 
-Replaying the same ID and body while the schedule is live returns the existing schedule with `200`. Reusing the live ID with different fields returns a conflict. After a one-time schedule fires or a schedule is deleted, that ID returns `410` for 24 hours.
+Choose an `at` value in the future at submission time. Replaying the same ID and body while the schedule is live returns the existing schedule with `200`. Reusing the live ID with different fields returns a conflict. After a one-time schedule fires or a schedule is deleted, that ID returns `410` for 24 hours.
 
 ## Pause or edit a schedule
 
@@ -133,6 +133,14 @@ curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules/111111
 ```http title="Response"
 HTTP/1.1 204 No Content
 ```
+
+## Delivery behavior
+
+Each occurrence has a stable request ID and enters the target as `followUp`. Acceptance means queued or admitted, not completed. Another occurrence of the same recurring schedule waits while the prior request is queued, running, or held for approval.
+
+Temporary delivery failures retry with delays. 24 failed delivery attempts pause the schedule. Refused requests and invariant conflicts can pause it immediately. Usage limits defer delivery. Editing or pausing a schedule does not cancel a request already admitted.
+
+One-time schedules retire when accepted, even if the later Agent run fails. Deleting the target thread or Agent removes its schedules. See [Routines](/developers/schedules) for the user workflow and timezone controls.
 
 ## Next
 

@@ -1,0 +1,13 @@
+{
+  "title": "Examples",
+  "icon": "lightbulb",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "email",
+    "document-filing",
+    "people-graph",
+    "custom-skills",
+    "release-review"
+  ]
+}
