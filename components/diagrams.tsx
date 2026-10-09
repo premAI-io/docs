@@ -212,7 +212,7 @@ export function KnowledgeGraphDiagram() {
 const architectureServices = [
   {
     label: 'Fluso client',
-    detail: 'Desktop or remote',
+    detail: 'Desktop or mobile',
     x: 10,
     icon: MessageSquareText,
   },
