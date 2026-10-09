@@ -5,9 +5,9 @@ icon: folder-open
 description: See how an Agent's configured project affects files, working memory, and new threads.
 ---
 
-Every Agent is assigned to one project. New Agent threads start in that project and use its files and project working-memory summaries.
+Every Agent has a configured project. Its main conversation starts in that project and can use its files and working-memory summaries. Delegated sessions use their parent conversation's project.
 
-Changing the Agent's project affects new threads. Existing threads stay with the project and Agent definition they started with.
+Changing the configured project does not move an existing conversation or its files. The main conversation can adopt updated instructions on its next turn while keeping its original project. Existing delegated sessions keep both their project and saved configuration.
 
 ## Three project layers
 

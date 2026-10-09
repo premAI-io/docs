@@ -64,7 +64,7 @@ Private enterprise skills use two pieces:
 1. `SKILL.md` contains the routing description and operating instructions.
 2. An authenticated private MCP server keeps sensitive code and credentials, then exposes the operations the skill needs.
 
-The server must expose a publicly reachable HTTPS Streamable HTTP endpoint. "Private" here means access-controlled, not a `localhost` or private-network address. The workspace or organization network-egress policy, plus any provider policy applied to that origin, must allow it.
+The server must expose a publicly reachable HTTPS Streamable HTTP endpoint. "Private" here means access-controlled, not a `localhost` or private-network address. The deployment's network-egress rules, user grants, and provider policies must permit access to that origin.
 
 Access follows the server's authentication and the workspace's MCP tool policy. Each tool's **Allow**, **Ask**, or **Deny** rule controls how calls proceed. Installing the skill does not override server access. See [Apps & MCP](/features/mcp#tool-permissions) to connect the server and set its tool rules.
 

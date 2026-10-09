@@ -9,13 +9,13 @@ description: The questions that come up most often. What Fluso is, how it works,
 
 <AccordionGroup>
   <Accordion title="What exactly is Fluso?">
-    An AI assistant that connects to your apps — Gmail, Calendar, Slack, GitHub, and a hundred more — and helps you manage work through conversation. It reads your inbox, drafts replies, runs your calendar, creates documents, researches topics, writes code, and remembers everything along the way.
+    An AI assistant that connects to your apps — Gmail, Calendar, Slack, GitHub, and a hundred more — and helps you manage work through conversation. It reads your inbox, drafts replies, runs your calendar, creates documents, researches topics, writes code, and can recall saved preferences and project context.
   </Accordion>
   <Accordion title="Is it just another chatbot?">
-    No. A chatbot answers questions. Fluso performs actions: sending mail, scheduling, opening PRs, generating files. It works across the apps where your work already happens, not just inside a chat window.
+    No. A chatbot answers questions. Fluso performs actions: sending mail, scheduling, opening PRs, generating files. External writes follow your [approval settings](/features/approvals); use **Ask me first** and Ask rules to review them before they run.
   </Accordion>
   <Accordion title="How is it different from ChatGPT or Claude?">
-    Those are general-purpose assistants in a chat window. Fluso connects directly to your tools, builds a private knowledge graph from your work, takes action across apps, and remembers what's happened. It's an executive assistant, not a conversational AI.
+    Fluso focuses on connected-app work, project files, tasks, and persistent workspace context. Compare the workflows and permissions you need; other assistants can also offer tools and memory.
   </Accordion>
   <Accordion title="Who is it for?">
     Anyone who loses too much time to email, meetings, research, content creation, or context-switching. Founders, executives, developers, PMs, researchers, and teams all use it.
@@ -55,7 +55,7 @@ description: The questions that come up most often. What Fluso is, how it works,
     It asks clarifying questions: *"Which project?"* or *"What format?"* Answer for a better result.
   </Accordion>
   <Accordion title="What platforms does it run on?">
-    Fluso runs on macOS today. Download it from [fluso.ai](https://fluso.ai/). Windows and iOS are coming later.
+    Fluso is available for macOS and Windows from [fluso.ai](https://fluso.ai/), and on the [iOS App Store](https://apps.apple.com/in/app/fluso/id6780937477). Some setup controls are desktop-only.
   </Accordion>
   <Accordion title="Does it work in other languages?">
     Primarily English, but it understands and responds in many. Quality varies by language and task.
@@ -76,16 +76,16 @@ description: The questions that come up most often. What Fluso is, how it works,
     Deleting your account deletes your dedicated sandbox and all associated data, including your files, conversations, connected-account credentials, and other records held by Fluso. We do not retain your data after account deletion.
   </Accordion>
   <Accordion title="Can it see all my emails?">
-    It reads emails when you ask it to (e.g., *"summarise my inbox"*) and as part of auto-task extraction. It does not keep a separate mailbox copy. See [Legal](/resources/legal) for Fluso's privacy policy.
+    It reads email within the permissions you grant, on request and during enabled background task extraction. Retrieved content can become part of conversation history, tasks, or indexed context. See [Legal](/resources/legal) for Fluso's privacy policy.
   </Accordion>
   <Accordion title="Does it send mail without my permission?">
-    Gmail send tools follow your effective **Allow**, **Ask**, or **Deny** policy. Use **Ask** to review each draft before it sends; **Allow** or **Don't ask permission** can continue without a per-action prompt.
+    Gmail send tools follow your effective **Allow**, **Ask**, or **Deny** policy. Use **Ask me first** with an **Ask** rule to review each draft before it sends; **Allow** or **Allow everything** can continue without a per-action prompt.
   </Accordion>
   <Accordion title="Where is my data stored?">
     In your isolated workspace on encrypted infrastructure. Files, conversations, tasks, and the knowledge graph are private to you.
   </Accordion>
   <Accordion title="Can I delete my data?">
-    Yes. Individual entries, connected apps' data (tokens destroyed), or the entire account. Deletion is permanent.
+    You can remove individual workspace files and disconnect apps, or request account deletion through support. Deletion is permanent.
   </Accordion>
   <Accordion title="Does it train on my data?">
     No. Your private data is never used to train AI models.
@@ -101,16 +101,16 @@ See [Legal](/resources/legal) for Fluso's privacy policy.
 
 <AccordionGroup>
   <Accordion title="Is there a free version?">
-    Yes. Free includes full chat, 3 connected apps, 1 project, 100 messages a month, and the basic skills. Enough to decide whether it works for you.
+    Yes. The free plan is called **Basic** in the app. It includes chat and workspace tools with a smaller usage allowance. Limits use six-hour and weekly windows, rather than a fixed monthly message count. See [Pricing](/resources/pricing).
   </Accordion>
-  <Accordion title="Can I try Pro before paying?">
-    Yes. Fourteen days, no card.
+  <Accordion title="Can I try paid features before subscribing?">
+    New accounts receive 30 days of Sponsored Confidential access without a paid subscription. That grant is separate from any trial offered at checkout. Check **Settings → Plans** for your effective plan and expiry; confidential inference still needs to be enabled in Settings.
   </Accordion>
   <Accordion title="What happens at Free limits?">
-    You're notified when you're getting close. Upgrade to continue. Your data is preserved.
+    If either usage window is exhausted, Fluso stops new runs and shows the reset time. Wait for that window to reset or choose a higher plan. Reaching a usage limit does not delete your work.
   </Accordion>
   <Accordion title="Cancel anytime?">
-    Yes. Pro access stays until the end of the billing period, then reverts to Free.
+    You can cancel from your account billing controls. Paid access continues until the end of the paid period. A separate sponsorship keeps its own expiry; otherwise the account returns to Basic.
   </Accordion>
 </AccordionGroup>
 
@@ -123,13 +123,13 @@ Plan details on [Pricing](/resources/pricing).
     Specialised capabilities: creating PDFs, generating images, processing meetings, deep research. They activate when you ask for something they can do.
   </Accordion>
   <Accordion title="Do I install them?">
-    No. Fluso picks the right skill based on the request.
+    Built-in skills are available automatically. You can install marketplace skills or create your own from **Plugins → Skills**. Fluso selects from the skills available to your account when a request matches.
   </Accordion>
   <Accordion title="Can I build my own?">
     Yes. Open **Plugins → Skills**, click **Add skill** at the top right, and pick **Build with Fluso**. The skill-creator skill takes it from there in chat: it asks what workflow the skill should handle, what inputs it takes, what shape the output should have, and which tools or apps are involved, then writes the skill and adds it to **My Skills**. See [Skills](/features/skills#building-your-own) for the full flow.
   </Accordion>
-  <Accordion title="Free vs Pro skills?">
-    Free includes the document-shaped ones: PDFs, Word, decks, spreadsheets. Pro adds image generation, deep research with citations, meeting intelligence, video summaries.
+  <Accordion title="Does the plan change which skills I can use?">
+    The current skill catalog is shared across plans; usage limits still apply. Skills can require connected apps or other tools. Image generation is unavailable while confidential mode is enabled. See [Skills](/features/skills).
   </Accordion>
 </AccordionGroup>
 
@@ -140,12 +140,12 @@ Plan details on [Pricing](/resources/pricing).
     Check Google Workspace is connected (**Plugins**). Try reconnecting from the row's menu. If the issue persists, you may have hit a Gmail API rate limit. Wait a few minutes.
   </Accordion>
   <Accordion title="The response seems off">
-    Start a new thread (the **+** button) if the conversation has drifted. *"Forget the context so far and start fresh on this topic"* also works. Being more specific in the request usually helps.
+    For an ordinary chat, start a new conversation with **New chat** when the topic has changed. Asking it to ignore earlier messages does not delete that history. Saved Agents keep one main conversation; see [Threads and contexts](/developers/threads-and-contexts) for separate testing or delegated work.
   </Accordion>
   <Accordion title="A connected app says it isn't connected">
     Refresh the page or reconnect. OAuth tokens occasionally expire. **Plugins** → row menu → **Reconnect**.
   </Accordion>
   <Accordion title="How do I contact support?">
-    [support@premai.io](mailto:support@premai.io). Pro gets priority email. Team gets priority chat. Enterprise gets dedicated support.
+    [support@premai.io](mailto:support@premai.io). For support commitments in a custom deployment, check your Enterprise agreement.
   </Accordion>
 </AccordionGroup>

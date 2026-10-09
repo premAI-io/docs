@@ -21,7 +21,7 @@ A few patterns worth practising.
 
 **Queue while Fluso works.** Press Enter during a run and the message waits in the editable follow-up queue. For a correction that cannot wait, use **Send now** on its queue row to steer the live run. The full set of controls is in [While Fluso is working](/features/chat#while-fluso-is-working).
 
-**Reference earlier work.** Threads remember everything. *"Reply to the one from Legal"* makes sense after Fluso has summarised your inbox. *"Use the same tone as my last email to the team"* works because Fluso has the previous draft in context.
+**Reference earlier work.** Threads keep their conversation history, while long model contexts may be summarized. *"Reply to the one from Legal"* makes sense after Fluso has summarised your inbox. *"Use the same tone as my last email to the team"* works because Fluso has the previous draft in context.
 
 **Set the audience and the tone.** "For technical buyers" produces different writing from "for board members" produces different writing from "for a customer success follow-up". The default audience is generic. If you tell it the audience, it writes for them.
 
@@ -29,7 +29,7 @@ A few patterns worth practising.
 
 [Projects](/features/projects) are folders for context. Most people create one and forget. The better habit:
 
-A project per major area of work. Acme Corp, Q3 Launch, Board Reporting, Personal. When you're inside a project, Fluso scopes its memory and search to that project's content. Asking "what's the status?" inside the Acme project gets the Acme answer; same prompt outside any project gets a generic everything-bag.
+A project per major area of work. Acme Corp, Q3 Launch, Board Reporting, Personal. When you're inside a project, Fluso scopes its memory and search to that project's content. Asking "what's the status?" inside the Acme project gets the Acme answer; use **Home** for general work. A Home chat does not automatically receive every project's memory.
 
 Add stable project context when the background is non-obvious. The simplest version:
 
@@ -108,7 +108,7 @@ The pattern: name the inputs, name the output, let Fluso connect them.
 
 ## Approval discipline
 
-Approval follows the effective tool and chat policy. With **Ask**, a read or write pauses on an approval card. A tool set to **Allow**, or a chat using **Don't ask permission**, can continue without a per-action prompt; **Deny** always blocks it. Keep external-facing write tools on **Ask** when you want to review each draft.
+Approval follows the effective tool and chat policy. With **Ask me first** and an **Ask** tool rule, a read or write pauses on an approval card. A tool set to **Allow**, or a chat using **Allow everything**, can continue without a per-action prompt; **Deny** always blocks it. Use **Ask me first** and keep external-facing write tools on **Ask** when you want to review each draft.
 
 The instinct on day one is to read every draft carefully. By day twenty, you will be tempted to wave things through. Don't.
 
@@ -122,21 +122,19 @@ The instinct on day one is to read every draft carefully. By day twenty, you wil
 
 ## For teams
 
-Team plans add shared context. The patterns that matter:
+Projects and memory belong to the signed-in account. A standard plan does not create a shared project or shared knowledge graph for colleagues.
 
-**Shared projects** for cross-team work. Both you and your colleague see the same memory, the same files, the same task list, scoped to that project. The Acme project becomes a real shared brain instead of two separate ones.
+Share a reviewed conversation or file link, export project files, or share an Agent setup for someone else to import. These are separate copies or published snapshots, not collaborative access to your live workspace. See [Open architecture](/features/open-architecture).
 
-**Shared knowledge graph** for the team. Decisions made in any team member's meetings are visible to everyone (within the shared project). Useful for executive teams; less useful for projects with strict need-to-know.
-
-**Admin visibility, not content access.** The current [Admin panel](/admin-panel) covers identity and access records, recorded usage, runtime status, and network policy. Connected-app inventory, seat controls, and a complete organization-wide audit require their owning Enterprise integrations. The admin UI does not expose messages, files, or knowledge graphs.
+For organization access, deployment boundaries, or shared-work requirements, [contact the Fluso team](mailto:sales@premai.io) to scope the setup. [Fluso Admin](/admin-panel) gives authorized operators usage and runtime controls without exposing workspace content.
 
 ## Things people miss
 
 A short list of features that are easy to overlook.
 
-The slash commands inside chat: `/status` shows what Fluso is doing right now (useful when something's slow), `/schedules` lists pending scheduled actions, `/abort` stops the current run.
+In desktop chat, use **Stop** to stop a run.
 
-Saying *"new thread"* starts a fresh context. Useful when the conversation has drifted but you don't want to reach for the mouse.
+Use **New chat** when the conversation has drifted and you want a fresh thread.
 
 You can attach files to messages. PDFs, images, CSVs, audio. *"Summarise this"*, *"what does this chart show?"*, *"make a deck from this data"*. The file becomes part of the prompt.
 

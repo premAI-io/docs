@@ -60,9 +60,9 @@ Follow-ups:
 
 ## How permissions actually behave
 
-Reading happens when you ask for it (*"summarise my inbox"*) and continuously in the background for auto-task extraction. Messages are processed for the response and not stored beyond what's referenced in your knowledge graph and tasks.
+Reading happens when you ask for it (*"summarise my inbox"*) and during enabled background task extraction. Retrieved messages can be retained in conversation history, tasks, and indexed context. Disconnecting an app removes its access; it does not erase content already saved in Fluso.
 
-Keep Gmail send tools on **Ask** when you want every draft shown before it sends. **Allow** or **Don't ask permission** can continue without a per-action prompt; **Deny** blocks the send. There is no separate batch-send mode that overrides the effective policy.
+Use **Ask me first** and keep Gmail send tools on **Ask** when you want every draft shown before it sends. **Allow** or **Allow everything** can continue without a per-action prompt; **Deny** blocks the send. There is no separate batch-send mode that overrides the effective policy.
 
 Header metadata is used for categorisation and handled under the same subprocessor controls as other requested email content.
 
@@ -81,7 +81,7 @@ You can also revoke directly from [Google Account → Security → Third-party a
     OAuth tokens occasionally expire. In **Plugins**, open the row's three-dot menu and click **Reconnect**.
   </Accordion>
   <Accordion title="Auto-tasks haven't appeared yet">
-    Auto-task extraction runs periodically and learns the shape of your inbox over a couple of days. You can also force a sweep with *"Scan my inbox for tasks."*
+    Background extraction depends on the connection, runtime availability, and deployment settings. It is disabled in confidential mode. Check the Tasks sync activity for errors. You can also ask *"Scan my inbox for tasks"* to request work in the current chat.
   </Accordion>
 
 ## See also

@@ -2,141 +2,81 @@
 title: Pricing
 sidebarTitle: Pricing
 icon: credit-card
-description: Compare plan limits, storage, automation, and workspace controls.
+description: Current plans, usage windows, billing, and confidential access.
 ---
 
-Four plans. Free is enough to try Fluso on real work. Plus is for daily use. Pro adds heavier automation and confidential computing. Enterprise is the path for custom deployments, data residency, and server-integrated identity or audit work.
+Fluso's current personal plans are Basic, Plus, Pro, and Confidential. Basic is the free plan. Open **Settings → Plans** to see your effective access, current usage, and the offers available to your account.
 
-Fluso uses only open-source models across all features, including Agent Studio. Your data never trains shared models. You get roughly 3× the tokens of equivalent closed-source assistants on the same task.
+Fluso uses only open-source models across all features. Your data is not used to train shared models.
 
 ## Plans
 
-<CardGroup cols={2}>
-  <Card title="Free" icon="sparkles">
-    **Free forever**
+| Plan | Monthly price | Usage allowance | Confidential mode access |
+|---|---|---|---|
+| Basic | Free | For light, occasional use | No |
+| Plus | $19 | Higher than Basic | No |
+| Pro | $99 | Higher than Plus | No |
+| Confidential | $119 | Higher than Pro | Yes, enable it in Settings |
+| Enterprise | Custom | Agreed for the deployment | Agreed for the deployment |
 
-    Enough to try Fluso on real work.
-    - Full workspace access
-    - Core model
-    - Limited apps
-    - Dedicated sandbox
-    - 1 GB storage
-    - Automated obligation detection runs once
-    - Automated task creation runs once
-    - European hosting
-  </Card>
-  <Card title="Plus" icon="zap">
-    **$19/user/month**
+Prices above are the current monthly personal-plan prices. Checkout shows the applicable trial, tax, billing date, and total before you subscribe.
 
-    For Fluso as your daily assistant. Most people start here.
-    - Everything in Free
-    - Always-on workspace. Never sleeps.
-    - Significantly more tokens
-    - All apps
-    - Artifact generation
-    - Skills Marketplace
-    - Obligation detection every 12 hours
-    - Task creation every 12 hours
-    - 10 GB storage
-  </Card>
-  <Card title="Pro" icon="rocket">
-    **$99/user/month**
+Basic runtimes can sleep when idle and resume when you return. Paid plans keep the runtime available for ongoing work, subject to maintenance and service availability.
 
-    For heavy automation and sensitive work.
-    - Everything in Plus
-    - 20× the tokens
-    - Constant obligation detection
-    - Constant task creation
-    - Confidential computing
-    - Unlimited meeting notes
-    - Priority support
-    - 10 GB storage
-  </Card>
-  <Card title="Enterprise" icon="building-2">
-    **Custom pricing**
+The current app does not divide its skill catalog into separate Free and Pro catalogs. Skills, files, connected apps, and background work still depend on their own permissions, configuration, and available usage. Image generation and background task extraction are disabled while confidential mode is enabled.
 
-    For organisations with custom needs.
-    - Everything in Pro
-    - Server-integrated identity (implementation scoped)
-    - Dedicated account executive
-    - Dedicated support
-    - Custom obligation detection
-    - Custom data retention
-    - Server-backed audit logging (implementation scoped)
-    - Custom skills
-  </Card>
-</CardGroup>
+## Usage limits
+
+Usage is measured in **six-hour** and **weekly** windows. If either window is exhausted, Fluso blocks new runs and shows when that window resets. You can wait for the reset or choose a plan with a higher allowance.
+
+These are usage allowances, not a fixed number of monthly messages or a guaranteed number of tokens per task. Long conversations, model output, and multi-step work use different amounts. The app shows the remaining percentage and reset time for each window.
+
+Reaching a usage limit does not delete your files or conversations. Storage has a separate limit; an upload or write can fail even when inference usage remains.
+
+## Sponsored Confidential
+
+An active **Sponsored Confidential** grant provides Confidential access until its displayed expiry. New accounts receive an initial 30-day grant. A sponsorship is an entitlement from the Fluso team, separate from a paid subscription or a checkout trial.
 
 <Note>
-  **Enterprise.** Prem has attained SOC 2 Type II. [Review the current security posture.](https://www.premai.io/security-at-prem)
+  **Pro does not include confidential mode.** A Pro subscriber can have a separate Sponsored Confidential grant. When that grant expires, Pro alone does not keep confidential access. Sponsorship does not cancel or pause an existing paid subscription.
 </Note>
 
-## What's in every plan
+Clerk's billing view describes your paid subscription. Fluso's **Settings → Plans** also accounts for sponsored access, so the two labels can differ. Check the sponsorship expiry as well as the billing renewal date.
 
-A few things hold regardless of plan.
+## Confidential mode
 
-- **Open-source models only.** All Fluso features, including Agent Studio, use open-source models.
-- **European hosting.** GDPR-aligned by default.
-- **3× more tokens** than equivalent closed-source assistants on a like-for-like task.
-- **Your data is yours.** Nothing trains shared models.
+Having access does not turn encrypted inference on automatically. With the **Confidential** plan or active **Sponsored Confidential** access, enable **Settings → Encrypted Inference**.
 
-## What changes between plans
+Confidential mode processes model inference inside a hardware-isolated enclave. The Fluso runtime is separate from encrypted inference. See [Confidential mode](/features/confidential) for activation, limitations, and the trust boundary.
 
-| | Free | Plus | Pro | Enterprise |
-|---|---|---|---|---|
-| Price | $0 | $19/user/mo | $99/user/mo | Custom |
-| Tokens | Core | Significantly more | 20× | Custom |
-| Apps | Limited | All | All | All |
-| Obligation detection | Once | Every 12 hours | Constant | Custom |
-| Task creation | Once | Every 12 hours | Constant | Custom |
-| Storage | 1 GB | 10 GB | 10 GB | Custom |
-| Workspace | Sleeps | Always-on | Always-on | Always-on |
-| Skills Marketplace | — | ✅ | ✅ | ✅ |
-| Artifact generation | — | ✅ | ✅ | ✅ |
-| Confidential computing | — | — | ✅ | ✅ |
-| Unlimited meeting notes | — | — | ✅ | ✅ |
-| Priority support | — | — | ✅ | Dedicated |
-| SSO | — | — | — | Scoped integration |
-| Audit logs | — | — | — | Scoped integration |
-| Custom skills | — | — | — | ✅ |
-| Custom data retention | — | — | — | ✅ |
+## Enterprise
 
-Obligation detection scans your connected apps for things you have committed to: replies expected, deadlines, action items. Task creation is the same pipeline writing them into your list. See [Tasks](/features/tasks) for what happens after.
+Enterprise deployments are scoped with the Fluso team. Agree on deployment ownership, residency, retention, identity integrations, support, and any additional access requirements before treating them as available.
+
+Prem has attained SOC 2 Type II. See the [current security posture](https://www.premai.io/security-at-prem) and [deployment models](/deployment-models).
+
+You can create your own workspace skills from **Plugins → Skills**. Enterprise implementation work is a separate engagement with the team; see [Skills](/features/skills).
 
 ## Common questions
 
 <AccordionGroup>
-  <Accordion title="What does the 3× tokens claim mean?">
-    Compared against equivalent closed-source assistants on a like-for-like task. The full methodology lives on the [pricing page](https://fluso.ai/pricing.html).
-  </Accordion>
-  <Accordion title="What models does Fluso use?">
-    Fluso uses only open-source models across all features, including Agent Studio.
-  </Accordion>
   <Accordion title="Where is my data stored?">
-    Fluso Cloud stores workspace data in the EU by default. Model inference and connected-App processing have their own provider boundaries. Enterprise customers can scope alternative data residency. Your data is never used to train shared models. See [Legal](/resources/legal) for Fluso's privacy policy.
+    Fluso Cloud stores workspace data in the EU by default. Model inference and connected apps have their own processing boundaries. Enterprise deployments can scope alternative residency. See [Legal](/resources/legal).
   </Accordion>
-  <Accordion title="Plus vs Pro: when is Pro worth it?">
-    Plus is the daily-driver tier: all apps, the Skills Marketplace, artifact generation, obligation and task automation every 12 hours. Pro raises tokens 20×, runs that automation constantly, lifts the meeting-notes cap, and adds confidential computing. Move to Pro when the 12-hour cadence or the Plus token allowance starts being the bottleneck.
+  <Accordion title="When is Pro useful?">
+    Pro gives intensive work more usage headroom than Plus. It does not add confidential mode. Choose Confidential if you need that access after a sponsorship ends.
   </Accordion>
-  <Accordion title="Can I switch plans anytime?">
-    Yes. Upgrade or downgrade from your account settings. Upgrading is immediate. Downgrading keeps your data but premium features come off at the next billing cycle.
+  <Accordion title="Can I switch or cancel?">
+    Use your account's billing controls. Review the effective date and charge shown before confirming. Paid access continues through the paid period after cancellation; a separate sponsorship keeps its own expiry.
   </Accordion>
-  <Accordion title="What is confidential computing?">
-    On Pro and Enterprise, Fluso runs your workload in a hardware-isolated environment so the model provider cannot read it. Useful when the work itself is sensitive. The technical details are on the [pricing page](https://fluso.ai/pricing.html).
+  <Accordion title="Does Pro guarantee constant background task creation?">
+    No. Background extraction depends on connected apps, deployment settings, runtime availability, and service health. It is disabled in confidential mode. Check [Tasks](/features/tasks) for sync activity and explicit task requests.
   </Accordion>
-  <Accordion title="Enterprise security?">
-    Custom data retention is part of the Enterprise scope. Governance records persist the configured identity and access history, but Microsoft Entra metadata does not verify a directory or provide SSO by itself. Prem has attained SOC 2 Type II. [Review the current security posture.](https://www.premai.io/security-at-prem)
-  </Accordion>
-  <Accordion title="Custom skills?">
-    Custom skills are part of the Enterprise tier and are built with the Fluso team. For workspace-level skill creation on Plus and Pro, see [Skills](/features/skills).
-  </Accordion>
-  <Accordion title="Startup or nonprofit discounts?">
-    Yes. [Email us](mailto:sales@premai.io) and tell us about your organisation.
+  <Accordion title="Can I get a custom setup or discount?">
+    [Email the team](mailto:sales@premai.io) with your requirements and organization details.
   </Accordion>
 </AccordionGroup>
 
 ## Get started
 
-Free forever, no card. [Download Fluso for Mac.](https://fluso.ai/)
-
-For a custom setup, [get in touch.](mailto:sales@premai.io)
+[Download Fluso](https://fluso.ai/). For account or billing questions, contact [support@premai.io](mailto:support@premai.io).

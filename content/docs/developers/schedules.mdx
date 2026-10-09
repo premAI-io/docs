@@ -7,9 +7,9 @@ description: Wake an existing Agent thread with a saved message once or on a rec
 
 A schedule saves a future message for one existing Agent thread. When it becomes due, Fluso sends that message to the same thread as a separate follow-up turn.
 
-A schedule does not create a new Agent or a new conversation. It wakes the thread with its saved Agent definition, history, and project scope.
+A schedule does not create a new Agent or a new conversation. It wakes the thread with its history and project scope. The main conversation uses the current Agent configuration; a delegated session keeps the configuration it started with.
 
-To create or manage schedules from an Agent chat, enable thread management for that Agent.
+Open the Agent's **Routines** section to review its schedules, or ask the Agent to manage them in chat.
 
 ## One-time and recurring schedules
 
@@ -38,4 +38,4 @@ If a recurring turn is still queued, running, or waiting for approval, Fluso doe
 
 ## Next
 
-Use [Schedules](/developers/api-ref/schedules) for the REST endpoints, [Webhooks](/developers/webhooks) for event-driven turns, and [Runs](/developers/api-ref/runs) to inspect each accepted turn.
+Use [Schedules](/developers/api-ref/schedules) for the REST endpoints, [Webhooks](/developers/webhooks) for the current event-integration options, and [Runs](/developers/api-ref/runs) to inspect each accepted turn.

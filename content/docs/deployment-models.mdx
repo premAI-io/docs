@@ -50,11 +50,11 @@ Agree on these boundaries before treating the design as approved:
 
 ## Operational telemetry
 
-AWS deployments send service logs to CloudWatch and define CloudWatch alarms. Fluso's knowledge service emits structured logs and can export traces and metrics through OpenTelemetry (OTLP). The current AWS collector routes traces to X-Ray and metrics to CloudWatch; Prometheus scraping is optional.
+Telemetry depends on the deployed services and collector configuration. AWS deployments can use CloudWatch for logs and alarms. Services may also support OpenTelemetry collectors; agree on enabled exporters and destinations for each deployment.
 
 Traces can include prompt and response text. For a dedicated or on-premises deployment, agree which signals are captured, where they are stored, how long they are retained, and which customer-owned collectors are supported.
 
-[Fluso Admin](/admin-panel) shows the product records it receives, including runtime health, recorded cost and token usage, and governance events. It does not replace infrastructure monitoring or promise export of every operational signal.
+[Fluso Admin](/admin-panel) shows the product records it receives, including runtime health, recorded model usage and costs, and network-egress events. It does not replace infrastructure monitoring or promise export of every operational signal.
 
 ## Choose a model
 

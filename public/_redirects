@@ -4,3 +4,6 @@
 /resources/security/ /resources/legal 301
 /llms.mdx/docs/resources/privacy/content.md /llms.mdx/docs/resources/legal/content.md 301
 /llms.mdx/docs/resources/security/content.md /llms.mdx/docs/resources/legal/content.md 301
+/remote/telegram /features/chat 301
+/remote/telegram/ /features/chat 301
+/llms.mdx/docs/remote/telegram/content.md /llms.mdx/docs/features/chat/content.md 301
