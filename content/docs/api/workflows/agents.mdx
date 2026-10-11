@@ -1,0 +1,93 @@
+---
+title: Agents and configuration
+sidebarTitle: Agents and configuration
+icon: bot
+description: Create a reusable Agent, choose its conversation, and update its instructions safely.
+---
+
+An Agent adds saved instructions and capabilities to a conversation. Start with [API access](/api/first-request) for credentials and your workspace's complete endpoint reference.
+
+## Create an Agent
+
+Send `POST /v1/agents` with a saved `Idempotency-Key` and a body such as:
+
+```json
+{
+  "name": "Meeting assistant",
+  "instructions": "Turn my notes into a short meeting brief. List decisions needed and questions still open."
+}
+```
+
+Keep the returned `agent_id`. To use the Agent, send `POST /v1/threads` with that ID and an `input` message. To change its setup through conversation, also set `purpose: "manager"`.
+
+Opening the same Agent and purpose returns its existing conversation. Two callers share that conversation and its queue. For independent ordinary chats, omit `agent_id`.
+
+## Read the current configuration
+
+`GET /v1/agents/{agent_id}` returns the Agent and its `current_config_id`. Keep that ID before editing.
+
+## Publish an update
+
+Send only the changed fields to `PATCH /v1/agents/{agent_id}`, together with the ID you read:
+
+```json
+{
+  "base_config_id": "CURRENT_CONFIG_ID",
+  "instructions": "Turn my notes into a short meeting brief. Start with the decisions I need to make."
+}
+```
+
+An old `base_config_id` returns 409 instead of overwriting another edit. Read the latest configuration, review the difference, then retry your intended change.
+
+The main conversation uses saved changes on its next turn. Existing work sessions retain their configuration binding. `run.execution` records the configuration, provider, model, and reasoning effort used when execution starts.
+
+## Select capabilities and knowledge
+
+Use skill names from [skill inventory](/api/workflows/workspace#choose-skills-for-an-agent) and connection IDs from [connection inventory](/api/workflows/connections).
+
+For updates, omitted `skills` or `connectors` remain unchanged. `null` removes the selection restriction. An empty list or map explicitly selects none. A connector's `allow` policy still respects account consent.
+
+To add knowledge, upload a file or copy a workspace file through the knowledge endpoints. Save the returned reference in `knowledge_files` with the current `base_config_id`. Storage alone does not attach it to the Agent.
+
+Knowledge is a copy. Editing the original workspace file does not change that copy. Each Agent accepts up to 25 knowledge files, with a 20 MiB limit per file. Send `knowledge_files: []` to remove all selected knowledge.
+
+<Accordion title="Reasoning effort and conversation boundaries">
+  Supported effort values are `off`, `minimal`, `low`, `medium`, `high`, and `xhigh`. An input's explicit effort overrides the Agent default. The runtime chooses the nearest supported effort, preferring a higher level before a lower one.
+
+  Steering without an effort preserves the active turn's setting. An explicit change takes effect at the next execution attempt. It does not restart an in-flight model call.
+
+  Public clients can open main and manager conversations. They cannot create Agent work sessions directly. For independent ordinary conversations, omit `agent_id`.
+
+  All conversations share workspace files. Use distinct output paths for concurrent jobs that must not overwrite each other.
+</Accordion>
+
+## Copies and sharing
+
+Duplication creates an independent Agent. Keep the same idempotency key when retrying duplication. The retry returns the original copy.
+
+Public sharing is Cloud-only. A shared Agent snapshot excludes credentials, conversations, and schedules. After importing, inspect `setup_requirements` and complete setup in its manager conversation. The recipient supplies credentials and consent.
+
+## Delete an Agent
+
+`DELETE /v1/agents/{agent_id}` deletes the Agent and its owned conversations and revokes its shared Agent link. Save the results you need first.
+
+For exact fields and sharing operations, use the [workspace API reference](/api#choose-your-workspace).
+
+<Accordion title="Agent endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/agents` | Search or list Agents. Use numbered pages or `all=true`. |
+  | `POST /v1/agents` | Create saved setup without starting a turn. |
+  | `GET /v1/agents/{agent_id}` | Read setup and `current_config_id`. |
+  | `PATCH /v1/agents/{agent_id}` | Save changes with `base_config_id`. |
+  | `DELETE /v1/agents/{agent_id}` | Delete setup and conversations, retire schedules, and revoke its Agent link. |
+  | `POST /v1/agents/{agent_id}/avatar` | Save appearance. `avatar: null` resets it. |
+  | `POST /v1/agents/{agent_id}/star` | Set `starred` to true or false. |
+  | `POST /v1/agents/{agent_id}/duplicate` | Copy setup and knowledge. Use an idempotency key for retries. |
+  | `POST /v1/agents/{agent_id}/knowledge-files` | Store multipart `file` and return its reference. |
+  | `POST /v1/agents/{agent_id}/knowledge-files/from-workspace` | Copy `path` into knowledge and return its reference. |
+
+  Appearance and starring do not change instructions or configuration bindings. Duplication excludes conversations, schedules, and public links.
+
+  Creation and duplication receipts remain with the saved Agent. Their keys do not use the input receipt's 24-hour window. Older `creation_id` is accepted for creation. Do not supply conflicting identifiers.
+</Accordion>

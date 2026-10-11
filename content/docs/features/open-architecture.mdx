@@ -22,7 +22,7 @@ Different exports serve different purposes. A project ZIP is a file backup; a sh
 | **Audit logs** | In Fluso Admin, filter **Audit log**, then select **Export _N_ rows** | CSV containing the currently filtered rows from the latest 100 recorded identity and access events |
 | **Usage records** | In Fluso Admin, open **Observability → Export CSV** | CSV of the recorded daily gateway cost and token totals shown in the 14-day view |
 
-Project ZIPs skip dotted runtime entries and symbolic links. They do not serve as a complete conversation archive. Use the [Threads and messages API](/developers/api-ref/threads-and-messages#read-message-history) when you need persisted chat records in a system you control.
+Project ZIPs skip dotted runtime entries and symbolic links. They do not serve as a complete conversation archive. Use the [Threads and messages API](/api/workflows/conversations#read-message-history) when you need persisted chat records in a system you control.
 
 ## Skills stay readable
 
@@ -52,4 +52,4 @@ These exports are independent snapshots. Later Fluso changes do not silently rew
 
 ## APIs for continuous access
 
-Use [API access](/developers/api-ref/authentication) when a one-time download is not enough. The account API covers Agents, conversations, files, schedules, runs, and usage on Cloud and [daemon workspaces](/workspaces). Authenticate with a Cloud developer token or a paired daemon token. Store only the data your integration needs.
+Use [API access](/api/first-request) when a one-time download is not enough. The account API covers Agents, conversations, files, schedules, runs, and usage on Cloud and [daemon workspaces](/workspaces). Authenticate with a Cloud developer token or a paired daemon token. Store only the data your integration needs.

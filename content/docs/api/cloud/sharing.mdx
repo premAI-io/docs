@@ -1,0 +1,101 @@
+---
+title: Sharing
+sidebarTitle: Sharing
+icon: share-2
+description: Share an Agent, conversation, or file, and understand what a public link exposes.
+---
+
+Public sharing is Cloud-only. Anyone with a published link can read its contents. Owner operations require [authentication](/api/cloud/tokens). Public reads do not.
+
+## Share an Agent
+
+An Agent link publishes a saved copy of selected setup. It does not expose the owner's live workspace.
+
+Read `GET /v1/agents/{agent_id}/share-options` to choose resources. Publish the selection through `POST /v1/agents/{agent_id}/share`:
+
+```json
+{
+  "skills": [],
+  "knowledge_files": [],
+  "connectors": []
+}
+```
+
+Use IDs from share options for skills, knowledge names for `knowledge_files`, and server IDs for `connectors`. Instructions and portable settings are included even with empty selections. Selected skill folders and knowledge contents share limits of 20 MiB and 512 regular files. Symbolic links are rejected. Custom connection URLs with query parameters are excluded from share options.
+
+Review all selected contents and connection URLs before publishing. Stored authentication, conversations, routines, and project files are not bundled. See [Sharing and copies](/developers/guides/sharing) for the recipient experience.
+
+## Preview and import
+
+Read `GET /v1/shared/agents/{share_id}` before importing. Send its exact `published_at` with the new name and project to `POST /v1/shared/agents/{share_id}/import`:
+
+```json
+{
+  "name": "My release reviewer",
+  "project_id": "Home",
+  "published_at": "<exact value from the preview>"
+}
+```
+
+Generate and save a new `Idempotency-Key` for each import. Reuse it and the unchanged body to recover an uncertain import without creating another copy. A changed snapshot returns a conflict rather than silently importing something different from the preview.
+
+The recipient gets independent setup and selected resource copies. Imported custom skills receive distinct names. App credentials are never inherited. Read the imported Agent's `setup_requirements`, then complete missing connections and consent in its manager conversation.
+
+A revoked link becomes unavailable. Unsupported older snapshots may require republication by their owner. Revocation does not delete copies already imported.
+
+<Accordion title="Agent-sharing endpoints">
+  | Method and path | Behavior |
+  | --- | --- |
+  | `GET /v1/agents/{agent_id}/share-options` | Available custom skills, knowledge, and custom connections |
+  | `GET /v1/agents/{agent_id}/share` | Current link record or `null` |
+  | `POST /v1/agents/{agent_id}/share` | Publish a snapshot |
+  | `POST /v1/agent-shares/{share_id}/refresh` | Replace the snapshot at the same link |
+  | `DELETE /v1/agent-shares/{share_id}` | Revoke the link |
+  | `GET /v1/agent-templates` | Fluso starting-point snapshots |
+  | `GET /v1/shared/agents/{share_id}` | Public setup, resource manifest, required filenames, and `published_at` |
+  | `POST /v1/shared/agents/{share_id}/import` | Authenticated import into the recipient's workspace |
+</Accordion>
+
+## Share a conversation
+
+Publish a conversation with `POST /v1/chat-shares` and its `thread_id`. The link shows a snapshot of its saved messages. Later messages remain private until you refresh that link.
+
+Revoke the link to prevent further public reads. The private conversation remains. Deleting the conversation itself does not revoke a separately published snapshot.
+
+<Accordion title="Conversation-sharing endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `POST /v1/chat-shares/lookup-batch` | Find existing links for `thread_ids` without publishing. |
+  | `POST /v1/chat-shares` | Publish the current conversation or return its existing link. |
+  | `POST /v1/chat-shares/{share_id}/refresh` | Update saved messages at the same link. |
+  | `DELETE /v1/chat-shares/{share_id}` | Revoke the link while keeping the private conversation. |
+  | `GET /v1/shared/chats/{share_id}` | Read the public snapshot without authentication. |
+</Accordion>
+
+## Share a file
+
+Choose `share_mode` explicitly when publishing a workspace file:
+
+| Mode | What readers get |
+| --- | --- |
+| `snapshot` | A saved copy. Later file changes require a refresh. |
+| `live` | The current file at its workspace path. A view can start the owner's runtime. |
+
+Anyone with the link can download the file. Review its contents before publication.
+
+If an active link already exists, creation returns it even when you request a different mode. Revoke it before changing modes. Refreshing a live link converts it to a snapshot. A failed refresh preserves the existing link.
+
+<Accordion title="File-sharing endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `POST /v1/asset-shares/lookup-batch` | Find active links for workspace paths without publishing. |
+  | `POST /v1/asset-shares` | Publish with explicit `share_mode`. Creation can start the runtime in either mode. |
+  | `POST /v1/asset-shares/{share_id}/refresh` | Save the current file as a new snapshot at the same link. |
+  | `DELETE /v1/asset-shares/{share_id}` | Revoke the link while keeping the workspace file. |
+  | `GET /v1/shared/assets/{share_id}` | Read public bytes or follow a snapshot download redirect. |
+  | `GET /v1/shared/assets/{share_id}/{file_name}` | Read the same file with a descriptive URL suffix. |
+
+  Public reads need no bearer token. Follow redirects and inspect `Content-Type` instead of parsing the response as JSON.
+
+  Revocation blocks new public requests. A previously issued snapshot download URL can remain valid for five minutes. Revocation cannot remove copies someone already downloaded.
+</Accordion>

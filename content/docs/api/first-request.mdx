@@ -1,0 +1,80 @@
+---
+title: Your first request
+icon: terminal
+description: Send a short task and read the complete answer from Cloud or your daemon.
+---
+
+This example creates a conversation, sends one message, and waits for its answer. It works with either workspace.
+
+## 1. Get access
+
+Create a Cloud [developer token](/api/cloud/tokens) with **Read and write** access. For Fluso Local, get a [paired device token](/api/daemon/pairing) after configuring your model provider.
+
+Open the **API reference** for your workspace to confirm API availability in that release.
+
+Open Bash in a new example directory. The examples need cURL 7.87 or later, `jq`, and `uuidgen`.
+
+Set your [workspace's base URL](/api#choose-your-workspace):
+
+```bash
+export FLUSO_API_URL='https://api.fluso.ai/v1'
+```
+
+Read the token without displaying it or placing it in your shell history:
+
+```bash
+read -r -s -p 'Fluso token: ' FLUSO_API_TOKEN
+echo
+export FLUSO_API_TOKEN
+```
+
+Use a secret store in a deployed application. Keep tokens out of URLs, source control, logs, and screenshots.
+
+## 2. Send a message and read the answer
+
+Download the example from your workspace:
+
+```bash
+curl --fail --silent --show-error \
+  "$FLUSO_API_URL/examples/quickstart.sh" -o quickstart.sh
+cat quickstart.sh
+```
+
+Read the script before running it. Then run it in the same Bash shell:
+
+```bash
+source quickstart.sh
+```
+
+The script submits a short request, waits for its run, and reads every result page. It retains the IDs for your next message.
+
+Here is the request pattern behind it:
+
+| Step | Request | Keep from the response |
+| --- | --- | --- |
+| Send work | `POST /v1/threads` with `input` and an `Idempotency-Key` | `thread_id`, `input_id`, `run_id` |
+| Check progress | `GET /v1/threads/{thread_id}/runs/{run_id}` | Status and any error |
+| Read the answer | `GET /v1/threads/{thread_id}/items?run_id={run_id}` | All result pages, including attachments |
+
+An **idempotency key** identifies one submitted message. Save it and the request body before sending. Reuse both if that request's response is lost.
+
+**202 means Fluso accepted the work.** Read the run status to learn whether it completed or needs your action.
+
+<Note>
+  A timeout does not cancel work. Do not rerun the quickstart to recover: it creates a new request. Read the [saved run](/api/workflows/runs) instead.
+</Note>
+
+## 3. Continue the conversation
+
+Send the next message to `POST /v1/threads/{thread_id}/inputs` with a new key:
+
+```json
+{
+  "input": "Give me one practical example for each suggestion.",
+  "mode": "queue"
+}
+```
+
+The reference's `follow-up.sh` runs this step using the IDs from the quickstart. Its `cleanup.sh` removes the example resources when you finish.
+
+Next, learn to [read conversations](/api/workflows/conversations), [attach a file](/api/workflows/files), or [use an Agent](/api/workflows/agents).

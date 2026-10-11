@@ -13,11 +13,12 @@
 The navigation keeps Home first and sorts the top-level sections alphabetically. Agents follows the user journey. Other sections keep their existing order:
 
 - **Administration** - `/admin-panel`. Browser-admin access, dashboards, governance records, runtime controls, and network policy.
-- **Agents (Beta)** - `/developers/*`. Start with a familiar task, then improvement and scheduling. Keep Examples, More about Agents (`/developers/guides/*`), and For developers (`/developers/api-ref/*`) collapsed by default. Introduce features when they help the reader's current task. Keep prompts natural and explain terms before using them.
+- **Agents (Beta)** - `/developers/*`. Start with a familiar task, then improvement and scheduling. Keep Examples and More about Agents (`/developers/guides/*`) collapsed by default. Introduce features when they help the reader's current task. Keep prompts natural and explain terms before using them.
 - **App setup** - `/integrations/{github, gmail, google-calendar, slack}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
 - **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
 - **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.
-- **Fluso Local** - `/workspaces/*`. Setup and everyday use on your own machine, followed by settings and maintenance. Keep macOS and Linux as choices inside one setup guide. Request daemon download links from support; do not publish unlisted release URLs. Account API access starts at `/developers/api-ref/authentication`; full endpoint reference is served at each workspace's `/docs`.
+- **Fluso API** - `/api/*`. Start with access and a first request. Keep Cloud and daemon credentials and administration separate. Document shared workflows once. Each deployment's `/docs` and `/v1/openapi.json` own exact request and response schemas. Keep endpoint tables collapsed after the workflow. Preserve old API URLs with redirects.
+- **Fluso Local** - `/workspaces/*`. Setup and everyday use on your own machine, followed by settings and maintenance. Keep macOS and Linux as choices inside one setup guide. Request daemon download links from support; do not publish unlisted release URLs. API access is documented under Fluso API.
 - **Get started** - `/going-deeper`, `/introduction`, `/quickstart`. These pages explain the path from first setup to daily use.
 - **Reference** - `/resources/{faq, legal, pricing}`. Legal links to the terms of service at `https://fluso.ai/terms` and privacy policy at `https://fluso.ai/privacy`; do not duplicate the policies in the docs.
 - **Release notes** - `/release-notes`. Customer-facing changes, newest first.

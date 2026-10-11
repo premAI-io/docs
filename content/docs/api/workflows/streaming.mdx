@@ -1,0 +1,49 @@
+---
+title: Live updates
+icon: radio
+description: Show progress while retaining a complete, recoverable conversation.
+---
+
+Use live events for a responsive interface. Use saved state and items to recover the full result after a disconnection.
+
+After the [quickstart](/api/first-request), listen to its conversation:
+
+```bash
+curl --no-buffer --fail-with-body --silent --show-error \
+  "$FLUSO_API_URL/threads/$thread_id/events" \
+  -H "Authorization: Bearer $FLUSO_API_TOKEN"
+```
+
+The response uses Server-Sent Events (SSE). Each `data` field contains a `ThreadEvent` JSON object. A blank line ends the frame.
+
+## Connect without missing saved work
+
+1. Open the event stream.
+2. Read the thread's saved state and all item pages.
+3. Match updates by input, run, and item IDs.
+4. Replace temporary text with its saved item when that item arrives.
+5. Reconcile saved state periodically while work remains active.
+
+Repeat this sequence after reconnecting. `Last-Event-ID` does not replay missed events. A closed stream does not establish whether the run finished.
+
+When submitting an input with `stream: true`, save the initial `input.accepted` receipt before processing progress. It contains the IDs needed for recovery.
+
+## Render progress accurately
+
+Tool progress includes `progress.tool_start` and `progress.tool_end`. These describe a tool's execution. They are not instructions for your client to execute that tool.
+
+A tool preview can omit arguments or results. `args_truncated: true` means the arguments are incomplete. If the flag is absent, completeness is unknown. Use the pending approval's actual arguments when asking a user to approve work.
+
+For a daemon behind a proxy, disable response buffering for the event stream.
+
+Ignore unknown event types and keepalive comments. Buffer incomplete frames across network chunks. Use a streaming client that supports an Authorization header. Do not put tokens in the URL.
+
+<Accordion title="Relevant endpoints and runnable example">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/threads/{thread_id}/events` | Stream new events. Optional `input_id` follows one input. |
+  | `GET /v1/threads/{thread_id}/state` | Recover active work, queues, and pending actions. |
+  | `GET /v1/threads/{thread_id}/items` | Recover saved messages and tool results. Follow all pages. |
+
+  Your workspace's `/v1/examples/watch.mjs` combines these operations. It requires Node 22 or later. Run it with the quickstart's `thread_id` and optional `run_id`.
+</Accordion>

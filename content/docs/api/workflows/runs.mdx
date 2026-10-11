@@ -1,0 +1,91 @@
+---
+title: Runs and recovery
+sidebarTitle: Runs and recovery
+icon: activity
+description: Follow accepted work, recover after a disconnection, and stop a run deliberately.
+---
+
+Submitting an input returns a receipt with `thread_id`, `input_id`, and `run_id`. Save all three. **202 means accepted, not completed.**
+
+Read `GET /v1/threads/{thread_id}/runs/{run_id}` to check progress. Read `GET /v1/threads/{thread_id}/state` for queued work and pending actions.
+
+## Understand the status
+
+| Status | What to do |
+| --- | --- |
+| `queued` or `running` | Wait, then read again. |
+| `waiting_action` | Read the pending approval or connection request in thread state. |
+| `held` | Inspect the state and queued inputs before resuming. |
+| `completed` | Read all saved result pages and check the answer. |
+| `failed` or `cancelled` | Read the error and any saved results before submitting more work. |
+
+A completed run can contain a failed tool call. A failed run can still have changed an external service. Check the results against the requested task.
+
+## Recover after a timeout
+
+- If the submission response was lost, retry the same body with the same `Idempotency-Key`.
+- If you received a receipt, read that run and its [saved items](/api/workflows/conversations#read-message-history).
+- If a stream closes, reconnect for new events and read saved state for missed results.
+
+A client timeout does not cancel work. Creating a new key can start another execution.
+
+Input retry receipts remain until 24 hours after completion. After that, inspect the saved run before deciding whether to submit new work. Runs remain readable until their conversation is deleted.
+
+<Accordion title="Thread created, but the first input failed">
+  An error from `POST /v1/threads` can include `error.details.thread_id`. Save that ID and inspect the thread state. Its presence does not prove input acceptance.
+
+  After resolving the cause, send the original input and key to that thread's `/inputs` endpoint. This can recover an uncertain acceptance within the retry window.
+</Accordion>
+
+## Stop work
+
+Use `POST /v1/threads/{thread_id}/runs/{run_id}/cancel` for one run. Use `POST /v1/threads/{thread_id}/stop` for the conversation.
+
+Read the state until execution stops. A cancellation acknowledgement does not prove that a tool has stopped, and cancellation cannot undo a completed external action.
+
+Use the **Recovery and cancellation** examples in your [workspace's full reference](/api#choose-your-workspace) for retries, held inputs, and cancellation.
+
+## Decide whether to retry
+
+A failed run does not become a new execution when you resend its old key. Read its results before choosing a new message and key.
+
+For temporary read failures, delay retries with backoff and a maximum wait. Honor `Retry-After`. Do not retry when `error.retryable` is explicitly false.
+
+For an uncertain write, use that operation's documented retry mechanism. Input keys, upload keys, schedule IDs, and configuration revisions solve different problems. They are not interchangeable.
+
+<Accordion title="Errors and request identity">
+  | Response | Action |
+  | --- | --- |
+  | 400 or 422 | Correct the request fields. |
+  | 401 | Replace the credential or sign in again. |
+  | 402 | Check the account allowance and any `resets_at` value. |
+  | 403 | Use the required access level or signed-in app session. |
+  | 404 | Check the workspace and resource ID. The resource may no longer exist. |
+  | 409 | Read the resource before resolving the conflict. Keep unsent edits. |
+  | 410 | Follow the error's instructions for the expired resource or approval. |
+  | 413 or 507 | Reduce the transfer or free workspace storage. |
+  | 408, 429, 500, 502, 503, or 504 | Retry transient reads with a delay. Preserve keys for uncertain writes. |
+
+  Errors include `error.code` and `error.message`, with details and retry guidance where available. Keep `request_id` or `X-Request-ID` for support. A request ID is not an idempotency key.
+
+  Use UUIDs for new input keys. Accepted characters are ASCII letters, digits, `_`, `-`, `.`, `:`, and `@`, with a maximum of 128 characters. A single dot, consecutive dots, and the `agent-turn:` and `agent-result:` prefixes are reserved.
+
+  For historical run IDs containing `/`, use `GET /v1/runs` with URL-encoded `thread_id` and `run_id` query parameters. Read output through the items endpoint's `run_id` filter.
+</Accordion>
+
+<Accordion title="Run endpoints and admission limits">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/runs` | List saved runs or find one through query filters. |
+  | `GET /v1/threads/{thread_id}/runs` | List a conversation's runs. Follow `next_cursor` as `after`. |
+  | `GET /v1/threads/{thread_id}/runs/{run_id}` | Read status, error, and recorded execution settings. |
+  | `GET /v1/threads/{thread_id}/runs/{run_id}/usage` | Read recorded usage or `null` when unreported. |
+  | `POST /v1/threads/{thread_id}/runs/{run_id}/cancel` | Request cancellation of this run. |
+  | `POST /v1/threads/{thread_id}/stop` | Stop active work and hold follow-ups. |
+
+  An input accepts up to 200,000 text characters and 25 attachments. A thread holds up to 100 queued inputs and 50 steering inputs per active turn.
+
+  Each thread retains up to 1,000 recent input receipts. At capacity, admission refuses new work while preserving existing retry receipts. Waiting for a local timeout does not clear accepted work.
+
+  Merge `state.runs` by ID when reading multiple item pages. An old item without a saved run has an unknown outcome. Its text alone does not prove success.
+</Accordion>

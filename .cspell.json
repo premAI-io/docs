@@ -84,6 +84,10 @@
     "timecode",
     "uvx",
     "uuidgen",
-    "webhook"
+    "webhook",
+    "healthz",
+    "OpenRouter",
+    "versionable",
+    "xhigh"
   ]
 }

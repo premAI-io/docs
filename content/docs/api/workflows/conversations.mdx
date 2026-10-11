@@ -1,0 +1,86 @@
+---
+title: Conversations and results
+sidebarTitle: Conversations and results
+icon: messages-square
+description: Submit work, continue a conversation, and read the complete saved answer.
+---
+
+A **thread** is a conversation. An **input** is a message you submit. A **run** tracks the resulting work.
+
+Start with the runnable [API quickstart](/api/first-request). These are the operations behind it.
+
+## Create a conversation
+
+Send `POST /v1/threads` with an `Idempotency-Key` and an input body:
+
+```json
+{
+  "input": "Explain three ways to check whether a source is reliable."
+}
+```
+
+Save the key and body before sending. The receipt returns `thread_id` and `run_id`. Use those values rather than deriving one from the other.
+
+To open a conversation without starting work, omit `input` and `attachments`. To use a saved Agent, include `agent_id`. Its main conversation is reused. `purpose: "manager"` opens its setup conversation.
+
+## Send a message
+
+Send `POST /v1/threads/{thread_id}/inputs` with the next `input` and a new key. If the conversation is busy, use `mode: "queue"` to wait or `mode: "steer"` to guide active work.
+
+A retry must keep the original key and unchanged body. Reusing a key with different content returns 409. A new key means new work.
+
+The **follow-up** example in your [workspace's reference](/api#choose-your-workspace) continues the quickstart conversation in the same shell.
+
+## Manage queued messages
+
+Read thread state before changing queued work. An active or completed input cannot be edited as a queued message.
+
+Editing an input requires a new `Idempotency-Key` for that edit. Keep it when retrying the edit. If the input started meanwhile, a 409 preserves the conflict. Keep the user's draft instead of silently submitting replacement work.
+
+A thread stop holds follow-up inputs. Resume a held input explicitly after reviewing state.
+
+## Read message history
+
+Read `GET /v1/threads/{thread_id}/items?run_id={run_id}` for messages, tool results, and attachments belonging to a run. Omit the filter to read the conversation.
+
+Entries are in `data`. Read every page: pass `next_cursor` as `after` with the unchanged `revision`, until `next_cursor` is null. Keep filters unchanged between pages.
+
+If a snapshot edit or deletion causes a pagination conflict, discard the partial read and restart without `after` or `revision`. New messages alone do not invalidate the snapshot.
+
+Read the saved [run status](/api/workflows/runs) as well as the messages. An empty page does not prove the run finished or failed.
+
+## Follow live progress
+
+`GET /v1/threads/{thread_id}/events` streams Server-Sent Events. Submitting with `stream: true` starts with an `input.accepted` receipt. Save it before processing later events.
+
+Streams do not replay missed events. After reconnecting, read saved state and items. Ignore unknown event types and keepalive comments. Replace temporary text with its saved item to avoid showing it twice.
+
+See [live updates](/api/workflows/streaming) for a complete reconnect sequence and the runnable `watch.mjs` example.
+
+## Delete a conversation
+
+`DELETE /v1/threads/{thread_id}` deletes an ordinary conversation and stops its execution. Save needed results first. Agent main and manager conversations require deleting their Agent instead.
+
+Conversation deletion does not remove a separately published chat snapshot or all workspace files.
+
+<Accordion title="Conversation endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/threads` | List by Agent, project, or purpose. Follow numbered `pagination.page` and `pages`. |
+  | `POST /v1/threads` | Create an ordinary chat or open an Agent's main or manager conversation. |
+  | `GET /v1/threads/{thread_id}` | Read details and configuration binding. |
+  | `PATCH /v1/threads/{thread_id}` | Change title, archive, pin, labels, or application metadata. |
+  | `DELETE /v1/threads/{thread_id}` | Stop and remove an ordinary conversation. |
+  | `POST /v1/threads/{thread_id}/inputs` | Submit new work or steer active work. |
+  | `PATCH /v1/threads/{thread_id}/inputs/{input_id}` | Replace queued content with an edit key. |
+  | `DELETE /v1/threads/{thread_id}/inputs/{input_id}` | Cancel that queued input. |
+  | `POST /v1/threads/{thread_id}/inputs/{input_id}/resume` | Resume a held input. |
+  | `GET /v1/threads/{thread_id}/items` | Read saved items with snapshot pagination. |
+  | `GET /v1/threads/{thread_id}/state` | Read active work, queues, partial output, and pending actions. |
+  | `GET /v1/threads/{thread_id}/preview` | Read the latest short message preview. |
+  | `GET /v1/threads/{thread_id}/files` | List files associated with this conversation. |
+  | `POST /v1/threads/{thread_id}/read` | Update unread tracking. Does not approve tools. |
+  | `PATCH /v1/threads/{thread_id}/reorder` | Set position within its current project. Cross-project moves are rejected. |
+
+  Agent binding and provenance belong to the server. Custom metadata cannot change them. See [live events](/api/workflows/streaming) and [cancellation](/api/workflows/runs#stop-work) for execution controls.
+</Accordion>
