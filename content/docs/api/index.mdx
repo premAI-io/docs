@@ -33,7 +33,7 @@ For a remote daemon, use its HTTPS address or an [SSH tunnel](/workspaces/setup#
 
 Open **Settings → Developer tokens → API reference** in Cloud. On a daemon's host, open `http://127.0.0.1:4111/docs`.
 
-Each workspace serves its full endpoint reference at `/docs` and its OpenAPI schema at `/v1/openapi.json`. These describe the fields and operations available in that deployment. The reference also supplies runnable examples under `/v1/examples/`. The daemon serves its schema and examples locally. Its interactive reference needs internet access to load the viewer.
+Releases with this API serve the endpoint reference at `/docs` and the OpenAPI schema at `/v1/openapi.json`. These describe the fields and operations available in that deployment. The reference also supplies runnable examples under `/v1/examples/`. The daemon serves its schema and examples locally. Its interactive reference needs internet access to load the viewer.
 
 The guides below explain how to combine those operations. Endpoint tables sit inside each guide, after the main workflow.
 
@@ -45,7 +45,7 @@ The guides below explain how to combine those operations. Endpoint tables sit in
     Pair a client with your own workspace.
   </Card>
   <Card title="Send messages" icon="messages-square" href="/api/workflows/conversations">
-    Continue work and retrieve the complete answer.
+    Continue work and read the complete answer.
   </Card>
   <Card title="Runs and retries" icon="activity" href="/api/workflows/runs">
     Handle a timeout without starting the same work twice.
@@ -53,5 +53,5 @@ The guides below explain how to combine those operations. Endpoint tables sit in
 </CardGroup>
 
 <Note>
-  These guides cover the current public `/v1` API. If your app lacks **Developer tokens**, contact [support](mailto:support@premai.io) about availability for your release.
+  If your app lacks **Developer tokens** or its API reference returns 404, contact [support](mailto:support@premai.io) about availability for your release.
 </Note>
