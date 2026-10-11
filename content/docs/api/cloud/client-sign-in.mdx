@@ -1,49 +1,120 @@
 ---
 title: Client sign-in
 icon: log-in
-description: Understand browser sign-in, access tokens, and refresh for Cloud clients.
+description: Let users sign in to a configured Cloud client and keep their session active.
 ---
 
-Use a [developer token](/api/cloud/tokens) for your own script. Native clients can use a browser sign-in flow and a renewable client session.
+For your own script or service, use a [developer token](/api/cloud/tokens). It needs no browser callback or refresh flow.
 
-The endpoints below support Fluso's client integrations. They are not an open redirect-registration service. The current browser callback supports configured Fluso handoffs, including Telegram. Contact [support](mailto:support@premai.io) before building a new client sign-in handoff.
+Use client sign-in when each person must connect their own Fluso account to a supported client. Fluso handles sign-in in the browser. Your client receives a one-use code and exchanges it for tokens.
 
-## Exchange browser sign-in for a session
+<Note>
+  A new client needs a configured Fluso callback. [Contact support](mailto:support@premai.io) before implementing that integration. These endpoints do not register arbitrary callback URLs.
+</Note>
 
-1. Generate a random PKCE `code_verifier` with 43 to 128 allowed characters.
-2. Compute its SHA-256 digest as unpadded base64url for `code_challenge`.
-3. Start sign-in with `client`, `client_user_id`, and that challenge.
-4. Open the returned sign-in URL in the user's browser.
-5. Complete the browser step under the user's Clerk app session.
-6. Exchange the returned code with the original verifier and client identifiers.
+## Sign in once
 
-The verifier can contain ASCII letters, digits, and `-._~`. PKCE binds the returned code to the client that started sign-in. Keep the verifier private until the exchange finishes.
+<Steps>
+  <Step title="Open Fluso sign-in">
+    Your client requests a sign-in URL. Open it in the user's browser.
+  </Step>
+  <Step title="Let the user sign in">
+    Fluso handles sign-in and returns a one-use code through your configured callback.
+  </Step>
+  <Step title="Exchange the code for tokens">
+    Your client sends the code with its private proof. Fluso returns tokens for API access and session renewal.
+  </Step>
+</Steps>
 
-The state expires after ten minutes. The returned code expires after five minutes and works once. If the exchange response is lost, restart sign-in.
+The proof, called **PKCE**, keeps another client from using the returned code. Generate it once for each sign-in attempt.
 
-The exchange returns `auth.access_token`, `auth.refresh_token`, `auth.expires_in`, `auth.session_id`, and the user. Use the access token in the `Authorization: Bearer` header. Store the refresh token privately.
+Use `auth.access_token` as `Authorization: Bearer TOKEN` for API requests. Save `auth.refresh_token` privately for renewal. `auth.expires_in` tells you when the access token expires.
 
-## Refresh without ending the session
+<Accordion title="Implement the sign-in exchange (Node.js)">
+  Use Node 22 or later. Set `baseUrl` to your Cloud API URL, including `/v1`. Use your configured `client` name. Set `clientUserId` to the user's stable ID within your client.
 
-Send the current `refresh_token` to `POST /v1/auth/client/refresh`. Save both replacement tokens together. Allow only one refresh at a time per client session.
+  Generate the proof and request the browser URL:
 
-The previous refresh token can recover the same token pair for 30 seconds. Reuse after that window revokes the session. Refresh extends the session's 30-day expiry. After a rejected refresh, sign in again.
+  ```javascript
+  import { randomBytes, createHash } from 'node:crypto';
 
-To sign out, send the refresh token to `/v1/auth/client/revoke`. Then remove the local credentials.
+  const baseUrl = 'https://api.fluso.ai/v1';
+  const client = 'YOUR_CONFIGURED_CLIENT';
+  const clientUserId = 'YOUR_CLIENT_USER_ID';
 
-<Accordion title="Client-session endpoints and required credentials">
+  const verifier = randomBytes(32).toString('base64url');
+  const challenge = createHash('sha256').update(verifier).digest('base64url');
+  const start = await fetch(`${baseUrl}/auth/client/start`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      client, client_user_id: clientUserId, code_challenge: challenge,
+    }),
+  });
+  if (!start.ok) throw new Error(`Sign-in could not start (${start.status})`);
+  const { url } = await start.json();
+  ```
+
+  Open `url` in the user's browser. Keep `verifier` on the initiating client. Do not log it or send it to the callback URL.
+
+  After the configured callback returns `code`, exchange it using the same client identity and verifier:
+
+  ```javascript
+  const exchange = await fetch(`${baseUrl}/auth/client/exchange`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      client, client_user_id: clientUserId, code, code_verifier: verifier,
+    }),
+  });
+  if (!exchange.ok) throw new Error(`Sign-in exchange failed (${exchange.status})`);
+  const { auth } = await exchange.json();
+  ```
+
+  Store `auth` in the client's credential store. It includes `access_token`, `refresh_token`, `expires_in`, `session_id`, and `user`.
+
+  The browser step calls `POST /v1/auth/client/complete` with the returned state under the user's Clerk app session. Current browser callbacks support configured Fluso handoffs, including Telegram. A developer token cannot perform that browser step.
+
+  Sign-in state expires after ten minutes. The returned code expires after five minutes and works once. If the exchange response is lost, start sign-in again.
+
+  For another language, generate a verifier with 43 to 128 ASCII letters, digits, or `-._~`. Its challenge is SHA-256 encoded as unpadded base64url.
+</Accordion>
+
+## Keep the session active
+
+Before the access token expires, send the saved refresh token to `POST /v1/auth/client/refresh`:
+
+```json
+{
+  "refresh_token": "YOUR_SAVED_REFRESH_TOKEN"
+}
+```
+
+The response contains replacement `access_token` and `refresh_token` values. Save both together before sending further requests. Allow only one refresh at a time for that session.
+
+<Accordion title="Recover a lost refresh response">
+  Retry the same refresh token within 30 seconds to recover the same replacement pair. Reusing it after that window revokes the session.
+
+  Refresh extends the session's 30-day expiry. If refresh is rejected, ask the user to sign in again. Do not create a new session for each API request.
+</Accordion>
+
+## Sign out
+
+Send the refresh-token body above to `POST /v1/auth/client/revoke`. Remove the local credentials after revocation.
+
+<Accordion title="Client-session endpoint reference">
   | Method and path | Required credential and use |
   | --- | --- |
-  | `POST /v1/auth/client/start` | PKCE challenge. Begin the browser handoff. |
-  | `POST /v1/auth/client/complete` | Clerk session and returned state. Issue the one-use code. |
-  | `POST /v1/auth/client/exchange` | Code, client identifiers, and original verifier. Issue tokens. |
-  | `POST /v1/auth/client/sessions` | Clerk session. Create a client session for an already signed-in app. |
-  | `GET /v1/auth/client/sessions` | Clerk session. List up to 100 active sessions, newest first. |
+  | `POST /v1/auth/client/start` | PKCE challenge. Request the browser URL. |
+  | `POST /v1/auth/client/complete` | Clerk app session and returned state. Issue the one-use code. |
+  | `POST /v1/auth/client/exchange` | Code, client identity, and original verifier. Issue tokens. |
+  | `POST /v1/auth/client/sessions` | Clerk app session. Create a client session for an already signed-in app. |
+  | `GET /v1/auth/client/sessions` | Clerk app session. List up to 100 active sessions, newest first. |
   | `DELETE /v1/auth/client/sessions/{session_id}` | Clerk session for any owned session, or a client token for itself. |
-  | `POST /v1/auth/client/refresh` | Current refresh token. Rotate the token pair. |
+  | `POST /v1/auth/client/refresh` | Refresh token. Rotate the token pair. |
   | `POST /v1/auth/client/revoke` | Refresh token. Revoke its session. Returns 204 even if already invalid. |
 
-  A client token does not grant account administration. In particular, developer-token management requires Clerk sign-in.
+  Client tokens cannot manage developer tokens. That operation requires Clerk sign-in.
 
-  Use your [deployment's schema](/api#find-the-exact-fields) for identifier constraints and response fields. Do not mint a new session for each API request.
+  Your [deployment's schema](/api#find-the-exact-fields) lists exact identifier constraints and response fields.
 </Accordion>

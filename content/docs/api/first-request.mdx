@@ -1,26 +1,28 @@
 ---
 title: Your first request
 icon: terminal
-description: Send a short task and read the complete answer from Cloud or your daemon.
+description: Send a message, get an answer, and keep the conversation open for follow-ups.
 ---
 
-This example creates a conversation, sends one message, and waits for its answer. It works with either workspace.
+This example asks Fluso to explain three ways to check a source. You get a complete answer and a conversation you can continue.
 
 ## 1. Get access
 
-Create a Cloud [developer token](/api/cloud/tokens) with **Read and write** access. For Fluso Local, get a [paired device token](/api/daemon/pairing) after configuring your model provider.
+For Cloud, create a [developer token](/api/cloud/tokens) with **Read and write** access. For Fluso Local, [pair a client](/api/daemon/pairing) after configuring its model provider.
 
-Open the **API reference** for your workspace to confirm API availability in that release.
+Open your workspace's [API reference](/api#find-the-exact-fields) to check availability in that release.
 
-Open Bash in a new example directory. The examples need cURL 7.87 or later, `jq`, and `uuidgen`.
+Start a Bash shell in a new, empty directory. You need cURL 7.87 or later, `jq`, and `uuidgen`.
 
-Set your [workspace's base URL](/api#choose-your-workspace):
+Set the URL for your workspace:
 
 ```bash
 export FLUSO_API_URL='https://api.fluso.ai/v1'
 ```
 
-Read the token without displaying it or placing it in your shell history:
+For Fluso Dev, use `https://api.dev.khichdi.cc/v1`. For a local daemon, use `http://127.0.0.1:4111/v1`. The token must belong to that workspace.
+
+Read your token without showing it or saving it in shell history:
 
 ```bash
 read -r -s -p 'Fluso token: ' FLUSO_API_TOKEN
@@ -28,53 +30,65 @@ echo
 export FLUSO_API_TOKEN
 ```
 
-Use a secret store in a deployed application. Keep tokens out of URLs, source control, logs, and screenshots.
+## 2. Get an answer
 
-## 2. Send a message and read the answer
-
-Download the example from your workspace:
+Download the example from that workspace:
 
 ```bash
 curl --fail --silent --show-error \
-  "$FLUSO_API_URL/examples/quickstart.sh" -o quickstart.sh
+  "$FLUSO_API_URL/examples/quickstart.sh" -o quickstart.sh &&
 cat quickstart.sh
 ```
 
-Read the script before running it. Then run it in the same Bash shell:
+Read the script, then run it in the same Bash shell:
 
 ```bash
 source quickstart.sh
 ```
 
-The script submits a short request, waits for its run, and reads every result page. It retains the IDs for your next message.
+It prints Fluso's answer after reading every result page. If work needs attention, it prints the run's status instead. Stop on an error and use [recovery](/api/workflows/runs) before submitting again.
 
-Here is the request pattern behind it:
+Keep this shell open. The other guides use the values and functions it provides:
 
-| Step | Request | Keep from the response |
-| --- | --- | --- |
-| Send work | `POST /v1/threads` with `input` and an `Idempotency-Key` | `thread_id`, `input_id`, `run_id` |
-| Check progress | `GET /v1/threads/{thread_id}/runs/{run_id}` | Status and any error |
-| Read the answer | `GET /v1/threads/{thread_id}/items?run_id={run_id}` | All result pages, including attachments |
+| Name | What it gives you |
+| --- | --- |
+| `thread_id` | The conversation to continue |
+| `run_id` | The work started by your message |
+| `input_key`, `input_body` | The exact request to reuse after a lost response |
+| `api` | An authenticated request to your chosen workspace |
+| `wait_for_run`, `read_run_items` | Wait for completion, then read all saved output |
 
-An **idempotency key** identifies one submitted message. Save it and the request body before sending. Reuse both if that request's response is lost.
-
-**202 means Fluso accepted the work.** Read the run status to learn whether it completed or needs your action.
+For example, `api "/threads/$thread_id/state"` reads the conversation's state. `api` adds the base URL and bearer token. It uses ordinary cURL options.
 
 <Note>
   A timeout does not cancel work. Do not rerun the quickstart to recover: it creates a new request. Read the [saved run](/api/workflows/runs) instead.
 </Note>
 
-## 3. Continue the conversation
+## 3. Continue from here
 
-Send the next message to `POST /v1/threads/{thread_id}/inputs` with a new key:
+[Send a follow-up](/api/workflows/conversations) to turn the answer into a checklist. You can also [attach a document](/api/workflows/files) or [create a reusable Agent](/api/workflows/agents).
 
-```json
-{
-  "input": "Give me one practical example for each suggestion.",
-  "mode": "queue"
-}
-```
+<Accordion title="What the example sends">
+  It sends `POST /v1/threads` with an `input` message and a new `Idempotency-Key`. The response identifies the accepted work:
 
-The reference's `follow-up.sh` runs this step using the IDs from the quickstart. Its `cleanup.sh` removes the example resources when you finish.
+  ```json
+  {
+    "thread_id": "thread_example",
+    "input_id": "message-1",
+    "run_id": "message-1",
+    "disposition": "running"
+  }
+  ```
 
-Next, learn to [read conversations](/api/workflows/conversations), [attach a file](/api/workflows/files), or [use an Agent](/api/workflows/agents).
+  Save the returned IDs. Do not assume `input_id` and `run_id` are equal.
+
+  **202 means accepted.** The example reads `GET /v1/threads/{thread_id}/runs/{run_id}` until completion, then reads the items for that run.
+
+  An idempotency key identifies one submitted message. Save it and the body before sending. Reuse both after a lost response. A new key starts new work.
+</Accordion>
+
+<Accordion title="Finish the example or use it in your application">
+  Save any output you need. Download `$FLUSO_API_URL/examples/cleanup.sh`, read it, then run `source cleanup.sh` in the same shell. It deletes the example conversation and any files created by the file examples.
+
+  The scripts are examples, not an SDK. In your application, store tokens in a secret store and save request IDs durably. Keep credentials out of URLs, source control, logs, and screenshots.
+</Accordion>

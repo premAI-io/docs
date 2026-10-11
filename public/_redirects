@@ -37,9 +37,9 @@
 /developers/export-import-and-share-agents /developers/guides/sharing 301
 /developers/export-import-and-share-agents/ /developers/guides/sharing 301
 /llms.mdx/docs/developers/export-import-and-share-agents/content.md /llms.mdx/docs/developers/guides/sharing/content.md 301
-/developers/architecture /api/architecture 301
-/developers/architecture/ /api/architecture 301
-/llms.mdx/docs/developers/architecture/content.md /llms.mdx/docs/api/architecture/content.md 301
+/developers/architecture /api 301
+/developers/architecture/ /api 301
+/llms.mdx/docs/developers/architecture/content.md /llms.mdx/docs/api/content.md 301
 /workspaces/macos /workspaces/setup 301
 /workspaces/macos/ /workspaces/setup 301
 /workspaces/linux /workspaces/setup 301
@@ -70,6 +70,9 @@
 /developers/api-ref/sharing /api/cloud/sharing 301
 /developers/api-ref/sharing/ /api/cloud/sharing 301
 /llms.mdx/docs/developers/api-ref/sharing/content.md /llms.mdx/docs/api/cloud/sharing/content.md 301
-/developers/api-ref/architecture /api/architecture 301
-/developers/api-ref/architecture/ /api/architecture 301
-/llms.mdx/docs/developers/api-ref/architecture/content.md /llms.mdx/docs/api/architecture/content.md 301
+/developers/api-ref/architecture /api 301
+/developers/api-ref/architecture/ /api 301
+/llms.mdx/docs/developers/api-ref/architecture/content.md /llms.mdx/docs/api/content.md 301
+/api/architecture /api 301
+/api/architecture/ /api 301
+/llms.mdx/docs/api/architecture/content.md /llms.mdx/docs/api/content.md 301

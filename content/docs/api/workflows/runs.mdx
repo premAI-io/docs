@@ -1,57 +1,75 @@
 ---
-title: Runs and recovery
-sidebarTitle: Runs and recovery
+title: Runs and retries
 icon: activity
-description: Follow accepted work, recover after a disconnection, and stop a run deliberately.
+description: Find out what happened, recover a result, or stop work without submitting it twice.
 ---
 
-Submitting an input returns a receipt with `thread_id`, `input_id`, and `run_id`. Save all three. **202 means accepted, not completed.**
+A request timed out, or the connection closed before the answer arrived. Start by checking the work Fluso already accepted.
 
-Read `GET /v1/threads/{thread_id}/runs/{run_id}` to check progress. Read `GET /v1/threads/{thread_id}/state` for queued work and pending actions.
+Use the Bash shell from [your first request](/api/first-request). It contains the `api` helper and saved IDs.
 
-## Understand the status
+## Check the run
 
-| Status | What to do |
+```bash
+api "/threads/$thread_id/runs/$run_id" | jq '{status, error}'
+```
+
+| Status | Your next step |
 | --- | --- |
-| `queued` or `running` | Wait, then read again. |
-| `waiting_action` | Read the pending approval or connection request in thread state. |
-| `held` | Inspect the state and queued inputs before resuming. |
-| `completed` | Read all saved result pages and check the answer. |
-| `failed` or `cancelled` | Read the error and any saved results before submitting more work. |
+| `queued` or `running` | Wait, then check again. |
+| `waiting_action` | Read thread state and [handle the pending action](/api/workflows/connections#handle-a-waiting-run). |
+| `held` | Review the queue in thread state before resuming an input. |
+| `completed` | [Read every result page](/api/workflows/conversations#read-message-history). |
+| `failed` or `cancelled` | Read the error and partial results before deciding what to do next. |
 
-A completed run can contain a failed tool call. A failed run can still have changed an external service. Check the results against the requested task.
+A completed run can contain a failed tool call. A failed run can still have changed an external service. Check the answer and tool results before repeating work.
 
 ## Recover after a timeout
 
-- If the submission response was lost, retry the same body with the same `Idempotency-Key`.
-- If you received a receipt, read that run and its [saved items](/api/workflows/conversations#read-message-history).
-- If a stream closes, reconnect for new events and read saved state for missed results.
+| What you have | What to do |
+| --- | --- |
+| A receipt with `thread_id` and `run_id` | Read that run and its saved output. |
+| A saved key and body, but no receipt | Repeat the original submission with both unchanged. |
+| A disconnected stream | Reconnect for new events, then read saved state and items. |
 
-A client timeout does not cancel work. Creating a new key can start another execution.
+For a lost [follow-up response](/api/workflows/conversations#send-a-follow-up), resend the saved request:
 
-Input retry receipts remain until 24 hours after completion. After that, inspect the saved run before deciding whether to submit new work. Runs remain readable until their conversation is deleted.
+```bash
+receipt=$(api "/threads/$thread_id/inputs" \
+  -H "Idempotency-Key: $input_key" \
+  -H 'Content-Type: application/json' -d "$input_body") &&
+run_id=$(printf '%s' "$receipt" | jq -er '.run_id')
+```
+
+Do not generate another key for this retry. A new key can start duplicate work. For the quickstart's initial submission, retry `/threads` instead of `/threads/$thread_id/inputs`.
+
+Input receipts remain until 24 hours after completion. After that, inspect the saved run before submitting again. Saved runs remain readable until their conversation is deleted.
 
 <Accordion title="Thread created, but the first input failed">
-  An error from `POST /v1/threads` can include `error.details.thread_id`. Save that ID and inspect the thread state. Its presence does not prove input acceptance.
+  An error from `POST /v1/threads` can include `error.details.thread_id`. Keep that ID and inspect its state. Thread creation alone does not prove that Fluso accepted the input.
 
-  After resolving the cause, send the original input and key to that thread's `/inputs` endpoint. This can recover an uncertain acceptance within the retry window.
+  After resolving the error, send the original input and key to that thread's `/inputs` endpoint. This can recover an uncertain acceptance within the retry window.
 </Accordion>
 
 ## Stop work
 
-Use `POST /v1/threads/{thread_id}/runs/{run_id}/cancel` for one run. Use `POST /v1/threads/{thread_id}/stop` for the conversation.
+To cancel only the saved run:
 
-Read the state until execution stops. A cancellation acknowledgement does not prove that a tool has stopped, and cancellation cannot undo a completed external action.
+```bash
+api "/threads/$thread_id/runs/$run_id/cancel" -X POST
+```
 
-Use the **Recovery and cancellation** examples in your [workspace's full reference](/api#choose-your-workspace) for retries, held inputs, and cancellation.
+Then check its status until execution stops. Cancellation cannot undo an external action that already completed.
+
+To stop the conversation and hold its follow-up messages, use `POST /v1/threads/{thread_id}/stop` instead. Review the queue before resuming held inputs.
 
 ## Decide whether to retry
 
-A failed run does not become a new execution when you resend its old key. Read its results before choosing a new message and key.
+For temporary read failures, wait before retrying. Increase the delay between attempts, set a maximum wait, and honor `Retry-After`. Stop when `error.retryable` is explicitly false. The quickstart's read helpers already do this.
 
-For temporary read failures, delay retries with backoff and a maximum wait. Honor `Retry-After`. Do not retry when `error.retryable` is explicitly false.
+For writes, use the operation's own recovery rule. Inputs use saved keys and bodies. Uploads use their receipts. Schedules use their IDs. Configuration edits use revisions.
 
-For an uncertain write, use that operation's documented retry mechanism. Input keys, upload keys, schedule IDs, and configuration revisions solve different problems. They are not interchangeable.
+A failed run stays failed when you resend its old key. Review partial results before choosing a new message and key.
 
 <Accordion title="Errors and request identity">
   | Response | Action |

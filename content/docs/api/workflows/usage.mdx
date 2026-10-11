@@ -1,30 +1,45 @@
 ---
-title: Usage
-sidebarTitle: Usage
+title: Check usage
 icon: chart-no-axes-combined
-description: Read recorded model usage for a workspace or one run.
+description: See what a run used, then inspect the model calls behind it.
 ---
 
-Usage reports describe recorded activity. They can arrive after execution and are not a final bill. A missing report or unknown price does not mean zero cost.
+Use the saved conversation and run IDs to inspect the cost of a task. The examples use the Bash shell from [your first request](/api/first-request).
+
+## Check one run
+
+```bash
+api "/threads/$thread_id/runs/$run_id/usage" | jq .
+```
+
+The response contains `tokens`, estimated `cost`, and `entry_count`. A response of `null` means no usage was reported yet. A null `cost` means pricing is unknown, not zero.
+
+## See which calls contributed
+
+Filter individual usage records to that run:
+
+```bash
+api /token-usage/entries --get \
+  --data-urlencode "thread_id=$thread_id" \
+  --data-urlencode "run_id=$run_id" | jq .
+```
+
+Use the records to compare model calls within the task. Further filters include `provider`, `model`, `since`, and `limit`.
 
 ## Read workspace totals
 
-Use `GET /v1/token-usage` for account totals and its session summaries. Public response fields use snake_case, such as `last_updated` and `entry_count`.
-
-## Inspect a run
-
-`GET /v1/threads/{thread_id}/runs/{run_id}/usage` returns the run's recorded tokens and estimated cost. It returns `null` when no usage is reported. Cost can also be null when a recorded call has no price.
-
-For individual records, use `GET /v1/token-usage/entries` with `thread_id` and `run_id`. Other filters include `provider`, `model`, `since`, and `limit`.
-
 ```bash
-curl --fail-with-body --silent --show-error --get \
-  "$FLUSO_API_URL/token-usage/entries" \
-  -H "Authorization: Bearer $FLUSO_API_TOKEN" \
-  --data-urlencode "thread_id=$thread_id" \
-  --data-urlencode "run_id=$run_id"
+api /token-usage | jq '{totals, last_updated}'
 ```
 
-Set the API URL, token, and IDs through the [quickstart](/api/first-request) first. Read access is sufficient for usage queries. They do not start workspace compute.
+Reports can arrive after execution. They are recorded estimates, not a final bill. For a daemon using your provider key, check that provider's billing too.
 
-Use your [workspace's endpoint reference](/api#choose-your-workspace) for all fields and filters. For daemon inference charges, check the model provider's billing as well.
+<Accordion title="Usage endpoint reference">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/token-usage` | Workspace totals and session summaries. |
+  | `GET /v1/token-usage/entries` | Individual records with optional filters. |
+  | `GET /v1/threads/{thread_id}/runs/{run_id}/usage` | One run's recorded usage, or `null`. |
+
+  Read access is sufficient. These queries do not start workspace compute. Responses use snake_case fields, including `last_updated` and `entry_count`.
+</Accordion>

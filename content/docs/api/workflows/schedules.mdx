@@ -1,49 +1,77 @@
 ---
-title: Schedules
-sidebarTitle: Schedules
+title: Schedule work
 icon: calendar-clock
-description: Schedule Agent work once or repeatedly, and manage future runs.
+description: Ask an Agent to review its notes every weekday, then inspect or pause the schedule.
 ---
 
-A schedule sends a message to an Agent's conversation. The app calls these schedules **routines**.
+A schedule sends a message to an Agent at a chosen time. In the app, schedules are called **routines**.
 
-## Create a schedule
+First [create the meeting assistant](/api/workflows/agents) and give it some notes. Keep that example's `agent_id` and `agent_thread_id` in the same Bash shell.
 
-Send `POST /v1/agents/{agent_id}/schedules` with a new UUID as `id`. Keep that ID when retrying creation.
+## Create a weekday review
 
-For a weekday morning brief:
+This schedule asks the assistant to review its conversation every weekday at 9 AM in Zurich. Change the message and timezone for your work.
 
-```json
-{
-  "id": "REPLACE_WITH_NEW_UUID",
-  "thread_id": "AGENT_THREAD_ID",
-  "message": "Prepare a short morning brief. Start with what needs my attention today.",
-  "cron": "0 9 * * 1-5",
-  "timezone": "Europe/Zurich"
-}
+```bash
+schedule_id=$(uuidgen) &&
+schedule_body=$(jq -nc --arg id "$schedule_id" --arg thread "$agent_thread_id" \
+  '{id: $id, thread_id: $thread,
+    message: ("Review the meeting notes in this conversation. " +
+              "Summarize decisions still open and actions due next."),
+    cron: "0 9 * * 1-5", timezone: "Europe/Zurich"}') &&
+api "/agents/$agent_id/schedules" \
+  -H 'Content-Type: application/json' -d "$schedule_body"
 ```
 
-The conversation must belong to that Agent. Supply exactly one of `cron` or `at`. For a one-time run, use a future `at` timestamp with a UTC offset instead of `cron`.
+The response includes `next_run_at`. Check that time before leaving the schedule active. Keep `schedule_id` and `schedule_body` for retries. A new ID creates another schedule.
 
-Use an IANA timezone. At daylight-saving changes, skipped local times move forward by the gap. Repeated times run at their first occurrence.
+For a one-time task, replace `cron` with `at`, using a future timestamp with a UTC offset. For example, the format is `2030-01-02T09:00:00+01:00`.
 
 ## Review and change future work
 
-| Action | Endpoint |
-| --- | --- |
-| List all schedules | `GET /v1/schedules` |
-| List one Agent's schedules | `GET /v1/agents/{agent_id}/schedules` |
-| Edit or pause | `PATCH /v1/schedules/{schedule_id}` |
-| Delete | `DELETE /v1/schedules/{schedule_id}` |
+Read this Agent's schedules:
 
-List responses include last-run information. Follow numbered `pagination.page` and `pages`. Use `attention=true` on `/v1/schedules` to find schedules needing review. Pause with `{"status":"paused"}` or resume with `{"status":"active"}` through PATCH. Check its entry in the schedule list after saving.
+```bash
+api "/agents/$agent_id/schedules" | jq '.data'
+```
 
-Keep the schedule ID and unchanged settings when retrying creation. A new ID creates another schedule.
+Look at `last_run.status` for the previous result. Use its `run_id` and the schedule's `thread_id` to [read the output](/api/workflows/conversations#read-message-history).
 
-To switch between recurring and one-time timing, send only the new `cron` or `at` field. It replaces the previous timing. Omitted fields stay unchanged. Do not send `null` to clear fields.
+Pause future submissions when you no longer need them:
 
-Deleting a schedule prevents future submissions. It does not cancel already accepted work. [Cancel that run separately](/api/workflows/runs#stop-work) if needed.
+```bash
+api "/schedules/$schedule_id" -X PATCH \
+  -H 'Content-Type: application/json' -d '{"status":"paused"}'
+```
 
-On a daemon, the host must be awake for work to run. After downtime, missed recurring runs are combined into one catch-up run.
+Check the schedule list after saving. Use `status: "active"` to resume, or `DELETE /v1/schedules/{schedule_id}` to remove it.
 
-Delivery failures can pause a schedule. A failed accepted run does not automatically pause recurring work. A one-time schedule stops submitting after acceptance, even if its run later fails. Check `last_run.status` or the saved run for the outcome.
+Pausing or deleting a schedule does not cancel work already accepted. [Cancel that run separately](/api/workflows/runs#stop-work).
+
+<Accordion title="Change the message or timing">
+  Send changed fields with `PATCH /v1/schedules/{schedule_id}`. Omitted fields stay unchanged. Do not send `null` to clear fields.
+
+  To switch between recurring and one-time timing, send only the new `cron` or `at` field. It replaces the previous timing.
+
+  Use an IANA timezone such as `Europe/Zurich`. At daylight-saving changes, skipped local times move forward by the gap. Repeated times run at their first occurrence.
+</Accordion>
+
+<Accordion title="Understand late, failed, and one-time runs">
+  The daemon host must be awake for work to run. After downtime, missed recurring runs combine into one catch-up run.
+
+  Delivery failures can pause a schedule. A failed accepted run does not automatically pause recurring work.
+
+  A one-time schedule stops submitting after acceptance, even if its run later fails. Inspect the saved run before deciding whether to request that work again.
+</Accordion>
+
+<Accordion title="Schedule endpoint reference">
+  | Method and path | Use |
+  | --- | --- |
+  | `POST /v1/agents/{agent_id}/schedules` | Create with a caller-generated UUID and exactly one of `cron` or `at`. |
+  | `GET /v1/agents/{agent_id}/schedules` | List schedules for one Agent. |
+  | `GET /v1/schedules` | List all schedules. Use `attention=true` for delivery problems. |
+  | `PATCH /v1/schedules/{schedule_id}` | Edit, pause, or resume. |
+  | `DELETE /v1/schedules/{schedule_id}` | Prevent future submissions. |
+
+  Follow numbered `pagination.page` and `pages` in list responses. The target conversation must belong to the Agent.
+</Accordion>

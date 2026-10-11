@@ -4,11 +4,19 @@ icon: folder-cog
 description: Inspect skills, organize labels, and manage runtime readiness.
 ---
 
-These operations support your conversations and Agents. They use the same Cloud account or daemon workspace as your other requests.
+Use these operations to choose skills, organize conversations, and check whether the workspace can run work.
+
+The examples use the authenticated `api` helper from [your first request](/api/first-request).
 
 ## Choose skills for an Agent
 
-Read `GET /v1/agent/skills` to find available skill names. For example, inspect a document skill before selecting it for a meeting assistant.
+List the skills already available in this workspace:
+
+```bash
+api /agent/skills | jq '.data'
+```
+
+For a meeting assistant, look for a skill that works with your document format. Use its exact name when updating the [Agent's configuration](/api/workflows/agents#improve-its-instructions).
 
 Built-in skills are already available. For a marketplace skill, read its detail and install it first. Then save its name in the [Agent's configuration](/api/workflows/agents).
 
@@ -32,7 +40,27 @@ Selecting a missing skill does not install it. Removing a skill does not remove 
 
 ## Organize with labels
 
-Create a label, then use its returned ID in a project's or thread's `label_ids`. For example, one **Customer work** label can group related conversations and projects.
+For example, mark the quickstart conversation for review. Create a label first:
+
+```bash
+label=$(api /agent/labels \
+  -H 'Content-Type: application/json' -d '{"name":"API review"}') &&
+label_id=$(printf '%s' "$label" | jq -er '.id')
+```
+
+If that label already exists, reuse its ID from `GET /v1/agent/labels`. After a lost creation response, check that list before creating another.
+
+Add the label to the conversation without removing its existing labels:
+
+```bash
+thread=$(api "/threads/$thread_id") &&
+label_body=$(printf '%s' "$thread" | jq --arg id "$label_id" \
+  '{label_ids: ((.label_ids // []) + [$id] | unique)}') &&
+api "/threads/$thread_id" -X PATCH \
+  -H 'Content-Type: application/json' -d "$label_body"
+```
+
+The updated conversation now includes this label's ID. Projects use the same `label_ids` field. Read the latest object before changing its labels.
 
 <Accordion title="Label endpoints">
   | Method and path | Use |
@@ -45,7 +73,15 @@ Create a label, then use its returned ID in a project's or thread's `label_ids`.
 
 ## Check runtime readiness
 
-Input submission starts the runtime when needed. Your integration usually needs no separate wake loop.
+Input submission starts the runtime when needed. To check readiness without sending a message:
+
+```bash
+api /agent/runtime/status | jq '{status, busy, can_wake, can_stop}'
+```
+
+Use `can_wake` and `can_stop` when offering those controls. A busy runtime can refuse a stop. Stop active work through its thread or run first. Respect `Retry-After` on temporary readiness errors.
+
+<Accordion title="Runtime endpoint reference">
 
 | Method and path | Use |
 | --- | --- |
@@ -53,7 +89,7 @@ Input submission starts the runtime when needed. Your integration usually needs 
 | `POST /v1/agent/runtime/wake` | Start if needed, then wait for readiness without sending a chat message. |
 | `POST /v1/agent/runtime/stop` | Release compute while keeping saved workspace data. |
 
-A busy runtime can refuse a stop. Stop active work through its thread or run first. Respect `Retry-After` on temporary readiness errors.
+</Accordion>
 
 <Accordion title="Reset an entire workspace">
   `POST /v1/agent/workspace/reset` is destructive. It clears conversations, projects, workspace files, and installed or custom workspace skills. It also retires schedules.

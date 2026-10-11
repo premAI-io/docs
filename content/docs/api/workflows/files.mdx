@@ -1,70 +1,100 @@
 ---
-title: Files and projects
-sidebarTitle: Files and projects
+title: Work with files
 icon: folder-kanban
-description: Upload inputs, read saved output, and protect files from conflicting edits.
+description: Attach a report, get a summary file, and edit saved content without losing another change.
 ---
 
-Files and projects belong to the authenticated workspace. You do not need a runtime ID. Use the paths returned by the API, including saved attachments.
+Give Fluso a short report and get a summary file back. This example covers upload, attachment, execution, and download.
 
-## Projects
+Use the Bash shell from [your first request](/api/first-request), plus Node 22 or later. Keep the example in its own directory.
 
-Use `/v1/projects` to list or create projects. Read, update, or delete a project at `/v1/projects/{project_id}`. Project IDs are also storage names. Keep the exact returned value when building paths.
+## Upload a report and get a summary
 
-Deleting a project deletes its conversations and files, then retires their schedules. Save needed results before deletion. See your [workspace's endpoint reference](/api#choose-your-workspace) for export and deletion behavior.
-
-## Read a text file
-
-After [setting your API URL and token](/api/first-request), use a path returned by `GET /v1/files`. Replace the example path below:
+Download the two examples from your workspace:
 
 ```bash
-curl --fail-with-body --silent --show-error --get \
-  "$FLUSO_API_URL/files/read" \
-  -H "Authorization: Bearer $FLUSO_API_TOKEN" \
-  --data-urlencode 'path=/projects/Home/files/notes.md'
+curl --fail --silent --show-error \
+  "$FLUSO_API_URL/examples/upload.mjs" -o upload.mjs &&
+curl --fail --silent --show-error \
+  "$FLUSO_API_URL/examples/attach.sh" -o attach.sh
 ```
 
-Use `GET /v1/files` to browse and `GET /v1/files/download` for file bytes. A text read includes a `revision` for safe replacement.
+Read both files before running them. The example writes `report.txt` and `summary.md` locally, so use a directory where those names are unused.
 
-## Upload a file
+```bash
+source attach.sh
+```
 
-1. Create an upload with `POST /v1/uploads`, its filename, MIME type, size, and a saved `Idempotency-Key`.
-2. Send the bytes to `upload_url` in a multipart POST. Include all returned `upload_fields` unchanged, with the file last.
-3. Confirm with `POST /v1/uploads/confirm` and `{"id":"UPLOAD_ID"}`.
-4. Read `GET /v1/uploads/{upload_id}` until it finishes.
-5. Attach its returned `target_path` to a conversation input.
+It uploads a sample report, sends it to your conversation, waits for completion, and downloads the returned attachment as `summary.md`.
 
-Do not send your Fluso bearer token to `upload_url`.
+Keep `input_path` for the uploaded report and `output_path` for the summary in your workspace. Use returned paths for future requests. Do not guess them from the prompt.
 
-A `confirmed` upload is ready to attach. `history_unavailable` also means the file was saved, but its new version was not recorded. Show that warning. For `failed`, `cancelled`, or `conflict`, inspect the saved error before starting another transfer.
+If the example stops on an error, retain its upload key and receipt. Use the recovery details below before repeating a transfer.
 
-If a request times out, read the existing upload. Starting another upload can duplicate work. Confirmed receipts do not guarantee that a file remains unchanged after later edits.
+## Download an attachment
 
-The full reference includes runnable **upload**, **attach**, and **download** examples. It also covers expired transfer credentials and recovery without another transfer.
+A saved message can contain attachments without text. Read all items for its run, then use each attachment's path:
+
+```bash
+api /files/download --get \
+  --data-urlencode "path=$output_path" --output downloaded-summary.md
+```
+
+Choose a local output name you can replace. `available: false` on an attachment means its file is no longer at that path.
 
 ## Edit without losing another change
 
-Use `PUT /v1/files/text` with `path`, `content`, and the latest `revision` to replace text. Use `overwrite: false` when creating a new file that must not replace an existing path. Add `recursive: true` if its parent directories do not exist yet.
+Read the report and its current revision:
 
-If another writer changed the file, read the new content and merge before retrying. Do not drop the revision check to force an overwrite.
+```bash
+saved=$(api /files/read --get --data-urlencode "path=$input_path") &&
+printf '%s' "$saved" | jq '{content, revision}'
+```
 
-Text writes allow 1 MiB of UTF-8 content. Text reads default to 5 MiB. Use uploads and downloads for larger or binary files.
+A revision identifies the content you read. Include it when saving your edit:
 
-<Accordion title="File history and partial results">
-  Versions and comments apply to ordinary files under `/files/` and `/projects/{project_id}/files/`, excluding hidden directories.
+```bash
+edit_body=$(printf '%s' "$saved" | jq --arg path "$input_path" \
+  '{path: $path, revision, content: (.content + "\nReviewed by me.\n")}') &&
+api /files/text -X PUT \
+  -H 'Content-Type: application/json' -d "$edit_body"
+```
 
-  Replacement refuses to lose existing history unless you explicitly permit it with `allow_history_loss: true`. Treat that option as a data-loss decision. For uploads, changing a failed request requires a new key. Retrying the old key returns its saved failure.
+If another writer changed the file, the save fails with 409. Read the new content and merge your edit. Keep the revision check.
 
-  A directory copy can partly succeed. Inspect the destination before retrying it. An attachment with `available: false` records historical output whose file is no longer at that path.
+For a new file, use `overwrite: false`. Add `recursive: true` when its parent directories do not exist. Text writes allow 1 MiB of UTF-8 content. Reads default to 5 MiB.
+
+## Projects
+
+Use `GET /v1/projects` to choose a project and `GET /v1/files` to browse its files. Project IDs are storage names. Keep their exact returned values when building paths.
+
+Deleting a project removes its conversations and files, then retires their schedules. Save or export needed results first.
+
+<Accordion title="Implement uploads in your own client">
+  1. Send `POST /v1/uploads` with the filename, MIME type, byte size, and a saved `Idempotency-Key`.
+  2. POST the bytes to `upload_url` as multipart data, with returned `upload_fields` unchanged and the file last.
+  3. Send `POST /v1/uploads/confirm` with `{"id":"UPLOAD_ID"}`.
+  4. Read `GET /v1/uploads/{upload_id}` until it finishes.
+  5. Attach the returned `target_path` to your next input.
+
+  Do not send your Fluso bearer token to `upload_url`. The downloadable example uses text files. Supply the correct MIME type for other files, such as PDFs.
+
+  `confirmed` means the file is ready. `history_unavailable` means it was saved without a new recorded version. Show that warning. For `failed`, `cancelled`, or `conflict`, inspect the saved error before another transfer.
+
+  A timeout does not prove import failure. Read the existing upload. A confirmed receipt also does not promise that later edits left its bytes unchanged.
 </Accordion>
 
-## Restore or discuss a file
+<Accordion title="History, restoration, and comments">
+  Versions and comments apply under `/files/` and `/projects/{project_id}/files/`, excluding hidden directories.
 
-Read `/v1/files/versions` to inspect saved versions before restoring one. Download a selected version through `/versions/content` with its `path` and `commit`. A missing version returns 404 instead of the current file.
+  Read `/v1/files/versions` before restoring a file. Download a version through `/v1/files/versions/content` with its `path` and `commit`. A missing version returns 404, never the current bytes.
 
-Restoring one file preserves the replaced bytes as a version first. Other files remain unchanged. If preservation fails, review the history warning before allowing any loss.
+  Restore preserves the replaced bytes as a version first. If preservation fails, review the warning before permitting `allow_history_loss: true`. Other files remain unchanged.
 
-File comments can attach a note to a quoted passage, slide, sheet range, or image region. Creating a comment does not start an Agent run.
+  The same history protection applies to writes, uploads, copies, and moves. Directory copies can partly succeed. Inspect the destination before retrying.
+
+  File comments can refer to a passage, slide, sheet range, or image region. A comment does not start an Agent run.
+</Accordion>
 
 <Accordion title="Project endpoints">
   | Method and path | Use |

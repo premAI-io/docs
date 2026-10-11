@@ -1,77 +1,109 @@
 ---
-title: Agents and configuration
-sidebarTitle: Agents and configuration
+title: Use Agents
 icon: bot
-description: Create a reusable Agent, choose its conversation, and update its instructions safely.
+description: Create a meeting assistant, give it work, and improve its saved instructions.
 ---
 
-An Agent adds saved instructions and capabilities to a conversation. Start with [API access](/api/first-request) for credentials and your workspace's complete endpoint reference.
+An Agent keeps instructions for work you repeat. This example creates a meeting assistant that turns notes into decisions and open questions.
 
-## Create an Agent
+Use the Bash shell from [your first request](/api/first-request). It provides authenticated requests through `api`.
 
-Send `POST /v1/agents` with a saved `Idempotency-Key` and a body such as:
+## Create the assistant
 
-```json
-{
+```bash
+agent_key=$(uuidgen) &&
+agent_body='{
   "name": "Meeting assistant",
-  "instructions": "Turn my notes into a short meeting brief. List decisions needed and questions still open."
-}
+  "instructions": "Turn my notes into a meeting brief. List decisions needed and open questions."
+}' &&
+agent=$(api /agents \
+  -H "Idempotency-Key: $agent_key" \
+  -H 'Content-Type: application/json' -d "$agent_body") &&
+agent_id=$(printf '%s' "$agent" | jq -er '.agent_id')
 ```
 
-Keep the returned `agent_id`. To use the Agent, send `POST /v1/threads` with that ID and an `input` message. To change its setup through conversation, also set `purpose: "manager"`.
+This saves the Agent without starting a conversation. Keep `agent_id` for later use. If the response is lost, repeat the request with the same `agent_key` and `agent_body`.
 
-Opening the same Agent and purpose returns its existing conversation. Two callers share that conversation and its queue. For independent ordinary chats, omit `agent_id`.
+## Give it work
 
-## Read the current configuration
+Send a message with that Agent's ID:
 
-`GET /v1/agents/{agent_id}` returns the Agent and its `current_config_id`. Keep that ID before editing.
-
-## Publish an update
-
-Send only the changed fields to `PATCH /v1/agents/{agent_id}`, together with the ID you read:
-
-```json
-{
-  "base_config_id": "CURRENT_CONFIG_ID",
-  "instructions": "Turn my notes into a short meeting brief. Start with the decisions I need to make."
-}
+```bash
+agent_input_key=$(uuidgen) &&
+agent_input_body=$(jq -nc --arg agent_id "$agent_id" \
+  '{agent_id: $agent_id,
+    input: ("Notes: Maya will send the revised budget on Thursday. " +
+            "We still need to choose a launch date. Prepare my meeting brief.")}') &&
+agent_receipt=$(api /threads \
+  -H "Idempotency-Key: $agent_input_key" \
+  -H 'Content-Type: application/json' -d "$agent_input_body") &&
+agent_thread_id=$(printf '%s' "$agent_receipt" | jq -er '.thread_id') &&
+agent_run_id=$(printf '%s' "$agent_receipt" | jq -er '.run_id')
 ```
 
-An old `base_config_id` returns 409 instead of overwriting another edit. Read the latest configuration, review the difference, then retry your intended change.
+Read the answer with the quickstart's helpers. The parentheses keep your original conversation IDs unchanged:
 
-The main conversation uses saved changes on its next turn. Existing work sessions retain their configuration binding. `run.execution` records the configuration, provider, model, and reasoning effort used when execution starts.
+```bash
+(
+  thread_id=$agent_thread_id
+  run_id=$agent_run_id
+  wait_for_run && read_run_items | jq '.data'
+)
+```
 
-## Select capabilities and knowledge
+Opening this Agent again returns the same main conversation. Other callers share its history and queue. To open its setup conversation, include `purpose: "manager"` in the thread request.
 
-Use skill names from [skill inventory](/api/workflows/workspace#choose-skills-for-an-agent) and connection IDs from [connection inventory](/api/workflows/connections).
+## Improve its instructions
 
-For updates, omitted `skills` or `connectors` remain unchanged. `null` removes the selection restriction. An empty list or map explicitly selects none. A connector's `allow` policy still respects account consent.
+First read the current setup. Then send your edit with its `current_config_id`:
 
-To add knowledge, upload a file or copy a workspace file through the knowledge endpoints. Save the returned reference in `knowledge_files` with the current `base_config_id`. Storage alone does not attach it to the Agent.
+```bash
+agent=$(api "/agents/$agent_id") &&
+config_id=$(printf '%s' "$agent" | jq -er '.current_config_id') &&
+edit_body=$(jq -nc --arg base "$config_id" \
+  '{base_config_id: $base,
+    instructions: ("Turn my notes into a short meeting brief. " +
+                   "Start with decisions I need to make, then open questions. " +
+                   "Do not invent owners or dates.")}') &&
+api "/agents/$agent_id" -X PATCH \
+  -H 'Content-Type: application/json' -d "$edit_body"
+```
 
-Knowledge is a copy. Editing the original workspace file does not change that copy. Each Agent accepts up to 25 knowledge files, with a 20 MiB limit per file. Send `knowledge_files: []` to remove all selected knowledge.
+A 409 means another edit arrived first. Read the newer setup and review it before retrying. The main conversation uses saved changes on its next turn. Existing work sessions keep their saved configuration.
+
+Next, [schedule this assistant](/api/workflows/schedules) using `agent_id` and `agent_thread_id`.
+
+<Accordion title="Add skills, connections, or reference files">
+  Use skill names from [skill inventory](/api/workflows/workspace#choose-skills-for-an-agent) and server IDs from [connection inventory](/api/workflows/connections).
+
+  Omitted `skills` or `connectors` stay unchanged during an update. `null` removes the selection restriction. An empty list or map selects none. Connector `allow` still respects account consent.
+
+  Upload knowledge or copy a workspace file through the knowledge endpoints below. Add the returned reference to `knowledge_files` in an update with the current `base_config_id`.
+
+  Uploading alone does not attach knowledge to the Agent. Knowledge is a copy, so later edits to the original file do not change it.
+
+  Each Agent accepts up to 25 knowledge files, each no larger than 20 MiB. Use `knowledge_files: []` to remove the selection.
+</Accordion>
 
 <Accordion title="Reasoning effort and conversation boundaries">
   Supported effort values are `off`, `minimal`, `low`, `medium`, `high`, and `xhigh`. An input's explicit effort overrides the Agent default. The runtime chooses the nearest supported effort, preferring a higher level before a lower one.
 
-  Steering without an effort preserves the active turn's setting. An explicit change takes effect at the next execution attempt. It does not restart an in-flight model call.
+  Steering without an effort keeps the active setting. An explicit change applies at the next execution attempt, without restarting an in-flight model call.
 
-  Public clients can open main and manager conversations. They cannot create Agent work sessions directly. For independent ordinary conversations, omit `agent_id`.
+  `run.execution` records the configuration, provider, model, and effort used when execution starts.
 
-  All conversations share workspace files. Use distinct output paths for concurrent jobs that must not overwrite each other.
+  Public clients open main and manager conversations, not Agent work sessions. Omit `agent_id` for independent ordinary conversations.
+
+  Conversations share workspace files. Use distinct output paths for concurrent jobs that must not overwrite each other.
 </Accordion>
 
-## Copies and sharing
+<Accordion title="Copy, share, or delete an Agent">
+  Duplication creates independent setup. Retry it with the same idempotency key to recover the original copy.
 
-Duplication creates an independent Agent. Keep the same idempotency key when retrying duplication. The retry returns the original copy.
+  [Public sharing](/api/cloud/sharing) is Cloud-only. Its snapshot excludes credentials, conversations, and schedules. After import, read `setup_requirements` and complete setup in the Manager conversation.
 
-Public sharing is Cloud-only. A shared Agent snapshot excludes credentials, conversations, and schedules. After importing, inspect `setup_requirements` and complete setup in its manager conversation. The recipient supplies credentials and consent.
-
-## Delete an Agent
-
-`DELETE /v1/agents/{agent_id}` deletes the Agent and its owned conversations and revokes its shared Agent link. Save the results you need first.
-
-For exact fields and sharing operations, use the [workspace API reference](/api#choose-your-workspace).
+  `DELETE /v1/agents/{agent_id}` removes the Agent, its owned conversations, and its schedules. It also revokes the Agent's share link. Save needed results before deletion.
+</Accordion>
 
 <Accordion title="Agent endpoints">
   | Method and path | Use |

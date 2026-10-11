@@ -5,7 +5,6 @@
     "first-request",
     "cloud",
     "daemon",
-    "workflows",
-    "architecture"
+    "workflows"
   ]
 }

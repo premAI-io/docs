@@ -1,67 +1,76 @@
 ---
-title: Conversations and results
-sidebarTitle: Conversations and results
+title: Send messages
 icon: messages-square
-description: Submit work, continue a conversation, and read the complete saved answer.
+description: Continue a conversation and read its complete answer.
 ---
 
-A **thread** is a conversation. An **input** is a message you submit. A **run** tracks the resulting work.
+Turn the answer from [your first request](/api/first-request) into a checklist. Use the same Bash shell, which already has your token, `api` helper, and conversation IDs.
 
-Start with the runnable [API quickstart](/api/first-request). These are the operations behind it.
+A **thread** is the conversation. Each message you submit is an **input**. A **run** tracks the work that follows.
 
-## Create a conversation
+## Send a follow-up
 
-Send `POST /v1/threads` with an `Idempotency-Key` and an input body:
+Save a new key and message, then send them to the existing conversation:
 
-```json
-{
-  "input": "Explain three ways to check whether a source is reliable."
-}
+```bash
+input_key=$(uuidgen) &&
+input_body='{
+  "input": "Turn those checks into a three-item checklist.",
+  "mode": "queue"
+}' &&
+receipt=$(api "/threads/$thread_id/inputs" \
+  -H "Idempotency-Key: $input_key" \
+  -H 'Content-Type: application/json' -d "$input_body") &&
+run_id=$(printf '%s' "$receipt" | jq -er '.run_id')
 ```
 
-Save the key and body before sending. The receipt returns `thread_id` and `run_id`. Use those values rather than deriving one from the other.
+The receipt identifies this new run. If the conversation is busy, `queue` waits for the current work to finish. Use `steer` to guide active work instead.
 
-To open a conversation without starting work, omit `input` and `attachments`. To use a saved Agent, include `agent_id`. Its main conversation is reused. `purpose: "manager"` opens its setup conversation.
+Keep `input_key` and `input_body` if the response is lost. [Retry those same values](/api/workflows/runs), without generating another key.
 
-## Send a message
+## Read the answer
 
-Send `POST /v1/threads/{thread_id}/inputs` with the next `input` and a new key. If the conversation is busy, use `mode: "queue"` to wait or `mode: "steer"` to guide active work.
+The quickstart's helpers wait for the run and read every output page:
 
-A retry must keep the original key and unchanged body. Reusing a key with different content returns 409. A new key means new work.
+```bash
+wait_for_run &&
+items=$(read_run_items) &&
+printf '%s' "$items" | jq '.data[] | select(.type == "message" and .role == "assistant")'
+```
 
-The **follow-up** example in your [workspace's reference](/api#choose-your-workspace) continues the quickstart conversation in the same shell.
+You receive the saved assistant messages, including any attachments. A message can contain a file without text. Use each attachment's returned path to [download its content](/api/workflows/files).
 
-## Manage queued messages
+If the run needs approval or fails, `wait_for_run` stops and prints its status. Follow [Runs and retries](/api/workflows/runs) before sending more work.
 
-Read thread state before changing queued work. An active or completed input cannot be edited as a queued message.
+## Start a separate conversation
 
-Editing an input requires a new `Idempotency-Key` for that edit. Keep it when retrying the edit. If the input started meanwhile, a 409 preserves the conflict. Keep the user's draft instead of silently submitting replacement work.
+Send `POST /v1/threads` with an `input` and a new key, as the quickstart does. Omit `input` and `attachments` to open an empty conversation.
 
-A thread stop holds follow-up inputs. Resume a held input explicitly after reviewing state.
+Include `agent_id` to use a [saved Agent](/api/workflows/agents). Its main conversation is reused. Add `purpose: "manager"` to open that Agent's setup conversation.
 
 ## Read message history
 
-Read `GET /v1/threads/{thread_id}/items?run_id={run_id}` for messages, tool results, and attachments belonging to a run. Omit the filter to read the conversation.
+For your own client, use `GET /v1/threads/{thread_id}/items?run_id={run_id}`. Omit `run_id` to read the whole conversation.
 
-Entries are in `data`. Read every page: pass `next_cursor` as `after` with the unchanged `revision`, until `next_cursor` is null. Keep filters unchanged between pages.
+Entries are in `data`. Pass `next_cursor` as `after`, with the unchanged `revision`, until `next_cursor` is null. Keep filters unchanged. The `read_run_items` helper performs these steps for you.
 
-If a snapshot edit or deletion causes a pagination conflict, discard the partial read and restart without `after` or `revision`. New messages alone do not invalidate the snapshot.
+An empty page does not prove completion. Check the [run status](/api/workflows/runs). To display progress while waiting, add [live updates](/api/workflows/streaming).
 
-Read the saved [run status](/api/workflows/runs) as well as the messages. An empty page does not prove the run finished or failed.
+<Accordion title="Handle a changing conversation or queued message">
+  Edits or deletions can invalidate an item snapshot. On a pagination conflict, discard the partial read and restart without `after` or `revision`. New messages alone do not invalidate it.
 
-## Follow live progress
+  Read thread state before editing queued work. Active or completed inputs cannot be edited as queued messages.
 
-`GET /v1/threads/{thread_id}/events` streams Server-Sent Events. Submitting with `stream: true` starts with an `input.accepted` receipt. Save it before processing later events.
+  A queued edit needs its own new `Idempotency-Key`. Keep that edit key on retries. If the input started meanwhile, keep the user's draft when the API returns 409.
 
-Streams do not replay missed events. After reconnecting, read saved state and items. Ignore unknown event types and keepalive comments. Replace temporary text with its saved item to avoid showing it twice.
+  Stopping a thread holds follow-up inputs. Review state before resuming a held input.
+</Accordion>
 
-See [live updates](/api/workflows/streaming) for a complete reconnect sequence and the runnable `watch.mjs` example.
+<Accordion title="Delete a conversation">
+  `DELETE /v1/threads/{thread_id}` stops and deletes an ordinary conversation. Save needed results first. Agent main and manager conversations require deleting their Agent instead.
 
-## Delete a conversation
-
-`DELETE /v1/threads/{thread_id}` deletes an ordinary conversation and stops its execution. Save needed results first. Agent main and manager conversations require deleting their Agent instead.
-
-Conversation deletion does not remove a separately published chat snapshot or all workspace files.
+  Conversation deletion does not remove a separately published chat snapshot or all workspace files.
+</Accordion>
 
 <Accordion title="Conversation endpoints">
   | Method and path | Use |
