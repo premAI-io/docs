@@ -94,6 +94,7 @@ Keep the current and previous package folders for recovery. Internet access is r
 Run these commands one at a time on the host. Use a new backup folder:
 
 ```bash
+mkdir -p "$HOME/fluso/backups"
 ./fluso-daemon shutdown
 ./fluso-daemon backup --backup-dir "$HOME/fluso/backups/first-backup"
 ./fluso-daemon start
@@ -101,7 +102,9 @@ Run these commands one at a time on the host. Use a new backup folder:
 
 Continue to backup only after shutdown succeeds. Shutdown refuses to interrupt active work. If backup fails, inspect the error and restart the service when ready.
 
-Keep the **encryption key and file-access settings separately**. The backup alone cannot recover an installation that has lost its key.
+The backup includes workspace files and its database. It excludes shared host folders. Back up those folders separately.
+
+Keep the **encryption key and file-access settings separately**. The backup does not contain the key needed to read saved credentials.
 
 - On macOS, the key is in the owner's Keychain.
 - On Linux, the key is in the installation's `keys` folder.
@@ -110,9 +113,11 @@ Keep the **encryption key and file-access settings separately**. The backup alon
 Backup files can contain readable documents. Store them privately and include them in your protected host backups.
 
 <Accordion title="Restore a backup">
-  Restore requires the original installation's encryption key. Stop the service, then run `./fluso-daemon restore --backup-dir /path/to/backup` and `./fluso-daemon start`.
+  Restore accepts a backup from the same installation. Keep its original encryption key available. Stop the service, then run `./fluso-daemon restore --backup-dir /path/to/backup`. Start the service after restore succeeds.
 
   Restore keeps the pre-restore data separately. You must pair clients again, restore host-file access, and explicitly resume schedules. Pending work and approvals are not resumed automatically.
+
+  If the key is lost, ask support about a credential reset. This can preserve files and conversations, but requires new credentials and connections.
 
   Ask support before moving a workspace to another machine. Copying only the project-files folder or SQLite database is not a complete migration.
 </Accordion>

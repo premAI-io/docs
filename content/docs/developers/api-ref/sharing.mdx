@@ -43,12 +43,11 @@ Review all selected contents and connection URLs before publishing. Stored authe
 {
   "name": "My release reviewer",
   "project_id": "Home",
-  "creation_id": "11111111-1111-4111-8111-111111111111",
   "published_at": "<exact value from the preview>"
 }
 ```
 
-Send a saved `Idempotency-Key` when importing. Reuse it and the unchanged body to recover an uncertain import without creating another copy. The `creation_id` field is also accepted, but must not conflict with that key. A changed snapshot returns a conflict rather than silently importing something different from the preview.
+Generate and save a new `Idempotency-Key` for each import. Reuse it and the unchanged body to recover an uncertain import without creating another copy. A changed snapshot returns a conflict rather than silently importing something different from the preview.
 
 The recipient gets independent setup and selected resource copies. Imported custom skills receive distinct names. App credentials are never inherited. Read the imported Agent's `setup_requirements`, then complete missing connections and consent in its manager conversation.
 

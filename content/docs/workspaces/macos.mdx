@@ -25,10 +25,10 @@ Use links supplied by Fluso. You do not need a GitHub account. Intel Macs are no
 Open Terminal. Replace `ARCHIVE_URL` and `CHECKSUM_URL` with the links you received, keeping the quotes:
 
 ```bash
-mkdir -p "$HOME/Downloads/fluso-daemon"
-cd "$HOME/Downloads/fluso-daemon"
-curl --fail --location 'ARCHIVE_URL' -o daemon-darwin-arm64.tar.gz
-curl --fail --location 'CHECKSUM_URL' -o daemon-darwin-arm64.sha256
+mkdir -p "$HOME/Downloads/fluso-daemon" &&
+cd "$HOME/Downloads/fluso-daemon" &&
+curl --fail --location 'ARCHIVE_URL' -o daemon-darwin-arm64.tar.gz &&
+curl --fail --location 'CHECKSUM_URL' -o daemon-darwin-arm64.sha256 &&
 shasum -a 256 -c daemon-darwin-arm64.sha256
 ```
 
@@ -37,9 +37,9 @@ Continue only if the check prints `daemon-darwin-arm64.tar.gz: OK`. If it fails,
 Replace `RELEASE_VERSION` below with the version supplied by support. Use a new folder for this release:
 
 ```bash
-mkdir -p "$HOME/fluso/releases"
+mkdir -p "$HOME/fluso/releases" &&
 mkdir "$HOME/fluso/releases/RELEASE_VERSION" &&
-  tar -xzf daemon-darwin-arm64.tar.gz -C "$HOME/fluso/releases/RELEASE_VERSION"
+tar -xzf daemon-darwin-arm64.tar.gz -C "$HOME/fluso/releases/RELEASE_VERSION" &&
 cd "$HOME/fluso/releases/RELEASE_VERSION"
 ```
 
@@ -47,7 +47,7 @@ Keep this folder in place. The executable needs the other packaged files beside 
 
 ## 3. Start your workspace
 
-Run these commands as your normal Mac user, without `sudo`:
+Run these commands one at a time as your normal Mac user, without `sudo`. If a command fails, stop and check its error:
 
 ```bash
 ./fluso-daemon setup --manage-host

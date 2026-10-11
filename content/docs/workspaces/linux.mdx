@@ -48,19 +48,19 @@ Use only links supplied by Fluso. No GitHub login, Docker, or compiler is needed
 The commands below use **ARM64**, including a suitable Pi. On x64, replace `arm64` with `x64`. Replace the two URL placeholders with your links:
 
 ```bash
-mkdir -p "$HOME/Downloads/fluso-daemon"
-cd "$HOME/Downloads/fluso-daemon"
-curl --fail --location 'ARCHIVE_URL' -o daemon-linux-arm64.tar.gz
-curl --fail --location 'CHECKSUM_URL' -o daemon-linux-arm64.sha256
+mkdir -p "$HOME/Downloads/fluso-daemon" &&
+cd "$HOME/Downloads/fluso-daemon" &&
+curl --fail --location 'ARCHIVE_URL' -o daemon-linux-arm64.tar.gz &&
+curl --fail --location 'CHECKSUM_URL' -o daemon-linux-arm64.sha256 &&
 sha256sum -c daemon-linux-arm64.sha256
 ```
 
 Continue only if the check prints `OK`. Replace `RELEASE_VERSION` with the supplied version, then extract into a new, permanent folder:
 
 ```bash
-mkdir -p "$HOME/fluso/releases"
+mkdir -p "$HOME/fluso/releases" &&
 mkdir "$HOME/fluso/releases/RELEASE_VERSION" &&
-  tar -xzf daemon-linux-arm64.tar.gz -C "$HOME/fluso/releases/RELEASE_VERSION"
+tar -xzf daemon-linux-arm64.tar.gz -C "$HOME/fluso/releases/RELEASE_VERSION" &&
 cd "$HOME/fluso/releases/RELEASE_VERSION"
 ```
 
@@ -68,7 +68,7 @@ Keep all extracted files together. Do not overwrite an installed package. Use [u
 
 ## 3. Start and configure
 
-Run as the user who will own the workspace, without `sudo`:
+Run these commands one at a time as the workspace owner, without `sudo`. If a command fails, stop and check its error:
 
 ```bash
 ./fluso-daemon setup --root "$HOME/fluso/state" --manage-host
