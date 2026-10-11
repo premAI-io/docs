@@ -1,0 +1,58 @@
+---
+title: Use Fluso Local
+sidebarTitle: Everyday use
+icon: messages-square
+description: Work with your files, return to an Agent, and keep useful work running.
+---
+
+After [setup](/workspaces/setup), you use Fluso through the same desktop app. Start with a small task and check the result before giving it more work.
+
+## Open your workspace
+
+Open **Workspaces** from the account menu. Choose **This Mac** or the remote connection you saved.
+
+Each workspace has its own conversations, Agents, files, and connections. If your Cloud chats are missing, switch to **Fluso Cloud** to see them.
+
+When you reopen the app, it starts on Cloud. Select your saved local or remote workspace again.
+
+## Start with a document
+
+Open a chat and attach a document with the **+** button, or drag it into the conversation. Try a set of meeting notes:
+
+> *"Turn these notes into a short plan for next week. Separate agreed actions from open questions. Include an owner or date only where the notes give one."*
+
+Read the answer against your notes. Continue in the same chat to correct a detail or add another document.
+
+An attachment copies the file into the selected workspace. It does not give Fluso access to the rest of your computer.
+
+## Work with a folder
+
+For files you use repeatedly, [share a folder](/workspaces/manage#share-a-folder) in workspace settings. Keep reference files read-only. Grant write access only where you want Fluso to edit files.
+
+Tell Fluso the folder path shown by the settings and what you want:
+
+> *"Review the meeting notes in this folder. Give me a short list of decisions that are still open, with the source file for each. Leave the files unchanged."*
+
+For a remote workspace, shared folders belong to the remote machine. Attach a file from your Mac when you want to copy it there.
+
+## Keep an Agent for repeat work
+
+Create an [Agent](/developers/agent-builder) in this workspace to keep instructions for a job you return to. For example, keep an assistant for reviewing your project notes.
+
+Once its results are useful, ask in the Agent's working conversation:
+
+> *"Every Friday at 4 PM in Europe/Zurich, review this project's notes. Summarize progress, open decisions, and next week's priorities here."*
+
+Use your own time and timezone. Check the saved [routine](/developers/schedules) in **Routines**. Read its results in the conversation or **Inbox**.
+
+The machine running Fluso must stay awake and connected. Closing the desktop app leaves accepted work running. After downtime, missed recurring runs are combined into one catch-up run.
+
+## Return from another location
+
+For a remote machine, reopen your [SSH tunnel](/workspaces/setup#connect-from-another-mac) or use its configured HTTPS address. Your Mac must be able to reach that machine. Pairing alone does not make a home computer reachable over the internet.
+
+Select the saved connection to return to its work. Closing the tunnel disconnects your app, but leaves work running on the remote machine.
+
+To use an external service, [connect its custom MCP server](/workspaces/manage#connect-an-app) in this workspace. Cloud app connections do not carry over.
+
+For provider changes, storage, updates, and backups, open [settings and maintenance](/workspaces/manage).

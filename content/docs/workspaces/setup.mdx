@@ -1,0 +1,206 @@
+---
+title: Set up Fluso Local
+sidebarTitle: Setup
+icon: download
+description: Install on macOS or Linux, choose a model provider, and connect Fluso.
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+Install the daemon on the machine that will run your work. You can use the same Mac as the desktop app, or connect to a separate Linux machine.
+
+You need internet access and your own model provider key. Allow at least 8 GiB of memory and 8 GiB of free disk space, plus room for files and backups.
+
+## 1. Get the download
+
+[Email support@premai.io](mailto:support@premai.io?subject=Fluso%20Local%20download) for the daemon package. Include your operating system, processor type, and whether you use Fluso or Fluso Dev.
+
+On a Mac, find these details in **Apple menu → About This Mac**. On Linux, run `uname -m` and `cat /etc/os-release`.
+
+Ask for the release version, archive URL, and matching checksum URL:
+
+| Machine | Archive | Checksum |
+| --- | --- | --- |
+| Apple Silicon Mac | `daemon-darwin-arm64.tar.gz` | `daemon-darwin-arm64.sha256` |
+| Linux ARM64 (`aarch64`) | `daemon-linux-arm64.tar.gz` | `daemon-linux-arm64.sha256` |
+| Linux x64 (`x86_64`) | `daemon-linux-x64.tar.gz` | `daemon-linux-x64.sha256` |
+
+Use links supplied by Fluso. You do not need a GitHub account, Docker, Bun, or a source checkout.
+
+## 2. Install on your machine
+
+Choose the operating system of the machine that will run Fluso:
+
+<Tabs items={['macOS', 'Linux']}>
+<Tab value="macOS">
+
+You need an **Apple Silicon Mac**. This package does not support Intel Macs.
+
+**Download and check.** Open Terminal. Replace `ARCHIVE_URL` and `CHECKSUM_URL` with your links, keeping the quotes:
+
+```bash
+mkdir -p "$HOME/Downloads/fluso-daemon" &&
+cd "$HOME/Downloads/fluso-daemon" &&
+curl --fail --location 'ARCHIVE_URL' -o daemon-darwin-arm64.tar.gz &&
+curl --fail --location 'CHECKSUM_URL' -o daemon-darwin-arm64.sha256 &&
+shasum -a 256 -c daemon-darwin-arm64.sha256
+```
+
+Continue only if the check prints `daemon-darwin-arm64.tar.gz: OK`. If it fails, download both files again from the matching release links.
+
+**Extract the package.** Replace `RELEASE_VERSION` with the version supplied by support. Use a new folder:
+
+```bash
+mkdir -p "$HOME/fluso/releases" &&
+mkdir "$HOME/fluso/releases/RELEASE_VERSION" &&
+tar -xzf daemon-darwin-arm64.tar.gz -C "$HOME/fluso/releases/RELEASE_VERSION" &&
+cd "$HOME/fluso/releases/RELEASE_VERSION"
+```
+
+Keep the whole folder in place. The executable needs the other files beside it. For later releases, use [update](/workspaces/manage#update-the-daemon).
+
+**Start and configure.** Run these commands one at a time as your normal Mac user, without `sudo`. If a command fails, stop and check its error:
+
+```bash
+./fluso-daemon setup --manage-host
+./fluso-daemon configure --apply
+./fluso-daemon status
+```
+
+Setup checks the signed package and installs a background service. Follow the prompts to choose your model provider, model, and API key. Key entry stays hidden. Prem confidential inference needs only your Prem API key.
+
+Respond to macOS Keychain or folder-access prompts. Wait for `status` to report that the workspace is ready.
+
+The service starts when you log in. Closing Fluso leaves it running. Putting the Mac to sleep pauses its work.
+
+</Tab>
+<Tab value="Linux">
+
+Use **64-bit glibc Linux with systemd**: Ubuntu 24.04, Debian 13, or newer. The packages support ARM64 and x64.
+
+The host needs **KVM**, Linux's hardware virtualization facility. A virtual machine also needs nested virtualization from its host provider.
+
+**Check access to KVM.** Run this on the Linux machine:
+
+```bash
+test -r /dev/kvm && test -w /dev/kvm && echo 'KVM access is ready'
+```
+
+If it does not print `KVM access is ready`, stop here. Ask your administrator to enable KVM and grant your user read/write access. After a group-permission change, sign out and sign in again.
+
+<Note>
+  A Raspberry Pi needs a supported 64-bit operating system and kernel with usable KVM. An ARM64 processor alone is not enough. Send your system details and KVM check to support if you are unsure.
+</Note>
+
+On Ubuntu or Debian, install the native library and download tools:
+
+```bash
+sudo apt-get update
+sudo apt-get install libcap-ng0 curl ca-certificates
+```
+
+**Download and check.** These commands use ARM64. On x64, replace every `arm64` with `x64`. Replace the two URL placeholders with your links:
+
+```bash
+mkdir -p "$HOME/Downloads/fluso-daemon" &&
+cd "$HOME/Downloads/fluso-daemon" &&
+curl --fail --location 'ARCHIVE_URL' -o daemon-linux-arm64.tar.gz &&
+curl --fail --location 'CHECKSUM_URL' -o daemon-linux-arm64.sha256 &&
+sha256sum -c daemon-linux-arm64.sha256
+```
+
+Continue only if the check prints `OK`. If it fails, download both files again from the matching release links.
+
+**Extract the package.** Replace `RELEASE_VERSION` with the supplied version. Use a new folder:
+
+```bash
+mkdir -p "$HOME/fluso/releases" &&
+mkdir "$HOME/fluso/releases/RELEASE_VERSION" &&
+tar -xzf daemon-linux-arm64.tar.gz -C "$HOME/fluso/releases/RELEASE_VERSION" &&
+cd "$HOME/fluso/releases/RELEASE_VERSION"
+```
+
+Keep all extracted files together. Do not overwrite an installed package. Use [update](/workspaces/manage#update-the-daemon) for later releases.
+
+**Start and configure.** Run these commands one at a time as the workspace owner, without `sudo`. If a command fails, stop and check its error:
+
+```bash
+./fluso-daemon setup --root "$HOME/fluso/state" --manage-host
+./fluso-daemon configure --root "$HOME/fluso/state" --apply
+./fluso-daemon status
+```
+
+Follow the prompts for your own model provider and key. Setup keeps data and keys under `~/fluso/state`, outside the package. It remembers this installation for later commands.
+
+Wait for the workspace to become ready. Setup also arranges for the user service to run after logout and at boot. If administrator approval is needed, it prints a `sudo loginctl enable-linger` command. Have your administrator run that exact command.
+
+</Tab>
+</Tabs>
+
+`--manage-host` lets the connected app change the provider, resource limits, and shared folders. You can review these in [workspace settings](/workspaces/manage).
+
+## 3. Connect Fluso
+
+Open the matching, current [Fluso desktop app](https://fluso.ai/) on your Mac and sign in.
+
+### On the same Mac
+
+1. Open **Workspaces** from the account menu. **View → Workspace settings** opens the same page.
+2. Open the workspace selector and choose **This Mac**. Complete any native confirmation.
+
+### Connect from another Mac
+
+The machine running Fluso must be reachable through SSH or HTTPS. For a Linux host, the SSH connection below is a way to start. You do not need a daemon on the Mac that connects to it.
+
+On the host, create a pairing code from the package folder:
+
+```bash
+./fluso-daemon pair --manage-host
+```
+
+Keep the code private. Each code works once and expires after ten minutes. It gives the client workspace access and permission to change host settings.
+
+On your Mac, open Terminal. Replace `USER` and `HOST` with your host login and address:
+
+```bash
+ssh -N -o ExitOnForwardFailure=yes -L 127.0.0.1:4111:127.0.0.1:4111 USER@HOST
+```
+
+Leave this terminal open. Use the same local and remote port shown by setup. The daemon checks the port in incoming requests.
+
+1. Open **Workspaces** in the current Fluso desktop app.
+2. Under **Connect a remote workspace**, enter a name, such as `Home server`.
+3. Enter `http://127.0.0.1:4111` as the **Workspace URL**, then paste the pairing code.
+4. Select **Connect**.
+
+Closing the tunnel disconnects the client. It does not stop work on the host. Reopen the tunnel to reconnect. Pairing remains valid unless revoked or unused for 30 days.
+
+<Accordion title="Port 4111 is already in use on my Mac">
+  A Mac daemon or another tunnel may already use that port. For a new host installation, choose two free ports during setup, for example `--port 4211 --control-port 4212`.
+
+  Forward `127.0.0.1:4211` to `127.0.0.1:4211` and use port `4211` in the workspace URL. For an existing host, stop its service before repeating setup with changed ports. Keep its original `--root`.
+</Accordion>
+
+<Accordion title="Use a permanent HTTPS address instead">
+  For a host with DNS and a trusted TLS certificate, add `--public-origin https://workspace.example.com` during setup. Put an HTTPS reverse proxy in front of port `4111`.
+
+  The proxy must preserve the requested Host, support streamed responses, and block `/control/*`. Keep both daemon ports on loopback. Port `4112` is private runtime control. Configure OAuth callbacks for the final HTTPS origin.
+
+  Use the HTTPS URL and a fresh pairing code in Fluso. Ordinary remote HTTP is not accepted. Ask support for help if you do not manage this infrastructure.
+</Accordion>
+
+## 4. Try your first task
+
+Open a chat in the selected workspace. Attach a short document and ask Fluso to summarize its main points.
+
+Your Cloud conversations stay in Cloud. This workspace has its own data. Continue with [Use Fluso Local](/workspaces/use) for files, Agents, and routines.
+
+<Accordion title="The workspace is missing or not ready">
+  From the package folder, run `./fluso-daemon status` and `./fluso-daemon doctor`. Use `./fluso-daemon info` to see its paths and API address.
+
+  Start a stopped service with `./fluso-daemon start`. If configuration is missing, rerun `./fluso-daemon configure --apply`.
+
+  In **Workspaces**, refresh the workspace list. A release mismatch requires a compatible desktop app and daemon. Changing the data directory does not fix it. Keep the original data and keys when diagnosing an existing installation.
+
+  If macOS cannot verify the developer, use **System Settings → Privacy & Security → Open Anyway** only for the package supplied by Fluso. Follow [Apple's instructions](https://support.apple.com/en-us/102445) after checking the download. For a damaged-file or malware warning, contact support with the exact message.
+</Accordion>

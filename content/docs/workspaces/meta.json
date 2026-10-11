@@ -2,10 +2,10 @@
   "pages": [
     "!index",
     "[monitor][Overview](/workspaces)",
-    "!macos",
-    "[laptop][macOS setup](/workspaces/macos)",
-    "!linux",
-    "[server][Linux and Raspberry Pi](/workspaces/linux)",
+    "!setup",
+    "[download][Setup](/workspaces/setup)",
+    "!use",
+    "[messages-square][Everyday use](/workspaces/use)",
     "!manage",
     "[settings-2][Settings and maintenance](/workspaces/manage)"
   ]

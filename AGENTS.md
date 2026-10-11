@@ -17,12 +17,12 @@ The navigation keeps Home first and sorts the top-level sections alphabetically.
 - **App setup** - `/integrations/{github, gmail, google-calendar, slack}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
 - **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
 - **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.
+- **Fluso Local** - `/workspaces/*`. Setup and everyday use on your own machine, followed by settings and maintenance. Keep macOS and Linux as choices inside one setup guide. Request daemon download links from support; do not publish unlisted release URLs. Account API access starts at `/developers/api-ref/authentication`; full endpoint reference is served at each workspace's `/docs`.
 - **Get started** - `/going-deeper`, `/introduction`, `/quickstart`. These pages explain the path from first setup to daily use.
 - **Reference** - `/resources/{faq, legal, pricing}`. Legal links to the terms of service at `https://fluso.ai/terms` and privacy policy at `https://fluso.ai/privacy`; do not duplicate the policies in the docs.
 - **Release notes** - `/release-notes`. Customer-facing changes, newest first.
 - **Remote access** - `/remote/*`. Ways to use Fluso away from the desktop app.
 - **Workflows** - `/workflows/*`. Six concrete stories: bug-to-PR, content launch, knowledge recall, meetings, morning brief, and research-to-deck.
-- **Workspaces** - `/workspaces/*`. Independent daemon setup on macOS and Linux, provider and file access, updates, backups, and recovery. Request download links from support; do not publish unlisted release URLs. Account API access starts at `/developers/api-ref/authentication`; full endpoint reference is served at each workspace's `/docs`.
 
 The home page (`/`) is a router into the journey, with three sections: just landed, already set up, daily user.
 

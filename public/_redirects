@@ -40,3 +40,9 @@
 /developers/architecture /developers/api-ref/architecture 301
 /developers/architecture/ /developers/api-ref/architecture 301
 /llms.mdx/docs/developers/architecture/content.md /llms.mdx/docs/developers/api-ref/architecture/content.md 301
+/workspaces/macos /workspaces/setup 301
+/workspaces/macos/ /workspaces/setup 301
+/workspaces/linux /workspaces/setup 301
+/workspaces/linux/ /workspaces/setup 301
+/llms.mdx/docs/workspaces/macos/content.md /llms.mdx/docs/workspaces/setup/content.md 301
+/llms.mdx/docs/workspaces/linux/content.md /llms.mdx/docs/workspaces/setup/content.md 301

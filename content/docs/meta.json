@@ -12,6 +12,8 @@
     "[server-cog][Overview](/deployment-models)",
     "---Features---",
     "...features",
+    "---Fluso Local---",
+    "...workspaces",
     "---Get started---",
     "going-deeper",
     "introduction",
@@ -25,8 +27,6 @@
     "---Remote access---",
     "...remote",
     "---Workflows---",
-    "...workflows",
-    "---Workspaces---",
-    "...workspaces"
+    "...workflows"
   ]
 }

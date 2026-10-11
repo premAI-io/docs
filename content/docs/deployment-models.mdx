@@ -10,7 +10,7 @@ Your deployment model decides who operates Fluso and where its runtime, durable 
 | Model | Availability | Operations |
 | --- | --- | --- |
 | Fluso Cloud | Available | Managed by Fluso |
-| Personal daemon | Contact Fluso for a matching Mac or Linux package | You operate one owner's workspace |
+| Fluso Local | Contact Fluso for a matching Mac or Linux package | You operate one owner's workspace |
 | Dedicated AWS VPC | Supported for scoped Enterprise deployments | Responsibilities agreed during deployment design |
 | Azure VNet | Coming soon | Not available today |
 | On-premises | Scoped Enterprise engagement | Responsibilities agreed before implementation |
@@ -21,11 +21,11 @@ Fluso Cloud is the standard managed service. It runs on AWS with European hostin
 
 Choose it when you want to start without operating infrastructure. See [Legal](/resources/legal) for Fluso's privacy policy.
 
-## A workspace on your machine
+## Fluso Local
 
 Install the daemon to run one owner's workspace on an Apple Silicon Mac or a supported Linux host. Conversations and files stay on that host. You manage its provider credentials, service, updates, and backups.
 
-The desktop app connects to this workspace; it does not install or update the daemon. This is separate from an Enterprise deployment of the whole platform. Start with [macOS setup](/workspaces/macos) or [Linux and Raspberry Pi setup](/workspaces/linux).
+The desktop app connects to this workspace. It does not install or update the daemon. This is separate from an Enterprise deployment of the whole platform. Start with [Set up Fluso Local](/workspaces/setup).
 
 ## Dedicated AWS VPC
 
@@ -66,7 +66,7 @@ Traces can include prompt and response text. For a dedicated or on-premises depl
 ## Choose a model
 
 - Start with Fluso Cloud when managed operations and European hosting meet the requirement.
-- Use a [personal daemon](/workspaces) when you want to operate a workspace on your own machine.
+- Use [Fluso Local](/workspaces) when you want to operate a workspace on your own machine.
 - Scope an AWS VPC deployment when you need a dedicated AWS network boundary.
 - Treat Azure VNet as future availability, not a current option.
 - Scope on-premises only after Fluso validates the infrastructure, residency, provider, telemetry, and support requirements.
