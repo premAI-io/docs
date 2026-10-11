@@ -36,10 +36,14 @@ Use an IANA timezone. At daylight-saving changes, skipped local times move forwa
 | Edit or pause | `PATCH /v1/schedules/{schedule_id}` |
 | Delete | `DELETE /v1/schedules/{schedule_id}` |
 
-List responses include last-run information. Follow numbered `pagination.page` and `pages`. Use `attention=true` on `/v1/schedules` to find schedules needing review. Pause with `{"status":"paused"}` or resume with `{"status":"active"}` through PATCH. Read the schedule again to confirm its saved state.
+List responses include last-run information. Follow numbered `pagination.page` and `pages`. Use `attention=true` on `/v1/schedules` to find schedules needing review. Pause with `{"status":"paused"}` or resume with `{"status":"active"}` through PATCH. Check its entry in the schedule list after saving.
 
-Keep the schedule ID and unchanged settings when retrying creation. A new ID creates another schedule. To change between recurring and one-time timing, supply exactly one of `cron` or `at`.
+Keep the schedule ID and unchanged settings when retrying creation. A new ID creates another schedule.
+
+To switch between recurring and one-time timing, send only the new `cron` or `at` field. It replaces the previous timing. Omitted fields stay unchanged. Do not send `null` to clear fields.
 
 Deleting a schedule prevents future submissions. It does not cancel already accepted work. [Cancel that run separately](/api/workflows/runs#stop-work) if needed.
 
-On a daemon, the host must be awake for work to run. After downtime, missed recurring runs are combined into one catch-up run. Failed scheduled work can pause the schedule for attention.
+On a daemon, the host must be awake for work to run. After downtime, missed recurring runs are combined into one catch-up run.
+
+Delivery failures can pause a schedule. A failed accepted run does not automatically pause recurring work. A one-time schedule stops submitting after acceptance, even if its run later fails. Check `last_run.status` or the saved run for the outcome.
