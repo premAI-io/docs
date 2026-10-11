@@ -2,146 +2,42 @@
 title: Schedules
 sidebarTitle: Schedules
 icon: calendar-clock
-description: Create, inspect, pause, and delete Agent schedules.
+description: Schedule Agent work once or repeatedly, and manage future runs.
 ---
 
-The UI calls these records **routines**. A schedule belongs to an Agent and one of that Agent's existing threads. Supply exactly one timing field: a five-field `cron` expression or a future `at` timestamp with an offset. `timezone` must be an IANA time zone.
-
-See [Threads and messages](/developers/api-ref/threads-and-messages) for the target thread and [Runs](/developers/api-ref/runs) for execution state.
-
-## List schedules
-
-<Endpoint method="GET" path="/v1/agents/{agentId}/schedules" />
-
-Returns schedules for an Agent, optionally filtered by thread.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules?threadId=thread_agent_release&page=1&limit=100" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```json title="Response: 200"
-{
-  "schedules": [
-    {
-      "id": "11111111-1111-4111-8111-111111111111",
-      "agentId": "agt_0123456789ab4def8123456789abcdef",
-      "threadId": "thread_agent_release",
-      "message": "Review the release candidate",
-      "cron": "0 9 * * 1-5",
-      "timezone": "Asia/Kolkata",
-      "status": "active",
-      "pauseReason": null,
-      "nextRunAt": "2026-09-01T03:30:00Z",
-      "attempts": 0,
-      "createdAt": "2026-08-31T09:00:00Z",
-      "updatedAt": "2026-08-31T09:00:00Z",
-      "firedAt": null,
-      "lastRun": null
-    }
-  ],
-  "pagination": { "page": 1, "limit": 100, "total": 1, "pages": 1 }
-}
-```
+A schedule sends a message to an Agent's conversation. The app calls these schedules **routines**.
 
 ## Create a schedule
 
-<Endpoint method="POST" path="/v1/agents/{agentId}/schedules" />
+Send `POST /v1/agents/{agent_id}/schedules` with a new UUID as `id`. Keep that ID when retrying creation.
 
-Creates a recurring or one-time schedule. The caller supplies a UUID so retries can be idempotent.
+For a weekday morning brief:
 
-```bash title="Request"
-curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules" \
-  -X POST \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "id": "11111111-1111-4111-8111-111111111111",
-    "threadId": "thread_agent_release",
-    "message": "Review the release candidate",
-    "cron": "0 9 * * 1-5",
-    "timezone": "Asia/Kolkata"
-  }'
-```
-
-For a durable one-time schedule, replace `cron` with an offset-bearing `at` value:
-
-```json title="One-time timing fields"
+```json
 {
-  "at": "2030-01-15T09:00:00+05:30",
-  "timezone": "Asia/Kolkata"
-}
-```
-
-```json title="Response: 201"
-{
-  "id": "11111111-1111-4111-8111-111111111111",
-  "agentId": "agt_0123456789ab4def8123456789abcdef",
-  "threadId": "thread_agent_release",
-  "message": "Review the release candidate",
+  "id": "REPLACE_WITH_NEW_UUID",
+  "thread_id": "AGENT_THREAD_ID",
+  "message": "Prepare a short morning brief. Start with what needs my attention today.",
   "cron": "0 9 * * 1-5",
-  "timezone": "Asia/Kolkata",
-  "status": "active",
-  "pauseReason": null,
-  "nextRunAt": "2026-09-01T03:30:00Z",
-  "attempts": 0,
-  "createdAt": "2026-08-31T09:00:00Z",
-  "updatedAt": "2026-08-31T09:00:00Z",
-  "firedAt": null,
-  "lastRun": null
+  "timezone": "Europe/Zurich"
 }
 ```
 
-Choose an `at` value in the future at submission time. Replaying the same ID and body while the schedule is live returns the existing schedule with `200`. Reusing the live ID with different fields returns a conflict. After a one-time schedule fires or a schedule is deleted, that ID returns `410` for 24 hours.
+The conversation must belong to that Agent. Supply exactly one of `cron` or `at`. For a one-time run, use a future `at` timestamp with a UTC offset instead of `cron`.
 
-## Pause or edit a schedule
+Use an IANA timezone. At daylight-saving changes, skipped local times move forward by the gap. Repeated times run at their first occurrence.
 
-<Endpoint method="PATCH" path="/v1/agents/{agentId}/schedules/{scheduleId}" />
+## Review and change future work
 
-Updates submitted fields. `threadId` is always required to guard the target.
+| Action | Endpoint |
+| --- | --- |
+| List all schedules | `GET /v1/schedules` |
+| List one Agent's schedules | `GET /v1/agents/{agent_id}/schedules` |
+| Edit or pause | `PATCH /v1/schedules/{schedule_id}` |
+| Delete | `DELETE /v1/schedules/{schedule_id}` |
 
-```bash title="Request"
-curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules/11111111-1111-4111-8111-111111111111" \
-  -X PATCH \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{"threadId":"thread_agent_release","status":"paused"}'
-```
+List responses include last-run information. Use the fields in your [workspace's full reference](/developers/api-ref/authentication#choose-your-workspace) to edit the message, timing, or status.
 
-```json title="Response: 200, selected fields"
-{
-  "id": "11111111-1111-4111-8111-111111111111",
-  "agentId": "agt_0123456789ab4def8123456789abcdef",
-  "threadId": "thread_agent_release",
-  "status": "paused",
-  "nextRunAt": "2026-09-01T03:30:00Z"
-}
-```
+Deleting a schedule prevents future submissions. It does not cancel already accepted work. [Cancel that run separately](/developers/api-ref/runs#stop-work) if needed.
 
-## Delete a schedule
-
-<Endpoint method="DELETE" path="/v1/agents/{agentId}/schedules/{scheduleId}" />
-
-Deletes a schedule after matching it to the supplied thread.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agents/agt_0123456789ab4def8123456789abcdef/schedules/11111111-1111-4111-8111-111111111111?threadId=thread_agent_release" \
-  -X DELETE \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```http title="Response"
-HTTP/1.1 204 No Content
-```
-
-## Delivery behavior
-
-Each occurrence has a stable request ID and enters the target as `followUp`. Acceptance means queued or admitted, not completed. Another occurrence of the same recurring schedule waits while the prior request is queued, running, or held for approval.
-
-Temporary delivery failures retry with delays. 24 failed delivery attempts pause the schedule. Refused requests and invariant conflicts can pause it immediately. Usage limits defer delivery. Editing or pausing a schedule does not cancel a request already admitted.
-
-One-time schedules retire when accepted, even if the later Agent run fails. Deleting the target thread or Agent removes its schedules. See [Routines](/developers/schedules) for the user workflow and timezone controls.
-
-## Next
-
-Inspect each execution in [Runs](/developers/api-ref/runs), or manage the target in [Threads and messages](/developers/api-ref/threads-and-messages).
+On a daemon, the host must be awake for work to run. After downtime, missed recurring runs are combined into one catch-up run. Failed scheduled work can pause the schedule for attention.

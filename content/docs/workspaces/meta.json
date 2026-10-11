@@ -1,0 +1,12 @@
+{
+  "pages": [
+    "!index",
+    "[monitor][Overview](/workspaces)",
+    "!macos",
+    "[laptop][macOS setup](/workspaces/macos)",
+    "!linux",
+    "[server][Linux and Raspberry Pi](/workspaces/linux)",
+    "!manage",
+    "[settings-2][Settings and maintenance](/workspaces/manage)"
+  ]
+}

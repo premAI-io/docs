@@ -3,14 +3,14 @@
   "icon": "code-xml",
   "defaultOpen": false,
   "pages": [
-    "architecture",
     "authentication",
-    "agents-and-versions",
     "threads-and-messages",
+    "agents-and-versions",
+    "files-and-projects",
     "schedules",
     "runs",
-    "files-and-projects",
     "sharing",
-    "usage"
+    "usage",
+    "architecture"
   ]
 }

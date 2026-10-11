@@ -22,6 +22,7 @@ The navigation keeps Home first and sorts the top-level sections alphabetically.
 - **Release notes** - `/release-notes`. Customer-facing changes, newest first.
 - **Remote access** - `/remote/*`. Ways to use Fluso away from the desktop app.
 - **Workflows** - `/workflows/*`. Six concrete stories: bug-to-PR, content launch, knowledge recall, meetings, morning brief, and research-to-deck.
+- **Workspaces** - `/workspaces/*`. Independent daemon setup on macOS and Linux, provider and file access, updates, backups, and recovery. Request download links from support; do not publish unlisted release URLs. Account API access starts at `/developers/api-ref/authentication`; full endpoint reference is served at each workspace's `/docs`.
 
 The home page (`/`) is a router into the journey, with three sections: just landed, already set up, daily user.
 

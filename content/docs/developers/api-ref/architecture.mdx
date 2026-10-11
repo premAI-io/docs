@@ -48,4 +48,6 @@ A dropped stream does not prove a run failed. The client reconciles with saved h
 
 Use conversation history, routine state, and [run status](/developers/api-ref/runs) to distinguish queued work, approval waits, failures, and completed output. Avoid resubmitting an uncertain operation under a new ID without checking it.
 
-See [Authentication](/developers/api-ref/authentication) for the current beta API boundary.
+A [daemon workspace](/workspaces) runs the gateway and runtime on one owner's host. It stores its own account state and files. The desktop connects to it through authenticated native transport. Switching to Cloud does not move that data.
+
+See [API access](/developers/api-ref/authentication) for developer tokens, daemon pairing, and the account API reference.

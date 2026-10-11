@@ -1,233 +1,59 @@
 ---
 title: Files and projects
-sidebarTitle: Files & projects
+sidebarTitle: Files and projects
 icon: folder-kanban
-description: Work with durable project metadata and files in a user's Agent workspace.
+description: Upload inputs, read saved output, and protect files from conflicting edits.
 ---
 
-Workspace projects and files use the `/v1/agent/*` routes. They belong to the authenticated user's durable workspace, outside disposable runtime compute.
+Files and projects belong to the authenticated workspace. You do not need a runtime ID. Use the paths returned by the API, including saved attachments.
 
-An [Agent](/developers/api-ref/agents-and-versions) places its main conversation in the configured project when that conversation is first created. Changing its setup later does not move existing conversations.
+## Projects
 
-## List projects
+Use `/v1/projects` to list or create projects. Read, update, or delete a project at `/v1/projects/{project_id}`. Project IDs are also storage names. Keep the exact returned value when building paths.
 
-<Endpoint method="GET" path="/v1/agent/projects" />
-
-Returns workspace projects and their thread summaries.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agent/projects?includeArchived=false" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```json title="Response: 200"
-{
-  "projects": [
-    {
-      "name": "Release Review",
-      "goal": "Decide launch readiness",
-      "createdAt": "2026-08-31T09:00:00Z",
-      "updatedAt": "2026-08-31T09:00:00Z",
-      "threads": []
-    }
-  ]
-}
-```
-
-## Create a project
-
-<Endpoint method="POST" path="/v1/agent/projects" />
-
-Creates a workspace project and its context file.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agent/projects" \
-  -X POST \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "name": "Release Review",
-    "goal": "Decide launch readiness",
-    "instructions": "Keep evidence and decisions in this project."
-  }'
-```
-
-```json title="Response: 201"
-{
-  "name": "Release Review",
-  "goal": "Decide launch readiness",
-  "instructions": "Keep evidence and decisions in this project.",
-  "createdAt": "2026-08-31T09:00:00Z",
-  "updatedAt": "2026-08-31T09:00:00Z",
-  "threads": []
-}
-```
-
-## Update a project
-
-<Endpoint method="PATCH" path="/v1/agent/projects" />
-
-Updates the project named in the request body.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agent/projects" \
-  -X PATCH \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "name": "Release Review",
-    "goal": "Decide launch readiness and record follow-up owners"
-  }'
-```
-
-```json title="Response: 200, selected fields"
-{
-  "name": "Release Review",
-  "goal": "Decide launch readiness and record follow-up owners",
-  "updatedAt": "2026-08-31T09:05:00Z",
-  "threads": []
-}
-```
-
-## Export a project
-
-<Endpoint method="GET" path="/v1/agent/projects/export" />
-
-Streams the named project as a ZIP archive.
-
-```bash title="Request"
-curl -G "$FLUSO_API/v1/agent/projects/export" \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  --data-urlencode 'name=Release Review' \
-  -o release-review.zip
-```
-
-```http title="Response"
-HTTP/1.1 200 OK
-Content-Type: application/zip
-Content-Disposition: attachment; filename="Release Review.zip"; filename*=UTF-8''Release%20Review.zip
-```
-
-## List files
-
-<Endpoint method="GET" path="/v1/agent/files" />
-
-Lists files or directories under a workspace path.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agent/files?path=/files&recursive=false&includeStats=true" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
-
-```json title="Response: 200"
-{
-  "path": "/files",
-  "recursive": false,
-  "entries": [
-    {
-      "path": "/files/release-brief.md",
-      "name": "release-brief.md",
-      "type": "file",
-      "size": 1240,
-      "modifiedAt": "2026-08-31T09:00:00Z",
-      "mimeType": "text/markdown"
-    }
-  ]
-}
-```
+Deleting a project deletes its conversations and files, then retires their schedules. Save needed results before deletion. See your [workspace's endpoint reference](/developers/api-ref/authentication#choose-your-workspace) for export and deletion behavior.
 
 ## Read a text file
 
-<Endpoint method="GET" path="/v1/agent/files/read" />
+After [setting your API URL and token](/developers/api-ref/authentication), run:
 
-Returns a UTF-8 text file as JSON.
-
-```bash title="Request"
-curl -G "$FLUSO_API/v1/agent/files/read" \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  --data-urlencode 'path=/files/release-brief.md'
+```bash
+curl --fail-with-body --silent --show-error --get \
+  "$FLUSO_API_URL/files/read" \
+  -H "Authorization: Bearer $FLUSO_API_TOKEN" \
+  --data-urlencode 'path=/projects/Home/files/notes.md'
 ```
 
-```json title="Response: 200"
-{
-  "path": "/files/release-brief.md",
-  "content": "# Release candidate\n\nKnown issue: ...\n",
-  "encoding": "utf-8"
-}
-```
+Use `GET /v1/files` to browse and `GET /v1/files/download` for file bytes. A text read includes a `revision` for safe replacement.
 
 ## Upload a file
 
-The current client uploads to temporary object storage, then confirms an import into the workspace. The older multipart `/v1/agent/files/upload` route is deprecated.
+1. Create an upload with `POST /v1/uploads`, its filename, MIME type, size, and a saved `Idempotency-Key`.
+2. Send the bytes to `upload_url` in a multipart POST. Include all returned `upload_fields` unchanged, with the file last.
+3. Confirm with `POST /v1/uploads/confirm` and `{"id":"UPLOAD_ID"}`.
+4. Read `GET /v1/uploads/{upload_id}` until it finishes.
+5. Attach its returned `target_path` to a conversation input.
 
-1. `POST /v1/files/upload/presigned-url/get` with the file name, MIME type, size in bytes, and optional destination.
-2. POST the returned `upload_fields` and file bytes as multipart form data to `upload_url`. The file is the last field. Do not send your Fluso bearer token to that storage URL.
-3. `POST /v1/files/upload/presigned-url/confirm` with `{"id": "<returned upload id>"}`.
-4. Poll `GET /v1/files` for upload tracking and verify the destination file after the import finishes.
+Do not send your Fluso bearer token to `upload_url`.
 
-```json title="Presign body"
-{
-  "file_name": "release-brief.md",
-  "mime_type": "text/markdown",
-  "file_size": 1240,
-  "target_path": "/projects/Home/files/release-brief.md",
-  "expected_revision": "missing"
-}
-```
+A `confirmed` upload is ready to attach. `history_unavailable` also means the file was saved, but its new version was not recorded. Show that warning. For `failed`, `cancelled`, or `conflict`, inspect the saved error before starting another transfer.
 
-Use the actual byte count. `expected_revision: "missing"` requires that no file exists at the destination when the import commits. To edit an existing file, supply its current revision hash. Omitting the field allows ordinary replacement in import order.
+If a request times out, read the existing upload. Starting another upload can duplicate work. Confirmed receipts do not guarantee that a file remains unchanged after later edits.
 
-Confirmation queues the import. It does not mean the file is already saved. Tracking rows remain for in-progress uploads, failures, and undismissed history warnings. Successful imports without warnings leave that tracking list.
+The full reference includes runnable **upload**, **attach**, and **download** examples. It also covers expired transfer credentials and recovery without another transfer.
 
-An account can have at most four pending uploads. A fifth presign request returns `429`. Confirm active uploads before requesting more. For an abandoned upload, use `DELETE /v1/files/upload/presigned-url/cancel/{id}` to cancel its pending record. Removing an attachment from the composer is not proof that the upload record was cancelled.
+## Edit without losing another change
 
-If the destination changed, reread it before saving again. If prior file history cannot be preserved, inspect the reported failure or warning rather than treating the operation as a normal versioned save. Agent knowledge uses its [separate attach-and-save flow](/developers/api-ref/agents-and-versions#attach-knowledge).
+Use `PUT /v1/files/text` with `path`, `content`, and the latest `revision` to replace text. Use `overwrite: false` when creating a new file that must not replace an existing path.
 
-## Download a file
+If another writer changed the file, read the new content and merge before retrying. Do not drop the revision check to force an overwrite.
 
-<Endpoint method="GET" path="/v1/agent/files/download" />
+Text writes allow 1 MiB of UTF-8 content. Text reads default to 5 MiB. Use uploads and downloads for larger or binary files.
 
-Streams a file with attachment headers.
+<Accordion title="File history and partial results">
+  Versions and comments apply to ordinary files under `/files/` and `/projects/{project_id}/files/`, excluding hidden directories.
 
-```bash title="Request"
-curl -G "$FLUSO_API/v1/agent/files/download" \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  --data-urlencode 'path=/files/release-report.pdf' \
-  -o release-report.pdf
-```
+  Replacement refuses to lose existing history unless you explicitly permit it with `allow_history_loss: true`. Treat that option as a data-loss decision. For uploads, changing a failed request requires a new key. Retrying the old key returns its saved failure.
 
-```http title="Response"
-HTTP/1.1 200 OK
-Content-Type: application/pdf
-Content-Disposition: attachment; filename="release-report.pdf"; filename*=UTF-8''release-report.pdf
-```
-
-## Delete a file
-
-<Endpoint method="DELETE" path="/v1/agent/files" />
-
-Deletes one file, or a directory when `recursive=true`.
-
-```bash title="Request"
-curl -G "$FLUSO_API/v1/agent/files" \
-  -X DELETE \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  --data-urlencode 'path=/files/release-brief.md' \
-  --data 'recursive=false'
-```
-
-```json title="Response: 200"
-{
-  "success": true,
-  "path": "/files/release-brief.md"
-}
-```
-
-<Warning>
-  A recursive directory delete removes every child path. List the target first
-  when its contents are not already known.
-</Warning>
-
-## Next
-
-Read [Projects](/features/projects) for the product workflow, choose a project for [Agents](/developers/api-ref/agents-and-versions), or create project-bound [Threads and messages](/developers/api-ref/threads-and-messages).
+  A directory copy can partly succeed. Inspect the destination before retrying it. An attachment with `available: false` records historical output whose file is no longer at that path.
+</Accordion>

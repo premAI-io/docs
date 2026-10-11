@@ -1,73 +1,56 @@
 ---
-title: Threads and messages
-sidebarTitle: Threads and messages
+title: Conversations and results
+sidebarTitle: Conversations and results
 icon: messages-square
-description: Open an Agent's main conversation, send a turn, and read durable history.
+description: Submit work, continue a conversation, and read the complete saved answer.
 ---
 
-A thread is a conversation stored in a project. Agent-owned conversations have a saved Agent binding. An ordinary chat cannot be converted by adding an Agent ID to a later message.
+A **thread** is a conversation. An **input** is a message you submit. A **run** tracks the resulting work.
 
-Each Agent has one main conversation and a separate Manager. Delegated sessions are created by the Agent's session tools. Do not create a new top-level thread for every message.
+Start with the runnable [API quickstart](/developers/api-ref/authentication#try-a-complete-request). These are the operations behind it.
 
-## Open the main conversation
+## Create a conversation
 
-<Endpoint method="POST" path="/v1/threads" />
+Send `POST /v1/threads` with an `Idempotency-Key` and an input body:
 
-Use the Agent's configured project and its ID in `metadata`. Omit `thread_id` to let repeated opens resolve to the existing main conversation.
-
-```bash
-curl "$FLUSO_API/v1/threads" \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "project_id": "Home",
-    "metadata": {"agentId": "<agentId from GET /v1/agents>"}
-  }'
+```json
+{
+  "input": "Explain three ways to check whether a source is reliable."
+}
 ```
 
-Use the returned `thread_id` and `project_id`, including when they refer to an existing conversation. Adding `"role": "manager"` to the creation metadata opens that Agent's Manager instead. Ordinary thread creation omits the Agent metadata.
+Save the key and body before sending. The receipt returns `thread_id` and `run_id`. Use those values rather than deriving one from the other.
+
+To open a conversation without starting work, omit `input` and `attachments`. To use a saved Agent, include `agent_id`. Its main conversation is reused. `purpose: "manager"` opens its setup conversation.
 
 ## Send a message
 
-<Endpoint method="POST" path="/v1/chat" />
+Send `POST /v1/threads/{thread_id}/inputs` with the next `input` and a new key. If the conversation is busy, use `mode: "queue"` to wait or `mode: "steer"` to guide active work.
 
-```bash
-curl -N "$FLUSO_API/v1/chat" \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "threadId": "<returned thread_id>",
-    "projectName": "<returned project_id>",
-    "agentId": "<agentId>",
-    "requestId": "<unique ID for this intended turn>",
-    "message": "Review the release evidence already in this project.",
-    "streamingBehavior": "followUp"
-  }'
-```
+A retry must keep the original key and unchanged body. Reusing a key with different content returns 409. A new key means new work.
 
-The response uses the AI SDK UI message stream over SSE. A request can be queued, running, or held for approval before it settles. Stream acceptance is not completion. Use [Runs](/developers/api-ref/runs) and persisted history to recover after a disconnect.
-
-Use the same `requestId` when checking or retrying an ambiguous submission, with the same request content. Use a new ID for a genuinely new turn.
-
-`followUp` queues a separate turn if work is active. `steer` brings new input into the active turn where compatible, or starts it when idle. Input with a different saved Agent configuration must wait for its own turn. Do not assume every queued message can be steered.
-
-## Read and organize conversations
-
-| Method and path | Behavior |
-| --- | --- |
-| `GET /v1/threads?page=1&limit=20` | General chat list. Excludes Agent-owned conversations |
-| `GET /v1/agents/{agentId}/chats` | Agent conversations, including `isOrchestrator`, `createdByThreadId`, `previousConfig`, `forked`, and `role` |
-| `GET /v1/threads/{threadId}?project_id=Home` | Thread metadata |
-| `GET /v1/threads/{threadId}/messages?project_id=Home` | Persisted messages and tool-status projections |
-| `PATCH /v1/threads/{threadId}?project_id=Home` | Title, supported metadata, pin, archive state, or labels |
-| `DELETE /v1/threads/{threadId}?project_id=Home` | Delete an eligible thread and its schedules |
-
-Thread and message responses use snake_case. Message `content` and `metadata` can contain serialized JSON. Parse them before reading their fields.
+The **follow-up** example in your [workspace's reference](/developers/api-ref/authentication#choose-your-workspace) continues the quickstart conversation in the same shell.
 
 ## Read message history
 
-Use the messages endpoint above when reconnecting or keeping a copy of a conversation. Routine metadata identifies its scheduled origin. Collapsing it in the UI does not remove its full instructions from history.
+Read `GET /v1/threads/{thread_id}/items?run_id={run_id}` for messages, tool results, and attachments belonging to a run. Omit the filter to read the conversation.
 
-Agent and role bindings are fixed at creation. The main conversation uses the current Agent setup on a later turn. Delegated sessions keep their creation setup. The thread endpoints cannot archive or delete the main conversation. Deleting its project also removes it, as explained in [Files and context](/developers/guides/files).
+Entries are in `data`. Read every page: pass `next_cursor` as `after` with the unchanged `revision`, until `next_cursor` is null. Keep filters unchanged between pages.
 
-For user-facing behavior, see [Conversations and sessions](/developers/guides/conversations).
+If a snapshot edit or deletion causes a pagination conflict, discard the partial read and restart without `after` or `revision`. New messages alone do not invalidate the snapshot.
+
+Read the saved [run status](/developers/api-ref/runs) as well as the messages. An empty page does not prove the run finished or failed.
+
+## Follow live progress
+
+`GET /v1/threads/{thread_id}/events` streams Server-Sent Events. Submitting with `stream: true` starts with an `input.accepted` receipt. Save it before processing later events.
+
+Streams do not replay missed events. After reconnecting, read saved state and items. Ignore unknown event types and keepalive comments. Replace temporary text with its saved item to avoid showing it twice.
+
+Use the reference's **watch.mjs** example for a client that combines live updates, result pages, and recovery. It requires Node 22 or later.
+
+## Delete a conversation
+
+`DELETE /v1/threads/{thread_id}` deletes an ordinary conversation and stops its execution. Save needed results first. Agent main and manager conversations require deleting their Agent instead.
+
+Conversation deletion does not remove a separately published chat snapshot or all workspace files.

@@ -43,6 +43,7 @@
     "Hubspot",
     "hypervisor",
     "Intercom",
+    "journalctl",
     "Kimi",
     "Linear",
     "MDX",
@@ -82,6 +83,7 @@
     "Supabase",
     "timecode",
     "uvx",
+    "uuidgen",
     "webhook"
   ]
 }

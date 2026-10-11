@@ -1,115 +1,46 @@
 ---
-title: Runs
-sidebarTitle: Runs
+title: Runs and recovery
+sidebarTitle: Runs and recovery
 icon: activity
-description: Inspect Agent runs and stop work that is still active.
+description: Follow accepted work, recover after a disconnection, and stop a run deliberately.
 ---
 
-Run IDs are request IDs. A run can be `queued`, `running`, `held`, `completed`, `failed`, or `cancelled`.
+Submitting an input returns a receipt with `thread_id`, `input_id`, and `run_id`. Save all three. **202 means accepted, not completed.**
 
-Runs originate from [messages](/developers/api-ref/threads-and-messages) and [schedules](/developers/api-ref/schedules).
+Read `GET /v1/threads/{thread_id}/runs/{run_id}` to check progress. Read `GET /v1/threads/{thread_id}/state` for queued work and pending actions.
 
-## List runs
+## Understand the status
 
-<Endpoint method="GET" path="/v1/agent-runs" />
+| Status | What to do |
+| --- | --- |
+| `queued` or `running` | Wait, then read again. |
+| `waiting_action` | Read the pending approval or connection request in thread state. |
+| `held` | Inspect the state and queued inputs before resuming. |
+| `completed` | Read all saved result pages and check the answer. |
+| `failed` or `cancelled` | Read the error and any saved results before submitting more work. |
 
-Returns recent runs, with optional thread, request, and attention filters.
+A completed run can contain a failed tool call. A failed run can still have changed an external service. Check the results against the requested task.
 
-```bash title="Request"
-curl "$FLUSO_API/v1/agent-runs?threadId=thread_agent_release&limit=20" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
+## Recover after a timeout
 
-```json title="Response: 200"
-{
-  "agent_runs": [
-    {
-      "id": "req_review_01",
-      "request_id": "req_review_01",
-      "thread_id": "thread_agent_release",
-      "target_thread_id": "thread_agent_release",
-      "agent_id": "agt_0123456789ab4def8123456789abcdef",
-      "thread_title": "Release review",
-      "status": "running",
-      "origin": "user",
-      "created_at": "2026-08-31T09:00:00Z",
-      "started_at": "2026-08-31T09:00:01Z",
-      "updated_at": "2026-08-31T09:00:02Z",
-      "completed_at": null,
-      "outcome": null,
-      "result_ref": null,
-      "error": null
-    }
-  ],
-  "settlement_cursor": "2026-08-31T09:00:02Z/req_review_01"
-}
-```
+- If the submission response was lost, retry the same body with the same `Idempotency-Key`.
+- If you received a receipt, read that run and its [saved items](/developers/api-ref/threads-and-messages#read-message-history).
+- If a stream closes, reconnect for new events and read saved state for missed results.
 
-Use `attention=true` for owned approvals and current failures, with approval requests first. It also adds `schedule_failures` for routine delivery problems that did not produce a run. `agentId`, `threadId`, `status`, repeated `requestId`, and `limit` can filter the result. Add `includeRoutineResults=true` to include completed top-level routine runs. Delegated completions remain in their conversations.
+A client timeout does not cancel work. Creating a new key can start another execution.
 
-The feed is filtered before limiting. It is a recent status view, not a complete audit archive. A failed request superseded by newer work is omitted from attention.
+Input retry receipts remain until 24 hours after completion. After that, inspect the saved run before deciding whether to submit new work. Runs remain readable until their conversation is deleted.
 
-## Read one run
+<Accordion title="Thread created, but the first input failed">
+  An error from `POST /v1/threads` can include `error.details.thread_id`. Save that ID and inspect the thread state. Its presence does not prove input acceptance.
 
-<Endpoint method="GET" path="/v1/agent-runs/{requestId}" />
+  After resolving the cause, send the original input and key to that thread's `/inputs` endpoint. This can recover an uncertain acceptance within the retry window.
+</Accordion>
 
-Returns one matching run. Include `threadId` when request IDs may repeat across threads.
+## Stop work
 
-```bash title="Request"
-curl "$FLUSO_API/v1/agent-runs/req_review_01?threadId=thread_agent_release" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
-```
+Use `POST /v1/threads/{thread_id}/runs/{run_id}/cancel` for one run. Use `POST /v1/threads/{thread_id}/stop` for the conversation.
 
-```json title="Response: 200"
-{
-  "id": "req_review_01",
-  "request_id": "req_review_01",
-  "thread_id": "thread_agent_release",
-  "target_thread_id": "thread_agent_release",
-  "agent_id": "agt_0123456789ab4def8123456789abcdef",
-  "status": "completed",
-  "origin": "user",
-  "created_at": "2026-08-31T09:00:00Z",
-  "started_at": "2026-08-31T09:00:01Z",
-  "updated_at": "2026-08-31T09:01:10Z",
-  "completed_at": "2026-08-31T09:01:10Z",
-  "outcome": "completed",
-  "result_ref": {
-    "thread_id": "thread_agent_release",
-    "request_id": "req_review_01"
-  },
-  "error": null
-}
-```
+Read the state until execution stops. A cancellation acknowledgement does not prove that a tool has stopped, and cancellation cannot undo a completed external action.
 
-## Stop a run
-
-<Endpoint method="POST" path="/v1/agent-runs/{requestId}/stop" />
-
-Requests cancellation without starting a dormant runtime only to stop it.
-
-```bash title="Request"
-curl "$FLUSO_API/v1/agent-runs/req_review_01/stop" \
-  -X POST \
-  -H "Authorization: Bearer $FLUSO_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d '{"threadId":"thread_agent_release"}'
-```
-
-```json title="Response: 200"
-{
-  "thread_id": "thread_agent_release",
-  "request_id": "req_review_01",
-  "status": "cancelled"
-}
-```
-
-The status can also be `already_terminal` when the run settled before cancellation reached it. Stopping does not undo completed tool actions or pause future routine occurrences. Manage the routine separately.
-
-## Read a durable settlement status
-
-`GET /v1/agent-runs/{requestId}/status?thread_id={threadId}` returns `state: active | awaiting_approval | settled` and `outcome: completed | failed | canceled | null`. This endpoint uses `thread_id` and the single-l spelling `canceled`, unlike the list projection above. A missing status is not proof of completion.
-
-## Next
-
-Inspect token cost in [Usage](/developers/api-ref/usage), or create recurring and one-time [Schedules](/developers/api-ref/schedules).
+Use the **Recovery and cancellation** examples in your [workspace's full reference](/developers/api-ref/authentication#choose-your-workspace) for retries, held inputs, and cancellation.

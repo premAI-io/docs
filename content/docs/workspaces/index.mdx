@@ -1,0 +1,55 @@
+---
+title: Run Fluso on your machine
+sidebarTitle: Overview
+icon: monitor
+description: Keep a workspace on your Mac or a Linux machine, and use it from Fluso.
+---
+
+You can use Fluso Cloud, or run a workspace on a machine you own. For example, your Mac can work with a folder of reports. A Linux machine can keep a scheduled task running after you close your laptop.
+
+The **daemon** is the background program that runs this workspace. You install it separately from the Fluso desktop app.
+
+## Choose where the work runs
+
+| Workspace | Where work runs and files stay | What you manage |
+| --- | --- | --- |
+| Fluso Cloud | Fluso's managed service | Your work and app connections |
+| This Mac | Your Apple Silicon Mac | The daemon, model provider, and backups |
+| Remote workspace | Your Linux machine or another supported host | The daemon, secure connection, model provider, and backups |
+
+These workspaces keep separate conversations, Agents, files, and connections. Switching between them does not move or synchronize your work.
+
+<CardGroup cols={2}>
+  <Card title="Set up on macOS" icon="laptop" href="/workspaces/macos">
+    Install the package, choose a model provider, and connect This Mac.
+  </Card>
+  <Card title="Set up on Linux" icon="server" href="/workspaces/linux">
+    Use a Linux host or a Raspberry Pi with a supported operating system and KVM.
+  </Card>
+</CardGroup>
+
+[Contact us](mailto:support@premai.io?subject=Fluso%20daemon%20download) for the daemon download links. Include your operating system, processor type, and whether you use Fluso or Fluso Dev. We can confirm the matching package and desktop version.
+
+## What stays on your machine
+
+The daemon stores workspace files and conversations on its host. It has no access to your personal folders until you share them.
+
+Your chosen model provider receives the content needed for inference. Connected services receive their tool requests. Running the daemon locally does not make these calls offline or keep all processing on your machine.
+
+You supply your own provider credentials. The desktop interface still needs an internet connection and Fluso sign-in. You can configure the daemon and use its API without the desktop app.
+
+## Use it day to day
+
+Open **Workspaces** from the desktop account menu. Choose **This Mac** or a saved remote connection. Settings on this page apply to the selected machine.
+
+Closing the app or switching workspaces leaves accepted work running. Opening the app again starts on **Fluso Cloud**. Select your saved connection to return.
+
+The host must remain awake and connected for work to continue. After downtime, missed recurring runs are combined into one catch-up run.
+
+<Accordion title="What differs from Cloud?">
+  Conversations, Agents, files, routines, and custom MCP connections use the selected workspace. Cloud billing, managed app connections, ingestion services, legacy Tasks, and public sharing are not available through the daemon.
+
+  Each paired client has access to the same owner's workspace. Pairing does not create separate user accounts or private areas for different people.
+</Accordion>
+
+Next, learn how to [share folders, update, and back up your workspace](/workspaces/manage). For scripts and integrations, start with [API access](/developers/api-ref/authentication).

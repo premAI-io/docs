@@ -1,0 +1,96 @@
+---
+title: Set up on macOS
+sidebarTitle: macOS
+icon: laptop
+description: Install the daemon on an Apple Silicon Mac and connect it to Fluso.
+---
+
+This guide sets up a workspace on your Mac. You need an Apple Silicon Mac, internet access, and your own model provider key. Allow at least 8 GiB of host memory and 8 GiB of free disk space, plus room for your files and backups.
+
+The daemon runs separately from the desktop app. You do not need Docker, Bun, or a source checkout.
+
+## 1. Get the download links
+
+[Email support@premai.io](mailto:support@premai.io?subject=Fluso%20daemon%20for%20macOS) and ask for the macOS daemon package. Include your macOS version, chip, and whether you use Fluso or Fluso Dev. **Apple menu → About This Mac** shows your version and chip.
+
+Ask for the release version and these two links:
+
+- `daemon-darwin-arm64.tar.gz`: the package.
+- `daemon-darwin-arm64.sha256`: its checksum.
+
+Use links supplied by Fluso. You do not need a GitHub account. Intel Macs are not supported by this package.
+
+## 2. Download and check the package
+
+Open Terminal. Replace `ARCHIVE_URL` and `CHECKSUM_URL` with the links you received, keeping the quotes:
+
+```bash
+mkdir -p "$HOME/Downloads/fluso-daemon"
+cd "$HOME/Downloads/fluso-daemon"
+curl --fail --location 'ARCHIVE_URL' -o daemon-darwin-arm64.tar.gz
+curl --fail --location 'CHECKSUM_URL' -o daemon-darwin-arm64.sha256
+shasum -a 256 -c daemon-darwin-arm64.sha256
+```
+
+Continue only if the check prints `daemon-darwin-arm64.tar.gz: OK`. If it fails, download both files again from the matching release links.
+
+Replace `RELEASE_VERSION` below with the version supplied by support. Use a new folder for this release:
+
+```bash
+mkdir -p "$HOME/fluso/releases"
+mkdir "$HOME/fluso/releases/RELEASE_VERSION" &&
+  tar -xzf daemon-darwin-arm64.tar.gz -C "$HOME/fluso/releases/RELEASE_VERSION"
+cd "$HOME/fluso/releases/RELEASE_VERSION"
+```
+
+Keep this folder in place. The executable needs the other packaged files beside it. For an existing installation, use [update](/workspaces/manage#update-the-daemon) instead of replacing files in its folder.
+
+## 3. Start your workspace
+
+Run these commands as your normal Mac user, without `sudo`:
+
+```bash
+./fluso-daemon setup --manage-host
+./fluso-daemon configure --apply
+./fluso-daemon status
+```
+
+Setup checks the signed package and installs a background service. Follow the configuration prompts to choose a provider, model, and API key. Key entry stays hidden. Prem confidential inference needs only your Prem API key.
+
+Respond to macOS Keychain or folder-access prompts. Wait for `status` to report that the workspace is ready before sending work.
+
+`--manage-host` lets the connected app change the provider, resource limits, and shared folders. The [workspace settings guide](/workspaces/manage) explains these controls.
+
+## 4. Connect Fluso
+
+1. Open the matching, current [Fluso desktop app](https://fluso.ai/) and sign in.
+2. Open **Workspaces** from the account menu. The menu-bar **View → Workspace settings** opens the same page.
+3. Open the workspace selector and choose **This Mac**. Complete any native confirmation.
+4. Send a small first message, such as: *"Help me plan a weekly review of my project notes."*
+
+Your existing Cloud conversations stay in Cloud. This workspace starts with its own data.
+
+The service starts when you log in. Closing Fluso leaves it running. Putting the Mac to sleep pauses its work.
+
+## If setup stops
+
+From the package folder, run:
+
+```bash
+./fluso-daemon doctor
+./fluso-daemon info
+```
+
+`doctor` explains installation problems. `info` shows the workspace paths and API address.
+
+<Accordion title="The workspace is missing or not ready">
+  Check `./fluso-daemon status`. Start a stopped service with `./fluso-daemon start`. If configuration is missing, rerun `./fluso-daemon configure --apply`.
+
+  In **Workspaces**, refresh the workspace list. A release mismatch requires a compatible desktop app and daemon. Changing the workspace's data directory does not fix it.
+
+  If macOS cannot verify the developer, use **System Settings → Privacy & Security → Open Anyway** only for the package supplied by Fluso. Follow [Apple's instructions](https://support.apple.com/en-us/102445) after checking the download. For a damaged-file or malware warning, contact support with the exact message.
+
+  Keep the original data and keys when diagnosing an existing installation.
+</Accordion>
+
+Next: [give the workspace access to a folder](/workspaces/manage#share-a-folder).

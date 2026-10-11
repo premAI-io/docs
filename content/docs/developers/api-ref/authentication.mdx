@@ -1,62 +1,85 @@
 ---
-title: Authentication
-sidebarTitle: Authentication
+title: API access
+sidebarTitle: API access
 icon: key-round
-description: Understand bearer authentication and the limits of the current beta client API.
+description: Connect a script to your Cloud or daemon workspace, then send a first request.
 ---
 
-This reference documents the routes used by Fluso clients on the current development branch. It is not a promise that every feature is enabled in every deployed build. These beta contracts may change.
+The account API lets an integration use the same conversations, Agents, and files as Fluso. Cloud and the daemon share these operations. You do not need a separate API project or a runtime ID.
 
-Use the API host and authenticated session for the same environment. Production uses `https://api.fluso.ai`. Development clients must use their development API and identity environment.
+## Choose your workspace
+
+| Workspace | API base URL | Full guide and endpoint reference |
+| --- | --- | --- |
+| Fluso Cloud | `https://api.fluso.ai/v1` | **Settings → Developer tokens → API reference** in your app |
+| Fluso Dev | `https://api.dev.khichdi.cc/v1` | [Development API reference](https://api.dev.khichdi.cc/docs) |
+| Daemon, default local port | `http://127.0.0.1:4111/v1` | Open `http://127.0.0.1:4111/docs` on its host or through your tunnel |
+| Daemon, HTTPS | Your workspace URL followed by `/v1` | Your workspace URL followed by `/docs` |
+
+The reference includes request bodies, response fields, and runnable examples. Its OpenAPI schema is at `/v1/openapi.json`. A daemon lists the endpoints it supports. Cloud account administration and public sharing do not transfer to it.
+
+<Note>
+  These examples need the current account API. If **Developer tokens** is missing from your app, contact [support](mailto:support@premai.io) to confirm availability for your release.
+</Note>
+
+## Get a token
+
+### Fluso Cloud
+
+In **Fluso → Settings → Developer tokens**, create a token. Choose **Read only** to inspect existing data, or **Read and write** to submit work and edit it. Use **Read and write** for the quickstart below. Copy the secret when shown. It cannot be retrieved later.
+
+A write token can also connect services and approve individual tool calls. Managing credentials and permanent tool permissions requires a signed-in app session.
+
+### Your daemon
+
+Configure the [daemon](/workspaces) and its model provider first. On its host, run `./fluso-daemon pair` from the installed package folder. Exchange the one-use code at the daemon's address:
 
 ```bash
-export FLUSO_API='https://<your-environment-api-host>'
-export FLUSO_TOKEN='<valid-user-access-token>'
-
-curl "$FLUSO_API/v1/auth/me" \
-  -H "Authorization: Bearer $FLUSO_TOKEN"
+curl --fail-with-body --silent --show-error \
+  'http://127.0.0.1:4111/daemon/v1/pair' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"code":"PAIRING_CODE","name":"My integration"}'
 ```
 
-Keep tokens out of logs and source control. A token acts for its authenticated user. Supplying another user's IDs does not grant access. An `X-API-Key` header alone is not a replacement for the bearer session on these workspace proxy routes.
+Replace `PAIRING_CODE` before running. Save the returned `token` and client `id` privately. Codes expire after ten minutes. A device token grants read/write access to the owner's workspace, including tool approvals.
 
-## Read the authenticated identity
+Use `pair --manage-host` only when the client also needs provider settings, host-file access, or permission to invite devices. Remote connections require [HTTPS or an SSH tunnel](/workspaces/linux#4-connect-from-your-mac).
 
-<Endpoint method="GET" path="/v1/auth/me" />
+## Try a complete request
 
-Returns `user` and `api_key_id`. The latter is an identifier, not a secret API key.
+Open Bash in a new example directory. You need `curl`, `jq`, and `uuidgen`. The example below uses a daemon. For Cloud, use your environment's URL from the table above. Set the token you saved:
 
-```json
-{
-  "user": {
-    "id": "22222222-2222-4222-8222-222222222222",
-    "email": "developer@example.com",
-    "name": "Developer",
-    "picture": null,
-    "created_at": "2026-10-08T09:00:00"
-  },
-  "api_key_id": "33333333-3333-4333-8333-333333333333"
-}
+```bash
+export FLUSO_API_URL='http://127.0.0.1:4111/v1'
+export FLUSO_API_TOKEN='YOUR_TOKEN'
 ```
 
-## Client sign-in is not generic CLI onboarding
+Keep real tokens out of source control, shared terminal recordings, and URLs. Use a secret store for deployed integrations.
 
-The backend has `/v1/auth/client/start`, `/complete`, `/exchange/{code}`, and `/refresh` routes for client handoff. The current frontend's completed handoff supports Telegram. Registering an arbitrary `client: "cli"` does not produce a working browser-to-CLI flow.
+Download the example from that workspace. Read it before running:
 
-For the supported product flow, use [Telegram setup](/remote/telegram). For another integration, confirm its sign-in and token handling with [support](mailto:support@premai.io) before building against the beta routes.
+```bash
+curl --fail --silent --show-error \
+  "$FLUSO_API_URL/examples/quickstart.sh" -o quickstart.sh
+cat quickstart.sh
+```
 
-A supported client exchanges a short-lived, single-use code for an access token and refresh token bound to its client identity. `POST /v1/auth/client/refresh` accepts `{"refresh_token": "..."}` and returns refreshed credentials and `api_key_id`.
+Then run it in the same Bash shell:
 
-## Read failures correctly
+```bash
+source quickstart.sh
+```
 
-| Response | Meaning |
-| --- | --- |
-| `401` | Missing, invalid, or expired authentication |
-| `403` | The authenticated user is not allowed to complete the request |
-| `404` | The requested resource is unavailable to this user |
-| `409` | A state conflict requires inspection, such as a stale Agent revision |
-| `429` | A rate or usage limit was reached. Respect retry guidance |
-| `502` / `503` | A service or runtime is unavailable. An interrupted write may still need verification |
+The script creates a conversation, requests a short answer, waits for the run, and reads every result page. It keeps `thread_id`, `run_id`, `input_key`, and `input_body` for follow-ups.
 
-Do not treat a network failure as proof that a write did not happen. Use operation-specific IDs and reread state before repeating work.
+A timeout does not cancel accepted work. Do not rerun the quickstart to recover it: that creates a new request. Read the [saved run and results](/developers/api-ref/runs) instead.
 
-Next: [Agents](/developers/api-ref/agents-and-versions), [Threads and messages](/developers/api-ref/threads-and-messages), and [Runs](/developers/api-ref/runs).
+## Keep access under control
+
+Cloud developer tokens expire after 90 days by default. To rotate one, create a replacement in Settings, update your integration, verify it, then revoke the old token. Revocation can take up to 30 seconds to reach cached authentication and open streams.
+
+Daemon device tokens expire after 30 idle days. Authenticated use renews them. Revoke a device with `DELETE /daemon/v1/clients/{clientId}`. A device can revoke itself. Host-management access also permits revoking other devices.
+
+Native applications can use the Cloud browser sign-in flow instead of developer tokens. Follow **auth** in your app's **API reference**, including its code-verifier and refresh-token requirements. Do not reuse an old refresh token after rotation.
+
+Next: [conversations and results](/developers/api-ref/threads-and-messages).
