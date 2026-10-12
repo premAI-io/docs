@@ -1,0 +1,140 @@
+---
+title: Manage your workspace
+sidebarTitle: Settings and maintenance
+icon: settings-2
+description: Choose a provider, share folders, adjust resources, and keep your workspace recoverable.
+---
+
+Open **Workspaces** in Fluso and select the machine you want to change. These settings belong to that host, even when you use the app on another Mac.
+
+To use the terminal instead, run the commands below from the installed package folder on the host. Add `--root /path/to/state` only when selecting a different installation.
+
+## Choose a model provider
+
+Open **Model provider**, enter your provider details, then **Save and apply**. You supply the credentials. The daemon does not include a Fluso Cloud inference allowance.
+
+| Provider | What you supply |
+| --- | --- |
+| OpenRouter or OpenAI | API key and model ID |
+| Custom | An OpenAI-compatible base URL, API key, and exact model ID |
+| Prem · Confidential | Prem API key, then **Enable confidential inference** |
+
+For terminal setup, use `./fluso-daemon configure --apply`. Prompts hide your keys. Pressing Enter keeps a saved value.
+
+Saved changes need Apply or a restart before they take effect. Applying settings can restart the workspace's compute. Finish active work first. An explicit interruption can stop a running task.
+
+<Accordion title="Custom endpoints and confidential inference">
+  A custom endpoint must support streaming and tool calls, a 128K context window, and up to 16K output tokens. Use HTTPS for a remote provider. Local or trusted-network inference endpoints can use HTTP.
+
+  `localhost` refers to the daemon's host. For a Pi workspace, it does not refer to the Mac running Fluso. Changing an endpoint requires entering its key again.
+
+  Prem confidential inference verifies the provider and encrypts inference requests. It does not encrypt every workspace file or make external tools confidential. Image generation and speech synthesis are unavailable in this mode. Turning it off restores your saved standard provider.
+
+  Provider failures do not silently switch to another provider. Media features can need separate provider credentials. Configure these with the same CLI command.
+</Accordion>
+
+## Connect an app
+
+Open **Plugins → MCP → Add MCP** and choose **Custom server**. Enter the service's public MCP endpoint and supply its credentials or complete its OAuth sign-in.
+
+The daemon does not copy Cloud connections or provide the managed app catalog. Custom MCP destinations must be public: private network addresses and redirects are blocked. Review the service's permissions before you connect it.
+
+## Share a folder
+
+No personal host files are shared by default. Uploaded workspace files are separate from these grants.
+
+1. In **File access**, add the file or folder the Agent needs.
+2. Keep **Read only** for reference material. Choose **Read and write** for files the Agent should edit.
+3. Review the native confirmation and select **Save and apply**.
+
+For a report-writing task, share a reference folder read-only and a separate drafts folder with write access. Tell the Agent which folder holds each kind of file.
+
+On a remote workspace, enter paths on that remote host. A Mac path such as `/Users/alex/Drafts` appears to tools under `/mnt/host/Users/alex/Drafts`.
+
+Read-only access prevents edits, but content can still reach the chosen model provider. Share a specific folder instead of your entire home directory.
+
+<Accordion title="Change or remove file access">
+  Use `./fluso-daemon host-files --apply` for the same settings in a terminal.
+
+  A folder grant includes its descendants. A single-file grant permits in-place edits. Share the parent folder when a tool must rename or replace files. Overlapping grants are rejected.
+
+  Remove a path and apply the change to revoke access. This does not delete content already copied into the workspace or conversation. Operating-system permissions still apply to writable grants.
+</Accordion>
+
+## Adjust memory and storage
+
+The default sandbox has **3 GiB of RAM** and a **64 GiB disk budget**. The disk grows as needed: 56 GiB holds saved work and 8 GiB is for temporary work.
+
+Change these values in the workspace settings, or run `./fluso-daemon resources --apply`. Leave memory and disk space for the operating system and other applications.
+
+Runtime images, backups, and shared host folders are outside this disk budget. Reducing a limit must still leave room for saved data. Applying the change preserves saved files and replaces temporary storage.
+
+**Resources and storage** shows the data directory. On This Mac, **Open data folder** opens it in Finder. In a terminal, `./fluso-daemon info` shows the same paths.
+
+## Update the daemon
+
+Run this on the host:
+
+```bash
+./fluso-daemon update
+./fluso-daemon version
+./fluso-daemon status
+```
+
+The command finds the latest release for the installed development or production channel. You do not need another download URL or a GitHub login.
+
+It checks the download and signature before stopping the service. Updates keep files, conversations, settings, and pairings. If the replacement cannot start correctly, the updater restores the previous package.
+
+Updates run only when requested. The desktop app updates separately. A stopped service stays stopped. Active work must finish unless you explicitly allow interruption.
+
+Keep the current and previous package folders for recovery. Internet access is required for release verification.
+
+## Back up your work
+
+Run these commands one at a time on the host. Use a new backup folder:
+
+```bash
+mkdir -p "$HOME/fluso/backups"
+./fluso-daemon shutdown
+./fluso-daemon backup --backup-dir "$HOME/fluso/backups/first-backup"
+./fluso-daemon start
+```
+
+Continue to backup only after shutdown succeeds. Shutdown refuses to interrupt active work. If backup fails, inspect the error and restart the service when ready.
+
+The backup includes workspace files and its database. It excludes shared host folders. Back up those folders separately.
+
+Keep the **encryption key and file-access settings separately**. The backup does not contain the key needed to read saved credentials.
+
+- On macOS, the key is in the owner's Keychain.
+- On Linux, the key is in the installation's `keys` folder.
+- With `--root`, file-access settings are in `<root>/sandbox/config.json`. The default Mac path is `~/.fluso/sandbox/config.json`.
+
+Backup files can contain readable documents. Store them privately and include them in your protected host backups.
+
+<Accordion title="Restore a backup">
+  Restore accepts a backup from the same installation. Keep its original encryption key available. Stop the service, then run `./fluso-daemon restore --backup-dir /path/to/backup`. Start the service after restore succeeds.
+
+  Restore keeps the pre-restore data separately. You must pair clients again, restore host-file access, and explicitly resume schedules. Pending work and approvals are not resumed automatically.
+
+  If the key is lost, ask support about a credential reset. This can preserve files and conversations, but requires new credentials and connections.
+
+  Ask support before moving a workspace to another machine. Copying only the project-files folder or SQLite database is not a complete migration.
+</Accordion>
+
+## When something needs attention
+
+Start with `./fluso-daemon status` and `./fluso-daemon doctor`. `./fluso-daemon doctor --fix` can repair startup or an interrupted update without resetting credentials or deleting workspace data.
+
+| Symptom | What to check |
+| --- | --- |
+| Settings cannot be changed | Reconnect with a code made by `pair --manage-host`. |
+| Pairing code rejected | Generate a new code. Codes expire after ten minutes and work once. |
+| Remote workspace unreachable | Check the host service and SSH tunnel or HTTPS address. |
+| Configuration saved but not active | Apply it. If another client changed settings, reload and review before saving again. |
+| Work pauses when the laptop closes | Keep the host awake, or use an always-on Linux host. |
+| Model or tool call fails | Check that provider's credentials and the saved result before retrying work. |
+
+For logs, check `daemon.log` in the Mac data directory. On Linux, use `journalctl --user -u fluso-daemon` for the user service. Share the relevant error with [support](mailto:support@premai.io), without API keys or pairing codes.
+
+Disconnecting a reachable workspace revokes that client's access. Forgetting an offline connection cannot confirm revocation. Signing out or uninstalling the desktop app does not stop the daemon.

@@ -1,40 +1,73 @@
 ---
-title: Agent builder
-sidebarTitle: Agent builder
-icon: workflow
-description: Turn a plain-language request into an Agent draft, then review or refine it before saving.
+title: Your first Agent
+icon: bot
+description: Turn a few meeting notes into a brief you can use.
 ---
 
-Open **Control Panel → Create Agent** to start in Agent Studio. Describe the job in plain language. Studio drafts the Agent definition and a small workflow preview before anything is saved.
+Let's make an assistant for meeting preparation. You supply the notes. It helps you see what matters and what you need to decide.
 
-> *"Create a customer escalation coordinator. Gather the customer, impact, urgency, and open questions. Read relevant Gmail and Google Drive context, classify the case as P0 or P1, prepare the next steps, and require approval before sending anything."*
+You can try this with pasted text, so there is no account to connect first.
 
-## Build the first draft
+## 1. Describe the help you want
 
-A useful request names four things:
+Select **Agents → New Agent**. Leave the project as **Home** for this walkthrough.
 
-- The input, such as a support request or release candidate.
-- The outcome, such as a severity decision or handoff package.
-- The sources and capabilities the Agent may use.
-- The boundaries that must hold, such as approval before an external action.
+Write this in the message box:
 
-Select **Build**. Studio returns the Agent name, description, instructions, and a short graph of the proposed steps. The graph is a design preview. It helps you check the order and decision points, but it is not executable code.
+> *"Help me prepare for meetings. I'll share notes, agendas, and documents. Give me a short brief with what matters, what we need to decide, and a few questions worth asking. If something important is missing, tell me. Keep everything here. Don't contact anyone."*
 
-## Refine without starting over
+Send the message.
 
-Use the Studio message box to change the draft:
+<Frame caption="Describe the job in your own words. You can change it later.">
+  <a href="/images/agents/meeting-create.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
+    <img src="/images/agents/meeting-create.png" alt="New Agent message box with a request for help preparing for meetings." width="1520" height="996" />
+  </a>
+</Frame>
 
-> *"Only use P0 and P1. Run the Gmail and Drive lookups in parallel. Stop for approval before sending a customer reply."*
+Fluso opens a setup conversation called **Manager**. It gives the Agent a name and saves instructions for how it should help.
 
-Studio revises the current draft and replaces the workflow preview. If a request fails, the last valid preview stays in place so you can retry.
+Read the setup beside the conversation. Ask for a change there if needed. Select **Launch agent** when you are ready.
 
-## Create or open the editor
+<Frame caption="Manager confirms that Meeting Prep is ready. Launch agent opens the working conversation.">
+  <a href="/images/agents/meeting-manager.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
+    <img src="/images/agents/meeting-manager.png" alt="The creation request and Manager's reply, with the Launch agent button below." loading="lazy" width="1600" height="1276" />
+  </a>
+</Frame>
 
-- Select **Create Agent** when the draft is ready.
-- Select **Go to editor** when you want to inspect every field, capability, knowledge file, or thread setting first.
+## 2. Give it something to work on
 
-Studio only selects capabilities already available to you. Creating the Agent saves the definition. Existing Agent threads keep the definition they started with, so test changes in a new thread.
+You are now in the Agent's working conversation. Paste your meeting notes, or try these sample notes:
 
-## Next
+> *"Help me get ready for tomorrow's planning meeting.*
+>
+> *We're organizing a half-day workshop for 18 new colleagues next month. We have €1,200. The office room is free but seats 12. A nearby venue seats 24 and costs €450. We want a welcome session and a practical exercise. Lunch and the facilitator are undecided.*
+>
+> *What do we need to settle in the meeting? Keep the brief short enough to read in two minutes."*
 
-See [Agent description](/developers/agent-description) for field boundaries and [Threads and contexts](/developers/threads-and-contexts) for what a new Agent thread receives.
+Read the brief against your notes. It should notice the seating problem and leave undecided plans open.
+
+## 3. Keep the conversation going
+
+In our run, the Agent estimated costs we had not supplied. We corrected that and gave it a change to work with:
+
+> *"We can use the larger office room after all. It seats 20 and is free. We don't have prices for lunch or a facilitator yet. Keep those as open questions and update the brief."*
+
+We also asked for a shorter version: three decisions, the missing costs, and one question to ask first.
+
+<Frame caption="The shorter brief keeps the decisions and unknown costs clear. This is a real run with sample notes.">
+  <a href="/images/agents/meeting-brief.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
+    <img src="/images/agents/meeting-brief.png" alt="Meeting Prep updates the workshop brief after a room change and a correction about unknown costs." width="1600" height="1490" />
+  </a>
+</Frame>
+
+You can correct details, attach another document, or ask for a shorter answer in the same conversation. Select the Agent in the sidebar to return later.
+
+When you find a way of working you want to keep, [teach it your preferences](/developers/improve).
+
+<Accordion title="Other ways to start">
+  **My Agents** and **New Agent** offer Fluso starting points for research, project follow-through, inbox triage, and document review. Preview one to create your own copy. Manager helps with missing app connections.
+
+  **Fill in a form instead** lets you enter the setup directly. **Continue setup** lets you return to an unfinished creation.
+
+  For work with its own files, choose a project before starting. See [Files and memory](/developers/guides/files).
+</Accordion>

@@ -1,0 +1,16 @@
+{
+  "title": "Use the API",
+  "icon": "workflow",
+  "defaultOpen": false,
+  "pages": [
+    "conversations",
+    "runs",
+    "streaming",
+    "agents",
+    "files",
+    "connections",
+    "schedules",
+    "workspace",
+    "usage"
+  ]
+}

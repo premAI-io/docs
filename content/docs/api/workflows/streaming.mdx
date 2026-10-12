@@ -1,0 +1,72 @@
+---
+title: Live updates
+icon: radio
+description: Show progress as Fluso works, and recover the answer after a dropped connection.
+---
+
+Add live updates when your interface needs to show progress before the answer is ready. Keep saved results as the source for the completed conversation.
+
+## Try the watcher
+
+Use the [quickstart's shell](/api/first-request) and Node 22 or later. Download the watcher from your workspace:
+
+```bash
+curl --fail --silent --show-error \
+  "$FLUSO_API_URL/examples/watch.mjs" -o watch.mjs &&
+cat watch.mjs
+```
+
+After reading it, watch the saved run:
+
+```bash
+node watch.mjs "$thread_id" "$run_id"
+```
+
+The watcher prints saved conversation updates. It reads every page and reconnects after temporary failures without resubmitting input. Press **Ctrl+C** to stop watching. That does not cancel the run.
+
+## Connect without missing saved work
+
+Your client needs two sources:
+
+| Source | Use it for |
+| --- | --- |
+| Event stream | Show text and tool progress as it arrives. |
+| Saved state and items | Recover missed updates and read the final answer. |
+
+Open the stream first, then read state and every item page. Match updates by input, run, and item IDs. Replace temporary text with its saved item to avoid duplicates.
+
+After a disconnection, repeat that sequence. Continue checking saved state periodically while work is active. `Last-Event-ID` does not replay missed events.
+
+<Accordion title="Open the event stream directly">
+  ```bash
+  curl --no-buffer --fail-with-body --silent --show-error \
+    "$FLUSO_API_URL/threads/$thread_id/events" \
+    -H "Authorization: Bearer $FLUSO_API_TOKEN"
+  ```
+
+  The response uses Server-Sent Events (SSE). Each `data` field contains a `ThreadEvent` JSON object. A blank line ends a frame.
+
+  Buffer incomplete frames across network chunks. Ignore unknown event types and keepalive comments. Use a client that supports an Authorization header. Keep tokens out of URLs.
+
+  If you use `stream: true` during input submission, save the first `input.accepted` receipt. It contains the IDs for recovery if the stream fails.
+
+  For a daemon behind a proxy, disable response buffering for this stream.
+</Accordion>
+
+<Accordion title="Render tool progress accurately">
+  `progress.tool_start` and `progress.tool_end` describe tool execution. Your client displays these events. It does not execute the tool itself.
+
+  A preview can omit arguments or results. `args_truncated: true` means the arguments are incomplete. If that flag is absent, completeness is unknown.
+
+  For [tool approval](/api/workflows/connections#handle-a-waiting-run), fetch the pending action's actual arguments before asking the user to decide.
+</Accordion>
+
+<Accordion title="Live-update endpoint reference">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/threads/{thread_id}/events` | Stream new events. Optional `input_id` follows one input. |
+  | `GET /v1/threads/{thread_id}/state` | Recover active work, queues, partial output, and pending actions. |
+  | `GET /v1/threads/{thread_id}/items` | Recover saved messages and tool results. Follow every page. |
+
+  The watcher's run ID is optional. Supply it to check the run even when it has no saved messages. A closed stream does not establish whether work finished.
+</Accordion>

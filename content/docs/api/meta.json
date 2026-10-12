@@ -1,0 +1,10 @@
+{
+  "pages": [
+    "!index",
+    "[code-xml][Overview](/api)",
+    "first-request",
+    "cloud",
+    "daemon",
+    "workflows"
+  ]
+}

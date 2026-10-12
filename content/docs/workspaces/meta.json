@@ -1,0 +1,12 @@
+{
+  "pages": [
+    "!index",
+    "[monitor][Overview](/workspaces)",
+    "!setup",
+    "[download][Setup](/workspaces/setup)",
+    "!use",
+    "[messages-square][Everyday use](/workspaces/use)",
+    "!manage",
+    "[settings-2][Settings and maintenance](/workspaces/manage)"
+  ]
+}

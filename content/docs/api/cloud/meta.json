@@ -1,0 +1,11 @@
+{
+  "title": "Cloud API",
+  "icon": "cloud",
+  "defaultOpen": false,
+  "pages": [
+    "tokens",
+    "client-sign-in",
+    "apps",
+    "sharing"
+  ]
+}

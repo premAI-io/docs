@@ -1,0 +1,71 @@
+---
+title: Pair an API client
+icon: link
+description: Give a client access to your Fluso Local workspace.
+---
+
+A daemon belongs to one owner. Each paired device gets its own token for that owner's workspace. Pairing does not create a separate account or private set of files.
+
+[Set up Fluso Local](/workspaces/setup) and its provider before submitting work. For remote access, use HTTPS or an SSH tunnel.
+
+## Get a device token
+
+On the daemon's host, run this from the installed package folder. Use the same state root as your running daemon:
+
+```bash
+./fluso-daemon pair --root /path/to/state
+```
+
+Exchange its one-use code from your client:
+
+```bash
+curl --fail-with-body --silent --show-error \
+  'http://127.0.0.1:4111/daemon/v1/pair' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"code":"PAIRING_CODE","name":"Weekly report integration"}'
+```
+
+Replace the address for a remote daemon. Replace `PAIRING_CODE` with the code from the host.
+
+Save `token` privately. Keep the returned client `id` and `daemonId` with your connection settings. If that daemon identity changes later, pair again.
+
+Codes expire after ten minutes and work once. If the exchange response is lost, generate a new code. Device tokens expire after 30 idle days. Authenticated use renews them.
+
+<Note>
+  A normal device token grants read/write workspace access, including tool approvals. Add `--manage-host` only for clients that also need machine administration.
+</Note>
+
+Use the token as `Authorization: Bearer YOUR_TOKEN`. Browser requests must come from the daemon's exact origin. Use a native or server client for an integration hosted elsewhere. For the [first request](/api/first-request), set `FLUSO_API_URL` to `http://127.0.0.1:4111/v1` or your remote equivalent.
+
+## Check support and readiness
+
+`GET /v1/capabilities` reports supported features. Use it to show only the controls available on that daemon.
+
+`GET /daemon/v1/discovery` reports identity and configuration state. Its `ready` status means configuration is ready. Check `/v1/agent/runtime/status` for runtime readiness.
+
+`GET /healthz` only proves the daemon is listening. A successful health check does not prove that the model provider works.
+
+## Remove a device
+
+Send `DELETE /daemon/v1/clients/{clientId}` to revoke a token. A device can revoke itself. Host-management access also permits listing and revoking other devices.
+
+Revocation closes that device's streams and prevents further access. The workspace, accepted work, and schedules remain. [Stop work](/api/workflows/runs#stop-work) or [pause schedules](/api/workflows/schedules) separately.
+
+<Accordion title="Connection endpoints">
+  | Method and path | Access and use |
+  | --- | --- |
+  | `GET /healthz` | No token. Check liveness. |
+  | `POST /daemon/v1/pair` | One-use pairing code. Issue a device token. |
+  | `GET /daemon/v1/discovery` | Paired device. Read identity and configuration state. Host fields require host management. |
+  | `GET /v1/capabilities` | Paired device. Read feature support. |
+  | `GET /v1/confidential/attestation` | Paired device. Read the configured confidential-mode verification response. |
+  | `POST /daemon/v1/pairing-codes` | Host management. Create a code with `manageHost: true` or `false`. |
+  | `GET /daemon/v1/clients` | Host management. List current devices without token values. |
+  | `DELETE /daemon/v1/clients/{clientId}` | Self, or host management for another device. Revoke access. |
+
+  Pairing returns `expiresAt` in Unix milliseconds. Device listings use `expires_at` and `manage_host`. Use the exact field names in each response.
+</Accordion>
+
+After enabling and applying confidential mode, `/v1/confidential/attestation` reports `success`, `unavailable`, or `error`. `unavailable` can mean the mode is off or no key is active.
+
+Cloud sign-in, developer-token management, managed app catalogs, and public sharing are unavailable on a daemon. Use [custom MCP connections](/api/workflows/connections) and its own [host settings](/api/daemon/settings).

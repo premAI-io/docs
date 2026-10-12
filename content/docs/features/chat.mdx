@@ -17,17 +17,17 @@ Describe the outcome. Get the outcome. Review.
 
 ## Model mode
 
-Use the mode button in the composer to set how much reasoning Fluso spends on the current chat: **Quick**, **Deep**, or **Max**. `⌘\` cycles through them.
+Use the mode button in the composer to set how much reasoning Fluso spends on the current chat: **Fast**, **Medium**, or **High**. `⌘\` cycles through them.
 
-Quick answers straightforward questions and small edits. Deep takes longer on complex tasks, reviews, and planning. Max is for the hardest problems. [Composer](/interface/composer) has the full comparison.
+Fast suits straightforward questions and small edits. Medium balances speed and reasoning. High spends more reasoning on difficult work. [Composer](/interface/composer) has the full comparison.
 
-The mode is chat-specific. You can change it between messages, and new chats start in Deep unless you switch them.
+The mode is chat-specific. Ordinary new chats start in Medium unless you switch them. Saved Agents take **High** or **Fast** from their [setup](/developers/guides/settings).
 
 This only affects the chat you are using in the app. Telegram has its own conversation mode: using `/fast` in Telegram does not change an app chat, and changing the app control does not change Telegram.
 
 ## Approval mode
 
-Use the access control beside the mode button to choose when Fluso asks before connector and MCP tool actions. It shows a hand for **Ask me first**, a globe for **Allow web**, and an open lock for **Allow everything**; `⌘⇧\` steps through them. The choice belongs to the current chat. Before a new chat exists, it remains pending until you send the first message.
+Use the access control beside the mode button to choose when Fluso asks before connector and MCP tool actions. It shows a hand for **Ask me first** and an open lock for **Allow everything**; `⌘⇧\` steps through them. A choice made here belongs to the current chat. Chats without an explicit choice follow your default in Settings. Before a new chat exists, a selected mode remains pending until you send the first message.
 
 See [Approvals and permissions](/features/approvals) for the modes, in-chat approval cards, saved tool rules, and organization policy behavior.
 
@@ -43,7 +43,9 @@ Two things matter more than anything else.
 
 A thread is one conversation. It remembers what you've said and what Fluso has said back, so a follow-up prompt picks up where you left off. After Fluso summarises your inbox, *"reply to the one from Legal"* makes sense because the summary is still in context.
 
-Start a new thread when you switch topic. The plus button at the top works, or you can ask for one in chat. Old threads stay in the sidebar. Pick any of them back up and Fluso has the full history.
+Start a new thread when you switch topic. Use the new-chat control in the sidebar. Old threads remain available to reopen. Long histories may be compacted into a summary for the model; the saved conversation remains readable.
+
+Saved [Agents](/developers/agent-builder) work differently: selecting an Agent returns to its continuing main conversation. Its Manager refines the setup, and it can delegate independent work to [sessions](/developers/guides/conversations).
 
 ## Things you can do inside chat
 
@@ -69,11 +71,13 @@ Queued follow-ups wait above the composer and run in order once the current run 
 
 To steer the run in progress, queue the message, then click **Send now** (the play button) on its row. Fluso sends it into the live run immediately, or starts it as a new request if the run has already finished. **Edit** (the pencil) lets you rewrite the message first; **Cancel** (the cross) removes it.
 
+For an Agent, a message submitted with a changed saved setup shows **Saved setup applies next turn** instead of **Send now** while the older turn runs. Edit and Cancel remain available.
+
 Two safeguards worth knowing. If a follow-up starts while you are still editing it, the save is refused with a notice and your text stays in the composer — nothing sends twice. And if a follow-up cannot reach the server, the row is marked failed with a retry, not silently dropped.
 
 ### Stopping pauses the queue
 
-Stop the run with the square button and queued follow-ups pause instead of firing into a conversation you cut short. The same happens if the run fails. Paused follow-ups never start on their own: **Send now** runs one, **Edit** rewrites it first, **Cancel** clears it.
+Stop the run with the square button and messages you queued pause. The same happens if the run fails. Paused follow-ups never start on their own: **Send now** runs one, **Edit** rewrites it first, **Cancel** clears it. Routine messages and returned session results do not receive this pause.
 
 <Frame>
   <img src="/images/features/chat/tray-paused.png" alt="Two queued follow-ups marked with a Paused badge after the run was stopped." />

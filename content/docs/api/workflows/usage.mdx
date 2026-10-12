@@ -1,0 +1,45 @@
+---
+title: Check usage
+icon: chart-no-axes-combined
+description: See what a run used, then inspect the model calls behind it.
+---
+
+Use the saved conversation and run IDs to inspect the cost of a task. The examples use the Bash shell from [your first request](/api/first-request).
+
+## Check one run
+
+```bash
+api "/threads/$thread_id/runs/$run_id/usage" | jq .
+```
+
+The response contains `tokens`, estimated `cost`, and `entry_count`. A response of `null` means no usage was reported yet. A null `cost` means pricing is unknown, not zero.
+
+## See which calls contributed
+
+Filter individual usage records to that run:
+
+```bash
+api /token-usage/entries --get \
+  --data-urlencode "thread_id=$thread_id" \
+  --data-urlencode "run_id=$run_id" | jq .
+```
+
+Use the records to compare model calls within the task. Further filters include `provider`, `model`, `since`, and `limit`.
+
+## Read workspace totals
+
+```bash
+api /token-usage | jq '{totals, last_updated}'
+```
+
+Reports can arrive after execution. They are recorded estimates, not a final bill. For a daemon using your provider key, check that provider's billing too.
+
+<Accordion title="Usage endpoint reference">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/token-usage` | Workspace totals and session summaries. |
+  | `GET /v1/token-usage/entries` | Individual records with optional filters. |
+  | `GET /v1/threads/{thread_id}/runs/{run_id}/usage` | One run's recorded usage, or `null`. |
+
+  Read access is sufficient. These queries do not start workspace compute. Responses use snake_case fields, including `last_updated` and `entry_count`.
+</Accordion>

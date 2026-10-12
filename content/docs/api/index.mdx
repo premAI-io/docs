@@ -1,0 +1,57 @@
+---
+title: Fluso API
+icon: code-xml
+description: Give Fluso work from your own script or application, then read the result.
+---
+
+Use the API to send a message, attach a document, or run a saved Agent. Your integration uses the same workspace as the Fluso app.
+
+Start with one conversation. Add schedules, connections, or live updates when your application needs them.
+
+<Card title="Send your first request" icon="arrow-right" href="/api/first-request">
+  Get access, submit a short task, and read the saved answer.
+</Card>
+
+## Choose your workspace
+
+Cloud and Fluso Local share the conversation, Agent, file, and schedule APIs. Their credentials and administration differ. Data stays in the workspace you address.
+
+| | Cloud API | Daemon API |
+| --- | --- | --- |
+| Where work runs | Your Fluso Cloud workspace | Your own machine's Fluso Local workspace |
+| Access for scripts | [Developer token](/api/cloud/tokens) | [Paired device token](/api/daemon/pairing) |
+| Example base URL | `https://api.fluso.ai/v1` | `http://127.0.0.1:4111/v1` |
+| Connected apps | Managed apps and custom MCP servers | Custom MCP servers |
+| Public sharing | Agents, conversations, and files | Unavailable |
+| Machine settings | Managed by the service | [Provider, sandbox, and devices](/api/daemon/settings) |
+
+Fluso Dev uses `https://api.dev.khichdi.cc/v1`. Use credentials from the same environment as the URL.
+
+For a remote daemon, use its HTTPS address or an [SSH tunnel](/workspaces/setup#connect-from-another-mac). A Cloud token cannot access a daemon.
+
+## Find the exact fields
+
+Open **Settings → Developer tokens → API reference** in Cloud. On a daemon's host, open `http://127.0.0.1:4111/docs`.
+
+Releases with this API serve the endpoint reference at `/docs` and the OpenAPI schema at `/v1/openapi.json`. These describe the fields and operations available in that deployment. The reference also supplies runnable examples under `/v1/examples/`. The daemon serves its schema and examples locally. Its interactive reference needs internet access to load the viewer.
+
+The guides below explain how to combine those operations. Endpoint tables sit inside each guide, after the main workflow.
+
+<CardGroup cols={2}>
+  <Card title="Cloud access" icon="cloud" href="/api/cloud/tokens">
+    Create a developer token and choose its access.
+  </Card>
+  <Card title="Daemon access" icon="server" href="/api/daemon/pairing">
+    Pair a client with your own workspace.
+  </Card>
+  <Card title="Send messages" icon="messages-square" href="/api/workflows/conversations">
+    Continue work and read the complete answer.
+  </Card>
+  <Card title="Runs and retries" icon="activity" href="/api/workflows/runs">
+    Handle a timeout without starting the same work twice.
+  </Card>
+</CardGroup>
+
+<Note>
+  If your app lacks **Developer tokens** or its API reference returns 404, contact [support](mailto:support@premai.io) about availability for your release.
+</Note>

@@ -1,0 +1,114 @@
+---
+title: Connections and approvals
+icon: plug
+description: Connect a service once, then help users decide when Fluso needs permission.
+---
+
+Your integration can use the services already connected to the same Fluso workspace. A connection gives access to tools. The user's permission settings decide which actions can proceed.
+
+For an initial setup, connect the service in **Plugins → MCP** in Fluso. Cloud offers managed apps such as Google Workspace. Fluso Local uses custom MCP servers.
+
+The examples below use `api`, `thread_id`, and `run_id` from [your first request](/api/first-request).
+
+## Handle a waiting run
+
+When a run reports `waiting_action`, read its pending action:
+
+```bash
+state=$(api "/threads/$thread_id/state") &&
+approval_url=$(printf '%s' "$state" | jq -er --arg run "$run_id" \
+  'first(.pending_actions[] | select(.run_id == $run)) | .url') &&
+approval_route=${approval_url#/v1} &&
+approval=$(api "$approval_route") &&
+printf '%s' "$approval" | jq '{kind, status, app_id, server_id, tool_name, arguments, expires_at}'
+```
+
+The action URL already starts with `/v1`. The example removes that prefix because `api` includes it. If there is no matching action, check the run again. It may have resumed or finished.
+
+| Action kind | What to show the user |
+| --- | --- |
+| `mcp_connect` | The service they need to connect. Follow [managed app sign-in](/api/cloud/apps) or custom setup below. |
+| `mcp_tool` | The requested tool and its actual arguments, with a choice to allow or deny. |
+
+For a **pending `mcp_tool` action**, send this only after the user approves the displayed call:
+
+```bash
+api "$approval_route/decision" \
+  -H 'Content-Type: application/json' \
+  -d '{"decision":"allow","scope":"once"}'
+```
+
+Use `decision: "deny"` to refuse it. After either decision, follow the same run. Do not resend its input.
+
+A 409 or 410 means the action needs another read. Do not approve a replacement without reviewing it. A successful decision saves consent, but does not mean the run completed.
+
+## Connect a custom MCP server
+
+MCP is the protocol that lets a service expose tools to Fluso. Start with the service's public HTTPS endpoint.
+
+Probe the endpoint before saving it. Replace the example URL with your service's URL:
+
+```bash
+api /mcp-oauth/probe \
+  -H 'Content-Type: application/json' \
+  -d '{"server_url":"https://your-service.example/mcp"}'
+```
+
+The response identifies its transport and authentication method. Choose the matching connection flow:
+
+| The service uses | Start with |
+| --- | --- |
+| No authentication, bearer token, or API key | `POST /v1/mcp-oauth/connections/static` |
+| OAuth with automatic client registration | `POST /v1/mcp-oauth/sessions` |
+| OAuth with your own client registration | `POST /v1/mcp-oauth/sessions/byo-oauth` |
+
+Open the returned `authorization_url` for OAuth. `already_connected` needs no sign-in. Wait for the session status to become `connected` before treating setup as complete.
+
+<Accordion title="OAuth completion and connection recovery">
+  On Cloud, the callback submits `completion_proof` under the initiating account. On a daemon, `/daemon/v1/oauth/callback` completes it directly. Use the returned authorization URL unchanged.
+
+  Read `GET /v1/mcp-oauth/connections` to inspect saved connections. `needs_reauth` means the user must reconnect. Saved inventory alone does not prove the service is reachable.
+
+  A developer write token can decide one-time tool approvals. Permanent rules require a Cloud app session or a paired daemon device.
+</Accordion>
+
+<Accordion title="Custom connection and tool-discovery endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `POST /v1/mcp-oauth/probe` | Discover transport and authentication. |
+  | `POST /v1/mcp-oauth/connections/static` | Save a key-based or unauthenticated connection. |
+  | `POST /v1/mcp-oauth/sessions` | Start custom OAuth authorization. |
+  | `POST /v1/mcp-oauth/sessions/byo-oauth` | Start OAuth with your client registration. |
+  | `POST /v1/mcp-oauth/sessions/complete` | Cloud only. Save the connection from its completion proof. |
+  | `GET /v1/mcp-oauth/sessions/{session_id}/status` | Read authorization progress. |
+  | `GET /daemon/v1/oauth/callback` | Daemon only. Receive the provider's OAuth callback. |
+  | `GET /v1/mcp-oauth/connections` | List connections without exposing secrets. |
+  | `POST /v1/mcp-oauth/connections/refresh` | Refresh Cloud registrations or daemon tool discovery. |
+  | `DELETE /v1/mcp-oauth/connections/{server_id}` | Disconnect and invalidate its pending authority. |
+  | `GET /v1/mcp-oauth/connections/{server_id}/tools` | Read tool descriptions, input schemas, and read-only classifications. |
+  | `POST /v1/mcp-oauth/connections/{server_id}/tools` | Refresh or repair the connection before tool discovery. |
+
+  Reusing a static connection's `server_id` updates that connection. Its `auth_method` is `bearer`, `api_key`, or `no_auth`. Only the first two accept a token. API keys use `header_name`, which defaults to `X-Api-Key`.
+
+  Tool discovery can return saved tool information with an `error`. A 409 `CONNECTION_CHANGING` includes `Retry-After: 1`. Check the connection again after that delay.
+
+  OAuth `pending` and `processing` are unfinished states. Handle `error`, `expired`, or `superseded` before a new sign-in attempt.
+</Accordion>
+
+<Accordion title="Approval and saved-permission endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/mcp-oauth/permissions/approvals/{approval_id}` | Read the action, status, and expiry. |
+  | `POST /v1/mcp-oauth/permissions/approvals/{approval_id}/decision` | Allow or deny a tool request. |
+  | `POST /v1/mcp-oauth/permissions/approvals/{approval_id}/cancel` | Dismiss the pending action without granting access. |
+  | `GET /v1/mcp-oauth/permissions/mode` | Read a thread's `auto_approve` setting and `version`. Supply `thread_id`. |
+  | `PUT /v1/mcp-oauth/permissions/mode` | Change it with `expected_version` and the same `thread_id`. |
+  | `GET /v1/mcp-oauth/permissions/default` | Read the account default. |
+  | `PUT /v1/mcp-oauth/permissions/default` | Change the default with `expected_version`. |
+  | `GET /v1/mcp-oauth/connections/{server_id}/permissions` | Read saved and effective tool policies. |
+  | `PUT /v1/mcp-oauth/connections/{server_id}/permissions` | Change persistent connection or tool policies. |
+
+  Cloud developer tokens cannot use these PUT routes or decision `scope: "always"`. Use a signed-in app session for permanent changes. Paired daemon devices can make these changes.
+
+  A stale permission version returns 409. Enabling thread auto-approval can resolve an eligible pending request. An explicitly denied tool remains denied. Changing the account default does not decide an existing pending approval.
+</Accordion>

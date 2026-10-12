@@ -1,41 +1,94 @@
 ---
-title: Schedules
-sidebarTitle: Schedules
+title: Schedule a task
 icon: calendar-clock
-description: Wake an existing Agent thread with a saved message once or on a recurring schedule.
+description: Ask an Agent to help at a time you choose.
 ---
 
-A schedule saves a future message for one existing Agent thread. When it becomes due, Fluso sends that message to the same thread as a separate follow-up turn.
+Once a task is useful, you can schedule it. Fluso calls a scheduled message a **routine**.
 
-A schedule does not create a new Agent or a new conversation. It wakes the thread with its saved Agent definition, history, and project scope.
+A routine can run once or repeat. It returns to the same conversation, and you do not need to leave Fluso open.
 
-To create or manage schedules from an Agent chat, enable thread management for that Agent.
+## Tell it what to do and when
 
-## One-time and recurring schedules
+Ask in the Agent's working conversation:
 
-Ask the Agent in plain language:
+> *"Tomorrow at 8 AM, review the workshop notes in this chat. Tell me what still needs a decision before the meeting."*
 
-> *"Tomorrow at 9:00 AM Asia/Kolkata, check whether the release blockers are closed and prepare a status update."*
+For repeat work, be clear about what should change each time:
 
-> *"Every weekday at 9:30 AM Europe/London, review new P0 and P1 escalations and prepare the triage list."*
+> *"Every weekday at 9 AM, review mail since your last check. Show me what needs a reply and draft responses here. Don't send anything."*
 
-One-time schedules use a future date and time with an offset. Recurring schedules use a standard five-field cron expression and an IANA time zone.
+For that email example, the Agent needs your [Google Workspace connection](/integrations/gmail).
 
-## What to put in the saved message
+Check the saved time and timezone in **Routines**. If the timing could be ambiguous, include your timezone in the request.
 
-The message should still make sense when it runs later. Include:
+## Set it yourself
 
-- The condition to check or work to perform.
-- The source the Agent should read.
-- The expected output.
-- Any approval boundary before an external action.
+Open **Routines** in the Agents sidebar, or use the routine control in the conversation. Write the message, choose the Agent, and set the time.
 
-## Manage a schedule
+You can choose one time, daily, weekdays, weekly, or a repeating interval.
 
-Ask the Agent to list, pause, resume, change, or delete schedules for the current thread. Deleting the target thread also removes its schedules.
+<Frame className="mx-auto max-w-xl" caption="Choose the message, time, timezone, and Agent before you create the routine.">
+  <a href="/images/agents/routine-editor.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
+    <img src="/images/agents/routine-editor.png" alt="A one-time routine for Meeting Prep at 8 AM in Europe/Zurich, asking it to review the workshop's open decisions." loading="lazy" width="576" height="720" />
+  </a>
+</Frame>
 
-If a recurring turn is still queued, running, or waiting for approval, Fluso does not pile up duplicate occurrences. Repeated failures can pause a schedule so it does not keep retrying without attention.
+Request work in the Agent's working conversation. A routine you request in **Manager** is for reviewing the Agent's setup.
 
-## Next
+## Find the result
 
-Use [Schedules](/developers/api-ref/schedules) for the REST endpoints, [Webhooks](/developers/webhooks) for event-driven turns, and [Runs](/developers/api-ref/runs) to inspect each accepted turn.
+The scheduled message appears as a small row in the conversation. Expand it if you want to read its instructions.
+
+The answer stays in that conversation. You can also find routine results in [Inbox](/developers/guides/inbox).
+
+If the Agent is busy, the routine waits. If it needs an approval, it waits for your decision.
+
+## Change or stop it
+
+Pause a routine to stop future occurrences. Edit it to change the message or timing. Delete it when you no longer need it.
+
+Use **Cancel run** for an occurrence that is already queued, running, or waiting for approval. Pausing a routine does not cancel work already sent to the conversation.
+
+For a temporary check, give it a stopping point:
+
+> *"Check for a reply every 30 minutes until Friday. Stop checking when a reply arrives."*
+
+Check that the Agent pauses or deletes the routine when that condition is met. The instruction is not an automatic expiry setting.
+
+<AccordionGroup>
+  <Accordion title="When a routine doesn't finish">
+    Open its conversation to see what happened. It may be waiting behind other work or asking for approval.
+
+    For a failure, check any partial result before trying again. A one-time routine stops scheduling after its message is accepted, even if the later work fails.
+
+    **Last run dispatched · outcome unavailable** means delivery is recorded, but completion is unknown.
+
+    A usage limit delays the routine. Repeated delivery failures can pause it. Fix the reported problem before resuming.
+  </Accordion>
+  <Accordion title="How timing and repeat runs work">
+    An earlier occurrence of the same routine must finish before another can proceed. This includes queued work and approval waits.
+
+    Temporary delivery failures retry with delays. Delayed recurring routines do not replay every missed time.
+
+    Choose a future time for a one-time routine. The editor rejects local times skipped by daylight-saving changes. Check the timezone and next-run time before saving.
+
+    Existing custom timing stays unchanged unless you change the frequency.
+  </Accordion>
+  <Accordion title="Schedule work for several Agents">
+    On **Routines**, you can apply the same message and timing to several Agents. Each gets its own routine.
+
+    **Select all** covers the Agents currently in the picker. It does not include Agents created later.
+
+    Matching routines appear together. Changing or deleting one Agent's assignment leaves the others in place. The editor reports any assignments it could not save, so you can retry those alone.
+
+    An Agent already using the same instructions at another time needs an explicit selection to add another timing.
+  </Accordion>
+  <Accordion title="Routines in separate sessions">
+    Open the session and use its routine control. The sidebar editor targets the Agent's main conversation.
+
+    A session's routine uses that session's saved setup. A routine in the main conversation uses the setup selected for its new turn.
+
+    Deleting a session removes its routines. Archiving it does not pause them. Deleting an Agent removes all its routines.
+  </Accordion>
+</AccordionGroup>

@@ -1,0 +1,162 @@
+---
+title: Work with files
+icon: folder-kanban
+description: Attach a report, get a summary file, and edit saved content without losing another change.
+---
+
+Give Fluso a short report and get a summary file back. This example covers upload, attachment, execution, and download.
+
+Use the Bash shell from [your first request](/api/first-request), plus Node 22 or later. Keep the example in its own directory.
+
+## Upload a report and get a summary
+
+Download the two examples from your workspace:
+
+```bash
+curl --fail --silent --show-error \
+  "$FLUSO_API_URL/examples/upload.mjs" -o upload.mjs &&
+curl --fail --silent --show-error \
+  "$FLUSO_API_URL/examples/attach.sh" -o attach.sh
+```
+
+Read both files before running them. The example writes `report.txt` and `summary.md` locally, so use a directory where those names are unused.
+
+```bash
+source attach.sh
+```
+
+It uploads a sample report, sends it to your conversation, waits for completion, and downloads the returned attachment as `summary.md`.
+
+Keep `input_path` for the uploaded report and `output_path` for the summary in your workspace. Use returned paths for future requests. Do not guess them from the prompt.
+
+If the example stops on an error, retain its upload key and receipt. Use the recovery details below before repeating a transfer.
+
+## Download an attachment
+
+A saved message can contain attachments without text. Read all items for its run, then use each attachment's path:
+
+```bash
+api /files/download --get \
+  --data-urlencode "path=$output_path" --output downloaded-summary.md
+```
+
+Choose a local output name you can replace. `available: false` on an attachment means its file is no longer at that path.
+
+## Edit without losing another change
+
+Read the report and its current revision:
+
+```bash
+saved=$(api /files/read --get --data-urlencode "path=$input_path") &&
+printf '%s' "$saved" | jq '{content, revision}'
+```
+
+A revision identifies the content you read. Include it when saving your edit:
+
+```bash
+edit_body=$(printf '%s' "$saved" | jq --arg path "$input_path" \
+  '{path: $path, revision, content: (.content + "\nReviewed by me.\n")}') &&
+api /files/text -X PUT \
+  -H 'Content-Type: application/json' -d "$edit_body"
+```
+
+If another writer changed the file, the save fails with 409. Read the new content and merge your edit. Keep the revision check.
+
+For a new file, use `overwrite: false`. Add `recursive: true` when its parent directories do not exist. Text writes allow 1 MiB of UTF-8 content. Reads default to 5 MiB.
+
+## Projects
+
+Use `GET /v1/projects` to choose a project and `GET /v1/files` to browse its files. Project IDs are storage names. Keep their exact returned values when building paths.
+
+Deleting a project removes its conversations and files, then retires their schedules. Save or export needed results first.
+
+<Accordion title="Implement uploads in your own client">
+  1. Send `POST /v1/uploads` with the filename, MIME type, byte size, and a saved `Idempotency-Key`.
+  2. POST the bytes to `upload_url` as multipart data, with returned `upload_fields` unchanged and the file last.
+  3. Send `POST /v1/uploads/confirm` with `{"id":"UPLOAD_ID"}`.
+  4. Read `GET /v1/uploads/{upload_id}` until it finishes.
+  5. Attach the returned `target_path` to your next input.
+
+  Do not send your Fluso bearer token to `upload_url`. The downloadable example uses text files. Supply the correct MIME type for other files, such as PDFs.
+
+  `confirmed` means the file is ready. `history_unavailable` means it was saved without a new recorded version. Show that warning. For `failed`, `cancelled`, or `conflict`, inspect the saved error before another transfer.
+
+  A timeout does not prove import failure. Read the existing upload. A confirmed receipt also does not promise that later edits left its bytes unchanged.
+</Accordion>
+
+<Accordion title="History, restoration, and comments">
+  Versions and comments apply under `/files/` and `/projects/{project_id}/files/`, excluding hidden directories.
+
+  Read `/v1/files/versions` before restoring a file. Download a version through `/v1/files/versions/content` with its `path` and `commit`. A missing version returns 404, never the current bytes.
+
+  Restore preserves the replaced bytes as a version first. If preservation fails, review the warning before permitting `allow_history_loss: true`. Other files remain unchanged.
+
+  The same history protection applies to writes, uploads, copies, and moves. Directory copies can partly succeed. Inspect the destination before retrying.
+
+  File comments can refer to a passage, slide, sheet range, or image region. A comment does not start an Agent run.
+</Accordion>
+
+<Accordion title="Project endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/projects` | List projects. Follow `next_cursor` as `after`. |
+  | `POST /v1/projects` | Create a project. Its name becomes its ID. |
+  | `GET /v1/projects/{project_id}` | Read details and conversation counts. |
+  | `PATCH /v1/projects/{project_id}` | Change description, icon, labels, archive, or pin settings. Does not rename it. |
+  | `DELETE /v1/projects/{project_id}` | Delete its conversations and files, then retire schedules. |
+  | `GET /v1/projects/{project_id}/export` | Stream an export download, not JSON. |
+  | `GET /v1/projects/{project_id}/search` | Search project files with `q`. |
+  | `GET /v1/projects/{project_id}/files/origins` | Read recorded file provenance. Missing entries mean unknown origin. |
+  | `PATCH /v1/projects/{project_id}/files/pins` | Add or remove relative paths such as `files/report.pdf`. |
+
+  Names use 1 to 64 ASCII letters, digits, single spaces, hyphens, or underscores, starting with a letter or digit. URL-encode names in paths.
+
+  Deleting Home also removes its work. An empty Home is recreated on first use. Retry a failed deletion to finish schedule cleanup. If you reuse the project name, deletion addresses the new project.
+</Accordion>
+
+<Accordion title="Upload endpoints and recovery">
+  | Method and path | Use |
+  | --- | --- |
+  | `POST /v1/uploads` | Prepare transfer with `file_name`, `mime_type`, and byte `file_size`. |
+  | `POST /v1/uploads/confirm` | Confirm transfer with `id`. Repeating confirmation is safe. |
+  | `GET /v1/uploads/{upload_id}` | Read import progress and the final `target_path`. |
+  | `GET /v1/uploads` | List receipts, following `next_cursor` as `after`. |
+  | `DELETE /v1/uploads/{file_id}` | Cancel a pending transfer or dismiss a saved-file history warning. |
+
+  Save an `Idempotency-Key` when preparing a transfer. Retrying the same settings returns its receipt. Changed settings return 409. At most four uploads can be pending.
+
+  A retry after transfer credentials expire can return a receipt without `upload_url`. Read or confirm that upload before starting another. A processing or completed receipt needs no repeat transfer.
+
+  Confirmation can return 200 while import is still processing. Poll until a final status. Receipts remain for seven days after completion. Receipt expiry does not delete the saved file.
+
+  Cancelling a pending upload removes temporary bytes. Dismissing `history_unavailable` keeps the saved file. This endpoint does not delete workspace content.
+</Accordion>
+
+<Accordion title="File, history, and comment endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/files` | Browse a directory, optionally recursively. Keep filters while following `next_cursor`. |
+  | `GET /v1/files/stat` | Read metadata for a workspace `path`. |
+  | `GET /v1/files/read` | Read UTF-8 content and its revision. |
+  | `GET /v1/files/download` | Stream raw bytes and download headers. |
+  | `PUT /v1/files/text` | Write text, optionally with a revision or `overwrite: false`. |
+  | `POST /v1/files/edit` | Replace matching text. `replace_all: true` changes every occurrence. |
+  | `POST /v1/files/directories` | Create a directory. `recursive: true` creates missing parents. |
+  | `POST /v1/files/move` | Move or rename. Existing destinations require explicit overwrite. |
+  | `POST /v1/files/copy` | Copy. Directory copies require `recursive: true`. |
+  | `DELETE /v1/files` | Supply `path` in the query. Nonempty directories also need `recursive=true`. |
+  | `POST /v1/files/batch-delete` | Delete selected paths and report each result. |
+  | `GET /v1/files/versions` | List history and the current file fingerprint. |
+  | `PATCH /v1/files/versions` | Rename a recorded version. |
+  | `GET /v1/files/versions/{commit}` | Read version metadata without its bytes. |
+  | `GET /v1/files/versions/content` | Download the selected version's exact bytes. |
+  | `POST /v1/files/versions/restore` | Restore one file, preserving the replaced version first. |
+  | `GET /v1/files/comments` | Read file comments across conversations. |
+  | `POST /v1/files/comments` | Add a note with a passage or object anchor. |
+  | `PATCH /v1/files/comments` | Edit a note, anchor, or status. |
+  | `DELETE /v1/files/comments` | Remove a comment by ID. |
+
+  Script-created files may have no history until delivered. `versionable: false` means an overwrite cannot preserve the current bytes. Do not treat version history as a complete workspace backup.
+
+  File deletion revokes public links before removing content. If deletion fails, links remain revoked. Retry deletion to remove the remaining content.
+</Accordion>

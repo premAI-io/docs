@@ -1,0 +1,57 @@
+---
+title: Organize customer documents
+icon: folders
+description: Make proposals and attachments easier to find after you send them.
+---
+
+Customer documents often stay buried in sent email. An Agent can copy them into the right Google Drive folders and keep track of what it already filed.
+
+This job needs a [Google Workspace connection](/integrations/gmail) with **Allowed** access, because it writes files to Drive.
+
+## Start with one week
+
+Give the Agent a destination and a rule for uncertainty:
+
+> *"Help me organize customer documents. Copy proposals and project documents from my sent email into the Customer Documents folder in Drive. Keep the original filenames. If you can't tell which customer a file belongs to, ask me. Don't change my email."*
+
+For its first task:
+
+> *"Start with last week's sent mail. Leave out signature images and internal messages. Show me where you put each document."*
+
+Open a few saved files. Check both the content and the customer folder.
+
+## Resolve the awkward cases
+
+Two customers may have similarly named files. Some documents may not identify a customer at all.
+
+You can give it a place to keep those questions:
+
+> *"Put anything uncertain in a Needs Review folder and tell me why. Keep going with the documents you can identify."*
+
+Answer a question in the same conversation:
+
+> *"Those two proposals belong to North Studio. Move them into that customer's folder."*
+
+Ask **Manager** to save a filing rule when it should apply next time.
+
+## Make repeat work safe
+
+Ask it to keep a record of each document's source and destination:
+
+> *"Keep track of what you've filed so we don't get duplicates. If a different document has the same filename, keep both with a clear date."*
+
+A file it cannot download should stay on the unfinished list. You can provide another copy or upload it yourself.
+
+Once the first run looks right:
+
+> *"Do this every night at 3 AM Chicago time. Check new sent mail since the last completed review. Tell me about anything that still needs my help."*
+
+Check the saved timezone in **Routines**. A night with no new documents is a valid result.
+
+<Accordion title="If a run stops halfway through">
+  Ask the Agent to check its record and the destination folders before it copies anything again.
+
+  It should track individual attachments, since one email can contain several files. An empty review period still counts as checked.
+
+  Keep unresolved documents on the list even when later mail has been processed.
+</Accordion>

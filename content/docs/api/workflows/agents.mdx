@@ -1,0 +1,125 @@
+---
+title: Use Agents
+icon: bot
+description: Create a meeting assistant, give it work, and improve its saved instructions.
+---
+
+An Agent keeps instructions for work you repeat. This example creates a meeting assistant that turns notes into decisions and open questions.
+
+Use the Bash shell from [your first request](/api/first-request). It provides authenticated requests through `api`.
+
+## Create the assistant
+
+```bash
+agent_key=$(uuidgen) &&
+agent_body='{
+  "name": "Meeting assistant",
+  "instructions": "Turn my notes into a meeting brief. List decisions needed and open questions."
+}' &&
+agent=$(api /agents \
+  -H "Idempotency-Key: $agent_key" \
+  -H 'Content-Type: application/json' -d "$agent_body") &&
+agent_id=$(printf '%s' "$agent" | jq -er '.agent_id')
+```
+
+This saves the Agent without starting a conversation. Keep `agent_id` for later use. If the response is lost, repeat the request with the same `agent_key` and `agent_body`.
+
+## Give it work
+
+Send a message with that Agent's ID:
+
+```bash
+agent_input_key=$(uuidgen) &&
+agent_input_body=$(jq -nc --arg agent_id "$agent_id" \
+  '{agent_id: $agent_id,
+    input: ("Notes: Maya will send the revised budget on Thursday. " +
+            "We still need to choose a launch date. Prepare my meeting brief.")}') &&
+agent_receipt=$(api /threads \
+  -H "Idempotency-Key: $agent_input_key" \
+  -H 'Content-Type: application/json' -d "$agent_input_body") &&
+agent_thread_id=$(printf '%s' "$agent_receipt" | jq -er '.thread_id') &&
+agent_run_id=$(printf '%s' "$agent_receipt" | jq -er '.run_id')
+```
+
+Read the answer with the quickstart's helpers. The parentheses keep your original conversation IDs unchanged:
+
+```bash
+(
+  thread_id=$agent_thread_id
+  run_id=$agent_run_id
+  wait_for_run && read_run_items | jq '.data'
+)
+```
+
+Opening this Agent again returns the same main conversation. Other callers share its history and queue. To open its setup conversation, include `purpose: "manager"` in the thread request.
+
+## Improve its instructions
+
+First read the current setup. Then send your edit with its `current_config_id`:
+
+```bash
+agent=$(api "/agents/$agent_id") &&
+config_id=$(printf '%s' "$agent" | jq -er '.current_config_id') &&
+edit_body=$(jq -nc --arg base "$config_id" \
+  '{base_config_id: $base,
+    instructions: ("Turn my notes into a short meeting brief. " +
+                   "Start with decisions I need to make, then open questions. " +
+                   "Do not invent owners or dates.")}') &&
+api "/agents/$agent_id" -X PATCH \
+  -H 'Content-Type: application/json' -d "$edit_body"
+```
+
+A 409 means another edit arrived first. Read the newer setup and review it before retrying. The main conversation uses saved changes on its next turn. Existing work sessions keep their saved configuration.
+
+Next, [schedule this assistant](/api/workflows/schedules) using `agent_id` and `agent_thread_id`.
+
+<Accordion title="Add skills, connections, or reference files">
+  Use skill names from [skill inventory](/api/workflows/workspace#choose-skills-for-an-agent) and server IDs from [connection inventory](/api/workflows/connections).
+
+  Omitted `skills` or `connectors` stay unchanged during an update. `null` removes the selection restriction. An empty list or map selects none. Connector `allow` still respects account consent.
+
+  Upload knowledge or copy a workspace file through the knowledge endpoints below. Add the returned reference to `knowledge_files` in an update with the current `base_config_id`.
+
+  Uploading alone does not attach knowledge to the Agent. Knowledge is a copy, so later edits to the original file do not change it.
+
+  Each Agent accepts up to 25 knowledge files, each no larger than 20 MiB. Use `knowledge_files: []` to remove the selection.
+</Accordion>
+
+<Accordion title="Reasoning effort and conversation boundaries">
+  Supported effort values are `off`, `minimal`, `low`, `medium`, `high`, and `xhigh`. An input's explicit effort overrides the Agent default. The runtime chooses the nearest supported effort, preferring a higher level before a lower one.
+
+  Steering without an effort keeps the active setting. An explicit change applies at the next execution attempt, without restarting an in-flight model call.
+
+  `run.execution` records the configuration, provider, model, and effort used when execution starts.
+
+  Public clients open main and manager conversations, not Agent work sessions. Omit `agent_id` for independent ordinary conversations.
+
+  Conversations share workspace files. Use distinct output paths for concurrent jobs that must not overwrite each other.
+</Accordion>
+
+<Accordion title="Copy, share, or delete an Agent">
+  Duplication creates independent setup. Retry it with the same idempotency key to recover the original copy.
+
+  [Public sharing](/api/cloud/sharing) is Cloud-only. Its snapshot excludes credentials, conversations, and schedules. After import, read `setup_requirements` and complete setup in the Manager conversation.
+
+  `DELETE /v1/agents/{agent_id}` removes the Agent, its owned conversations, and its schedules. It also revokes the Agent's share link. Save needed results before deletion.
+</Accordion>
+
+<Accordion title="Agent endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/agents` | Search or list Agents. Use numbered pages or `all=true`. |
+  | `POST /v1/agents` | Create saved setup without starting a turn. |
+  | `GET /v1/agents/{agent_id}` | Read setup and `current_config_id`. |
+  | `PATCH /v1/agents/{agent_id}` | Save changes with `base_config_id`. |
+  | `DELETE /v1/agents/{agent_id}` | Delete setup and conversations, retire schedules, and revoke its Agent link. |
+  | `POST /v1/agents/{agent_id}/avatar` | Save appearance. `avatar: null` resets it. |
+  | `POST /v1/agents/{agent_id}/star` | Set `starred` to true or false. |
+  | `POST /v1/agents/{agent_id}/duplicate` | Copy setup and knowledge. Use an idempotency key for retries. |
+  | `POST /v1/agents/{agent_id}/knowledge-files` | Store multipart `file` and return its reference. |
+  | `POST /v1/agents/{agent_id}/knowledge-files/from-workspace` | Copy `path` into knowledge and return its reference. |
+
+  Appearance and starring do not change instructions or configuration bindings. Duplication excludes conversations, schedules, and public links.
+
+  Creation and duplication receipts remain with the saved Agent. Their keys do not use the input receipt's 24-hour window. Older `creation_id` is accepted for creation. Do not supply conflicting identifiers.
+</Accordion>

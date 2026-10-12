@@ -1,0 +1,95 @@
+---
+title: Send messages
+icon: messages-square
+description: Continue a conversation and read its complete answer.
+---
+
+Turn the answer from [your first request](/api/first-request) into a checklist. Use the same Bash shell, which already has your token, `api` helper, and conversation IDs.
+
+A **thread** is the conversation. Each message you submit is an **input**. A **run** tracks the work that follows.
+
+## Send a follow-up
+
+Save a new key and message, then send them to the existing conversation:
+
+```bash
+input_key=$(uuidgen) &&
+input_body='{
+  "input": "Turn those checks into a three-item checklist.",
+  "mode": "queue"
+}' &&
+receipt=$(api "/threads/$thread_id/inputs" \
+  -H "Idempotency-Key: $input_key" \
+  -H 'Content-Type: application/json' -d "$input_body") &&
+run_id=$(printf '%s' "$receipt" | jq -er '.run_id')
+```
+
+The receipt identifies this new run. If the conversation is busy, `queue` waits for the current work to finish. Use `steer` to guide active work instead.
+
+Keep `input_key` and `input_body` if the response is lost. [Retry those same values](/api/workflows/runs), without generating another key.
+
+## Read the answer
+
+The quickstart's helpers wait for the run and read every output page:
+
+```bash
+wait_for_run &&
+items=$(read_run_items) &&
+printf '%s' "$items" | jq '.data[] | select(.type == "message" and .role == "assistant")'
+```
+
+You receive the saved assistant messages, including any attachments. A message can contain a file without text. Use each attachment's returned path to [download its content](/api/workflows/files).
+
+If the run needs approval or fails, `wait_for_run` stops and prints its status. Follow [Runs and retries](/api/workflows/runs) before sending more work.
+
+## Start a separate conversation
+
+Send `POST /v1/threads` with an `input` and a new key, as the quickstart does. Omit `input` and `attachments` to open an empty conversation.
+
+Include `agent_id` to use a [saved Agent](/api/workflows/agents). Its main conversation is reused. Add `purpose: "manager"` to open that Agent's setup conversation.
+
+## Read message history
+
+For your own client, use `GET /v1/threads/{thread_id}/items?run_id={run_id}`. Omit `run_id` to read the whole conversation.
+
+Entries are in `data`. Pass `next_cursor` as `after`, with the unchanged `revision`, until `next_cursor` is null. Keep filters unchanged. The `read_run_items` helper performs these steps for you.
+
+An empty page does not prove completion. Check the [run status](/api/workflows/runs). To display progress while waiting, add [live updates](/api/workflows/streaming).
+
+<Accordion title="Handle a changing conversation or queued message">
+  Edits or deletions can invalidate an item snapshot. On a pagination conflict, discard the partial read and restart without `after` or `revision`. New messages alone do not invalidate it.
+
+  Read thread state before editing queued work. Active or completed inputs cannot be edited as queued messages.
+
+  A queued edit needs its own new `Idempotency-Key`. Keep that edit key on retries. If the input started meanwhile, keep the user's draft when the API returns 409.
+
+  Stopping a thread holds follow-up inputs. Review state before resuming a held input.
+</Accordion>
+
+<Accordion title="Delete a conversation">
+  `DELETE /v1/threads/{thread_id}` stops and deletes an ordinary conversation. Save needed results first. Agent main and manager conversations require deleting their Agent instead.
+
+  Conversation deletion does not remove a separately published chat snapshot or all workspace files.
+</Accordion>
+
+<Accordion title="Conversation endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/threads` | List by Agent, project, or purpose. Follow numbered `pagination.page` and `pages`. |
+  | `POST /v1/threads` | Create an ordinary chat or open an Agent's main or manager conversation. |
+  | `GET /v1/threads/{thread_id}` | Read details and configuration binding. |
+  | `PATCH /v1/threads/{thread_id}` | Change title, archive, pin, labels, or application metadata. |
+  | `DELETE /v1/threads/{thread_id}` | Stop and remove an ordinary conversation. |
+  | `POST /v1/threads/{thread_id}/inputs` | Submit new work or steer active work. |
+  | `PATCH /v1/threads/{thread_id}/inputs/{input_id}` | Replace queued content with an edit key. |
+  | `DELETE /v1/threads/{thread_id}/inputs/{input_id}` | Cancel that queued input. |
+  | `POST /v1/threads/{thread_id}/inputs/{input_id}/resume` | Resume a held input. |
+  | `GET /v1/threads/{thread_id}/items` | Read saved items with snapshot pagination. |
+  | `GET /v1/threads/{thread_id}/state` | Read active work, queues, partial output, and pending actions. |
+  | `GET /v1/threads/{thread_id}/preview` | Read the latest short message preview. |
+  | `GET /v1/threads/{thread_id}/files` | List files associated with this conversation. |
+  | `POST /v1/threads/{thread_id}/read` | Update unread tracking. Does not approve tools. |
+  | `PATCH /v1/threads/{thread_id}/reorder` | Set position within its current project. Cross-project moves are rejected. |
+
+  Agent binding and provenance belong to the server. Custom metadata cannot change them. See [live events](/api/workflows/streaming) and [cancellation](/api/workflows/runs#stop-work) for execution controls.
+</Accordion>

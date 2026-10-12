@@ -1,0 +1,52 @@
+---
+title: Fluso Local
+sidebarTitle: Overview
+icon: monitor
+description: Set up Fluso on your own machine and use it for your daily work.
+---
+
+Fluso Local runs your workspace on a computer you control. Use your Mac for work with local files, or a Linux machine for work that continues after you close your laptop.
+
+You still talk to Fluso in the desktop app. Your conversations, Agents, and workspace files stay on the machine you choose.
+
+## Choose where to run it
+
+| Where | Useful for | How you connect |
+| --- | --- | --- |
+| Your Apple Silicon Mac | Working with documents on your laptop | Choose **This Mac** in Fluso |
+| A supported Linux machine | Keeping work running while your laptop is closed | Connect from Fluso on your Mac |
+
+A Linux machine can be at home or on a server you manage. A Raspberry Pi works only with a supported 64-bit system and working hardware virtualization.
+
+<CardGroup cols={2}>
+  <Card title="Set up Fluso Local" icon="download" href="/workspaces/setup">
+    Get the download, choose macOS or Linux, and connect the app.
+  </Card>
+  <Card title="Use Fluso Local" icon="messages-square" href="/workspaces/use">
+    Work with your files, keep an Agent, and schedule useful work.
+  </Card>
+</CardGroup>
+
+## What you need
+
+You install a background program called the **daemon** on the machine that will do the work. It runs separately from the desktop app. You also supply a model provider key and keep that machine awake for work to continue.
+
+[Contact us](mailto:support@premai.io?subject=Fluso%20Local%20download) for the daemon download links. Include your operating system, processor type, and whether you use Fluso or Fluso Dev.
+
+The [setup guide](/workspaces/setup) checks your machine before installation. You do not need Docker or a source checkout. For use without the desktop app, follow [API access](/api/first-request) after setup.
+
+## Where your work stays
+
+Each machine has its own conversations, Agents, files, and connections. They are separate from Fluso Cloud. Switching workspaces does not move or synchronize your work.
+
+Fluso can use files you upload or folders you explicitly share. It has no access to your other personal folders by default.
+
+Your chosen model provider receives the content needed to answer. Connected services receive their tool requests. Local storage does not make all processing local. The desktop interface still needs internet access and Fluso sign-in.
+
+<Accordion title="What differs from Cloud?">
+  Conversations, Agents, files, routines, and custom MCP connections use the selected workspace. Cloud billing, managed app connections, ingestion services, legacy Tasks, and public sharing are not available through the daemon.
+
+  Each paired client has access to the same owner's workspace. Pairing does not create separate user accounts or private areas for different people.
+</Accordion>
+
+Start with [Set up Fluso Local](/workspaces/setup). Return to [settings and maintenance](/workspaces/manage) for provider changes, updates, and backups.

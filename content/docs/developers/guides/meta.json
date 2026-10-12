@@ -1,0 +1,12 @@
+{
+  "title": "More about Agents",
+  "icon": "book-open",
+  "defaultOpen": false,
+  "pages": [
+    "settings",
+    "files",
+    "conversations",
+    "inbox",
+    "sharing"
+  ]
+}

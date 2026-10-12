@@ -1,0 +1,44 @@
+---
+title: Managed app connections
+icon: plug
+description: Connect a supported Cloud app when your integration needs its data or tools.
+---
+
+Cloud can guide users through connecting supported apps, such as Google Workspace. A connection belongs to the authenticated account. Completing sign-in does not remove its tool-approval rules.
+
+For a daemon or a custom server, use [custom MCP connections](/api/workflows/connections).
+
+## Connect the requested app
+
+For example, a morning-brief Agent may need a calendar connection. Its run can enter `waiting_action` with an `mcp_connect` action in thread state.
+
+1. Read the action to identify the requested `app_id`.
+2. Check the managed connection list for that app.
+3. Send `POST /v1/mcp-oauth/catalog/{app_id}/connect` if it needs connection.
+4. If the response says `redirect`, open its `authorization_url` for the user.
+5. Let the user complete the provider sign-in and Fluso callback.
+6. Check connection status and thread state before continuing.
+
+A `connected` response needs no browser handoff. `PROVISIONING` means provider sign-in succeeded but Fluso setup is still finishing. A refresh can complete registration. It cannot authorize an unconnected app.
+
+## Complete a custom callback client
+
+Fluso's signed-in callback normally completes the handoff. A client that handles an allowed callback itself must submit its `completion_proof` under the initiating account.
+
+Send the proof to `POST /v1/mcp-oauth/catalog/connect/complete`. Optionally set `expected_server_id` to check the returned connection. Protect the proof like a temporary credential. It expires after five minutes.
+
+A provider redirect alone does not establish that the connection is usable. Wait for the completion response or verified connection status.
+
+<Accordion title="Managed app endpoints">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /v1/mcp-oauth/catalog` | List app IDs and connection metadata. |
+  | `GET /v1/mcp-oauth/catalog/connections` | Read provider connection status without repairing it. |
+  | `POST /v1/mcp-oauth/catalog/{app_id}/connect` | Start authorization or return an existing usable connection. |
+  | `GET /v1/mcp-oauth/catalog/callback` | Provider/browser handoff. Do not use it for polling. |
+  | `POST /v1/mcp-oauth/catalog/connect/complete` | Complete the account-bound proof exchange. |
+
+  Reads accept a developer read token. Connection changes require write access. The provider callback validates its own handoff state.
+
+  Managed apps can be unavailable in a deployment, returning 503. `redirect_url`, when supplied, must match an allowed Fluso callback location.
+</Accordion>

@@ -1,0 +1,75 @@
+---
+title: Host settings
+icon: settings-2
+description: Change a daemon's model provider, sandbox resources, and shared folders safely.
+---
+
+These operations require a device paired with `--manage-host`. Ordinary pairing already permits workspace work. Host management adds authority over this machine's configuration and connected devices.
+
+Prefer [Workspace settings in Fluso](/workspaces/manage) for interactive setup. Use this API when your client needs to manage the same settings.
+
+## Read, save, then apply
+
+Saving settings does not apply them to the running sandbox.
+
+1. Read `GET /daemon/v1/settings` and `GET /daemon/v1/sandbox`.
+2. Keep each response's `revision`.
+3. Save the change with that resource's `expectedRevision`.
+4. Keep the new revisions returned by the saves.
+5. Apply both revisions with `POST /daemon/v1/apply`.
+6. Read discovery and runtime status to check the outcome.
+
+For example, change the model while keeping the existing provider and key:
+
+```json
+{
+  "expectedRevision": "SETTINGS_REVISION_FROM_READ",
+  "settings": {
+    "FLUSO_MODEL": "MODEL_ID_SUPPORTED_BY_YOUR_PROVIDER"
+  }
+}
+```
+
+Send that body to `PATCH /daemon/v1/settings`. Omitted fields remain unchanged. `null` clears a field. Returned `secrets` are presence flags, not key values.
+
+Apply the saved revisions with:
+
+```json
+{
+  "settingsRevision": "SETTINGS_REVISION_FROM_SAVE",
+  "sandboxRevision": "SANDBOX_REVISION_FROM_READ",
+  "interrupt": false
+}
+```
+
+A 409 `INTERRUPTION_REQUIRED` means active work would be interrupted. Ask the owner before repeating with `interrupt: true`.
+
+## Change the provider or sandbox
+
+For an OpenAI-compatible endpoint, set `FLUSO_PROVIDER: "custom"`, `OPENAI_BASE_URL`, `FLUSO_MODEL`, and `OPENAI_API_KEY`. Include `/v1` in the base URL when the provider requires it. Other provider choices are `openrouter`, `openai`, and `pcci`.
+
+A saved key stays tied to its endpoint. Enter a key again when changing that destination. Audio has separate provider and key settings. The [daemon's schema](/api#find-the-exact-fields) lists every supported setting.
+
+Sandbox changes use `PUT /daemon/v1/sandbox` with `expectedRevision` and the complete `config`. Preserve all intended `hostFiles` grants. An empty list removes shared-folder access.
+
+Host paths refer to the daemon's machine, even when you connect remotely. Grant only the required folders. Writable grants permit changing or deleting the original host files. Workspace `/v1/files` paths do not grant access to arbitrary host paths.
+
+<Accordion title="Management endpoints and recovery">
+  | Method and path | Use |
+  | --- | --- |
+  | `GET /daemon/v1/settings` | Read saved provider settings and their revision. |
+  | `PATCH /daemon/v1/settings` | Save changed fields. `preview: true` validates without saving. |
+  | `GET /daemon/v1/sandbox` | Read configuration, revision, host RAM, and disk budgets. |
+  | `PUT /daemon/v1/sandbox` | Replace the sandbox configuration with revision protection. |
+  | `POST /daemon/v1/apply` | Apply the saved settings and sandbox revisions. |
+
+  Sandbox `config` contains `runtimeProfile`, `hostFiles`, `memoryGiB`, and `diskGiB`. RAM is the VM allocation. Disk is the combined saved-work and temporary-work budget. It excludes images, backups, and shared host folders. Existing workspace data must fit a smaller budget before you apply it.
+
+  On 409 `CONFIGURATION_CONFLICT`, reload both resources and review the newer changes. Do not substitute a fresh revision without reviewing them.
+
+  During an update or apply, workspace routes can return 503 with `Retry-After`. Discovery shows `applying` or `configuration_error` where applicable. Resolve a configuration error before resubmitting work. A 423 locked credential store requires recovery on the host.
+
+  Discovery exposes saved and applied revisions and `restartRequired` to host-authorized clients. After a lost apply response, read those values before another apply.
+</Accordion>
+
+Binary updates, backups, and credential-store recovery use the [daemon CLI](/workspaces/manage). The settings API does not replace those operations.

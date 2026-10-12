@@ -1,0 +1,9 @@
+{
+  "title": "Daemon API",
+  "icon": "server",
+  "defaultOpen": false,
+  "pages": [
+    "pairing",
+    "settings"
+  ]
+}

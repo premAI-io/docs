@@ -213,12 +213,16 @@ export function AccordionGroup({ children }: { children: ReactNode }) {
 export function Frame({
   caption,
   children,
+  className,
 }: {
   caption?: ReactNode;
   children: ReactNode;
+  className?: string;
 }) {
   return (
-    <figure className="my-6 overflow-hidden rounded-xl border bg-fd-card p-2 not-prose">
+    <figure
+      className={cn('my-6 overflow-hidden rounded-xl border bg-fd-card p-2 not-prose', className)}
+    >
       <div className="overflow-hidden rounded-lg [&_img]:my-0 [&_img]:w-full">
         {children}
       </div>
