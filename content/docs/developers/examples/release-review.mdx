@@ -16,7 +16,7 @@ Create a reviewer through [New Agent](/developers/agent-builder). Explain what i
 
 Then attach the material for your review. Explain when you need the decision and what must be true before launch.
 
-The screenshots below use synthetic sample files. Their findings are part of the example, not an assessment of an actual release.
+For this example, we gave the Agent sample files for a fictional documentation launch.
 
 <Frame caption="The review request brings a sample launch brief, validation notes, and draft guides together.">
   <a href="/images/agents/native/review-request.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
@@ -32,7 +32,7 @@ For a larger review, you can ask:
 
 The Agent can use separate [sessions](/developers/guides/conversations) while it works on the overall review.
 
-In this sample run, two sessions checked the reader journey and validation evidence. The Agent saved a `release-review.md` report. It recommended waiting because the sample files left launch requirements unresolved.
+In our run, two sessions checked the draft guides and validation notes. The Agent recommended waiting because some launch requirements were still unresolved. It saved their findings in `release-review.md`.
 
 Read the reasoning, not only the recommendation. An earlier successful check may cover an older version of the work.
 
@@ -49,13 +49,13 @@ You can schedule a later check with a [one-time routine](/developers/schedules).
 <Accordion title="What happened in the scheduled follow-up?">
   The routine reread the saved report and validation notes. It found no new evidence, so it kept the unresolved checks open.
 
-  <Frame caption="The routine's completed follow-up keeps the sample's unresolved checks visible.">
+  <Frame caption="The routine returned to the same conversation and kept the pending decisions visible.">
     <a href="/images/agents/native/routine-result.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
-      <img src="/images/agents/native/routine-result.png" alt="Below a collapsed Routine message, Scheduled check complete reports no new evidence and an unchanged not-ready verdict for the sample release." width="2358" height="1694" />
+      <img src="/images/agents/native/routine-result.png" alt="The routine reports no new evidence and keeps the launch checks open in the Agent conversation." width="2358" height="1694" />
     </a>
   </Frame>
 
   Its result appeared in Inbox. The routine did not approve or publish the release.
 </Accordion>
 
-The screenshots show real responses to the sample files. The example requests above are wording you can adapt to your own launch.
+The example requests above are wording you can adapt to your own launch.
