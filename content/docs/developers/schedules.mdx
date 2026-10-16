@@ -24,13 +24,15 @@ Check the saved time and timezone in **Routines**. If the timing could be ambigu
 
 ## Set it yourself
 
-Open **Routines** in the Agents sidebar, or use the routine control in the conversation. Write the message, choose the Agent, and set the time.
+Open the Agent conversation's side panel with the panel icon at the upper right. Under **Routines**, select **Add**. Write the message and set the time.
 
-You can choose one time, daily, weekdays, weekly, or a repeating interval.
+The editor offers **Once**, **Daily**, **Weekdays**, and **Weekly**. It schedules work for the current Agent.
 
-<Frame className="mx-auto max-w-xl" caption="Choose the message, time, timezone, and Agent before you create the routine.">
-  <a href="/images/agents/routine-editor.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
-    <img src="/images/agents/routine-editor.png" alt="A one-time routine for Meeting Prep at 8 AM in Europe/Zurich, asking it to review the workshop's open decisions." loading="lazy" width="576" height="720" />
+Check the timezone. Select **Create routine**.
+
+<Frame caption={<>Use the <strong>New routine</strong> panel on the right to schedule a follow-up for our <a className="underline underline-offset-2" href="/developers/examples/release-review">fictional launch-review example</a>. Check the message, time, and timezone before saving.</>}>
+  <a href="/images/agents/native/routine-editor.png" target="_blank" rel="noreferrer" title="Open full-size image in a new tab">
+    <img src="/images/agents/native/routine-editor.png" alt="The New routine panel for Release Reviewer has Once selected for 9 AM in Asia/Kolkata and a request to update the release review while keeping unresolved checks pending." loading="lazy" width="2295" height="1700" />
   </a>
 </Frame>
 
@@ -76,7 +78,7 @@ Check that the Agent pauses or deletes the routine when that condition is met. T
     Existing custom timing stays unchanged unless you change the frequency.
   </Accordion>
   <Accordion title="Schedule work for several Agents">
-    On **Routines**, you can apply the same message and timing to several Agents. Each gets its own routine.
+    Expand **Also run on other agents** in the routine editor to apply the same message and timing to several Agents. Each gets its own routine.
 
     **Select all** covers the Agents currently in the picker. It does not include Agents created later.
 
@@ -85,7 +87,7 @@ Check that the Agent pauses or deletes the routine when that condition is met. T
     An Agent already using the same instructions at another time needs an explicit selection to add another timing.
   </Accordion>
   <Accordion title="Routines in separate sessions">
-    Open the session and use its routine control. The sidebar editor targets the Agent's main conversation.
+    Open the session and use its routine control. To schedule work in the main conversation, open that conversation first.
 
     A session's routine uses that session's saved setup. A routine in the main conversation uses the setup selected for its new turn.
 
