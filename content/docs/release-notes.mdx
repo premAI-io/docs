@@ -4,6 +4,68 @@ icon: sparkles
 description: "What's new in Fluso - product updates, improvements, and fixes."
 ---
 
+<Update label="2026-10-16" description="Desktop 1.3.6" tags={["Desktop"]}>
+
+**Highlights**
+- Desktop 1.3.6 is a required update. Older versions show an update screen when you open them.
+- Create personal developer tokens in **Settings → Developer tokens** and call the [Fluso API](https://docs.fluso.ai/api) from your own scripts.
+- Free and Plus now have a weekly usage allowance, with a usage bar that shows how much you have left. Pro has no weekly limit.
+- [Confidential Mode](https://docs.fluso.ai/features/confidential) now runs DeepSeek V4.1 Flash.
+- Paste several screenshots at once, and each one arrives as its own attachment.
+
+**Updates & installation**
+
+- This release changes how the app connects to your account, so every desktop app needs 1.3.6.
+- If you see **Update Fluso to continue**, click **Update Fluso**. You can also download the latest build from [fluso.ai](https://fluso.ai/).
+
+**The Fluso API and developer tokens**
+
+- Fluso now has a documented API. Each deployment serves its reference at `/docs` and the full spec at `/v1/openapi.json`.
+- Create a token in **Settings → Developer tokens**. Choose **Read only** or **Read and write**, and pick when it expires.
+- Rename or revoke a token at any time.
+- Start with [your first request](https://docs.fluso.ai/api/first-request), then read about [developer tokens](https://docs.fluso.ai/api/cloud/tokens).
+
+**Plans & limits**
+
+- Free and Plus have a weekly usage allowance. Plus gives you 10 times as much as Free.
+- The week starts on the weekday you signed up, so your allowance resets on that day each week.
+- A usage bar shows how much of this week's allowance you have used.
+- Pro has no weekly limit.
+- Upgrade without leaving the app. Checkout opens in a single payment dialog.
+- If someone gifted you Pro, you can pick the paid plan that takes over when the gift ends. Otherwise you return to Free.
+
+**Confidential Mode**
+
+- Confidential requests now run on DeepSeek V4.1 Flash.
+- **Fast** mode now turns model reasoning off in Confidential Mode too.
+
+**Chat and files**
+
+- Paste several screenshots at once and each one arrives as its own attachment. Files with the same name get a number, for example `image (1).png`.
+- The **All**, **Uploaded**, and **Generated** filter in the Files panel works again.
+- A message you send while Fluso is working now appears where you sent it. If the network drops, you see **Connection error** instead of "Failed to fetch".
+- New chats open with the Files panel closed.
+- Decks, PDFs, and other generated files get a design that suits the content, instead of one fixed style.
+- Fluso knows today's weekday, so "on Friday" means the Friday you meant.
+
+**Assistant reliability**
+
+- Reconnecting while you answer an [approval](https://docs.fluso.ai/features/approvals) no longer skips the next approval or fails the run.
+- A run you stop shows as cancelled, not failed.
+- A brief error from the model provider is retried instead of ending your turn.
+- Fluso looks up Google Calendar events more reliably.
+- Custom MCP servers that publish both IPv4 and IPv6 addresses connect promptly instead of timing out.
+- If a tool is interrupted mid-call, Fluso tells you its outcome is unknown instead of waiting forever.
+- Fewer 502 errors, and less background polling while your workspace is asleep.
+- A damaged project record no longer breaks your chat list.
+
+**Polish**
+
+- Tasks has an **Add** button.
+- The shield and badges in the top bar are spaced correctly.
+
+</Update>
+
 <Update label="2026-08-14" description="Fluso 1.5.0" tags={["Desktop", "iOS"]}>
 
 **Highlights**
