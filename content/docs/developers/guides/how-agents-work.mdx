@@ -4,7 +4,7 @@ icon: workflow
 description: The parts of an Agent, what it knows on each turn, and how routines and app access fit together.
 ---
 
-The other guides show you what to do. This page explains what happens underneath, so you can predict how an Agent will behave before you rely on it.
+The other guides show you what to do. This page explains what happens underneath, so you can predict how an Agent behaves before you rely on it.
 
 ## The parts of an Agent
 
@@ -17,9 +17,9 @@ An Agent is one saved setup plus the conversations that use it.
 | **Manager** | A separate conversation that changes the setup. It does not do the Agent's work | **Refine with manager** |
 | **Sessions** | Conversations the Agent creates to work on part of a job | The dropdown beside the Agent's title |
 | **Routines** | Messages that Fluso sends to a conversation at a set time | **Routines** |
-| **Inbox** | Approvals, failures, and routine results that need you | The bell icon in the Agents sidebar |
+| **Inbox** | Approvals, failures, and routine results that need you | The bell icon at the bottom of the sidebar |
 
-Keep this division in mind. You give work in the main conversation. You change how the Agent works through Manager or **Edit**.
+You give the Agent work in the main conversation. To change how it works, use Manager or **Edit**.
 
 ## What a setup contains
 
@@ -58,8 +58,8 @@ Before each turn, Fluso gives the model:
 
 1. The Agent's instructions.
 2. A list of the Agent's knowledge files. Fluso marks them as reference material. Text inside a file is not treated as an instruction.
-3. Facts from your profile, and short summaries of recent work in the same project.
-4. The state of the Agent's sessions and any results they returned.
+3. Facts from your profile, and short summaries of related work in the same project.
+4. The Agent's sessions, and whether their results have come back.
 5. The apps the Agent can use, with read-only apps marked. Apps that are off are named, so the Agent can tell you it cannot use them.
 
 Your general chat preferences and project instructions are not added to Agent conversations. If the Agent needs a preference, put it in the Agent's instructions.
@@ -92,14 +92,14 @@ If the same Agent had Gmail set to **Read only**, the draft and the send would b
 
 ## Routines are scheduled messages
 
-A routine sends a message to a conversation at a set time. The Agent then handles it like any other message. This explains most routine behavior:
+A routine sends a message to a conversation at a set time. The Agent handles it like any other message, which explains most of what you see:
 
 - **The Agent is busy.** The message waits behind the current work.
-- **The previous run has not finished.** Fluso skips this occurrence and tries again later.
-- **A scheduled time is missed.** Fluso does not replay it later.
+- **The previous run has not finished.** Fluso holds the new run until the previous one ends, then sends it once. Times that pass while it waits are not sent separately.
+- **A scheduled time is missed**, for example during an outage. Fluso sends one late run when it can, not one for every missed time.
 - **Delivery keeps failing.** After repeated failures, the routine pauses and shows **Delivery failed**.
 
-A routine runs while you may be away. So the third app-access check, a person to approve, is usually missing. Unless your deployment holds routine approvals, a tool set to **Ask** is refused during a routine, and the Agent reports that it could not use it.
+A routine can run while you are away, so there is nobody to answer the third check. A tool set to **Ask** is refused during a routine, and the Agent reports that it could not use it.
 
 Before you schedule work that changes something, decide which tools it needs and set them to **Allow**. For work that must be reviewed, ask the routine to prepare a draft and leave the send to you:
 
