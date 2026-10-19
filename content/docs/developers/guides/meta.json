@@ -3,6 +3,7 @@
   "icon": "book-open",
   "defaultOpen": false,
   "pages": [
+    "how-agents-work",
     "settings",
     "files",
     "conversations",

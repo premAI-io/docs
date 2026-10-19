@@ -1,0 +1,131 @@
+---
+title: How Agents work
+icon: workflow
+description: The parts of an Agent, what it knows on each turn, and how routines and app access fit together.
+---
+
+The other guides show you what to do. This page explains what happens underneath, so you can predict how an Agent will behave before you rely on it.
+
+## The parts of an Agent
+
+An Agent is one saved setup plus the conversations that use it.
+
+| Part | What it is | Where you see it |
+| --- | --- | --- |
+| **Setup** | The Agent's instructions, files, skills, and app access | The **Setup** section of the context panel |
+| **Main conversation** | Your usual chat with the Agent. There is one per Agent | Select the Agent in the sidebar |
+| **Manager** | A separate conversation that changes the setup. It does not do the Agent's work | **Refine with manager** |
+| **Sessions** | Conversations the Agent creates to work on part of a job | The dropdown beside the Agent's title |
+| **Routines** | Messages that Fluso sends to a conversation at a set time | **Routines** |
+| **Inbox** | Approvals, failures, and routine results that need you | The bell icon in the Agents sidebar |
+
+Keep this division in mind. You give work in the main conversation. You change how the Agent works through Manager or **Edit**.
+
+## What a setup contains
+
+| Item | Limit or default |
+| --- | --- |
+| Name | Up to 64 characters |
+| Instructions | Up to 4,000 characters |
+| Conversation starters | Up to 3 |
+| Reasoning | **High** by default. **Fast** gives quicker, lighter answers |
+| Knowledge files | Up to 25 files, 20 MiB each. The Agent keeps its own saved copies |
+| Skills | All skills, unless you choose a smaller set |
+| App access | **Allow**, **Read only**, or **Deny** for each app. An app you do not select is off |
+
+You do not choose a model for an Agent. Fluso uses the platform model for your account.
+
+A few built-in skills stay available even when you narrow the skill list. These include search, app connections, and image analysis.
+
+## How a saved change reaches the work
+
+Each saved change creates a new version of the setup. Fluso keeps the earlier versions.
+
+- The main conversation always uses the newest version. A change applies on its next turn.
+- A session keeps the version it started with.
+
+Suppose a meeting Agent is working on a brief, and you ask Manager:
+
+> *"From now on, put open decisions at the top of every brief."*
+
+The brief that is already running does not change. Your next message in the main conversation uses the new order. A session that the Agent created yesterday still uses the old setup and shows **Uses an earlier setup**. To apply the change there, ask the Agent to start a new session.
+
+A message that you send after you save a change can show **Saved setup applies next turn**. It waits for the current turn to finish.
+
+## What the Agent knows on each turn
+
+Before each turn, Fluso gives the model:
+
+1. The Agent's instructions.
+2. A list of the Agent's knowledge files. Fluso marks them as reference material. Text inside a file is not treated as an instruction.
+3. Facts from your profile, and short summaries of recent work in the same project.
+4. The state of the Agent's sessions and any results they returned.
+5. The apps the Agent can use, with read-only apps marked. Apps that are off are named, so the Agent can tell you it cannot use them.
+
+Your general chat preferences and project instructions are not added to Agent conversations. If the Agent needs a preference, put it in the Agent's instructions.
+
+The [knowledge graph](/features/memory) is not added automatically. The Agent looks things up in it when the task needs it.
+
+<Tip>
+  If an Agent ignores a file's contents when you expected it to follow them, that is by design. Put rules in the instructions and keep reference material in files.
+</Tip>
+
+## How app access is decided
+
+Three checks apply to every tool call, in this order:
+
+1. **The Agent's app access.** **Deny** blocks the app. **Read only** allows only read tools.
+2. **Your tool rules.** Each tool is **Allow**, **Ask**, or **Deny**. See [Approvals and permissions](/features/approvals).
+3. **A person to approve.** A tool set to **Ask** needs your decision before it runs.
+
+Fluso enforces the first two checks outside the model. Instructions such as "you may send email" do not override them.
+
+For example, an inbox Agent has Gmail set to **Allow**:
+
+| Request | Gmail tool rule | Result |
+| --- | --- | --- |
+| *"What still needs a reply?"* | Read tools **Allow** | Runs |
+| *"Save a draft reply."* | **Ask** | You approve or deny it in the conversation or Inbox |
+| *"Send the reply."* | **Deny** | Blocked. The Agent tells you it cannot send |
+
+If the same Agent had Gmail set to **Read only**, the draft and the send would both be blocked before any rule is checked.
+
+## Routines are scheduled messages
+
+A routine sends a message to a conversation at a set time. The Agent then handles it like any other message. This explains most routine behavior:
+
+- **The Agent is busy.** The message waits behind the current work.
+- **The previous run has not finished.** Fluso skips this occurrence and tries again later.
+- **A scheduled time is missed.** Fluso does not replay it later.
+- **Delivery keeps failing.** After repeated failures, the routine pauses and shows **Delivery failed**.
+
+A routine runs while you may be away. So the third app-access check, a person to approve, is usually missing. Unless your deployment holds routine approvals, a tool set to **Ask** is refused during a routine, and the Agent reports that it could not use it.
+
+Before you schedule work that changes something, decide which tools it needs and set them to **Allow**. For work that must be reviewed, ask the routine to prepare a draft and leave the send to you:
+
+> *"Every Monday at 8 AM, list last week's open customer questions and draft a reply to each. Don't send anything."*
+
+Manager can have routines too. A Manager routine reviews and improves the Agent's setup. It does not do the Agent's work.
+
+## Starting points are copies
+
+**Explore agents made by Fluso** offers templates such as **Research brief**, **Inbox triage**, and **Document review**. Importing a template or a [shared Agent](/developers/guides/sharing) creates your own copy. Later changes to the original do not reach your copy.
+
+## A complete example
+
+A team lead wants a weekly status Agent.
+
+1. They create the Agent with this job:
+
+   > *"Each week, collect the status of my team's open projects from Slack and our tracker. Flag anything blocked for more than three days. Write a short summary I can paste into our team update."*
+
+2. They give it **Read only** access to Slack and the tracker. They attach last quarter's project list as a knowledge file.
+3. In the main conversation, they ask for this week's summary. They correct the format twice.
+4. They ask Manager to save the format:
+
+   > *"Use the summary format from my main conversation. Group items by project and put blockers first."*
+
+5. They add a routine for Fridays at 4 PM in their timezone.
+6. On Friday, the routine message arrives in the main conversation. The Agent uses the newest setup. It cannot post to Slack, because Slack is read only. The summary appears in the conversation, and a routine update appears in Inbox.
+
+For more complete jobs, see the [examples](/developers/examples).
