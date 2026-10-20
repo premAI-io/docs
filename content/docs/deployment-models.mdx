@@ -31,7 +31,7 @@ The desktop app connects to this workspace. It does not install or update the da
 
 A dedicated AWS VPC deployment is available for Enterprise customers whose network or residency requirements do not fit the managed service. It is a scoped deployment, not a self-service switch.
 
-Before launch, your team and Fluso agree on AWS account ownership, region, network connectivity, ingress and egress, DNS, secrets, data stores, backups, upgrades, and support access. Where egress governance is enabled, outbound access can use Fluso's Allow, Ask, and Deny policy boundary; review the current scope under [Network egress](/admin-panel#network-egress).
+Before launch, your team and Fluso agree on AWS account ownership, region, network connectivity, ingress and egress, DNS, secrets, data stores, backups, upgrades, and support access.
 
 ## Azure VNet (coming soon)
 
@@ -60,8 +60,6 @@ Agree on these boundaries before treating the design as approved:
 AWS deployments send service logs to CloudWatch and define CloudWatch alarms. Fluso's knowledge service emits structured logs and can export traces and metrics through OpenTelemetry (OTLP). The current AWS collector routes traces to X-Ray and metrics to CloudWatch; Prometheus scraping is optional.
 
 Traces can include prompt and response text. For a dedicated or on-premises deployment, agree which signals are captured, where they are stored, how long they are retained, and which customer-owned collectors are supported.
-
-[Fluso Admin](/admin-panel) shows the product records it receives, including runtime health, recorded cost and token usage, and governance events. It does not replace infrastructure monitoring or promise export of every operational signal.
 
 ## Choose a model
 
