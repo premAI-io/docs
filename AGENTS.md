@@ -12,7 +12,6 @@
 
 The navigation keeps Home first and sorts the top-level sections alphabetically. Agents follows the user journey. Other sections keep their existing order:
 
-- **Administration** - `/admin-panel`. Browser-admin access, dashboards, governance records, runtime controls, and network policy.
 - **Agents (Beta)** - `/developers/*`. Start with a familiar task, then improvement and scheduling. Keep Examples and More about Agents (`/developers/guides/*`) collapsed by default. Introduce features when they help the reader's current task. Keep prompts natural and explain terms before using them.
 - **App setup** - `/integrations/{github, gmail, google-calendar, slack}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
 - **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
@@ -87,6 +86,7 @@ Use the [ASD-STE100 writing skill](https://github.com/danyuchn/asd-ste100-skill/
 
 ## Content boundaries
 
+- Fluso Admin is internal. Do not publish its operator guide, navigation, links, or panel instructions in this public documentation site.
 - Never invent feature behaviour. If a capability isn't documented in source materials, leave it out.
 - When describing external sends, explain how to request and review a draft and choose **Ask me first**. Do not claim every write requires approval: saved tool rules, connection settings, and the chat's mode determine that behavior.
 - Verify Agent behavior against both current frontend and backend code. Do not restore removed Studio graphs, evaluations, version rollback, YAML transfer, webhook triggers, or thread-management toggles from historical release notes.

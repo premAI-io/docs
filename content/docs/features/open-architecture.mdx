@@ -5,7 +5,7 @@ icon: blocks
 description: Keep a usable copy of your work and move it through documented files, links, and APIs.
 ---
 
-Fluso keeps core work in ordinary formats instead of locking every object behind one interface. You can download project files, move Agent definitions, export operational records, and read conversation history through the API.
+Fluso keeps core work in ordinary formats instead of locking every object behind one interface. You can download project files, move Agent definitions, and read conversation history through the API.
 
 Different exports serve different purposes. A project ZIP is a file backup; a shared Agent is a reusable setup; a shared chat is a reviewable snapshot.
 
@@ -19,8 +19,6 @@ Different exports serve different purposes. A project ZIP is a file backup; a sh
 | **Generated documents and presentations** | Use the artifact's export menu | Documents as PDF, Word, HTML, or Markdown; presentations as PDF, PowerPoint, or a Google Slides copy |
 | **Agent copies** | Open the Agent's actions menu, then **Share** | A revocable snapshot of the setup and selected resources that another person can import |
 | **Conversation history** | Open a chat and select **Share chat**, or read messages with the Threads API | A revocable public snapshot, or structured persisted messages through the API |
-| **Audit logs** | In Fluso Admin, filter **Audit log**, then select **Export _N_ rows** | CSV containing the currently filtered rows from the latest 100 recorded identity and access events |
-| **Usage records** | In Fluso Admin, open **Observability → Export CSV** | CSV of the recorded daily gateway cost and token totals shown in the 14-day view |
 
 Project ZIPs skip dotted runtime entries and symbolic links. They do not serve as a complete conversation archive. Use the [Threads and messages API](/api/workflows/conversations#read-message-history) when you need persisted chat records in a system you control.
 
@@ -45,8 +43,7 @@ To hand a customer-support workflow to another team:
 1. Export the support project as ZIP so they receive the runbooks and working files.
 2. Share the Agent's saved setup and any reference files the recipient needs.
 3. Share any example conversation as a snapshot, removing sensitive messages first.
-4. Export the relevant filtered audit rows separately if the reviewer needs access evidence.
-5. In the destination workspace, import the Agent, upload the project files, connect Apps, and try a real task before scheduling work.
+4. In the destination workspace, import the Agent, upload the project files, connect Apps, and try a real task before scheduling work.
 
 These exports are independent snapshots. Later Fluso changes do not silently rewrite the copies you already saved.
 
