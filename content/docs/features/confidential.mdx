@@ -5,7 +5,7 @@ icon: lock-keyhole
 description: Run your work through models hosted in a hardware-sealed enclave.
 ---
 
-Confidential mode routes your inference through Prem API's confidential compute, an isolated enclave that infrastructure operators and the cloud provider cannot access. It is available on the Confidential plan. You can turn it off later to return future requests to standard provider routing.
+Confidential mode routes your inference through Prem API's confidential compute, an isolated enclave that infrastructure operators and the cloud provider cannot access. It is available on the Pro plan. You can turn it off later to return future requests to standard provider routing.
 
 ## What it protects
 
@@ -19,15 +19,15 @@ For the full technical picture, see Prem's [confidential compute documentation](
 
 ## Plans
 
-Confidential mode is included with the **Confidential** plan. Accounts granted access by the Fluso team show **Sponsored Confidential** as their effective plan.
+Confidential mode is included with **Pro**, including an active Pro trial or gifted Pro access. **Settings → Plans** shows your effective plan and the expiry date of any gift. See [Pricing](/resources/pricing) for current prices and trial terms.
 
-Open **Settings** and find **Encrypted Inference**. Without plan access, the row reads "Available on the Confidential plan" and shows **Upgrade**. With plan access, it shows an **Off** or **On** switch.
+Open **Settings** and find **Encrypted Inference**. Without Pro access, use **Upgrade** to view the plans. With Pro access, you can turn confidential mode on or off.
 
 ## Turning it on
 
 <Steps>
   <Step title="Get plan access">
-    Open **Settings → Plans** and choose **Confidential**. If your team grants sponsored access, the current plan reads **Sponsored Confidential** instead.
+    Open **Settings → Plans** and choose **Pro**, or check that your Pro trial or gifted Pro access is active.
   </Step>
   <Step title="Enable encrypted inference">
     Turn on the switch under **Settings → Encrypted Inference**. The confirmation dialog lists the two unavailable capabilities: automated task generation and image generation. It also explains that you can return to standard inference later, but data removed during activation cannot be restored automatically.
@@ -54,7 +54,7 @@ Open **Settings** and find **Encrypted Inference**. Without plan access, the row
     Image generation and automated task creation. Both rely on paths that would take your data outside the enclave, so they're turned off in this mode.
   </Accordion>
   <Accordion title="Which plan do I need?">
-    The Confidential plan. Team-granted access appears as Sponsored Confidential.
+    Pro, including an active Pro trial or gifted Pro access. Free and Plus do not include confidential mode.
   </Accordion>
   <Accordion title="Can anyone access my data during confidential inference?">
     Inside the enclave, no. At the gateway, your request is encrypted for a hardware-sealed environment that infrastructure operators and the cloud provider cannot access. Before that, traffic passes through Fluso's AWS infrastructure.
