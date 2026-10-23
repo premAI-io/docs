@@ -73,7 +73,7 @@ Use `auth.access_token` as `Authorization: Bearer TOKEN` for API requests. Save 
 
   Store `auth` in the client's credential store. It includes `access_token`, `refresh_token`, `expires_in`, `session_id`, and `user`.
 
-  The browser step calls `POST /v1/auth/client/complete` with the returned state under the user's Clerk app session. Current browser callbacks support configured Fluso handoffs, including Telegram. A developer token cannot perform that browser step.
+  The browser step calls `POST /v1/auth/client/complete` with the returned state under the user's Clerk app session. A developer token cannot perform that browser step.
 
   Sign-in state expires after ten minutes. The returned code expires after five minutes and works once. If the exchange response is lost, start sign-in again.
 
