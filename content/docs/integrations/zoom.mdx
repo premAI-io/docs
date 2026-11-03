@@ -1,0 +1,95 @@
+---
+title: Fluso for Zoom
+sidebarTitle: Zoom
+icon: video
+description: Add, use, and remove the Fluso app for Zoom. Permissions, data handling, and support.
+---
+
+Connect Zoom and you can run your meetings from chat. Fluso schedules and moves calls, tells you who attended, reads the AI Companion summary, and finds the recording. This page covers how to add the app, use it, and remove it.
+
+## What it does
+
+Once Zoom is connected, you can ask Fluso to:
+
+- Schedule, reschedule, or cancel your Zoom meetings.
+- Show your upcoming and past meetings and webinars, with participants and registrants.
+- Read Zoom AI Companion meeting summaries.
+- Find your cloud recordings.
+- Add a registrant to a meeting or webinar.
+
+## Adding the app
+
+<Steps>
+  <Step title="Sign in to Fluso">
+    Open the Fluso app and sign in. If you don't have it yet, download it from [fluso.ai/download](https://fluso.ai/download).
+  </Step>
+  <Step title="Open Plugins">
+    Open **Plugins** in the sidebar and click **Add MCP**. You can also ask in chat: *"Connect Zoom."* Fluso then shows an access card with an **Authorize** button.
+  </Step>
+  <Step title="Connect Zoom">
+    Click **Connect** on **Zoom** (or **Authorize** on the access card).
+  </Step>
+  <Step title="Approve on Zoom">
+    Sign in to Zoom and approve the requested permissions.
+  </Step>
+  <Step title="Back in Fluso">
+    Zoom returns you to Fluso, and Zoom shows as connected.
+  </Step>
+</Steps>
+
+## Using the app
+
+Ask in plain words:
+
+> *"Schedule a 30-minute Zoom with sam@example.com tomorrow at 3pm."*
+
+> *"What meetings do I have this week?"*
+
+> *"Summarise yesterday's design review."*
+
+> *"Find the recording of Monday's standup."*
+
+In **Ask me first** mode, Fluso shows an approval card before it creates, changes, or deletes anything in Zoom. The card shows the Zoom tool and its arguments, so you can check them before you click **Allow once**. A saved **Always allow this tool** rule or **Allow everything** mode skips the card for that tool. See [Approvals and permissions](/features/approvals).
+
+## Permissions and data
+
+Zoom asks you to approve these scope groups when you connect:
+
+| Scope group | What Fluso can do |
+| --- | --- |
+| User | Read your profile and settings |
+| Meetings and webinars | Read; create, update, and delete meetings; add registrants |
+| Cloud recordings | List recordings; delete only when you ask |
+| Contacts | Read |
+
+Fluso fetches Zoom data on demand to answer your request. It does not keep a copy of your Zoom content. OAuth tokens are stored encrypted and are deleted when you disconnect.
+
+The full policies are the [privacy policy](https://fluso.ai/privacy) and the [terms of service](https://fluso.ai/terms).
+
+## Removing the app
+
+<Steps>
+  <Step title="Disconnect in Fluso">
+    In **Plugins**, open the Zoom row's three-dot menu and click **Disconnect**. This deletes the tokens Fluso stored for your Zoom account.
+  </Step>
+  <Step title="Remove in Zoom">
+    Sign in to the [Zoom App Marketplace](https://marketplace.zoom.us). Go to **Manage → Added Apps**, find **Fluso**, and click **Remove**.
+  </Step>
+</Steps>
+
+After removal, Fluso can no longer access your Zoom data. To request deletion of any associated data, email [privacy@premai.io](mailto:privacy@premai.io).
+
+## Support
+
+For help with the Zoom app, see [fluso.ai/support](https://fluso.ai/support).
+
+## See also
+
+<CardGroup cols={2}>
+  <Card title="Apps & MCP" icon="blocks" href="/features/mcp">
+    How connections work, and connecting from chat.
+  </Card>
+  <Card title="Meetings workflow" icon="users" href="/workflows/meetings">
+    Prep, notes, and follow-up around a meeting.
+  </Card>
+</CardGroup>

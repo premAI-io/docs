@@ -13,7 +13,7 @@
 The navigation keeps Home first and sorts the top-level sections alphabetically. Agents follows the user journey. Other sections keep their existing order:
 
 - **Agents (Beta)** - `/developers/*`. Start with a familiar task, then improvement and scheduling. Keep Examples and More about Agents (`/developers/guides/*`) collapsed by default. Introduce features when they help the reader's current task. Keep prompts natural and explain terms before using them.
-- **App setup** - `/integrations/{github, gmail, google-calendar, slack}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
+- **App setup** - `/integrations/{github, gmail, google-calendar, slack, zoom}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
 - **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
 - **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.
 - **Fluso API** - `/api/*`. Start with access and a first request. Keep Cloud and daemon credentials and administration separate. Document shared workflows once under Use the API. Lead with a useful task, runnable requests, and the expected result. Reuse the deployment's example helpers. Put protocol details and recovery rules beside the step that needs them. Each deployment's `/docs` and `/v1/openapi.json` own exact request and response schemas. Keep endpoint tables collapsed after the workflow. Preserve old API URLs with redirects.
