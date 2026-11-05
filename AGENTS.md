@@ -21,7 +21,6 @@ The navigation keeps Home first and sorts the top-level sections alphabetically.
 - **Get started** - `/going-deeper`, `/introduction`, `/quickstart`. These pages explain the path from first setup to daily use.
 - **Reference** - `/resources/{faq, legal, pricing}`. Legal links to the terms of service at `https://fluso.ai/terms` and privacy policy at `https://fluso.ai/privacy`; do not duplicate the policies in the docs.
 - **Release notes** - `/release-notes`. Customer-facing changes, newest first.
-- **Remote access** - `/remote/*`. Ways to use Fluso away from the desktop app.
 - **Workflows** - `/workflows/*`. Six concrete stories: bug-to-PR, content launch, knowledge recall, meetings, morning brief, and research-to-deck.
 
 The home page (`/`) is a router into the journey, with three sections: just landed, already set up, daily user.
