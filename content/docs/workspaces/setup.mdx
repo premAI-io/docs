@@ -83,7 +83,7 @@ The host needs **KVM**, Linux's hardware virtualization facility. A virtual mach
 **Check access to KVM.** Run this on the Linux machine as the workspace owner. It opens KVM the way the background service will:
 
 ```bash
-systemd-run --user --wait --pipe --quiet sh -c 'test -c /dev/kvm && : <> /dev/kvm' && echo 'KVM access is ready'
+systemd-run --user --quiet --collect -p Type=oneshot sh -c 'test -c /dev/kvm && : <> /dev/kvm' && echo 'KVM access is ready'
 ```
 
 If it does not print `KVM access is ready`, stop here. Ask your administrator to enable KVM and grant your user read/write access, usually through the `kvm` group. After a group change, restart the machine. Signing out is not enough while another session or lingering keeps your background services running.
