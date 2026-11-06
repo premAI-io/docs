@@ -80,13 +80,13 @@ Use **64-bit glibc Linux with systemd**: Ubuntu 24.04, Debian 13, or newer. The 
 
 The host needs **KVM**, Linux's hardware virtualization facility. A virtual machine also needs nested virtualization from its host provider.
 
-**Check access to KVM.** Run this on the Linux machine:
+**Check access to KVM.** Run this on the Linux machine as the workspace owner. It opens KVM the way the background service will:
 
 ```bash
-test -r /dev/kvm && test -w /dev/kvm && echo 'KVM access is ready'
+systemd-run --user --wait --pipe --quiet sh -c 'test -c /dev/kvm && : <> /dev/kvm' && echo 'KVM access is ready'
 ```
 
-If it does not print `KVM access is ready`, stop here. Ask your administrator to enable KVM and grant your user read/write access. After a group-permission change, sign out and sign in again.
+If it does not print `KVM access is ready`, stop here. Ask your administrator to enable KVM and grant your user read/write access, usually through the `kvm` group. After a group change, restart the machine. Signing out is not enough while another session or lingering keeps your background services running.
 
 <Note>
   A Raspberry Pi needs a supported 64-bit operating system and kernel with usable KVM. An ARM64 processor alone is not enough. Send your system details and KVM check to support if you are unsure.
