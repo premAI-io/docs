@@ -12,8 +12,6 @@
     "...features",
     "---Fluso API---",
     "...api",
-    "---Fluso Local---",
-    "...workspaces",
     "---Get started---",
     "going-deeper",
     "introduction",
@@ -24,8 +22,6 @@
     "...resources",
     "---Release notes---",
     "release-notes",
-    "---Remote access---",
-    "...remote",
     "---Workflows---",
     "...workflows"
   ]

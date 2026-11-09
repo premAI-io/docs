@@ -6,7 +6,7 @@ description: Connect a service once, then help users decide when Fluso needs per
 
 Your integration can use the services already connected to the same Fluso workspace. A connection gives access to tools. The user's permission settings decide which actions can proceed.
 
-For an initial setup, connect the service in **Plugins → MCP** in Fluso. Cloud offers managed apps such as Google Workspace. Fluso Local uses custom MCP servers.
+For an initial setup, connect the service in **Plugins → MCP** in Fluso. Fluso offers managed apps such as Google Workspace, and you can add custom MCP servers.
 
 The examples below use `api`, `thread_id`, and `run_id` from [your first request](/api/first-request).
 
@@ -65,11 +65,11 @@ The response identifies its transport and authentication method. Choose the matc
 Open the returned `authorization_url` for OAuth. `already_connected` needs no sign-in. Wait for the session status to become `connected` before treating setup as complete.
 
 <Accordion title="OAuth completion and connection recovery">
-  On Cloud, the callback submits `completion_proof` under the initiating account. On a daemon, `/daemon/v1/oauth/callback` completes it directly. Use the returned authorization URL unchanged.
+  The callback submits `completion_proof` under the initiating account. Use the returned authorization URL unchanged.
 
   Read `GET /v1/mcp-oauth/connections` to inspect saved connections. `needs_reauth` means the user must reconnect. Saved inventory alone does not prove the service is reachable.
 
-  A developer write token can decide one-time tool approvals. Permanent rules require a Cloud app session or a paired daemon device.
+  A developer write token can decide one-time tool approvals. Permanent rules require a signed-in app session.
 </Accordion>
 
 <Accordion title="Custom connection and tool-discovery endpoints">
@@ -79,11 +79,10 @@ Open the returned `authorization_url` for OAuth. `already_connected` needs no si
   | `POST /v1/mcp-oauth/connections/static` | Save a key-based or unauthenticated connection. |
   | `POST /v1/mcp-oauth/sessions` | Start custom OAuth authorization. |
   | `POST /v1/mcp-oauth/sessions/byo-oauth` | Start OAuth with your client registration. |
-  | `POST /v1/mcp-oauth/sessions/complete` | Cloud only. Save the connection from its completion proof. |
+  | `POST /v1/mcp-oauth/sessions/complete` | Save the connection from its completion proof. |
   | `GET /v1/mcp-oauth/sessions/{session_id}/status` | Read authorization progress. |
-  | `GET /daemon/v1/oauth/callback` | Daemon only. Receive the provider's OAuth callback. |
   | `GET /v1/mcp-oauth/connections` | List connections without exposing secrets. |
-  | `POST /v1/mcp-oauth/connections/refresh` | Refresh Cloud registrations or daemon tool discovery. |
+  | `POST /v1/mcp-oauth/connections/refresh` | Refresh registrations and tool discovery. |
   | `DELETE /v1/mcp-oauth/connections/{server_id}` | Disconnect and invalidate its pending authority. |
   | `GET /v1/mcp-oauth/connections/{server_id}/tools` | Read tool descriptions, input schemas, and read-only classifications. |
   | `POST /v1/mcp-oauth/connections/{server_id}/tools` | Refresh or repair the connection before tool discovery. |
@@ -108,7 +107,7 @@ Open the returned `authorization_url` for OAuth. `already_connected` needs no si
   | `GET /v1/mcp-oauth/connections/{server_id}/permissions` | Read saved and effective tool policies. |
   | `PUT /v1/mcp-oauth/connections/{server_id}/permissions` | Change persistent connection or tool policies. |
 
-  Cloud developer tokens cannot use these PUT routes or decision `scope: "always"`. Use a signed-in app session for permanent changes. Paired daemon devices can make these changes.
+  Cloud developer tokens cannot use these PUT routes or decision `scope: "always"`. Use a signed-in app session for permanent changes.
 
   A stale permission version returns 409. Enabling thread auto-approval can resolve an eligible pending request. An explicitly denied tool remains denied. Changing the account default does not decide an existing pending approval.
 </Accordion>

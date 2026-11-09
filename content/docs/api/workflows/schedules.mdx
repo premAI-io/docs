@@ -57,8 +57,6 @@ Pausing or deleting a schedule does not cancel work already accepted. [Cancel th
 </Accordion>
 
 <Accordion title="Understand late, failed, and one-time runs">
-  The daemon host must be awake for work to run. After downtime, missed recurring runs combine into one catch-up run.
-
   Delivery failures can pause a schedule. A failed accepted run does not automatically pause recurring work.
 
   A one-time schedule stops submitting after acceptance, even if its run later fails. Inspect the saved run before deciding whether to request that work again.
