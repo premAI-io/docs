@@ -97,3 +97,5 @@
 /remote/telegram /quickstart 301
 /remote/telegram/ /quickstart 301
 /llms.mdx/docs/remote/telegram/content.md /llms.mdx/docs/quickstart/content.md 301
+/remote /quickstart 301
+/remote/ /quickstart 301
