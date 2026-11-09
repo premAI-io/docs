@@ -5,7 +5,7 @@ icon: credit-card
 description: Compare Free, Plus, Pro, weekly usage allowances, and the Pro trial.
 ---
 
-Choose Free, Plus, or Pro for Fluso desktop. Plus gives you 10 times the weekly usage allowance of Free. Pro has no weekly token limit and includes confidential mode. Enterprise is available for custom deployments, data residency, and identity or audit integrations.
+Choose Free, Plus, or Pro for Fluso desktop. Plus gives you 10 times the weekly usage allowance of Free. Pro has the highest weekly usage allowance, 10 times that of Plus, and includes confidential mode. Enterprise is available for custom deployments, data residency, and identity or audit integrations.
 
 Fluso uses only open-source models across all features. Your data never trains shared models.
 
@@ -33,7 +33,7 @@ Fluso uses only open-source models across all features. Your data never trains s
 
     For higher usage and confidential inference.
     - Everything in Plus
-    - No weekly token limit
+    - 10 times the weekly usage allowance of Plus
     - Confidential mode
   </Card>
   <Card title="Enterprise" icon="building-2">
@@ -78,7 +78,7 @@ Free, Plus, and Pro share the core workspace features. Your plan determines your
 | | Free | Plus | Pro | Enterprise |
 |---|---|---|---|---|
 | Price (USD) | $0 | $10/user/month | $30/user/month | Custom |
-| Weekly token usage | Standard allowance | 10 times Free | No weekly limit | Custom |
+| Weekly token usage | Standard allowance | 10 times Free | 10 times Plus | Custom |
 | Core workspace features, apps, and skills | Included | Included | Included | Included |
 | Confidential mode | Not included | Not included | Included | Included |
 | Identity and audit integrations | Not included | Not included | Not included | Scoped integration |
@@ -86,9 +86,9 @@ Free, Plus, and Pro share the core workspace features. Your plan determines your
 
 ## Weekly usage
 
-Free and Plus usage resets every seven days from when you signed up. Open **Settings → Plans** to see your usage bar and next reset date. The allowance measures tokens used by model requests, so a long conversation or an Agent run can use more than a short message.
+Usage on Free, Plus, and Pro resets every seven days from when you signed up. Open **Settings → Plans** to see your usage bar and next reset date. The allowance measures tokens used by model requests, so a long conversation or an Agent run can use more than a short message. Earlier context that the model reads again from its cache usually counts for less than new tokens.
 
-If you reach your allowance, wait for the next reset or upgrade your plan to continue. Your existing files and conversations remain available. Pro has no weekly token quota; storage, service availability, and operational limits still apply.
+If you reach your allowance, wait for the next reset to continue. On Free or Plus, you can also upgrade your plan. Your existing files and conversations remain available.
 
 ## Common questions
 
@@ -100,7 +100,7 @@ If you reach your allowance, wait for the next reset or upgrade your plan to con
     Fluso Cloud stores workspace data in the EU by default. Model inference and connected-App processing have their own provider boundaries. Enterprise customers can scope alternative data residency. Your data is never used to train shared models. See [Legal](/resources/legal) for Fluso's privacy policy.
   </Accordion>
   <Accordion title="Plus vs Pro: when is Pro worth it?">
-    Plus costs $10/month and gives you 10 times the weekly usage allowance of Free. Pro costs $30/month, removes the weekly token limit, and includes confidential mode. Choose Pro if you need more usage than Plus or want confidential inference.
+    Plus costs $10/month and gives you 10 times the weekly usage allowance of Free. Pro costs $30/month, gives you 10 times the weekly usage allowance of Plus, and includes confidential mode. Choose Pro if you need more usage than Plus or want confidential inference.
   </Accordion>
   <Accordion title="Can I switch plans anytime?">
     Yes. Open **Settings → Plans** to upgrade, downgrade, or cancel. Upgrades take effect immediately. Paid-plan downgrades and cancellations take effect at the end of the current billing period. Review the amount and effective date shown before confirming a change.
