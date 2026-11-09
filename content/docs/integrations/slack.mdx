@@ -11,11 +11,11 @@ If your team mostly coordinates outside Slack, this connection isn't urgent. If 
 
 ## Setup
 
-Open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **Slack**. The Slack authorisation screen asks which workspace to connect; pick the one you want. You can connect more than one if you split work across them.
+Open **Plugins** in the sidebar, click **Add MCP**, and click **Connect** on **Slack**. The Slack authorisation screen asks which workspace to connect; pick the one you want. Use the workspace authorized by that connection.
 
 Reading messages in authorised channels is what powers catching up, search, and surfacing action items. Posting follows the Slack tool's effective **Allow**, **Ask**, or **Deny** policy.
 
-The catalog also has **Slackbot**, which connects with a bot token instead of your own account. Most people want plain Slack.
+Use the **Slack** entry in the current catalog. The available tools depend on the account and scopes you authorize.
 
 ## Prompts that work well
 
@@ -75,7 +75,7 @@ You can also revoke from your Slack workspace at **Settings → Integrations →
     Add the Fluso bot to the private channel, or rerun the authorisation and select the channel.
   </Accordion>
   <Accordion title="Multiple workspaces">
-    Connect each separately. Fluso treats them as independent. Disambiguate in the prompt: *"What did I miss in [workspace] #channel?"*
+    Check which workspace the current connection authorizes. Do not assume one connection grants access to all your Slack workspaces. Contact support if your workflow needs more than the available connection supports.
   </Accordion>
   <Accordion title="Token expired">
     OAuth tokens occasionally expire. In **Plugins**, open the Slack row's three-dot menu and click **Reconnect**.

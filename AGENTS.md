@@ -13,12 +13,12 @@
 The navigation keeps Home first and sorts the top-level sections alphabetically. Agents follows the user journey. Other sections keep their existing order:
 
 - **Agents (Beta)** - `/developers/*`. Start with a familiar task, then improvement and scheduling. Keep Examples and More about Agents (`/developers/guides/*`) collapsed by default. Introduce features when they help the reader's current task. Keep prompts natural and explain terms before using them.
-- **App setup** - `/integrations/{github, gmail, google-calendar, slack, zoom}`. Per-app permissions and prompts, not feature pages. All of them connect through the Apps tab of the Add MCP dialog.
-- **Deployment models** - `/deployment-models`. Current availability and operating boundaries for Fluso Cloud, dedicated AWS VPC, planned Azure VNet, and scoped on-premises deployments.
+- **App setup** - `/integrations/{github, gmail, google-calendar, slack, zoom}`. Per-app permissions and prompts, not feature pages. Use the current Apps catalog under Plugins → MCP → Add MCP. Google services connect separately; native Fluso connectors have the Fluso mark.
+- **Deployment models** - `/deployment-models`. Released Fluso Cloud and custom Enterprise deployments requiring confirmed scope.
 - **Features** - `/features/*`. Approvals and permissions, Apps and MCP servers, Chat, Confidential mode, Imports, Memory, Projects, Skills, and Tasks.
-- **Fluso API** - `/api/*`. Start with access and a first request. Document shared workflows once under Use the API. Lead with a useful task, runnable requests, and the expected result. Reuse the deployment's example helpers. Put protocol details and recovery rules beside the step that needs them. Each deployment's `/docs` and `/v1/openapi.json` own exact request and response schemas. Keep endpoint tables collapsed after the workflow. Preserve old API URLs with redirects.
+- **Fluso API** - `/api/*`. Start with access and a first request. Document the released Cloud API; do not publish daemon setup or pairing instructions. Document shared workflows once under Use the API. Lead with a useful task, runnable requests, and the expected result. Reuse the deployment's example helpers. Put protocol details and recovery rules beside the step that needs them. Each deployment's `/docs` and `/v1/openapi.json` own exact request and response schemas. Keep endpoint tables collapsed after the workflow. Preserve old API URLs with redirects.
 - **Get started** - `/going-deeper`, `/introduction`, `/quickstart`. These pages explain the path from first setup to daily use.
-- **Reference** - `/resources/{faq, legal, pricing}`. Legal links to the terms of service at `https://fluso.ai/terms` and privacy policy at `https://fluso.ai/privacy`; do not duplicate the policies in the docs.
+- **Reference** - `/resources/{availability, faq, legal, pricing}`. Legal links to the terms of service at `https://fluso.ai/terms` and privacy policy at `https://fluso.ai/privacy`; do not duplicate the policies in the docs.
 - **Release notes** - `/release-notes`. Customer-facing changes, newest first.
 - **Workflows** - `/workflows/*`. Six concrete stories: bug-to-PR, content launch, knowledge recall, meetings, morning brief, and research-to-deck.
 
@@ -34,16 +34,16 @@ This is the mental model the docs use. Every page should reinforce it, not contr
 - **Apps & MCP** are the plugs into external apps. Every connection is an MCP connection: managed apps from the catalog, or custom servers by URL.
 - **Skills** are the capabilities Fluso reaches for when a request matches one (built-in or custom via `SKILL.md`).
 - **Tasks** is the unified to-do system, populated mostly automatically.
-- **Memory** is the knowledge graph that builds in the background.
+- **Memory** includes saved preferences, project context, and working-memory summaries. Do not promise complete automatic indexing of every connected app.
 
 Email, calendar, code, content, research are skills, not separate features. The skills page (`/features/skills`) is the catalog. Per-app integration pages (`/integrations/*`) cover setup and permissions.
 
 ## Terminology
 
 - **Fluso** — the product.
-- **Apps** / **MCP connections** — the connections to third-party apps. There is no separate connector system; connections live under **Plugins → MCP**. Use **Connectors** when referring to the Agent editor's capability picker.
+- **Apps** / **MCP connections** — the connections to third-party apps. Native Fluso and provider-managed connections live under **Plugins → MCP**. Use **Connectors** when referring to the Agent editor's capability picker.
 - **Agent** — saved setup and a continuing main conversation. **Manager** refines that one Agent; **sessions** are delegated conversations; **routines** are scheduled messages. Main conversations take saved setup changes on their next turn; existing delegated sessions retain their setup.
-- **Knowledge graph** — Fluso's persistent memory. Lowercase.
+- **Memory** — saved context with the boundaries described on the Memory page.
 - **Skills** — specialised capabilities that activate automatically. Built-in or custom (`SKILL.md`).
 - **Projects** — workspaces that scope context, files, and tasks.
 
@@ -84,11 +84,17 @@ Use the [ASD-STE100 writing skill](https://github.com/danyuchn/asd-ste100-skill/
 
 ## Content boundaries
 
+- Compare current production release evidence and feature configuration with source before describing a feature as available. A dev merge is not a public release.
+- Fluso Local is not enabled in production; the Telegram bot is retired. Keep their setup guides out of navigation, search, and generated Markdown. Redirect old routes to Availability. Preserve historical release notes.
+- All standard plans have weekly allowances: Plus is 10 times Free, Pro is 10 times Plus. Do not publish pending accounting changes or internal budget values.
+- Native connectors do not imply every catalog entry is native. Encrypted inference does not imply enclave-hosted workspace storage, tools, or connected apps.
+- Do not publish an unconfirmed release date, bug-fix version, or measured performance claim.
+
 - Fluso Admin is internal. Do not publish its operator guide, navigation, links, or panel instructions in this public documentation site.
 - Never invent feature behaviour. If a capability isn't documented in source materials, leave it out.
 - When describing external sends, explain how to request and review a draft and choose **Ask me first**. Do not claim every write requires approval: saved tool rules, connection settings, and the chat's mode determine that behavior.
 - Verify Agent behavior against both current frontend and backend code. Do not restore removed Studio graphs, evaluations, version rollback, YAML transfer, webhook triggers, or thread-management toggles from historical release notes.
-- For product actions, point users to the macOS download at `https://fluso.ai/` and to support at `support@premai.io`. Don't link to `app.fluso.ai`. Fluso is a desktop app.
+- For product actions, point users to the desktop downloads at `https://fluso.ai/` and to support at `support@premai.io`. Don't link to `app.fluso.ai`. Fluso has macOS, Windows, and iOS apps. Desktop guides do not establish mobile feature parity.
 
 ## Publishing release notes
 

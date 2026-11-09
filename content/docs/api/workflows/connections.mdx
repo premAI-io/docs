@@ -6,7 +6,7 @@ description: Connect a service once, then help users decide when Fluso needs per
 
 Your integration can use the services already connected to the same Fluso workspace. A connection gives access to tools. The user's permission settings decide which actions can proceed.
 
-For an initial setup, connect the service in **Plugins → MCP** in Fluso. Fluso offers managed apps such as Google Workspace, and you can add custom MCP servers.
+For an initial setup, connect the service in **Plugins → MCP** in Fluso. The catalog offers native Fluso and provider-managed apps. Google services such as Gmail and Calendar connect separately.
 
 The examples below use `api`, `thread_id`, and `run_id` from [your first request](/api/first-request).
 
@@ -69,7 +69,7 @@ Open the returned `authorization_url` for OAuth. `already_connected` needs no si
 
   Read `GET /v1/mcp-oauth/connections` to inspect saved connections. `needs_reauth` means the user must reconnect. Saved inventory alone does not prove the service is reachable.
 
-  A developer write token can decide one-time tool approvals. Permanent rules require a signed-in app session.
+  A developer write token can decide one-time tool approvals. Permanent rules require a signed-in Cloud app session.
 </Accordion>
 
 <Accordion title="Custom connection and tool-discovery endpoints">

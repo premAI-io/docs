@@ -1,0 +1,43 @@
+---
+title: Availability and troubleshooting
+sidebarTitle: Availability
+icon: circle-help
+description: Supported apps, current availability, and what to send when you report a problem.
+---
+
+## Apps you can use today
+
+Fluso Cloud is the released service. Sign in with the same account to use your workspace across supported apps.
+
+| App | Where to get it |
+| --- | --- |
+| macOS | [Download for Apple Silicon or Intel](https://fluso.ai/download) |
+| Windows | [Download for Windows](https://fluso.ai/download) |
+| iPhone and iPad | [Fluso on the App Store](https://apps.apple.com/us/app/fluso/id6780937477) |
+
+Most guides show the desktop interface. Mobile controls and feature availability can differ. Installing an app does not move the Cloud runtime or model inference onto your device.
+
+## Fluso Local and Telegram
+
+**Fluso Local is not available in the production app.** There is no public production daemon package or announced release date. Development previews are not production support. A Linux server does not currently provide a supported way to run your production workspace locally.
+
+**The Fluso Telegram bot is retired.** Use the desktop or iOS app to access your workspace. Older release notes describe historical features.
+
+## Attachment problems on iOS
+
+Image attachments have been reported to crash the iOS app. A confirmed fix version is not available in this guide. Audio attachment failures have also been reported; include the type of failure in your report.
+
+Check the App Store for the latest version. If the problem continues, try the desktop app with the same account. This is an alternative upload path, not a confirmed fix for the iOS issue. You can paste text if your task does not need the original file.
+
+Use **Report a bug** if accessible, or email [support@premai.io](mailto:support@premai.io). Include:
+
+- Your app version, device model, and operating-system version.
+- The file type and approximate size.
+- Whether you used Photos, Files, recording, or the share sheet.
+- The steps, approximate time, and any error shown.
+
+Send a non-sensitive example if one reproduces the problem. Do not include passwords or access tokens.
+
+## Connections and usage
+
+For a missing or expired app connection, see [Apps and MCP servers](/features/mcp#troubleshooting). For a usage limit, check **Settings → Plans** for your remaining allowance and reset date. [All three plans have weekly allowances](/resources/pricing#weekly-usage).
