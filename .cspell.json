@@ -88,6 +88,14 @@
     "healthz",
     "OpenRouter",
     "versionable",
-    "xhigh"
+    "xhigh",
+    "Eventbrite",
+    "Omnisend",
+    "Productboard",
+    "Pushbullet",
+    "Shippo",
+    "Typeform",
+    "Wrike",
+    "YNAB"
   ]
 }
