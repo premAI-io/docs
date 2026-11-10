@@ -4,9 +4,15 @@ icon: plug
 description: Connect a supported Cloud app when your integration needs its data or tools.
 ---
 
-Cloud can guide users through connecting supported apps, such as Google Workspace. A connection belongs to the authenticated account. Completing sign-in does not remove its tool-approval rules.
+Cloud can guide users through connecting supported apps, such as Gmail. A connection belongs to the authenticated account. Completing sign-in does not remove its tool-approval rules.
 
 For a custom server, use [custom MCP connections](/api/workflows/connections).
+
+## Native and provider-managed apps
+
+Read the current catalog rather than hard-coding app IDs. Its `connect_kind` distinguishes native Fluso, Google, Microsoft, and provider-managed flows. Only configured services are available. Google services have separate entries.
+
+An app may require an API key or account-specific setup instead of OAuth. If the catalog flow returns `API_KEY_REQUIRED` or `SUBDOMAIN_REQUIRED`, complete that setup in Fluso, then recheck the connection. Do not treat a provider redirect or an old saved connection as proof that migration is complete.
 
 ## Connect the requested app
 

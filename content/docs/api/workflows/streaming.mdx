@@ -49,6 +49,8 @@ After a disconnection, repeat that sequence. Continue checking saved state perio
   Buffer incomplete frames across network chunks. Ignore unknown event types and keepalive comments. Use a client that supports an Authorization header. Keep tokens out of URLs.
 
   If you use `stream: true` during input submission, save the first `input.accepted` receipt. It contains the IDs for recovery if the stream fails.
+
+  If your client connects through a proxy you operate, disable response buffering for this stream.
 </Accordion>
 
 <Accordion title="Render tool progress accurately">

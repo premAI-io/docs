@@ -2,18 +2,16 @@
 title: Confidential mode
 sidebarTitle: Confidential
 icon: lock-keyhole
-description: Run your work through models hosted in a hardware-sealed enclave.
+description: Protect model requests with encrypted inference, and understand the separate workspace and app boundaries.
 ---
 
 Confidential mode routes your inference through Prem API's confidential compute, an isolated enclave that infrastructure operators and the cloud provider cannot access. It is available on the Pro plan. You can turn it off later to return future requests to standard provider routing.
 
 ## What it protects
 
-At the gateway, your request is encrypted for processing and sent to an enclave: hardware-isolated regions of the server that the host OS, the hypervisor, and anyone operating the infrastructure cannot read. The cloud provider can't see your data there. Someone with physical access to the hardware can't either.
+Fluso encrypts model requests for Prem's confidential inference service. Hardware isolation protects the model's processing memory, and attestation verifies the confidential environment.
 
-Before the gateway, your requests pass through Fluso's infrastructure on AWS. Both the sandbox and gateway run in a secure cloud environment we control.
-
-The enclave itself isn't protected by a policy or a promise. Isolation is enforced in the hardware, and attestation reports signed by the chip vendor let you verify it.
+The Fluso runtime prepares requests and uses the returned answers outside the inference enclave. Files, conversation history, tool execution, and connected services have their own processing and storage boundaries. Enabling this mode does not turn Fluso Cloud into an offline or fully enclave-hosted workspace.
 
 For the full technical picture, see Prem's [confidential compute documentation](https://docs.prem.io/basics/learn-more/overview).
 
@@ -57,6 +55,6 @@ Open **Settings** and find **Encrypted Inference**. Without Pro access, use **Up
     Pro, including an active Pro trial or gifted Pro access. Free and Plus do not include confidential mode.
   </Accordion>
   <Accordion title="Can anyone access my data during confidential inference?">
-    Inside the enclave, no. At the gateway, your request is encrypted for a hardware-sealed environment that infrastructure operators and the cloud provider cannot access. Before that, traffic passes through Fluso's AWS infrastructure.
+    Hardware isolation protects model processing inside the enclave from the host infrastructure. The Fluso runtime prepares requests and reads responses outside it. Connected tools and saved workspace data remain separate from this protection.
   </Accordion>
 </AccordionGroup>

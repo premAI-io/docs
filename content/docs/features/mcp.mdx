@@ -2,162 +2,102 @@
 title: Apps and MCP servers
 sidebarTitle: Apps & MCP
 icon: plug-zap
-description: Every connection in Fluso is an MCP connection. One-click managed apps, custom servers by URL, and per-tool permissions.
+description: Connect supported apps or a custom MCP server, then choose which tools Fluso may use.
 ---
 
-Fluso reaches other software through MCP. There is no separate connector system anymore: a Gmail connection, a Slack connection, and a private MCP server your team runs are all the same thing — an MCP connection with its own sign-in and its own tool permissions.
+Connections give Fluso access to external tools through MCP. You can connect an app from the catalog or add your own MCP server.
 
-Two ways in, one list:
+## Connect an app
 
-- **Apps.** A catalog of about a hundred managed apps — Google Workspace, GitHub, Slack, Linear, Notion, Jira, HubSpot, Stripe, and so on. One click, sign in on the app's own page, done. Fluso runs the MCP server for you.
-- **Custom server.** A publicly reachable HTTPS endpoint that implements MCP over Streamable HTTP. This can be a server your team operates or a SaaS endpoint outside the managed catalog.
+1. Open **Plugins → MCP**.
+2. Select **Add MCP**, then **Apps**.
+3. Search for the app you need and select **Connect**.
+4. Complete the sign-in or credential form shown for that app.
+5. Check that the connection appears as connected.
 
-## Where to find them
+Ordinary chats can use the connection on their next message. For a saved Agent, also select it under [Connectors](/developers/guides/settings#grant-app-access).
 
-<Frame>
-  <img src="/images/features/mcp/mcp-page.png" alt="The MCP servers page: sidebar item Plugins, tabs MCP and Skills, a section 'MCP connections — Managed apps and custom MCP servers' with an Add MCP button, and one connected row, Web Search." />
-</Frame>
+You can also request a connection in chat. Use the **Authorize** card when it appears, then check the result before continuing.
 
-Open **Plugins** in the left sidebar. The **MCP** tab lists every connection in this workspace — managed apps and custom servers together — with its status. **Web Search** is connected out of the box. The **Skills** tab on the same page holds [skills](/features/skills), which shape how Fluso works rather than what it can reach.
+## Native Fluso connectors
 
-## Connecting an app
+The Fluso mark beside an app identifies a **Native** connector built and run by Fluso. These connectors use Fluso's own connection flow instead of Composio.
 
-Click **Add MCP**. The dialog opens on the **Apps** tab.
+The catalog can also contain provider-managed connections and vendor-hosted MCP services. Check the app and sign-in screen you are using. A native connector still calls the connected service, such as Google or Slack. It does not move that service's processing into Fluso or into an enclave.
 
-<Frame>
-  <img src="/images/features/mcp/marketplace-apps.png" alt="The Add MCP dialog on the Apps tab: a search field and a catalog listing Google Workspace, GitHub, Slack, Slackbot, Linear, Web Search (connected), Airtable, Asana, and more, each with a Connect button." />
-</Frame>
+Use the current catalog as the list of available connections. A connector's presence in source code or an earlier screenshot does not mean it is enabled for your account.
 
-Search for the app, click **Connect**, and sign in on the app's own login screen. You approve the permissions there, the window closes itself, and the row appears in your list. Ordinary chats can use it from the next message. For a saved Agent, also select it under [Connectors](/developers/guides/settings#grant-app-access).
+### Google services connect separately
 
-A few rows worth knowing about:
+**Gmail**, **Google Calendar**, **Google Drive**, **Google Docs**, **Google Sheets**, and **Google Slides** have separate entries. Connect the services you need and check each one's status. Connecting Gmail alone does not connect Calendar or Drive.
 
-- **Google Workspace** is one connection that covers Gmail, Drive, Docs, Sheets, Slides, Calendar, Meet, and Tasks. One sign-in, the whole suite.
-- **Slack** connects as you; **Slackbot** connects with a bot token instead. Most people want Slack.
-- **Web Search** (Exa) comes pre-connected on new workspaces.
+Google may reuse an existing consent for related services. Review the permissions it requests rather than assuming that one sign-in grants the whole suite.
 
-The catalog runs from the everyday — Outlook, Teams, Notion, Dropbox, Zoom — to the specialised: Salesforce, Stripe, Supabase, Sentry, Figma, YouTube, Zendesk, and the rest. If an app you need is missing, email [support@premai.io](mailto:support@premai.io), or add it yourself as a custom server if it has an MCP endpoint.
+### OAuth and API keys
 
-## Connecting a custom server
+Many apps open their own sign-in page. Some require an API key, personal token, or account name. Follow the selected app's form. Your provider account and its permissions still determine what Fluso can access.
 
-Switch to the **Custom server** tab and paste the endpoint URL.
+If an older connection asks you to reconnect after the native connector rollout, open the current catalog entry and finish that flow. Check the connection and any saved Agent selections before running unattended work.
 
-<Note>
-  Use the exact Streamable HTTP endpoint. It must be reachable from Fluso over
-  public HTTPS; `localhost`, private network addresses, and `stdio` commands
-  are not connection URLs. The workspace or organization
-  network-egress policy, plus any provider
-  policy applied to that origin, must allow it.
-</Note>
+## Connect a custom server
 
-<Frame>
-  <img src="/images/features/mcp/custom-server.png" alt="The Add MCP dialog on the Custom server tab, with a single URL field showing the placeholder https://mcp.linear.app." />
-</Frame>
+In **Add MCP**, choose **Custom server** and enter the server's Streamable HTTP endpoint.
 
-Click **Continue**. Fluso probes the URL — no credentials are sent — and reads the server's public sign-in metadata. The result appears as a suggestion, with four tabs for the auth method the server actually uses:
+The endpoint must be reachable from Fluso over public HTTPS. A `localhost` address, private-network address, or `stdio` command is not a supported Cloud connection URL. Network and provider policies also apply.
 
-<Frame>
-  <img src="/images/features/mcp/auth-api-key.png" alt="The Add MCP dialog after probing mcp.linear.app: a suggestion banner reading 'Linear — Suggested: OAuth with Dynamic Client Registration (one-click). Pick what the server actually uses', tabs OAuth, OAuth (BYO), API key, and Bearer, with the API key tab open showing API key and Header name fields." />
-</Frame>
+Select **Continue** to discover the server's authentication options:
 
-### OAuth
+| Method | What to provide |
+| --- | --- |
+| **OAuth** | Sign in through the server's authorization flow |
+| **OAuth (BYO)** | Your registered client ID and any required client secret or OAuth endpoints |
+| **API key** | The key and header name expected by the server; the default is `X-Api-Key` |
+| **Bearer** | The token expected in the `Authorization` header |
 
-The one-click case. The server supports OAuth with Dynamic Client Registration, so Fluso registers itself on the fly. Click **Authorize**, sign in on the server's own page, and the row appears. This is what Linear, Notion, and most modern MCP servers look like.
+For a custom OAuth client, the callback is `https://api.fluso.ai/v1/mcp-oauth/callback`.
 
-### OAuth (BYO)
-
-OAuth, but the server doesn't let Fluso register itself. Register an app in the server's developer console and bring the credentials back.
-
-<Frame>
-  <img src="/images/features/mcp/auth-byo-oauth.png" alt="The OAuth (BYO) tab: fields for Client ID, Client secret (optional for public clients), Authorization endpoint (auto if blank), Token endpoint (auto if blank), and Scope (space-separated, optional), with an Authorize button." />
-</Frame>
-
-Client ID and secret go where they say. Authorization and token endpoints are auto-detected if left blank. **Authorize** works the same as the OAuth tab from there.
-
-<Note>
-  When the provider's console asks for a redirect URL, use: `https://api.fluso.ai/v1/mcp-oauth/callback`
-</Note>
-
-### API key
-
-The server expects a key in an HTTP header. Paste the key; the header name defaults to `X-Api-Key`. Click **Save**.
-
-### Bearer
-
-A static token sent as `Authorization: Bearer <token>` — the GitHub-PAT style.
-
-<Frame>
-  <img src="/images/features/mcp/auth-bearer.png" alt="The Bearer tab: a single Bearer token field with the placeholder ghp_..., and a Save button." />
-</Frame>
-
-<Note>
-  Whatever you paste goes to the backend over HTTPS and is stored encrypted at rest, the same way OAuth tokens are. The UI does not persist or redisplay it after save, and it does not appear in logs.
-</Note>
-
-## Connecting from chat
-
-You don't have to start from the Plugins page. Ask in chat:
-
-> *"Connect the Notion MCP server for me."*
-
-<Frame>
-  <img src="/images/features/mcp/chat-authorize.png" alt="A chat where the user asked to connect Notion. Fluso replies with a tool-access request card reading 'Needs MCP access to Notion — Connect your Notion workspace so I can read, search, and update your Notion pages and databases', with an Authorize button." />
-</Frame>
-
-Fluso surfaces the same sign-in inline as an access card. Click **Authorize**, approve on the app's page, and the conversation carries on. Connections made in chat show up on the Plugins page; connections made on the Plugins page are usable from chat. One list, two ways in.
+Only connect servers you trust. Review requested access before authorizing them. A successful sign-in does not establish that every tool works or is permitted.
 
 ## Tool permissions
 
-Expand any connection row to see its tools and set rules per tool.
+Expand a connection to inspect its tools and set **Allow**, **Ask**, or **Deny**:
 
-<Frame>
-  <img src="/images/features/mcp/tool-permissions.png" alt="The Web Search row expanded: a Tool permissions section with an 'Auto-approve read-only tools' toggle, and three read-only tools (Exa Search, Exa Get Contents Action, Exa Answer), each with Allow, Ask, and Deny buttons." />
-</Frame>
+- **Allow** lets that tool run without a per-call approval.
+- **Ask** requests approval when the chat uses **Ask me first**.
+- **Deny** blocks the tool, including in **Allow everything** mode.
 
-- **Auto-approve read-only tools** allows operations classified as GET, list, search, and fetch to run without asking. Explicit Ask or Deny rules still win.
-- Each tool has its own **Allow**, **Ask**, or **Deny**. Allow runs without asking, Ask pauses for approval when the chat uses **Ask me first**, and Deny blocks the tool. **Allow everything** can bypass Ask, but not Deny.
-- Tools are grouped read-only versus everything else, so you can see at a glance what can only look and what can act.
+**Auto-approve read-only tools** permits tools classified as reads unless an explicit Ask or Deny rule applies. **Allow everything** can bypass Ask, but cannot bypass Deny or organization restrictions.
 
-These rules work together with your chat-level approval mode. See [Approvals and permissions](/features/approvals) for how the modes and rules interact.
+For email or other external messages, request a draft, use **Ask me first**, and keep send tools on **Ask**. See [Approvals and permissions](/features/approvals).
 
-## Managing connections
+## Reconnect or disconnect
 
-Each row shows the connection's status. The three-dot menu holds the two actions you'll need:
+Use the connection row's menu to reconnect when access expires, or disconnect when you no longer want Fluso to use it. Actions depend on the connector; a shared built-in service may not offer a personal reconnect control.
 
-<Frame>
-  <img src="/images/features/mcp/row-menu.png" alt="The row action menu open on the Web Search connection, with two options: Reconnect and Disconnect (red)." />
-</Frame>
+Disconnecting removes Fluso's saved connection. You can also revoke access in the provider's settings. Disconnecting does not delete content already saved in conversations or files, or undo actions already completed.
 
-**Reconnect** drops the stored sign-in and runs the connect flow again. Use it when a connection stops working, or to sign in as a different account.
-
-**Disconnect** removes the connection. Fluso loses access from the next message on. This removes the sign-in on Fluso's side only — to revoke it at the source, use the app's own settings page (for Google, [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions); for GitHub, [Settings → Applications](https://github.com/settings/applications)).
-
-## Things to know
-
-- **Connections are per account, not per chat.** Sign in once and reuse the connection across chats. Saved Agents can use only their selected connections. Sign-ins survive runtime restarts.
-- **The runtime never stores tokens.** Tools fetch a short-lived token from the backend per request, use it, and drop it. Sign-in happens on the app's own page — Fluso never sees your password.
-- **Custom servers have prerequisites.** Fluso supports public HTTPS Streamable HTTP endpoints with OAuth, API-key, or bearer-token access. A successful sign-in does not override network-egress or provider policy.
-- **Rules set by your organization take precedence** over anything you allow yourself.
-
-<Warning>
-  MCP servers run tools on your behalf. Only connect ones you trust. A malicious server can advertise harmless-looking tools that do harmful things.
-</Warning>
+For Google services, check each related service after disconnecting or revoking access. Some services share an underlying grant.
 
 ## Troubleshooting
 
-<Accordion title="Fluso can't find the server's sign-in metadata">
-  The URL is probably the docs page, not the MCP endpoint. Try `mcp.<service>.com` or `<service>.com/mcp`.
-</Accordion>
-<Accordion title="A connection stopped working">
-  The app probably revoked or rotated the token. Open the row's three-dot menu and click **Reconnect**.
-</Accordion>
-<Accordion title="The server rejects one-click OAuth">
-  The server advertises Dynamic Client Registration but rejected the registration. Switch to **OAuth (BYO)** and register an app in the server's developer console yourself.
-</Accordion>
-<Accordion title="A tool keeps asking for approval">
-  Its rule is set to **Ask**, or your chat's approval mode is **Ask me first**. Set the tool to **Allow** in the row's tool permissions, or change the mode — see [Approvals](/features/approvals).
-</Accordion>
+<AccordionGroup>
+  <Accordion title="An app is missing from the catalog">
+    Search by the service name. If it is still missing, contact [support](mailto:support@premai.io). A public HTTPS MCP endpoint can be an alternative, but a listed app elsewhere is not a guarantee of a supported Fluso connection.
+  </Accordion>
+  <Accordion title="Connected, but a tool fails">
+    Read the error and check the provider account's permissions. Reconnect if authorization expired. A connection can be saved even when a provider tool is unavailable or rate-limited.
+  </Accordion>
+  <Accordion title="Google sign-in succeeded but Calendar is missing">
+    Connect **Google Calendar** separately. Gmail, Calendar, and Drive have their own catalog entries.
+  </Accordion>
+  <Accordion title="An Agent cannot use a connection">
+    Check that the connection is selected in the Agent's setup. Then check its read-only setting and saved tool rules. Account connection and Agent access are separate choices.
+  </Accordion>
+  <Accordion title="Custom OAuth cannot register a client">
+    Check that the URL is the MCP endpoint. If the server does not support dynamic registration, use **OAuth (BYO)** with a client registered with that provider.
+  </Accordion>
+</AccordionGroup>
 
 ## Next
 
-Per-app setup and prompts: [Gmail](/integrations/gmail), [Google Calendar](/integrations/google-calendar), [Slack](/integrations/slack), [GitHub](/integrations/github), [Zoom](/integrations/zoom). For capabilities that shape *how* Fluso works rather than what it can reach, see [Skills](/features/skills).
+See [Gmail](/integrations/gmail), [Google Calendar](/integrations/google-calendar), [GitHub](/integrations/github), [Slack](/integrations/slack), and [Zoom](/integrations/zoom) for app-specific guidance.

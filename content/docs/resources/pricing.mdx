@@ -5,9 +5,9 @@ icon: credit-card
 description: Compare Free, Plus, Pro, weekly usage allowances, and the Pro trial.
 ---
 
-Choose Free, Plus, or Pro for Fluso desktop. Plus gives you 10 times the weekly usage allowance of Free. Pro has no weekly token limit and includes confidential mode. Enterprise is available for custom deployments, data residency, and identity or audit integrations.
+Choose Free, Plus, or Pro for Fluso desktop. Plus gives you 10 times the weekly usage allowance of Free. Pro gives you 10 times the weekly usage allowance of Plus and includes confidential mode. Enterprise is available for custom deployments, data residency, and identity or audit integrations.
 
-Fluso uses only open-source models across all features. Your data never trains shared models.
+Fluso uses open-source and open-weight models. Connected apps and other tools use their own services. Your data never trains shared models.
 
 ## Plans
 
@@ -33,20 +33,20 @@ Fluso uses only open-source models across all features. Your data never trains s
 
     For higher usage and confidential inference.
     - Everything in Plus
-    - No weekly token limit
+    - 10 times the weekly usage allowance of Plus
     - Confidential mode
   </Card>
   <Card title="Enterprise" icon="building-2">
     **Custom pricing**
 
     For organisations with custom needs.
-    - Everything in Pro
-    - Server-integrated identity (implementation scoped)
+    - Scope with your team
+    - Identity integration, scoped with your team
     - Dedicated account executive
     - Dedicated support
-    - Custom obligation detection
-    - Custom data retention
-    - Server-backed audit logging (implementation scoped)
+    - Custom workflows and connectors
+    - Data retention requirements, scoped with your team
+    - Audit requirements, scoped with your team
     - Custom skills
   </Card>
 </CardGroup>
@@ -69,7 +69,7 @@ Free, Plus, and Pro share the core workspace features. Your plan determines your
 
 - **Chat and workspace tools.** Projects, memory, tasks, connected apps, skills, and document creation.
 - **Agents (Beta).** Use saved setups for repeatable work. Agent runs use your plan's allowance. See [Agents](/developers).
-- **Open-source models only.** All Fluso features use open-source models.
+- **Open-source and open-weight models.** Availability can change. Connected apps and other tools use their own services.
 - **European hosting.** GDPR-aligned by default.
 - **Your data is yours.** Nothing trains shared models.
 
@@ -78,7 +78,7 @@ Free, Plus, and Pro share the core workspace features. Your plan determines your
 | | Free | Plus | Pro | Enterprise |
 |---|---|---|---|---|
 | Price (USD) | $0 | $10/user/month | $30/user/month | Custom |
-| Weekly token usage | Standard allowance | 10 times Free | No weekly limit | Custom |
+| Weekly usage | Standard allowance | 10 times Free | 10 times Plus | Custom |
 | Core workspace features, apps, and skills | Included | Included | Included | Included |
 | Confidential mode | Not included | Not included | Included | Included |
 | Identity and audit integrations | Not included | Not included | Not included | Scoped integration |
@@ -86,21 +86,25 @@ Free, Plus, and Pro share the core workspace features. Your plan determines your
 
 ## Weekly usage
 
-Free and Plus usage resets every seven days from when you signed up. Open **Settings → Plans** to see your usage bar and next reset date. The allowance measures tokens used by model requests, so a long conversation or an Agent run can use more than a short message.
+Free, Plus, and Pro allowances reset every seven days from when you signed up. Open **Settings → Plans** to see the percentage remaining and next reset date. Chat and Agent activity use the same allowance.
 
-If you reach your allowance, wait for the next reset or upgrade your plan to continue. Your existing files and conversations remain available. Pro has no weekly token quota; storage, service availability, and operational limits still apply.
+Usage is not a fixed number of messages. A prompt can trigger several model calls, tool steps, or a long conversation history. Short visible replies can still use a substantial allowance.
+
+If you reach your allowance, wait for the next reset or choose a higher plan if one is available. Your existing files and conversations remain available. Storage, service availability, and other operational limits still apply.
+
+Check a stopped task before continuing it. Restored allowance does not mean interrupted work or delayed routines have already resumed. There is no self-service purchase of an extra weekly reset.
 
 ## Common questions
 
 <AccordionGroup>
   <Accordion title="What models does Fluso use?">
-    Fluso uses only open-source models across all features.
+    Fluso uses open-source and open-weight models. Check the available modes in the app. Connected apps and other tools use their own services.
   </Accordion>
   <Accordion title="Where is my data stored?">
     Fluso Cloud stores workspace data in the EU by default. Model inference and connected-App processing have their own provider boundaries. Enterprise customers can scope alternative data residency. Your data is never used to train shared models. See [Legal](/resources/legal) for Fluso's privacy policy.
   </Accordion>
   <Accordion title="Plus vs Pro: when is Pro worth it?">
-    Plus costs $10/month and gives you 10 times the weekly usage allowance of Free. Pro costs $30/month, removes the weekly token limit, and includes confidential mode. Choose Pro if you need more usage than Plus or want confidential inference.
+    Plus costs $10/month and gives you 10 times the weekly usage allowance of Free. Pro costs $30/month, gives you 10 times the weekly usage allowance of Plus, and includes confidential mode. Choose Pro if you need more usage than Plus or want confidential inference.
   </Accordion>
   <Accordion title="Can I switch plans anytime?">
     Yes. Open **Settings → Plans** to upgrade, downgrade, or cancel. Upgrades take effect immediately. Paid-plan downgrades and cancellations take effect at the end of the current billing period. Review the amount and effective date shown before confirming a change.
@@ -109,7 +113,7 @@ If you reach your allowance, wait for the next reset or upgrade your plan to con
     Pro includes model inference inside a hardware-isolated enclave. The Fluso runtime and connected apps have separate processing boundaries. See [Confidential mode](/features/confidential) for how it works and what it protects.
   </Accordion>
   <Accordion title="Enterprise security?">
-    Custom data retention is part of the Enterprise scope. Governance records persist the configured identity and access history, but Microsoft Entra metadata does not verify a directory or provide SSO by itself. Prem has attained SOC 2 Type II. [Review the current security posture.](https://www.premai.io/security-at-prem)
+    Identity, retention, audit records, and custom deployment requirements must be agreed with the team. They are not self-service features of a standard Cloud plan. Prem has attained SOC 2 Type II. [Review the current security posture.](https://www.premai.io/security-at-prem)
   </Accordion>
   <Accordion title="Custom skills?">
     You can create workspace skills on Free, Plus, and Pro. See [Skills](/features/skills). Custom skills built with the Fluso team can be scoped as part of an Enterprise engagement.
@@ -121,6 +125,6 @@ If you reach your allowance, wait for the next reset or upgrade your plan to con
 
 ## Get started
 
-Start with Free without a payment card, or review the eligible Pro trial in **Settings → Plans**. [Download Fluso for Mac.](https://fluso.ai/)
+Start with Free without a payment card, or review the eligible Pro trial in **Settings → Plans**. [Download Fluso.](https://fluso.ai/)
 
 For a custom setup, [get in touch.](mailto:sales@premai.io)
