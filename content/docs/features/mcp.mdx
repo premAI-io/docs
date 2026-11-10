@@ -19,25 +19,75 @@ Ordinary chats can use the connection on their next message. For a saved Agent, 
 
 You can also request a connection in chat. Use the **Authorize** card when it appears, then check the result before continuing.
 
-## Native Fluso connectors
+## Three kinds of connection
 
-The Fluso mark beside an app identifies a **Native** connector built and run by Fluso. These connectors use Fluso's own connection flow instead of Composio.
+Every connection on **Plugins → MCP** is one of three kinds. They all work the same way in chat and in Agents, with the same tool permissions.
 
-The catalog can also contain provider-managed connections and vendor-hosted MCP services. Check the app and sign-in screen you are using. A native connector still calls the connected service, such as Google or Slack. It does not move that service's processing into Fluso or into an enclave.
+| Kind | How to spot it | Who runs it |
+| --- | --- | --- |
+| **Native** | The Fluso mark after the app's name. Hover it to see "Native · built and run by Fluso". | Fluso. The connector calls the app's own API with your sign-in. |
+| **Third-party** | An app in the catalog with no Fluso mark. | Composio, a connection provider, runs it for Fluso. |
+| **Custom** | A server you added on the **Custom server** tab. | You, your team, or the app's vendor. |
 
-Use the current catalog as the list of available connections. A connector's presence in source code or an earlier screenshot does not mean it is enabled for your account.
+A native connector still sends your requests to the app you connected, such as Slack or Google. It does not move that app's processing into Fluso or into an enclave.
+
+When an app has a native connector, Fluso uses it instead of the third-party version. See [Moving to native connectors](#moving-to-native-connectors) if you connected an app before it went native.
+
+### Native connectors
+
+Native connectors launched in November 2026. The catalog in **Add MCP** is the current list, and it changes as apps are added. Your account may not show every app.
+
+| Area | Apps |
+| --- | --- |
+| Google | Gmail, Google Calendar, Google Docs, Google Drive, Google Sheets, Google Slides |
+| Chat and meetings | Discord, Fathom, Pushbullet, Slack, Webex |
+| Projects and tasks | Airtable, Asana, ClickUp, Confluence, Linear, Miro, monday.com, Notion, Productboard, TickTick, Todoist, Wrike |
+| Files | Box, Dropbox |
+| Engineering | Bitbucket, DigitalOcean, GitHub, GitLab, Hugging Face, PagerDuty, Sentry, Supabase, WakaTime |
+| Sales, marketing, and support | Apollo.io, Attio, Contentful, Crowdin, Dub, Eventbrite, HubSpot, Kit, LinkedIn, Mailchimp, Omnisend, Typeform, Zoho Desk |
+| Scheduling | Cal.com, Calendly |
+| Money and operations | Harvest, Shippo, Stripe, YNAB |
+| Other | LinkHut, Web Search |
+
+The rest of the catalog is third-party apps. They connect and work as before.
+
+### How you sign in
+
+What the app asks for depends on the app:
+
+- **Sign in on the app's page.** Most apps, including Google, Slack, GitHub, and Notion. Approve the access on the app's screen and the window closes.
+- **Paste an API key.** Some apps, such as Stripe, Supabase, Sentry, Asana, and Cal.com, use a key or personal token instead. Create one in the app's settings, usually under API or Developer, and paste it into the form Fluso shows. Fluso checks the key before it saves the connection and stores it encrypted. The key's own permissions limit what Fluso can do, so a restricted or read-only key keeps Fluso restricted too.
+- **Nothing to connect.** **Web Search** is on for every account. Its menu shows **On for everyone** and has no **Disconnect**.
+
+Your account on the app still decides what Fluso can reach.
 
 ### Google services connect separately
 
-**Gmail**, **Google Calendar**, **Google Drive**, **Google Docs**, **Google Sheets**, and **Google Slides** have separate entries. Connect the services you need and check each one's status. Connecting Gmail alone does not connect Calendar or Drive.
+**Gmail**, **Google Calendar**, **Google Drive**, **Google Docs**, **Google Sheets**, and **Google Slides** have separate entries. They replace the single **Google Workspace** connection. Connect the services you need and check each one's status. Connecting Gmail alone does not connect Calendar or Drive.
 
 Google may reuse an existing consent for related services. Review the permissions it requests rather than assuming that one sign-in grants the whole suite.
 
-### OAuth and API keys
+## Moving to native connectors
 
-Many apps open their own sign-in page. Some require an API key, personal token, or account name. Follow the selected app's form. Your provider account and its permissions still determine what Fluso can access.
+When a native connector replaces an app you connected through the third-party version, the old connection stops working and leaves your list. You do not need to delete it. Connect the native version once.
 
-If an older connection asks you to reconnect after the native connector rollout, open the current catalog entry and finish that flow. Check the connection and any saved Agent selections before running unattended work.
+<Steps>
+  <Step title="Find the apps to reconnect">
+    A banner at the top of the app reads **We've upgraded Fluso's app connections** and names the apps you need to reconnect. Select **Reconnect**.
+  </Step>
+  <Step title="Connect the native version">
+    On **Plugins → MCP**, select **Add MCP**, find each app, and select **Connect**. For the old **Google Workspace** connection, connect **Gmail** and any other Google services you use.
+  </Step>
+  <Step title="Check tool permissions">
+    Per-tool rules from the old connection do not move over, because the native connector has its own tools. Open **Tool permissions** on the new connection and set the rules you want.
+  </Step>
+</Steps>
+
+The banner stops naming an app once you connect its native version. For Google, connecting Gmail clears it.
+
+**Your Agents keep their access.** If an Agent could use the old app, it gets the same access to the native version: **Allowed** stays **Allowed** and **Read only** stays **Read only**. Access to the old Google Workspace connection covers all six Google services. You do not need to edit the Agent. Reconnect the app before the Agent's next routine, because a routine cannot use an app that is not connected.
+
+If you select an old app that has been replaced, Fluso says it **has been upgraded** and points you to the native version.
 
 ## Connect a custom server
 
@@ -60,7 +110,7 @@ Only connect servers you trust. Review requested access before authorizing them.
 
 ## Tool permissions
 
-Expand a connection to inspect its tools and set **Allow**, **Ask**, or **Deny**:
+Open a connection's **•••** menu and select **Tool permissions** to see its tools and set **Allow**, **Ask**, or **Deny**:
 
 - **Allow** lets that tool run without a per-call approval.
 - **Ask** requests approval when the chat uses **Ask me first**.
@@ -86,6 +136,9 @@ For Google services, check each related service after disconnecting or revoking 
   </Accordion>
   <Accordion title="Connected, but a tool fails">
     Read the error and check the provider account's permissions. Reconnect if authorization expired. A connection can be saved even when a provider tool is unavailable or rate-limited.
+  </Accordion>
+  <Accordion title="An app I connected before asks me to reconnect">
+    It now has a native connector. Connect the native version from **Add MCP**. See [Moving to native connectors](#moving-to-native-connectors).
   </Accordion>
   <Accordion title="Google sign-in succeeded but Calendar is missing">
     Connect **Google Calendar** separately. Gmail, Calendar, and Drive have their own catalog entries.
