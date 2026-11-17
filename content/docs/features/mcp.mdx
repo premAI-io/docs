@@ -40,6 +40,7 @@ Native connectors launched in November 2026. The catalog in **Add MCP** is the c
 | Area | Apps |
 | --- | --- |
 | Google | Gmail, Google Calendar, Google Docs, Google Drive, Google Sheets, Google Slides |
+| Microsoft 365 | Microsoft Teams, OneDrive, Outlook, Outlook Calendar |
 | Chat and meetings | Discord, Fathom, Pushbullet, Slack, Webex |
 | Projects and tasks | Airtable, Asana, ClickUp, Confluence, Linear, Miro, monday.com, Notion, Productboard, TickTick, Todoist, Wrike |
 | Files | Box, Dropbox |
@@ -55,7 +56,7 @@ The rest of the catalog is third-party apps. They connect and work as before.
 
 What the app asks for depends on the app:
 
-- **Sign in on the app's page.** Most apps, including Google, Slack, GitHub, and Notion. Approve the access on the app's screen and the window closes.
+- **Sign in on the app's page.** Most apps, including Google, Microsoft, Slack, GitHub, and Notion. Approve the access on the app's screen and the window closes.
 - **Paste an API key.** Some apps, such as Stripe, Supabase, Sentry, Asana, and Cal.com, use a key or personal token instead. Create one in the app's settings, usually under API or Developer, and paste it into the form Fluso shows. Fluso checks the key before it saves the connection and stores it encrypted. The key's own permissions limit what Fluso can do, so a restricted or read-only key keeps Fluso restricted too.
 - **Nothing to connect.** **Web Search** is on for every account. Its menu shows **On for everyone** and has no **Disconnect**.
 
@@ -66,6 +67,12 @@ Your account on the app still decides what Fluso can reach.
 **Gmail**, **Google Calendar**, **Google Drive**, **Google Docs**, **Google Sheets**, and **Google Slides** have separate entries. They replace the single **Google Workspace** connection. Connect the services you need and check each one's status. Connecting Gmail alone does not connect Calendar or Drive.
 
 Google may reuse an existing consent for related services. Review the permissions it requests rather than assuming that one sign-in grants the whole suite.
+
+### Microsoft services connect separately
+
+**Outlook**, **Outlook Calendar**, **OneDrive**, and **Microsoft Teams** have separate entries. Connect the services you need and check each one's status. Connecting Outlook alone does not connect Outlook Calendar.
+
+Microsoft asks which account to use each time you connect, so each service can use a different account. Use a work or school account. See [Outlook and Microsoft Teams](/integrations/microsoft) for what Fluso can do, the permissions it asks for, and its limits.
 
 ## Moving to native connectors
 
@@ -85,7 +92,7 @@ When a native connector replaces an app you connected through the third-party ve
 
 The banner stops naming an app once you connect its native version. For Google, connecting Gmail clears it.
 
-**Your Agents keep their access.** If an Agent could use the old app, it gets the same access to the native version: **Allowed** stays **Allowed** and **Read only** stays **Read only**. Access to the old Google Workspace connection covers all six Google services. You do not need to edit the Agent. Reconnect the app before the Agent's next routine, because a routine cannot use an app that is not connected.
+**Your Agents keep their access.** If an Agent could use the old app, it gets the same access to the native version: **Allowed** stays **Allowed** and **Read only** stays **Read only**. Access to the old Google Workspace connection covers all six Google services. Access to the old Outlook connection covers both Outlook and Outlook Calendar. You do not need to edit the Agent. Reconnect the app before the Agent's next routine, because a routine cannot use an app that is not connected.
 
 If you select an old app that has been replaced, Fluso says it **has been upgraded** and points you to the native version.
 
@@ -143,6 +150,9 @@ For Google services, check each related service after disconnecting or revoking 
   <Accordion title="Google sign-in succeeded but Calendar is missing">
     Connect **Google Calendar** separately. Gmail, Calendar, and Drive have their own catalog entries.
   </Accordion>
+  <Accordion title="Outlook is connected but calendar events are missing">
+    Connect **Outlook Calendar** separately. Outlook, Outlook Calendar, OneDrive, and Microsoft Teams have their own catalog entries.
+  </Accordion>
   <Accordion title="An Agent cannot use a connection">
     Check that the connection is selected in the Agent's setup. Then check its read-only setting and saved tool rules. Account connection and Agent access are separate choices.
   </Accordion>
@@ -153,4 +163,4 @@ For Google services, check each related service after disconnecting or revoking 
 
 ## Next
 
-See [Gmail](/integrations/gmail), [Google Calendar](/integrations/google-calendar), [GitHub](/integrations/github), [Slack](/integrations/slack), and [Zoom](/integrations/zoom) for app-specific guidance.
+See [Gmail](/integrations/gmail), [Google Calendar](/integrations/google-calendar), [GitHub](/integrations/github), [Outlook and Microsoft Teams](/integrations/microsoft), [Slack](/integrations/slack), and [Zoom](/integrations/zoom) for app-specific guidance.

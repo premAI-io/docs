@@ -1,0 +1,215 @@
+---
+title: Outlook and Microsoft Teams
+sidebarTitle: Outlook & Teams
+icon: building-2
+description: Connect Outlook and Microsoft Teams. What Fluso can do, the permissions it asks for, approvals, and troubleshooting.
+---
+
+Outlook and Microsoft Teams are native Fluso connectors. Fluso calls Microsoft Graph with your own Microsoft sign-in, so it can reach only what your account can reach.
+
+Outlook, Outlook Calendar, OneDrive, and Microsoft Teams are four separate connections. You connect each one on its own. This page covers Outlook and Teams in detail. See [Other Microsoft connections](#other-microsoft-connections) for the other two.
+
+## What you can ask Fluso to do
+
+### Outlook
+
+Once Outlook is connected, you can ask Fluso to:
+
+- List your messages, newest first. Filter by read state, attachments, date, or sender.
+- Search a folder for a word or phrase, such as your Inbox or Sent Items.
+- Open one message and read it.
+- Show your mail folders and subfolders.
+- Create a draft of a new message, or a draft reply, reply-all, or forward of a message you choose. Drafts go to your **Drafts** folder.
+- Send a draft, or reply, reply-all, or forward right away.
+- Create, rename, and copy mail folders, and copy a message to another folder.
+- Move a message to **Deleted Items**.
+
+> *"Which unread emails from Sam came in this week?"*
+
+> *"Search my Inbox for the invoice from Contoso."*
+
+> *"Draft a reply to the last message from Priya. Say I can meet on Thursday."*
+
+> *"Create a folder called Q4 contracts under my Inbox."*
+
+### Microsoft Teams
+
+Once Teams is connected, you can ask Fluso to:
+
+- List the teams you belong to, and the channels in each team.
+- Post a message to a channel, or reply to a message in a channel thread.
+- List your chats and who is in them.
+- Read the messages in a chat.
+- Send a message in a chat, or start a one-on-one or group chat.
+- Edit your own chat messages, delete a chat message, restore a deleted one, and add or remove a reaction on a chat or channel message.
+
+> *"Which teams am I in, and what channels does Design have?"*
+
+> *"Read the latest messages in my chat with Dana."*
+
+> *"Post in the Release channel of Engineering: version 2.4 is out."*
+
+## Connect Outlook or Teams
+
+<Steps>
+  <Step title="Open the app catalog">
+    Open **Plugins → MCP**. Select **Add MCP**, then **Apps**.
+  </Step>
+  <Step title="Connect the app">
+    Find **Outlook** or **Microsoft Teams**. Select **Connect**. You can also ask in chat: *"Connect Outlook."* Fluso then shows an **Authorize** card.
+  </Step>
+  <Step title="Choose your account">
+    Microsoft asks which account to use. Choose a work or school account.
+  </Step>
+  <Step title="Approve the permissions">
+    Read the permissions on Microsoft's screen. Approve them.
+  </Step>
+  <Step title="Check the result">
+    Microsoft returns you to Fluso. Check that the connection shows as connected.
+  </Step>
+</Steps>
+
+Microsoft asks for an account every time you connect. You can use a different account for each service.
+
+Ordinary chats can use the connection on their next message. For a saved Agent, also select it under [Connectors](/developers/guides/settings#grant-app-access).
+
+Fluso's Microsoft connections are set up for work and school accounts. A personal Microsoft account, such as an outlook.com or hotmail.com address, does not work.
+
+If **Outlook** and **Microsoft Teams** are not in the catalog, your Fluso deployment has not turned Microsoft connections on. Contact [support](mailto:support@premai.io).
+
+## Permissions Fluso asks for
+
+Every Microsoft connection asks you to sign in, read your basic profile (name and email address), and keep the connection active without asking you to sign in again. Each connection then asks for the permissions below. They are delegated permissions: Fluso acts as you, and only within your own access.
+
+| Connection | Microsoft permission | What it allows in Fluso |
+| --- | --- | --- |
+| Outlook | `Mail.ReadWrite` | Read your mail. Create, change, and delete messages and folders in your mailbox. |
+| Outlook | `Mail.Send` | Send mail as you. |
+| Microsoft Teams | `Team.ReadBasic.All` | List the teams you belong to. Read their names and descriptions. |
+| Microsoft Teams | `Channel.ReadBasic.All` | List the channels in a team. Read their names and descriptions. |
+| Microsoft Teams | `ChannelMessage.Send` | Post messages to channels. |
+| Microsoft Teams | `Chat.ReadWrite` | Read your chats and their members. Send, edit, and delete messages in them. Start chats. |
+| Outlook Calendar | `Calendars.ReadWrite` | Read your calendars. Create and change events. |
+| OneDrive | `Files.ReadWrite.All` | Read, create, and change files you can access. |
+
+Fluso does not request `ChannelMessage.Read.All`. Reading channel messages with that permission needs consent from a tenant admin. This is why Fluso cannot read channel history. See [Limits](#limits).
+
+Fluso has no tool for permanent deletion. Deleting a message moves it to **Deleted Items**, where you can recover it in Outlook.
+
+## Approvals
+
+Tools that only read, such as listing or opening a message, follow the connection's **Auto-approve read-only tools** setting. Tools that change something ask first by default, unless a saved rule or the chat's mode allows them. That includes sending, replying, forwarding, creating drafts or folders, copying, deleting, posting to Teams, starting chats, editing, and reactions.
+
+To review an email before it goes out, ask Fluso for a draft. Fluso saves it in your **Drafts** folder. You can read it in Outlook, then ask Fluso to send it. Fluso cannot edit a draft it already created. Edit it in Outlook, or ask for a new draft.
+
+<Warning>
+  A message posted to a Teams channel or chat is visible to everyone in it right away. Choose **Ask me first** and keep the Teams write tools on **Ask** to review each message. Ask Fluso to show the text first. A saved **Allow** rule or **Allow everything** can continue without a per-action prompt. **Deny** blocks the action.
+</Warning>
+
+Open the connection's **•••** menu and select **Tool permissions** to set **Allow**, **Ask**, or **Deny** for each tool. See [Approvals and permissions](/features/approvals) for how modes and saved rules combine.
+
+## Limits
+
+Fluso publishes a fixed, reviewed set of Outlook and Teams tools. A request outside that set cannot run, even with approval.
+
+<AccordionGroup>
+  <Accordion title="What Outlook cannot do">
+    - Move a message to another folder. Fluso can copy it.
+    - Mark a message as read or unread.
+    - Edit a draft after Fluso creates it.
+    - Add attachments to a message.
+    - Delete a mail folder, or delete anything permanently.
+    - Work with contacts, mail rules, or automatic replies.
+    - Search the whole mailbox for a word or phrase. A keyword search covers one folder at a time. You can still filter a mailbox-wide list by sender, date, read state, or attachments.
+  </Accordion>
+  <Accordion title="What Teams cannot do">
+    - Read channel messages. Fluso can list teams and channels and post to them, but it cannot read what is already in a channel.
+    - Search messages.
+    - Work with meetings or meeting transcripts.
+    - Look up people in your directory. Fluso finds people for a new chat through chats you already have.
+    - Create or delete teams and channels, or change who is in a team.
+  </Accordion>
+</AccordionGroup>
+
+Because Fluso cannot read channel history, it cannot look up the message you want to reply to in a channel. To reply in a thread, give Fluso a link to that message.
+
+Microsoft applies its own request limits. If a request fails because of a limit, wait a few minutes and ask again.
+
+## Other Microsoft connections
+
+These connections use the same steps and the same approval rules. Connect each one separately.
+
+| Connection | What you can ask |
+| --- | --- |
+| **Outlook Calendar** | Read your availability and manage Outlook Calendar events. |
+| **OneDrive** | Browse, search, and manage files in OneDrive. |
+
+Connecting Outlook does not connect Outlook Calendar.
+
+## Data and tokens
+
+Fluso reads Outlook and Teams data on demand to answer your request. Requested work can save returned content in conversation records or workspace files. Disconnecting does not delete those saved results. Fluso stores your Microsoft access and refresh tokens encrypted, and deletes them when you disconnect.
+
+Fluso sends your requests to Microsoft. This connector does not move Microsoft's processing into Fluso or into an enclave. See [Apps and MCP servers](/features/mcp#three-kinds-of-connection).
+
+The full policies are the [privacy policy](https://fluso.ai/privacy) and the [terms of service](https://fluso.ai/terms).
+
+## For IT admins
+
+- Fluso uses one Microsoft app registration, named **Fluso M365 Connector**, for all four Microsoft connections.
+- The sign-in accepts work and school accounts. Each user signs in as themselves, and Fluso uses that user's delegated access.
+- Your organization's Microsoft settings decide whether a user can approve these permissions alone. If Microsoft says a user needs administrator approval, an admin must approve the app for the permissions in the table above.
+- Fluso does not request any permission to read Teams channel messages. See [Permissions Fluso asks for](#permissions-fluso-asks-for).
+- To end access, a user disconnects the connection in Fluso. See [Reconnect or disconnect](#reconnect-or-disconnect).
+
+## Reconnect or disconnect
+
+In **Plugins → MCP**, open the connection's **•••** menu. Select **Reconnect** when the connection needs sign-in again. Select **Disconnect** to remove the connection.
+
+Disconnect each Microsoft connection separately. Disconnecting removes Fluso's saved connection and tokens. It does not undo actions Fluso already completed, such as a sent message. You can also remove the app's access in Microsoft. Your IT admin can help if you cannot find the setting.
+
+## If you used Outlook or Teams before
+
+Outlook, Teams, and OneDrive used to connect through a third-party provider. The native connectors replace them. See [Moving to native connectors](/features/mcp#moving-to-native-connectors) for the reconnect steps.
+
+Two things differ:
+
+- Outlook used to cover mail and calendar in one connection. Connect **Outlook** and **Outlook Calendar** separately now. An Agent that could use the old Outlook gets the same access to both.
+- The native connectors publish a smaller set of tools. For example, the earlier Teams connection could read channel messages, and the earlier Outlook connection could move messages and mark them as read. The native connectors cannot.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Outlook and Teams are not in the catalog">
+    Search for the app by name in **Add MCP**. If they are still missing, your Fluso deployment has not turned Microsoft connections on. Contact [support](mailto:support@premai.io).
+  </Accordion>
+  <Accordion title="Microsoft refuses the sign-in or asks for admin approval">
+    Use a work or school account. Personal Microsoft accounts do not work. If Microsoft says you need administrator approval, ask your IT admin to approve the Fluso app for the permissions listed on this page. Fluso cannot change what Microsoft's screen requires.
+  </Accordion>
+  <Accordion title="Connected, but a request fails">
+    Read the error. Check that the account you connected can do the action in Outlook or Teams itself. If the connection shows it needs to reconnect, use **Reconnect** in the connection's **•••** menu. If Microsoft is limiting requests, wait a few minutes and try again.
+  </Accordion>
+  <Accordion title="Fluso cannot find an email I know exists">
+    A keyword search covers one folder. Tell Fluso which folder to search, for example *"Search Sent Items for the contract."* Also check that the connection uses the Microsoft account you expect. Each Microsoft connection can use a different account.
+  </Accordion>
+  <Accordion title="Fluso cannot read a Teams channel">
+    This is a limit of the native connector. Fluso can post to a channel, but it cannot read channel messages. Ask Fluso to read a chat instead, or paste the channel text into the conversation.
+  </Accordion>
+  <Accordion title="Outlook is connected but calendar events are missing">
+    Connect **Outlook Calendar** separately. Outlook covers mail only.
+  </Accordion>
+  <Accordion title="An Agent cannot use Outlook or Teams">
+    Check that the connection is selected in the Agent's setup. Then check its read-only setting and saved tool rules. Account connection and Agent access are separate choices.
+  </Accordion>
+</AccordionGroup>
+
+## See also
+
+<CardGroup cols={2}>
+  <Card title="Apps & MCP" icon="blocks" href="/features/mcp">
+    How connections work, native connectors, and tool permissions.
+  </Card>
+  <Card title="Approvals and permissions" icon="shield-check" href="/features/approvals">
+    Choose when Fluso asks before it sends or changes anything.
+  </Card>
+</CardGroup>
