@@ -4,107 +4,85 @@ icon: sparkles
 description: "What's new in Fluso - product updates, improvements, and fixes."
 ---
 
-{/* cspell:ignore Excalidraw */}
-
 <Update label="2026-11-20" description="Fluso 1.7.0" tags={["Desktop"]}>
 
 **Highlights**
-- Over 40 [apps](https://docs.fluso.ai/features/connectors), including Google Workspace and Microsoft 365, now connect straight to Fluso, with no third-party platform in between.
-- A new Library is the one home for your files, folders, projects, pins and trash.
-- Files open in a deeper viewer, with citations that name the exact page or slide.
+- Over 40 [apps](https://docs.fluso.ai/features/connectors), including Google Workspace and Microsoft 365, now use connectors that Fluso builds and runs.
+- A new Library replaces the Projects page. It holds your files, folders, projects, pins and trash.
+- The file viewer has page navigation, zoom, comments, and citations that name the exact page or slide.
 - The desktop app now runs on Linux.
-- Stopping a reply keeps your place, and a message lost to a flaky connection is sent again.
-- Pro now has a weekly allowance, shown as a percentage like Free and Plus. See [pricing](https://docs.fluso.ai/resources/pricing).
+- Pro now has a weekly usage allowance, like Free and Plus. See [pricing](https://docs.fluso.ai/resources/pricing).
 
-**Apps that connect straight to Fluso**
+**Connectors built by Fluso**
 
-- Letting an assistant into your email or CRM means trusting whatever sits between it and your account.
-- Fluso now runs those connections itself. Google, Microsoft, Salesforce, Slack, LinkedIn, Zendesk, GitHub, Airtable and more moved off the third-party platform they used before.
-- Every [connector](https://docs.fluso.ai/features/connectors) Fluso builds and runs carries the Fluso mark next to its name, so you can tell it apart from provider-managed and custom connections.
-- Gmail, Drive, Calendar, Docs, Sheets and Slides each connect as their own app.
-- Apps that use an API key, like Stripe, Supabase and Sentry, connect by pasting the key in the connection dialog. If a key is refused, Fluso tells you which key it needs.
-- Some apps stay careful by design: YouTube and Square are read only, and QuickBooks asks before it writes anything.
+- Google Workspace, Microsoft 365, Salesforce, Slack, LinkedIn, Zendesk, GitHub and Airtable now use [connectors](https://docs.fluso.ai/features/connectors) that Fluso builds and runs.
+- These connectors show the Fluso mark next to their name.
+- To connect an app that uses an API key, such as Stripe, Supabase or Sentry, paste the key in the connection dialog. If the key is refused, Fluso tells you which key it needs.
+- YouTube and Square are read-only. QuickBooks asks before it writes anything.
 - If your Intercom or PostHog account is hosted in the EU, Fluso connects to the EU region.
-- Ask for an app you have not connected yet, and Fluso shows a Connect card in the chat.
-- Excalidraw is built in. Turn it on when you want it, and drawings open in the file viewer, where you can edit them.
-- Disconnecting Zoom also removes Fluso's access on the Zoom side.
+- If you ask for an app you have not connected, Fluso shows a Connect card in the chat.
+- Excalidraw is built in. Turn it on to open and edit drawings in the file viewer.
 
-**Moving to the new connections**
+**Reconnecting your apps**
 
-- Once an app's Fluso-built version is live, the old version retires for everyone.
-- A banner names exactly the apps you need to reconnect, and only yours.
-- An old app entry points you to its replacement and offers it in one click.
-- The connections list is redesigned, with even logos, a status pill (Connected, Needs reauth, Error) and real descriptions. Tool permissions sit in each row's menu.
-- On desktop, finishing an app's sign-in brings you back to your chat.
+- When an app's Fluso connector goes live, the older version of that app is retired for everyone.
+- A banner lists the apps you need to reconnect.
+- The connections list shows each app's status: Connected, Needs reauth or Error. Tool permissions are in each row's menu.
+- On desktop, after you sign in to an app, Fluso returns you to your chat.
 
-**Steadier apps**
+**Connector fixes**
 
-- A long task can make many more app calls in one message. If it reaches the limit, Fluso says so.
-- One busy app no longer makes calls to your other apps fail.
-- Apps with large tool lists, like PostHog, load all of their tools.
-- Microsoft accounts whose sign-in was turned away before now connect.
-- Sign-in fixes for LinkedIn, Box, Discord, TickTick and GitHub.
-- Large Google Drive files download, and Attio task deadlines and notes save correctly.
+- Fluso can make up to 512 app calls in one message, and tells you when it reaches that limit.
+- When one app connection is busy, calls to your other apps still go through.
+- Some Microsoft accounts failed to connect. They now connect.
+- Large Google Drive files now download.
 
-**The Library**
+**Library**
 
-- The Library replaces the Projects page. Files, folders, projects, pins, trash and filtered search live in one place.
-- A Notes feed collects your notes, with project filters and capture from chat.
-- Opening a file lands in a deeper viewer, with page navigation, zoom and hover previews.
-- Citations name the exact page or slide and the words quoted.
-- A review pass leaves inline notes and quick fixes you can accept.
-- Comment on a file, see its history, and chat beside it without the chat covering the file.
-- The preview panel resizes and remembers its width. HTML files show as rendered cards.
-- The storage meter lives in the Library header and turns red when 15% or less is left. Storage warnings start once you have used 80%.
-- A shared HTML file opens as a page at its public link, instead of downloading.
-- Moving a file out of the path its public link covers turns that link off.
+- A Notes feed collects your notes. You can filter it by project and save notes from a chat.
+- The storage meter is in the Library header and turns red when 15% or less of your storage is left. Storage warnings start when you have used 80%.
+- A shared HTML file opens as a web page at its public link.
+- A file's public link stops working when you move the file.
 
-**Fluso on Linux**
+**File viewer**
 
-- The desktop app now runs on Linux as an x64 AppImage, alongside macOS and Windows.
-- Signing in to an app from the Linux desktop returns you to Fluso.
+- Citations name the page or slide and the words quoted.
+- Run a review on a file to get inline notes and quick fixes, then apply the ones you accept.
+- Comment on a file, see its history, and chat with Fluso next to the file.
+
+**Linux desktop app**
+
+- The desktop app runs on Linux as an x64 AppImage, alongside macOS and Windows.
+- When you sign in to an app from the Linux desktop app, the sign-in returns you to Fluso.
 
 **Chat**
 
-- Pressing Stop no longer loses file-edit context or hides a turn Fluso already received.
-- A message cut off by a flaky connection is sent again automatically.
-- Unsaved edits in the capabilities dialog survive Escape and clicks outside it.
-- A project folder in the sidebar no longer looks empty when its only chat is old.
-- The **Chats** and **Agents** switcher now sits in the sidebar.
-- The Agents tab returns to an Agent setup that is still in progress.
-- Right-click selected text and choose **Attach selection as context**, on the web too. On desktop, right-clicking an image offers **Copy Image** again.
-- A long generated title no longer leaves a chat named "Untitled".
+- If you press Stop after Fluso has received your message, the message and any file edits already made stay in the chat.
+- If your connection drops after you send a message, Fluso sends it again.
+- A project folder in the sidebar lists its chats even when they are older than your newest 200 chats.
+- The **Chats** and **Agents** switcher is now in the sidebar.
+- On the web, right-click selected text and choose **Attach selection as context**. On desktop, right-clicking an image offers **Copy Image** again.
 
-**Smarter assistant**
+**Email, calendar and documents**
 
-- [Gmail](https://docs.fluso.ai/integrations/gmail) drafts can include files from your workspace, and Fluso reads Gmail attachments up to 2 MB.
-- Emails go out from the mailbox you signed in with.
-- Moving a [Google Calendar](https://docs.fluso.ai/integrations/google-calendar) event keeps the rest of its details.
-- Image generation now uses GPT Image 2.6 Flare.
-- Documents made from a brand template use the template's own fonts, and Fluso names any fonts it is missing.
-- Custom [skills](https://docs.fluso.ai/features/skills) show up everywhere you would look for one.
-- When Fluso posts to a connected app, its reply gives you the link.
-- When a model provider turns a request away, Fluso tries another provider.
-- A brief lookup failure no longer drops a [routine](https://docs.fluso.ai/developers/schedules).
-
-**Confidential Mode**
-
-- Chat titles, step labels, working memory and images work properly in [Confidential Mode](https://docs.fluso.ai/features/confidential).
+- [Gmail](https://docs.fluso.ai/integrations/gmail) drafts can include files from your workspace.
+- Fluso reads Gmail attachments up to 2 MB.
+- Emails are sent from the mailbox you signed in with.
+- Moving a [Google Calendar](https://docs.fluso.ai/integrations/google-calendar) event no longer clears its other details.
+- Image generation uses GPT Image 2.6 Flare.
+- Documents made from a brand template use the template's fonts. Fluso names any fonts it does not have.
 
 **Plans & limits**
 
-- Pro now has a weekly allowance too. The usage bar shows it as a percentage with the time it resets. See [pricing](https://docs.fluso.ai/resources/pricing).
-- When you reach your allowance, Fluso tells you when it resets, and your files and chats stay available.
-- A scheduled downgrade from Pro to Plus shows on the Plans page, and you can still upgrade while one is queued.
-- Checkout no longer offers a free trial it would not give.
-- Your plan updates as soon as a checkout or cancellation goes through.
+- Pro now has a weekly allowance. The usage bar shows how much you have used and when it resets. See [pricing](https://docs.fluso.ai/resources/pricing).
+- When you reach your allowance, Fluso shows when it resets. Your files and chats stay available.
+- A scheduled downgrade from Pro to Plus shows on the Plans page. You can still upgrade while it is scheduled.
+- Your plan changes as soon as a checkout or cancellation completes.
 
-**Fixes and polish**
+**Fixes**
 
-- A markdown file's front matter survives a save in the file editor.
-- Word documents show their embedded fonts.
-- Icon-only buttons have names for screen readers and tooltips on hover.
-- The app opens without the animated launch screen, and Newsreader is back as the display font.
+- The file editor keeps a markdown file's front matter when it saves.
+- Icon-only buttons have screen-reader names and hover tooltips.
 
 </Update>
 
